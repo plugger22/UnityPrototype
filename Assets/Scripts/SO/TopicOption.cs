@@ -20,8 +20,8 @@ public class TopicOption : ScriptableObject
     [Header("Parent")]
     [Tooltip("Topic that the option is connected with. Applies to all non-Tutorial options")]
     public Topic topic;
-    [Tooltip("Tutorial item that the option is connected with -> Only applies if isTutorial true, ignore otherwise")]
-    public TutorialItem tutorialItem;
+    [Tooltip("Tutorial that the option is connected with -> Only applies if isTutorial true, ignore otherwise")]
+    public Tutorial tutorial;
 
     [Header("Special")]
     [Tooltip("Select this if the option is preferred by HQ. Doing so will override the HQ Boss's personality preferences. Ignore otherwise")]

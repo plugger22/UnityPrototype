@@ -31,6 +31,20 @@ public class TutorialManager : MonoBehaviour
     [HideInInspector] public int index;                         //index that tracks player's progress (set #) through current tutorial
     #endregion
 
+    #region Other...
+
+    //TutorialItem.SO Query option data (takes data from TutorialOption.SO)
+    [HideInInspector] public string option0Tag;
+    [HideInInspector] public string option1Tag;
+    [HideInInspector] public string option2Tag;
+    [HideInInspector] public string option3Tag;
+    [HideInInspector] public string option0Text;
+    [HideInInspector] public string option1Text;
+    [HideInInspector] public string option2Text;
+    [HideInInspector] public string option3Text;
+
+    #endregion
+
     #region Initialisation...
     /// <summary>
     /// Master Initialisation
@@ -635,8 +649,11 @@ public class TutorialManager : MonoBehaviour
             //Output
             if (isErrorFlag == false)
             {
+                /*
                 //repeat prevention
                 option.tutorialItem.isQueryDone = true;
+                */
+
                 //Outcome
                 ModalOutcomeDetails details = new ModalOutcomeDetails()
                 {

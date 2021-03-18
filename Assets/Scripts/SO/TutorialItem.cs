@@ -32,14 +32,17 @@ public class TutorialItem : ScriptableObject
     public TutorialGoal goal;
 
     [Header("Question")]
+    [Tooltip("Type of query, eg. what is the query about? (SO enum that is required by EffectManager.cs to correctly handle a chosen template topic Option")]
+    public TutorialQueryType queryType;
+    [Tooltip("Map to Topic header and text")]
     public string queryHeader;
     [TextArea(2, 3)] public string queryText;
     [Tooltip("If false then standard option restrictions apply (min 2 max 4). If true then any number allowed and the max number (if present) are chosen randomly from the list to provide replayability")]
     public bool isRandomOptions;
     [Tooltip("Maximum of 4 topic Options, mininum of 2, sourced from Topics / TopicOptions / OptionsTutorial. Compulsory")]
-    public List<TopicOption> listOfOptions;
+    public List<TutorialOption> listOfOptions;
     [Tooltip("Option/s that apply if the player selects 'Ignore', only the first 2 are used. Compulsory")]
-    public List<TopicOption> listOfIgnoreOptions;
+    public List<TutorialOption> listOfIgnoreOptions;
 
     [HideInInspector] public bool isQueryDone;                   //set true once done to prevent player repeating query, reset at start of every new session
 

@@ -2087,15 +2087,10 @@ public class EffectManager : MonoBehaviour
                     //
                     // - - - Tutorial
                     //
-                    case "TutJobFungus":
-                    case "TutJobInform":
-                    case "TutJobLawyer":
-                    case "TutJobLion":
-                    case "TutJobMaggot":
-                    case "TutJobPorn":
-                    case "TutJobPrison":
-                    case "TutJobSmog":
-                    case "TutJobWaster":
+                    case "TutOption0":
+                    case "TutOption1":
+                    case "TutOption2":
+                    case "TutOption3":
                         effectResolve = ResolveTutorialData(effect);
                         effectReturn = ConvertEffectResolveToReturn(effectResolve, effectReturn);
                         break;
@@ -4155,15 +4150,11 @@ public class EffectManager : MonoBehaviour
         EffectDataResolve effectResolve = new EffectDataResolve();
         switch (effect.outcome.name)
         {
-            case "TutJobFungus": 
-            case "TutJobInformant":
-            case "TutJobLawyer":
-            case "TutJobLion":
-            case "TutJobMaggot":
-            case "TutJobPorn":
-            case "TutJobPrison":
-            case "TutJobSmog":
-            case "TutJobWaster":
+            case "TutOption0": 
+            case "TutOption1":
+            case "TutOption2":
+            case "TutOption3":
+                //job
                 GameManager.i.playerScript.previousJob = effect.description;
                 effectResolve.topText = string.Format("{0}It's official{1}", colourAlert, colourEnd);
                 effectResolve.bottomText = string.Format("Your previous occupation of<br><br>{0}{1}{2}<br><br>is now on the record", colourNeutral, effect.description, colourEnd);

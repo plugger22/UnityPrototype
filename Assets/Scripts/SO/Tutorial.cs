@@ -18,6 +18,9 @@ public class Tutorial : ScriptableObject
     [Tooltip("List of TutorialSets that make up the tutorial in order of use")]
     public List<TutorialSet> listOfSets;
 
+    [Tooltip("Template options for use with all TutorialItem Queries. Required to be FOUR")]
+    public TopicOption[] arrayOfOptions = new TopicOption[4];
+
 
     public void OnEnable()
     {

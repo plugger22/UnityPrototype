@@ -1240,6 +1240,8 @@ public class ValidationManager : MonoBehaviour
         for (int i = 0; i < arrayOfTopicOptions.Length; i++)
         {
             TopicOption option = arrayOfTopicOptions[i];
+
+            /*
             //Check normal and Tutorial options
             if (option.isTutorial == true)
             {
@@ -1257,6 +1259,7 @@ public class ValidationManager : MonoBehaviour
                 if (option.tutorialItem != null)
                 { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Tutorial option \"{0}\" has an Invalid option.tutorialItem \"{1}\" (should be Null){2}", option.name, option.tutorialItem, "\n"); }
             }
+            */
         }
         
         #endregion
@@ -1930,6 +1933,8 @@ public class ValidationManager : MonoBehaviour
                                                           item.name, count, maxTutorialOptions, "\n");
                                                     }
                                                 }
+
+                                                /*
                                                 //loop topicOptions in listsOfOptions
                                                 for (int m = 0; m < item.listOfOptions.Count; m++)
                                                 {
@@ -1996,6 +2001,8 @@ public class ValidationManager : MonoBehaviour
                                                     }
                                                     else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: IGNORE TopicOption \"{0}\" Invalid tutorialItem (Null){1}", option.name, "\n"); }
                                                 }
+                                                */
+
                                                 break;
                                             case "Information":
 
@@ -2212,6 +2219,10 @@ public class ValidationManager : MonoBehaviour
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfTutorialGoals);
         //TutorialGoalTypes
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfTutorialGoalTypes);
+        //TutorialQueryTypes
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfTutorialQueryTypes);
+        //TutorialOptions
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfTutorialOptions);
         //TutorialGUIFeatures
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfTutorialGUIFeatures);
         //Layouts

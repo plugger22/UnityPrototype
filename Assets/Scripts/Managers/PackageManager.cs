@@ -117,6 +117,7 @@ namespace packageAPI
         public int data1;                                                    //multipurpose datapoint
         public int dataSpecial;                                              //multipurpose datapoint, used for passing enums, eg. StoryType
         public string dataName;                                              //multipurpose data string, eg. organisation name for revealed secret
+        public TutorialQueryType queryType;                                  //What type of Tutorial Query is it? Only required for tutorial Options, ignore otherwise
 
 
         public EffectDataInput()

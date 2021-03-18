@@ -18,19 +18,21 @@ MonoBehaviour:
   bottomText: 
   gameHelp: {fileID: 0}
   goal: {fileID: 0}
+  queryType: {fileID: 11400000, guid: 932d6256daa87c544beac8ae5099c73e, type: 2}
   queryHeader: Existing Skill Set
   queryText: What job did you do before joining us here at the Resistance?<br><br>We're
     looking for useful skills...
   isRandomOptions: 1
   listOfOptions:
-  - {fileID: 11400000, guid: 597c5d5aabcbc284491e99651e7dfcf7, type: 2}
-  - {fileID: 11400000, guid: 1e02094ca7a3cf341b3b51c4ad939f22, type: 2}
-  - {fileID: 11400000, guid: f7e1f81555525344eb617faa6512936b, type: 2}
-  - {fileID: 11400000, guid: d17707de280de884a9bb098e721e29d6, type: 2}
-  - {fileID: 11400000, guid: fd79afb1ba999a346a480acd071da842, type: 2}
-  - {fileID: 11400000, guid: d798df6f19a13934890a8af9024f887c, type: 2}
-  - {fileID: 11400000, guid: 17f67b7f9c7d81348b37ff623eae847c, type: 2}
-  - {fileID: 11400000, guid: 24d228b3ee49c3d40b01a582957e1d57, type: 2}
-  - {fileID: 11400000, guid: db7d0504b22386d4da99171458e8cb1f, type: 2}
+  - {fileID: 11400000, guid: 69514e86ece5f2f459a0d40a918ebac6, type: 2}
+  - {fileID: 11400000, guid: a280ec036d8e7af46b930840b4e09a04, type: 2}
+  - {fileID: 11400000, guid: 924e68d3cededc04e9577b9ffdf24192, type: 2}
+  - {fileID: 11400000, guid: 893bad95b68a0b24c95d4df6db598056, type: 2}
+  - {fileID: 11400000, guid: 1b6c9d6bfe7374940be6d096b66d45ee, type: 2}
+  - {fileID: 11400000, guid: 44201d12857820947b49d0ec20337374, type: 2}
+  - {fileID: 11400000, guid: e0fb46a78fd130b488be11c9bf72f0e7, type: 2}
+  - {fileID: 11400000, guid: 836452e57025a8f419a8d21f9e8869af, type: 2}
+  - {fileID: 11400000, guid: 99feae060da509c45bc2e040f139115c, type: 2}
   listOfIgnoreOptions:
-  - {fileID: 11400000, guid: db7d0504b22386d4da99171458e8cb1f, type: 2}
+  - {fileID: 11400000, guid: 99feae060da509c45bc2e040f139115c, type: 2}
+  isQueryDone: 0

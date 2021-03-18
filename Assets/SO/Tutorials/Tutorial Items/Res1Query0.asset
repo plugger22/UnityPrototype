@@ -18,10 +18,22 @@ MonoBehaviour:
   bottomText: 
   gameHelp: {fileID: 0}
   goal: {fileID: 0}
+  queryType: {fileID: 11400000, guid: 7b12844901fc9f9478441b5e50b7ecc1, type: 2}
   queryHeader: Existing Skill Set
   queryText: What are we going to call you?<br><br>New folk like you don't get to
     use their <b>own name</b>. Not yet, anyway
   isRandomOptions: 1
-  listOfOptions: []
-  listOfIgnoreOptions: []
+  listOfOptions:
+  - {fileID: 11400000, guid: 1bd7497d20068ac4c92f7fefdaa75e85, type: 2}
+  - {fileID: 11400000, guid: efdc3f22b5c0eda4ead314f8a3a942fc, type: 2}
+  - {fileID: 11400000, guid: 85bb0ff6c76e09049b7e75c402acf03a, type: 2}
+  - {fileID: 11400000, guid: fb78ff1ca1393ee4596a88d3066e3e60, type: 2}
+  - {fileID: 11400000, guid: 5d9510a2bb69b394fa03b24af2d8f144, type: 2}
+  - {fileID: 11400000, guid: 89a4abf95b7f4aa4ea6326a42e0b55f5, type: 2}
+  - {fileID: 11400000, guid: 05ff78f8de101d84e984560f8545d2ad, type: 2}
+  - {fileID: 11400000, guid: cec43b58deccab74686bb62b0d729890, type: 2}
+  - {fileID: 11400000, guid: 8042c6fd2bb64ab43a746ea37ce644e4, type: 2}
+  - {fileID: 11400000, guid: 1ab89e9322cd8f74da62511c326a3c89, type: 2}
+  listOfIgnoreOptions:
+  - {fileID: 11400000, guid: 1ab89e9322cd8f74da62511c326a3c89, type: 2}
   isQueryDone: 0
