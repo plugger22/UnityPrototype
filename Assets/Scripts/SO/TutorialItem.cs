@@ -43,6 +43,11 @@ public class TutorialItem : ScriptableObject
     public List<TutorialOption> listOfOptions;
     [Tooltip("Option/s that apply if the player selects 'Ignore', only the first one is used. Compulsory")]
     public List<TutorialOption> listOfIgnoreOptions;
+    [Tooltip("Alternative listOfOptions, eg. male/female names. Used only if there is code in place, based off queryType, ignore otherwise")]
+    public List<TutorialOption> listOfOptionsAlt;
+    [Tooltip("Alternative option, used only if there is code in place, based off queryType, ignore otherwise. Only first option is used")]
+    public List<TutorialOption> listOfIgnoreOptionsAlt;
+
 
     /*[HideInInspector] public bool isQueryDone;*/
 
@@ -69,6 +74,9 @@ public class TutorialItem : ScriptableObject
                 Debug.AssertFormat(queryText != null, "Invalid queryText (Null) for {0}", name);
                 Debug.AssertFormat(listOfOptions.Count > 0, "Invalid listOfOptions (Empty) for {0}", name);
                 Debug.AssertFormat(listOfOptions.Count > 0, "Invalid listOfIgnoreOptions (Empty) for {0}", name);
+                //Alt options -> optional, but if present then there must be an alt IgnoreOption
+                if (listOfOptionsAlt.Count > 0)
+                { Debug.AssertFormat(listOfIgnoreOptionsAlt.Count > 0, "Invalid listOfIgnoreOptionsAlt (Empty) for {0}", name); }
                 break;
             default: Debug.LogWarningFormat("Unrecognised tutorialType \"{0}\" for {1}", tutorialType.name, name); break;
 

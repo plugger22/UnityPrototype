@@ -486,8 +486,7 @@ public class TutorialUI : MonoBehaviour
         if (item != null)
         {
             int index, limit, count;
-            //create temp list by Value (will be deleting
-            List<TutorialOption> listOfTempOptions = new List<TutorialOption>(item.listOfOptions) { };
+
             //data package
             TopicUIData data = new TopicUIData();
             data.topicName = item.tag;
@@ -527,7 +526,33 @@ public class TutorialUI : MonoBehaviour
                             if (isProceed == true)
                             {
                                 //Tutorial options
-                                count = item.listOfOptions.Count;
+                                List<TutorialOption> listOfTutorialOptions = new List<TutorialOption>();
+                                List<TutorialOption> listOfTutorialIgnoreOptions = new List<TutorialOption>();
+                                //special cases where an Alt set of options may be needed
+                                switch (item.queryType.name)
+                                {
+                                    case "Name":
+                                        switch (GameManager.i.playerScript.sex)
+                                        {
+                                            case ActorSex.Male:
+                                                listOfTutorialOptions = item.listOfOptions;
+                                                listOfTutorialIgnoreOptions = item.listOfIgnoreOptions;
+                                                break;
+                                            case ActorSex.Female:
+                                                listOfTutorialOptions = item.listOfOptionsAlt;
+                                                listOfTutorialIgnoreOptions = item.listOfIgnoreOptionsAlt;
+                                                break;
+                                            default: Debug.LogWarningFormat("Unrecognised ActorSex \"{0}\"", GameManager.i.playerScript.sex); break;
+                                        }
+                                        break;
+                                    default:
+                                        listOfTutorialOptions = item.listOfOptions;
+                                        listOfTutorialIgnoreOptions = item.listOfIgnoreOptions;
+                                        break;
+                                }
+                                count = listOfTutorialOptions.Count;
+                                //create temp list by Value (will be deleting
+                                List<TutorialOption> listOfTempOptions = new List<TutorialOption>(listOfTutorialOptions) { };
                                 // - - - RANDOM
                                 if (item.isRandomOptions == true)
                                 {
@@ -567,12 +592,12 @@ public class TutorialUI : MonoBehaviour
                                     }
                                 }
                                 //IGNORE option
-                                if (item.listOfIgnoreOptions != null)
+                                if (listOfTutorialIgnoreOptions != null)
                                 {
                                     //needs to be one option (can be more but they are ignored)
-                                    if (item.listOfIgnoreOptions.Count >= 1)
+                                    if (listOfTutorialIgnoreOptions.Count >= 1)
                                     {
-                                        TutorialOption optionTutorial = item.listOfIgnoreOptions[0];
+                                        TutorialOption optionTutorial = listOfTutorialIgnoreOptions[0];
                                         if (optionTutorial != null)
                                         {
                                             data.listOfIgnoreEffects.Add(ignoreOption.listOfGoodEffects[0]);

@@ -1865,6 +1865,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d98cf6dba71922b4cbb316498b31255f, type: 2}
   - {fileID: 11400000, guid: 13a44eb2c9cf69641ad7b124ba202a39, type: 2}
   - {fileID: 11400000, guid: f505b0a6c27e0504e8ec7178326af357, type: 2}
+  - {fileID: 11400000, guid: 1eb4abbd2e2be834bb90ce1f02147b6c, type: 2}
+  - {fileID: 11400000, guid: aeb8863be2bfc694da552c64fc7bdb0b, type: 2}
+  - {fileID: 11400000, guid: 7cdbde38f78d26d4b979b0934cf9e7b0, type: 2}
+  - {fileID: 11400000, guid: 32c6bd84082ca97458fde423f23742af, type: 2}
+  - {fileID: 11400000, guid: 7fb4d1e5ef0c525459289a38d502bc96, type: 2}
+  - {fileID: 11400000, guid: 0474ee9b7bb196a40906349c123412ce, type: 2}
+  - {fileID: 11400000, guid: 3e563f7356a3c1f4489fbf7e2d107895, type: 2}
+  - {fileID: 11400000, guid: d45f7dce7cdd5dd4abaeb787c63c31b9, type: 2}
+  - {fileID: 11400000, guid: 66183460ab18b4645b794b8e60b17bab, type: 2}
+  - {fileID: 11400000, guid: d93fdd7a139e0c0448c6b1565686bc58, type: 2}
   arrayOfTutorialGoalTypes:
   - {fileID: 11400000, guid: 5237bc6f2db221e4cbec1efa3fbd5e9a, type: 2}
   arrayOfTutorialQueryTypes:

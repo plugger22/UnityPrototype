@@ -2504,3 +2504,17 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:926)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:429)
 	City seed 34684 -> VirtualCity, Eurasia
+
+Dev seed 41401 -> Friday, 19 March 2021 3:17 PM
+City seed 26426 -> VirtualCity, Eurasia
+WARNING Invalid listOfIgnoreOptions (Empty) for topicItem "Res0Query0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TutorialUI:GetTopicData(TutorialItem) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:606)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:456)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:263)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 23704 -> Friday, 19 March 2021 3:21 PM
+City seed 43890 -> VirtualCity, Eurasia
