@@ -1240,28 +1240,36 @@ public class ValidationManager : MonoBehaviour
         for (int i = 0; i < arrayOfTopicOptions.Length; i++)
         {
             TopicOption option = arrayOfTopicOptions[i];
-
-            /*
             //Check normal and Tutorial options
             if (option.isTutorial == true)
             {
                 //tutorial option (independent option)
                 if (option.topic != null)
                 { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Tutorial option \"{0}\" has an Invalid option.topic \"{1}\" (should be Null){2}", option.name, option.topic, "\n"); }
-                if (option.tutorialItem == null)
-                { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Tutorial option \"{0}\" has an Invalid option.tutorialItem (Null){1}", option.name, "\n"); }
+                if (option.tutorial == null)
+                { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Tutorial option \"{0}\" has an Invalid option.tutorial (Null){1}", option.name, "\n"); }
+                //check listOfGoodEffects has 1 entry
+                if (option.listOfGoodEffects.Count != 1)
+                {
+                    Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: TopicOption \"{0}\" Invalid listOfGoodEffects.Count (is {1}, should be ONE){2}",
+                        option.name, option.listOfGoodEffects.Count, "\n");
+                }
+                //check listOfBadEffects is empty
+                if (option.listOfBadEffects.Count != 0)
+                {
+                    Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: TopicOption \"{0}\" Invalid listOfBadEffects.Count (is {1}, should be EMPTY){2}",
+                        option.name, option.listOfBadEffects.Count, "\n");
+                }
             }
             else
             {
                 //normal option
                 if (option.topic == null)
                 { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: option \"{0}\" has an Invalid option.topic (Null){1}", option.name, "\n"); }
-                if (option.tutorialItem != null)
-                { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Tutorial option \"{0}\" has an Invalid option.tutorialItem \"{1}\" (should be Null){2}", option.name, option.tutorialItem, "\n"); }
+                if (option.tutorial != null)
+                { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Tutorial option \"{0}\" has an Invalid option.tutorial \"{1}\" (should be Null){2}", option.name, option.tutorial.name, "\n"); }
             }
-            */
-        }
-        
+        }        
         #endregion
 
         #region Topic Pools
@@ -1933,75 +1941,38 @@ public class ValidationManager : MonoBehaviour
                                                           item.name, count, maxTutorialOptions, "\n");
                                                     }
                                                 }
-
-                                                /*
-                                                //loop topicOptions in listsOfOptions
+                                                //loop tutorialOptions in listsOfOptions
                                                 for (int m = 0; m < item.listOfOptions.Count; m++)
                                                 {
-                                                    TopicOption option = item.listOfOptions[m];
+                                                    TutorialOption optionTutorial = item.listOfOptions[m];
                                                     //option tutorialItem should match parent
-                                                    if (option.tutorialItem != null)
+                                                    if (optionTutorial.query!= null)
                                                     {
-                                                        if (option.tutorialItem != item)
+                                                        if (optionTutorial.query != item)
                                                         {
-                                                            Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: TopicOption \"{0}\" mismatch with Item (is {1}, should be {2}){3}",
-                                                                option.name, option.tutorialItem.name, item.name, "\n");
+                                                            Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: TutorialOption \"{0}\" mismatch with Item (is {1}, should be {2}){3}",
+                                                                optionTutorial.name, optionTutorial.query.name, item.name, "\n");
                                                         }
-                                                        //check listOfGoodEffects has 1 entry
-                                                        if (option.listOfGoodEffects.Count != 1)
-                                                        {
-                                                            Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: TopicOption \"{0}\" Invalid listOfGoodEffects.Count (is {1}, should be ONE){2}",
-                                                                option.name, option.listOfGoodEffects.Count, "\n");
-                                                        }
-                                                        //check listOfBadEffects is empty
-                                                        if (option.listOfBadEffects.Count != 0)
-                                                        {
-                                                            Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: TopicOption \"{0}\" Invalid listOfBadEffects.Count (is {1}, should be EMPTY){2}",
-                                                                option.name, option.listOfBadEffects.Count, "\n");
-                                                        }
-                                                        //option should have isTutorial true
-                                                        if (option.isTutorial == false)
-                                                        {
-                                                            Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: TopicOption \"{0}\" Invalid field 'isTutorial' (is {1} should be True){2}",
-                                                                option.name, option.isTutorial, "\n");
-                                                        }
+
                                                     }
-                                                    else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: TopicOption \"{0}\" Invalid tutorialItem (Null){1}",  option.name, "\n"); }
+                                                    else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: TutorialOption \"{0}\" Invalid tutorialItem (Null){1}",  optionTutorial.name, "\n"); }
                                                 }
-                                                //loop topicOptions in listsOfIgnoreOptions
+                                                //loop tutorialOptions in listsOfIgnoreOptions
                                                 for (int m = 0; m < item.listOfIgnoreOptions.Count; m++)
                                                 {
-                                                    TopicOption option = item.listOfIgnoreOptions[m];
+                                                    TutorialOption optionTutorial = item.listOfIgnoreOptions[m];
                                                     //option tutorialItem should match parent
-                                                    if (option.tutorialItem != null)
+                                                    if (optionTutorial.query != null)
                                                     {
-                                                        if (option.tutorialItem != item)
+                                                        if (optionTutorial.query != item)
                                                         {
-                                                            Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: IGNORE TopicOption \"{0}\" mismatch with Item (is {1}, should be {2}){3}",
-                                                                option.name, option.tutorialItem.name, item.name, "\n");
-                                                        }
-                                                        //check listOfGoodEffects has 1 entry
-                                                        if (option.listOfGoodEffects.Count != 1)
-                                                        {
-                                                            Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: IGNORE TopicOption \"{0}\" Invalid listOfGoodEffects.Count (is {1}, should be ONE){2}",
-                                                                option.name, option.listOfGoodEffects.Count, "\n");
-                                                        }
-                                                        //check listOfBadEffects is empty
-                                                        if (option.listOfBadEffects.Count != 0)
-                                                        {
-                                                            Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: IGNORE TopicOption \"{0}\" Invalid listOfBadEffects.Count (is {1}, should be EMPTY){2}",
-                                                                option.name, option.listOfBadEffects.Count, "\n");
-                                                        }
-                                                        //option should have isTutorial true
-                                                        if (option.isTutorial == false)
-                                                        {
-                                                            Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: IGNORE TopicOption \"{0}\" Invalid field 'isTutorial' (is {1} should be True){2}",
-                                                                option.name, option.isTutorial, "\n");
+                                                            Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: IGNORE TutorialOption \"{0}\" mismatch with Item (is {1}, should be {2}){3}",
+                                                                optionTutorial.name, optionTutorial.query.name, item.name, "\n");
                                                         }
                                                     }
-                                                    else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: IGNORE TopicOption \"{0}\" Invalid tutorialItem (Null){1}", option.name, "\n"); }
+                                                    else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: IGNORE TopicOption \"{0}\" Invalid tutorialItem (Null){1}", optionTutorial.name, "\n"); }
                                                 }
-                                                */
+                                                
 
                                                 break;
                                             case "Information":

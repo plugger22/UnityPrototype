@@ -68,6 +68,7 @@ public class LoadManager : MonoBehaviour
     public TextList[] arrayOfFactorTextLists;
     public TextList[] arrayOfAdvertTextLists;
     public TextList[] arrayOfCrisisTextLists;
+    public TextList[] arrayOfTutorialTextLists;
 
     [Header("NameSets -> ToolManager Duplicates")]
     public NameSet[] arrayOfNameSets;
@@ -598,6 +599,13 @@ public class LoadManager : MonoBehaviour
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfCrisisTextLists has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No CrisisTextLists present"); }
         //
+        // - - - Text Lists Tutorials (not stored in a collection)
+        //
+        numArray = arrayOfTutorialTextLists.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTutorialTextLists has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No TutorialTextLists present"); }
+        //
         // - - - Text Lists -> Consolidate into master array
         //
         List<TextList> listOfTextLists = new List<TextList>();
@@ -609,6 +617,7 @@ public class LoadManager : MonoBehaviour
         listOfTextLists.AddRange(arrayOfFactorTextLists);
         listOfTextLists.AddRange(arrayOfAdvertTextLists);
         listOfTextLists.AddRange(arrayOfCrisisTextLists);
+        listOfTextLists.AddRange(arrayOfTutorialTextLists);
         arrayOfTextLists = listOfTextLists.ToArray();
         //check master array
         numArray = arrayOfTextLists.Length;

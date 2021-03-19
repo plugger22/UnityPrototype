@@ -1763,7 +1763,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8b585f005cb8dd445acd54866f2c7a16, type: 2}
   - {fileID: 11400000, guid: 05884381eaf873742a3b551c2861bd8b, type: 2}
   - {fileID: 11400000, guid: 8ab2e853c9eabee47af61a605f911459, type: 2}
-  - {fileID: 11400000, guid: 77da817c0d61f5d4cb968b30ce6512c1, type: 2}
   arrayOfFactorTextLists:
   - {fileID: 11400000, guid: af68fbbc11f44364b93c0e5a481f60cb, type: 2}
   - {fileID: 11400000, guid: 821105cf4673ea746a20af596d2561bb, type: 2}
@@ -1794,6 +1793,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f6ac0fc0d2161f2479013584b9d5cec5, type: 2}
   - {fileID: 11400000, guid: 99a5f7cd69e8f954ca76beb481f4ccda, type: 2}
   - {fileID: 11400000, guid: bf1d1b404b0eb1146a2ccaf71de682a1, type: 2}
+  arrayOfTutorialTextLists:
+  - {fileID: 11400000, guid: 77da817c0d61f5d4cb968b30ce6512c1, type: 2}
+  - {fileID: 11400000, guid: bb07f8636828f564faa134abdbad837a, type: 2}
   arrayOfNameSets:
   - {fileID: 11400000, guid: 195743710f6a69f47acd502168cd250c, type: 2}
   - {fileID: 11400000, guid: 56b7e91ac8e6f3d449828205cc0d2f2a, type: 2}
@@ -1830,6 +1832,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0ba135735cfb2314c9c4a1778a1aa27a, type: 2}
   - {fileID: 11400000, guid: 8daec609db5c94d4c808e9a92441f9fe, type: 2}
   - {fileID: 11400000, guid: 2f16ad5d6a7fbb640bf5acab159bff6c, type: 2}
+  - {fileID: 11400000, guid: f8acd9b072aa270468592f974797115a, type: 2}
+  - {fileID: 11400000, guid: 94321c3fce5f3bf4a9450ccc98744962, type: 2}
   arrayOfTutorialTypes:
   - {fileID: 11400000, guid: 6af73092ead59e34f89fadf31d6d355c, type: 2}
   - {fileID: 11400000, guid: 3ea5e079678bd114896744e070740f21, type: 2}
@@ -1857,11 +1861,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cec43b58deccab74686bb62b0d729890, type: 2}
   - {fileID: 11400000, guid: 8042c6fd2bb64ab43a746ea37ce644e4, type: 2}
   - {fileID: 11400000, guid: 1ab89e9322cd8f74da62511c326a3c89, type: 2}
+  - {fileID: 11400000, guid: 9607f2b746acf41469bf8c88f98ba671, type: 2}
+  - {fileID: 11400000, guid: d98cf6dba71922b4cbb316498b31255f, type: 2}
+  - {fileID: 11400000, guid: 13a44eb2c9cf69641ad7b124ba202a39, type: 2}
+  - {fileID: 11400000, guid: f505b0a6c27e0504e8ec7178326af357, type: 2}
   arrayOfTutorialGoalTypes:
   - {fileID: 11400000, guid: 5237bc6f2db221e4cbec1efa3fbd5e9a, type: 2}
   arrayOfTutorialQueryTypes:
   - {fileID: 11400000, guid: 932d6256daa87c544beac8ae5099c73e, type: 2}
   - {fileID: 11400000, guid: 7b12844901fc9f9478441b5e50b7ecc1, type: 2}
+  - {fileID: 11400000, guid: b3e8cb19811f5a34992ae54dd9a35dae, type: 2}
   arrayOfTutorialGUIFeatures:
   - {fileID: 11400000, guid: 2b429498342b10042847ad6b6e67d783, type: 2}
   - {fileID: 11400000, guid: 4ecda8036df900d48b4b25e77b1b6ad0, type: 2}
@@ -4954,6 +4963,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a7ddfcdacfa995b4f87bf0fea37667a1, type: 2}
   - {fileID: 11400000, guid: 38bcac9c0133d6f438bac14fa414d13e, type: 2}
   - {fileID: 11400000, guid: d36192a3ec606bc4da7d308d7dfff8e6, type: 2}
+  - {fileID: 11400000, guid: 1cdc6f72dfdaa514fb2e662c63234c4b, type: 2}
   arrayOfTargetsGeneric:
   - {fileID: 11400000, guid: 91845915c557ef343b3d28510c5adf98, type: 2}
   - {fileID: 11400000, guid: 01a82fef77c93dc4985ff90d1bd3c64e, type: 2}
@@ -5969,6 +5979,7 @@ MonoBehaviour:
   authorityTutorial: {fileID: 0}
   maxNumOfItems: 10
   minNumOfOptions: 2
+  textListGeneric: {fileID: 11400000, guid: bb07f8636828f564faa134abdbad837a, type: 2}
   textListJob: {fileID: 11400000, guid: 77da817c0d61f5d4cb968b30ce6512c1, type: 2}
   tutorial: {fileID: 0}
   set: {fileID: 0}

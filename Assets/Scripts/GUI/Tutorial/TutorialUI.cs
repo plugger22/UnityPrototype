@@ -528,6 +528,7 @@ public class TutorialUI : MonoBehaviour
                             {
                                 //Tutorial options
                                 count = item.listOfOptions.Count;
+                                // - - - RANDOM
                                 if (item.isRandomOptions == true)
                                 {
                                     limit = Mathf.Min(maxOptions, count);
@@ -550,7 +551,7 @@ public class TutorialUI : MonoBehaviour
                                 }
                                 else
                                 {
-                                    //NOT random, take up to first four options
+                                    // - - - NOT random, take first four options
                                     limit = Mathf.Min(maxOptions, count);
                                     for (int i = 0; i < limit; i++)
                                     {
@@ -559,7 +560,7 @@ public class TutorialUI : MonoBehaviour
                                         {
                                             TopicOption optionTopic = arrayOfTopicOptions[i];
                                             optionTopic.tag = optionTutorial.tag;
-                                            optionTopic.text = optionTutorial.text;
+                                            optionTopic.textToDisplay = GameManager.i.topicScript.GetOptionString(optionTutorial.text);
                                             data.listOfOptions.Add(optionTopic);
                                         }
                                         else { Debug.LogWarningFormat("Invalid topicOption (Null) for normal listOfTempOptions[{0}]", i); }
@@ -590,7 +591,7 @@ public class TutorialUI : MonoBehaviour
                                     if (option != null)
                                     {
                                         option.tooltipHeader = string.Format("<size=120%>{0}</size>", GameManager.Formatt(option.tag, ColourType.neutralText));
-                                        option.tooltipMain = GameManager.i.tutorialScript.GetTutorialJobTooltip();
+                                        option.tooltipMain = GameManager.i.tutorialScript.GetTutorialTooltip(item.queryType);
                                         //reassign option number to be the position in the listOfOptions
                                         option.optionNumber = index;
                                         //set all options as Valid

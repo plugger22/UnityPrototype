@@ -9,12 +9,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
-  m_Name: ShortTutorialOptJob
+  m_Name: TutorialOptJob
   m_EditorClassIdentifier: 
   descriptor: 'Used for tutorial option tooltips -> What job?
 
     Self contained, short, shows as main tooltip text under tag for Job option'
-  category: {fileID: 11400000, guid: 6825b2997be0191448f1e386a06ee602, type: 2}
+  category: {fileID: 11400000, guid: e652d0417dbe7ed4b8aec62ea50a2d8e, type: 2}
   isTestForDuplicates: 1
   isTestForTextTags: 0
   randomList:
@@ -38,4 +38,4 @@ MonoBehaviour:
   - If you say so...
   - HQ will being running background checks so be truthful
   - Well that's a conversation stopper!
-  index: 12
+  index: 19

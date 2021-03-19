@@ -8,9 +8,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef9551e8460d46240b2ea11acbd0350e, type: 3}
-  m_Name: TutRESq0_1
+  m_Script: {fileID: 11500000, guid: 5185e44c8f8f74c49b48c3a275b2fdd0, type: 3}
+  m_Name: Tutorials
   m_EditorClassIdentifier: 
-  tag: Male
-  text: The Aliens did THINGS to me
-  query: {fileID: 11400000, guid: 94321c3fce5f3bf4a9450ccc98744962, type: 2}
+  descriptor: tutorial query tooltip snippets (random pick)

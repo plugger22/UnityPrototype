@@ -2560,6 +2560,7 @@ public class PlayerManager : MonoBehaviour
         List<Condition> listOfConditions = GetListOfConditionForSide(playerSide);
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("- {0} Player Stats{1}{2}", playerSide.name, "\n", "\n");
+        builder.AppendFormat(" Sex {0}{1}", sex, "\n");
         builder.AppendFormat(" {0}, first name \"{1}\"{2}{3}", PlayerName, FirstName, "\n", "\n");
         builder.AppendFormat("- Stats{0}", "\n");
         if (playerSide.level == globalResistance.level)
@@ -2568,6 +2569,9 @@ public class PlayerManager : MonoBehaviour
         builder.AppendFormat(" Mood {0}{1}", mood, "\n");
         builder.AppendFormat(" Innocence {0}{1}", Innocence, "\n");
         if (GameManager.i.actorScript.doomTimer > 0) { builder.AppendFormat(" Doom Timer {0}{1}", GameManager.i.actorScript.doomTimer, "\n"); }
+        //Backstory
+        builder.AppendFormat("{0}- Backstory{1}", "\n", "\n");
+        builder.AppendFormat(" Previous Job: {0}{1}", previousJob, "\n");
         //Conditions
         if (listOfConditions != null)
         {
@@ -2611,7 +2615,6 @@ public class PlayerManager : MonoBehaviour
         builder.AppendFormat(" stressImmunityStart {0}{1}", stressImmunityStart, "\n");
         builder.AppendFormat(" stressImmunityCurrent {0}{1}", stressImmunityCurrent, "\n");
         builder.AppendFormat(" addictedTally {0}{1}", addictedTally, "\n");
-        builder.AppendFormat(" Sex {0}{1}", sex, "\n");
         builder.AppendFormat("{0} -Global{1}", "\n", "\n");
         builder.AppendFormat(" authorityState {0}{1}", GameManager.i.turnScript.authoritySecurityState, "\n");
         builder.AppendFormat("{0} -Reserve Pool{1}", "\n", "\n");

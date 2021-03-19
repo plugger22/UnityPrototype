@@ -22,7 +22,8 @@ public class TutorialManager : MonoBehaviour
     [Range(4, 4)] public int minNumOfOptions = 4;
 
     [Header("Text Lists")]
-    [Tooltip("Reasons for the job query tooltip")]
+    [Tooltip("Reasons for query tooltips")]
+    public TextList textListGeneric;
     public TextList textListJob;
 
     #region save data compatibile
@@ -75,6 +76,7 @@ public class TutorialManager : MonoBehaviour
     #region SubInitialiseAsserts
     private void SubInitialiseAsserts()
     {
+        Debug.Assert(textListGeneric != null, "Invalid textListName (Null)");
         Debug.Assert(textListJob != null, "Invalid textListJob (Null)");
     }
     #endregion
@@ -754,8 +756,20 @@ public class TutorialManager : MonoBehaviour
     /// Get a tooltip.main text for a TutorialOption
     /// </summary>
     /// <returns></returns>
-    public string GetTutorialJobTooltip()
-    { return textListJob.GetIndexedRecord(); }
+    public string GetTutorialTooltip(TutorialQueryType queryType)
+    {
+        string tooltip = "Unknown";
+        switch (queryType.name)
+        {
+            case "Sex":
+            case "Name":
+                tooltip = textListGeneric.GetRandomRecord(); break;
+            case "Job": tooltip = textListJob.GetIndexedRecord(); break;
+            default: Debug.LogWarningFormat("Unrecognised queryType \"{0}\"", queryType.name); break;
+        }
+        return tooltip;
+
+    }
 
     #endregion
 

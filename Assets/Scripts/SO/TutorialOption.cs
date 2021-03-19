@@ -16,4 +16,11 @@ public class TutorialOption : ScriptableObject
     [Tooltip("Query that the options are associated with")]
     public TutorialItem query;
 
+
+    public void OnEnable()
+    {
+        Debug.AssertFormat(tag != null, "Invalid tag (Null) for {0}", name);
+        Debug.AssertFormat(text != null, "Invalid text (Null) for {0}", name);
+        Debug.AssertFormat(query != null, "Invalid query (Null) for {0}", name);
+    }
 }

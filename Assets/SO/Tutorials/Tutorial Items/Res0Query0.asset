@@ -12,27 +12,21 @@ MonoBehaviour:
   m_Name: Res0Query0
   m_EditorClassIdentifier: 
   tutorialType: {fileID: 11400000, guid: 8b2847a7a246595458eee2b6a64e9b06, type: 2}
-  tag: Your Job
+  tag: Your Sex
   set: {fileID: 11400000, guid: 8684e764709be71419fb07dae908d1e0, type: 2}
   topText: 
   bottomText: 
   gameHelp: {fileID: 0}
   goal: {fileID: 0}
-  queryType: {fileID: 11400000, guid: 932d6256daa87c544beac8ae5099c73e, type: 2}
-  queryHeader: Existing Skill Set
-  queryText: What job did you do before joining us here at the Resistance?<br><br>We're
-    looking for useful skills...
-  isRandomOptions: 1
+  queryType: {fileID: 11400000, guid: b3e8cb19811f5a34992ae54dd9a35dae, type: 2}
+  queryHeader: Your Orientation
+  queryText: The Resistance doesn't care if you're a confused, sexed up, Orangutan<br><br>You'll
+    be judged on your merits
+  isRandomOptions: 0
   listOfOptions:
-  - {fileID: 11400000, guid: 69514e86ece5f2f459a0d40a918ebac6, type: 2}
-  - {fileID: 11400000, guid: a280ec036d8e7af46b930840b4e09a04, type: 2}
-  - {fileID: 11400000, guid: 924e68d3cededc04e9577b9ffdf24192, type: 2}
-  - {fileID: 11400000, guid: 893bad95b68a0b24c95d4df6db598056, type: 2}
-  - {fileID: 11400000, guid: 1b6c9d6bfe7374940be6d096b66d45ee, type: 2}
-  - {fileID: 11400000, guid: 44201d12857820947b49d0ec20337374, type: 2}
-  - {fileID: 11400000, guid: e0fb46a78fd130b488be11c9bf72f0e7, type: 2}
-  - {fileID: 11400000, guid: 836452e57025a8f419a8d21f9e8869af, type: 2}
-  - {fileID: 11400000, guid: 99feae060da509c45bc2e040f139115c, type: 2}
+  - {fileID: 11400000, guid: 9607f2b746acf41469bf8c88f98ba671, type: 2}
+  - {fileID: 11400000, guid: d98cf6dba71922b4cbb316498b31255f, type: 2}
+  - {fileID: 11400000, guid: 13a44eb2c9cf69641ad7b124ba202a39, type: 2}
+  - {fileID: 11400000, guid: f505b0a6c27e0504e8ec7178326af357, type: 2}
   listOfIgnoreOptions:
-  - {fileID: 11400000, guid: 99feae060da509c45bc2e040f139115c, type: 2}
-  isQueryDone: 0
+  - {fileID: 11400000, guid: d98cf6dba71922b4cbb316498b31255f, type: 2}

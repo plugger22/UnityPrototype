@@ -64,6 +64,7 @@ public class TutorialItem : ScriptableObject
                 Debug.AssertFormat(goal != null, "Invalid goal (Null) for {0}", name);
                 break;
             case "Question":
+                Debug.AssertFormat(queryType != null, "Invalid queryType (Null) for {0}", name);
                 Debug.AssertFormat(queryHeader != null, "Invalid queryHeader (Null) for {0}", name);
                 Debug.AssertFormat(queryText != null, "Invalid queryText (Null) for {0}", name);
                 Debug.AssertFormat(listOfOptions.Count > 0, "Invalid listOfOptions (Empty) for {0}", name);

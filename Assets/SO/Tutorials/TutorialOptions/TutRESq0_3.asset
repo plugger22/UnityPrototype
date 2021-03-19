@@ -11,6 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef9551e8460d46240b2ea11acbd0350e, type: 3}
   m_Name: TutRESq0_3
   m_EditorClassIdentifier: 
-  tag: Informant
-  text: The Authority paid me to inform on people
-  query: {fileID: 11400000, guid: 0ba135735cfb2314c9c4a1778a1aa27a, type: 2}
+  tag: Female
+  text: They tell me that I'm ADORABLE
+  query: {fileID: 11400000, guid: 94321c3fce5f3bf4a9450ccc98744962, type: 2}

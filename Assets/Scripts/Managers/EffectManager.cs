@@ -4168,12 +4168,23 @@ public class EffectManager : MonoBehaviour
                 effectResolve.topText = string.Format("{0}It's official{1}", colourAlert, colourEnd);
                 effectResolve.bottomText = string.Format("Your previous occupation of<br><br>{0}{1}{2}<br><br>is now on the record", colourNeutral, optionText, colourEnd);
                 break;
+            case "Sex":
+                switch (optionText)
+                {
+                    case "Male": GameManager.i.playerScript.sex = ActorSex.Male; break;
+                    case "Female": GameManager.i.playerScript.sex = ActorSex.Female; break;
+                    default: Debug.LogWarningFormat("Unrecognised optionText (sex) \"{0}\"", optionText); break;
+                }
+                effectResolve.topText = string.Format("{0}You're {1}{2}", colourAlert, optionText, colourEnd);
+                effectResolve.bottomText = string.Format("{0}It's not a big deal{1}<br><br>Everybody gets treated the same", colourNeutral, colourEnd);
+                break;
             case "Name":
                 //Male/Female name
                 string fullName = optionText;
                 string firstName = "Unknown";
                 if (string.IsNullOrEmpty(optionText) == false)
                 {
+                    //separate first and last names (assumes format '[firstName]_[secondName]')
                     var names = fullName.Split(' ');
                     switch (names.Length)
                     {
