@@ -4178,6 +4178,18 @@ public class EffectManager : MonoBehaviour
                 effectResolve.topText = string.Format("{0}You're {1}{2}", colourAlert, optionText, colourEnd);
                 effectResolve.bottomText = string.Format("{0}It's not a big deal{1}<br><br>Everybody gets treated the same", colourNeutral, colourEnd);
                 break;
+            case "Pet":
+                //Favourite Pet
+                GameManager.i.playerScript.pet = optionText;
+                effectResolve.topText = string.Format("{0}Your Favourite Pet is...{1}", colourAlert, colourEnd);
+                effectResolve.bottomText = string.Format("a {0}{1}{2}. Make sure somebody is feeding it<br><br>You're going to be busy", colourNeutral, optionText, colourEnd);
+                break;
+            case "PetName":
+                //Pet Name
+                GameManager.i.playerScript.petName = optionText;
+                effectResolve.topText = string.Format("{0}Your {1} is called...{2}", colourAlert, GameManager.i.playerScript.pet, colourEnd);
+                effectResolve.bottomText = string.Format("{0}{1}{2}<br><br>It loves you to bits", colourNeutral, optionText, colourEnd);
+                break;
             case "Name":
                 //Male/Female name
                 string fullName = optionText;

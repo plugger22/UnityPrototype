@@ -495,6 +495,8 @@ public class FileManager : MonoBehaviour
         write.playerData.backstory0 = GameManager.i.playerScript.backstory0;
         write.playerData.backstory1 = GameManager.i.playerScript.backstory1;
         write.playerData.previousJob = GameManager.i.playerScript.previousJob;
+        write.playerData.pet = GameManager.i.playerScript.pet;
+        write.playerData.petName = GameManager.i.playerScript.petName;
         write.playerData.Invisibility = GameManager.i.playerScript.Invisibility;
         write.playerData.Innocence = GameManager.i.playerScript.Innocence;
         write.playerData.mood = GameManager.i.playerScript.GetMood();
@@ -2332,6 +2334,8 @@ public class FileManager : MonoBehaviour
         GameManager.i.playerScript.backstory0 = read.playerData.backstory0;
         GameManager.i.playerScript.backstory1 = read.playerData.backstory1;
         GameManager.i.playerScript.previousJob = read.playerData.previousJob;
+        GameManager.i.playerScript.pet = read.playerData.pet;
+        GameManager.i.playerScript.petName = read.playerData.petName;
         GameManager.i.playerScript.status = read.playerData.status;
         GameManager.i.playerScript.tooltipStatus = read.playerData.tooltipStatus;
         GameManager.i.playerScript.inactiveStatus = read.playerData.inactiveStatus;

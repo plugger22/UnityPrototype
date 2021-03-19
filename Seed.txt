@@ -2518,3 +2518,94 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	
 Dev seed 23704 -> Friday, 19 March 2021 3:21 PM
 City seed 43890 -> VirtualCity, Eurasia
+
+Dev seed 24761 -> Friday, 19 March 2021 4:36 PM
+WARNING [Val] ValidateSO: MISMATCH on TutorialSet, array 3, assets 4 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialSet[]) (at Assets/Scripts/Managers/ValidationManager.cs:2227)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2182)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:926)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:429)
+	City seed 44323 -> VirtualCity, Eurasia
+
+Dev seed 10719 -> Friday, 19 March 2021 4:37 PM
+WARNING [Val] ValidateSO: MISMATCH on TutorialSet, array 3, assets 4 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialSet[]) (at Assets/Scripts/Managers/ValidationManager.cs:2227)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2182)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:926)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:429)
+	City seed 32401 -> VirtualCity, Eurasia
+WARNING Unrecognised queryType "Pet"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TutorialManager:GetTutorialTooltip(TutorialQueryType) (at Assets/Scripts/Managers/TutorialManager.cs:768)
+	TutorialUI:GetTopicData(TutorialItem) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:619)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:456)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:263)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised queryType "Pet"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TutorialManager:GetTutorialTooltip(TutorialQueryType) (at Assets/Scripts/Managers/TutorialManager.cs:768)
+	TutorialUI:GetTopicData(TutorialItem) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:619)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:456)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:263)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised queryType "Pet"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TutorialManager:GetTutorialTooltip(TutorialQueryType) (at Assets/Scripts/Managers/TutorialManager.cs:768)
+	TutorialUI:GetTopicData(TutorialItem) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:619)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:456)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:263)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised queryType "Pet"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TutorialManager:GetTutorialTooltip(TutorialQueryType) (at Assets/Scripts/Managers/TutorialManager.cs:768)
+	TutorialUI:GetTopicData(TutorialItem) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:619)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:456)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:263)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised queryType "PetName"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TutorialManager:GetTutorialTooltip(TutorialQueryType) (at Assets/Scripts/Managers/TutorialManager.cs:768)
+	TutorialUI:GetTopicData(TutorialItem) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:619)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:456)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:263)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised queryType "PetName"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TutorialManager:GetTutorialTooltip(TutorialQueryType) (at Assets/Scripts/Managers/TutorialManager.cs:768)
+	TutorialUI:GetTopicData(TutorialItem) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:619)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:456)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:263)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised queryType "PetName"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TutorialManager:GetTutorialTooltip(TutorialQueryType) (at Assets/Scripts/Managers/TutorialManager.cs:768)
+	TutorialUI:GetTopicData(TutorialItem) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:619)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:456)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:263)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised queryType "PetName"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TutorialManager:GetTutorialTooltip(TutorialQueryType) (at Assets/Scripts/Managers/TutorialManager.cs:768)
+	TutorialUI:GetTopicData(TutorialItem) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:619)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:456)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:263)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	

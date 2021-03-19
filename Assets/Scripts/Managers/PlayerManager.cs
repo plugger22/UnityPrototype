@@ -56,6 +56,8 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector] public string backstory0;
     [HideInInspector] public string backstory1;
     [HideInInspector] public string previousJob;
+    [HideInInspector] public string pet;
+    [HideInInspector] public string petName;
     //collections
     private bool[] arrayOfCaptureTools = new bool[4];                               //if true Player has CaptureTool.SO corresponding to array index (0 to 3) level of Innocence
     private List<string> listOfGear = new List<string>();                           //gear names of all gear items in inventory
@@ -2572,6 +2574,8 @@ public class PlayerManager : MonoBehaviour
         //Backstory
         builder.AppendFormat("{0}- Backstory{1}", "\n", "\n");
         builder.AppendFormat(" Previous Job: {0}{1}", previousJob, "\n");
+        builder.AppendFormat(" Favourite Pet: {0}{1}", pet, "\n");
+        builder.AppendFormat(" Pet Name: {0}{1}", petName, "\n");
         //Conditions
         if (listOfConditions != null)
         {
