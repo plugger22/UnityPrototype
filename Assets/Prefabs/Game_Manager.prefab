@@ -818,7 +818,11 @@ MonoBehaviour:
   nameAuthority: Mr EVIL
   nameResistance: The Phantom
   nameFirst: Cameron
+  playerSex: {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}
   playerActorID: 999
+  playerJob: Beekeeper
+  playerPet: Dog
+  playerPetName: Beethhoven
   numOfQualities: 3
 --- !u!114 &114364785414329898
 MonoBehaviour:
@@ -1808,6 +1812,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8684e764709be71419fb07dae908d1e0, type: 2}
   - {fileID: 11400000, guid: 0e6e4f4202fc8ce4c81bc74b8e59543c, type: 2}
   - {fileID: 11400000, guid: be81fee15c06fd541ae9f6bdfa8a6c46, type: 2}
+  - {fileID: 11400000, guid: 3fda11eb21af8364585415c15df70f78, type: 2}
   arrayOfTutorialFeatures:
   - {fileID: 11400000, guid: 7e2f496678746a1488d0508fb5ac34ef, type: 2}
   - {fileID: 11400000, guid: 60c5546ae44161c4e96b856a75904210, type: 2}
@@ -6034,6 +6039,7 @@ MonoBehaviour:
   authorityTutorial: {fileID: 0}
   maxNumOfItems: 10
   minNumOfOptions: 2
+  queryOptionTooltipChance: 25
   textListGeneric: {fileID: 11400000, guid: bb07f8636828f564faa134abdbad837a, type: 2}
   textListJob: {fileID: 11400000, guid: 77da817c0d61f5d4cb968b30ce6512c1, type: 2}
   tutorial: {fileID: 0}

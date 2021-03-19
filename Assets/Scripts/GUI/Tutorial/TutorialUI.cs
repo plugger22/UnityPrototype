@@ -377,100 +377,105 @@ public class TutorialUI : MonoBehaviour
     /// <param name="item"></param>
     private void OpenTutorialItem(int index = -1)
     {
-        if (index > -1)
+        //flush input buffer
+        Input.ResetInputAxes();
+        if (GameManager.i.inputScript.ModalState == ModalState.Normal)
         {
-            //get tutorialItem
-            if (index < listOfSetItems.Count)
+            if (index > -1)
             {
-                currentItem = listOfSetItems[index];
-                if (currentItem != null)
+                //get tutorialItem
+                if (index < listOfSetItems.Count)
                 {
-                    //switch off all arrows
-                    for (int i = 0; i < numOfItems; i++)
-                    { listOfInteractions[i].arrowImage.gameObject.SetActive(false); }
-                    //display arrow next to selected + 1 tutorial button (shows the next one you need to click on)
-                    if (index + 1 < numOfItems)
-                    { listOfInteractions[index + 1].arrowImage.gameObject.SetActive(true); }
-                    //what type of item
-                    switch (currentItem.tutorialType.name)
+                    currentItem = listOfSetItems[index];
+                    if (currentItem != null)
                     {
-                        case "Dialogue":
-                            //open special outcome window
-                            ModalOutcomeDetails details = new ModalOutcomeDetails()
-                            {
-                                side = GameManager.i.sideScript.PlayerSide,
-                                textTop = GameManager.Formatt(currentItem.topText, ColourType.moccasinText),
-                                textBottom = currentItem.bottomText,
-                                sprite = GameManager.i.tutorialScript.tutorial.sprite,
-                                isAction = false,
-                                isSpecial = true,
-                                isSpecialGood = true
-                            };
-                            EventManager.i.PostNotification(EventType.OutcomeOpen, this, details);
-                            break;
-                        case "Goal":
-                            GameManager.i.tutorialScript.UpdateGoal(currentItem.goal);
-                            //change colour to completed (indicates that you're currently doing, or have done, the goal)
-                            ColorBlock goalColours = listOfButtons[index].colors;
-                            goalColours.normalColor = colourCompleted;
-                            listOfButtons[index].colors = goalColours;
-                            break;
-                        case "Information":
-                            EventManager.i.PostNotification(EventType.GameHelpOpen, this, currentItem.gameHelp);
-                            break;
-                        case "Question":
-                            /*
-                            if (currentItem.isQueryDone == false)
-                            {
-                                TopicUIData data = GetTopicData(currentItem);
-                                if (data != null)
-                                { EventManager.i.PostNotification(EventType.TopicDisplayOpen, this, data); }
-                                //change colour to completed (indicates that you're currently doing, or have done, the query)
-                                ColorBlock itemColours = listOfButtons[index].colors;
-                                itemColours.normalColor = colourCompleted;
-                                listOfButtons[index].colors = itemColours;
-                            }
-                            else
-                            {
-                                //query has already been done
-                                ModalOutcomeDetails detailsDone = new ModalOutcomeDetails()
+                        //switch off all arrows
+                        for (int i = 0; i < numOfItems; i++)
+                        { listOfInteractions[i].arrowImage.gameObject.SetActive(false); }
+                        //display arrow next to selected + 1 tutorial button (shows the next one you need to click on)
+                        if (index + 1 < numOfItems)
+                        { listOfInteractions[index + 1].arrowImage.gameObject.SetActive(true); }
+                        //what type of item
+                        switch (currentItem.tutorialType.name)
+                        {
+                            case "Dialogue":
+                                //open special outcome window
+                                ModalOutcomeDetails details = new ModalOutcomeDetails()
                                 {
                                     side = GameManager.i.sideScript.PlayerSide,
-                                    textBottom = "Haven't we already covered that?<br><br>I must be having a <b>Senior Moment</b>",
+                                    textTop = GameManager.Formatt(currentItem.topText, ColourType.moccasinText),
+                                    textBottom = currentItem.bottomText,
                                     sprite = GameManager.i.tutorialScript.tutorial.sprite,
                                     isAction = false,
                                     isSpecial = true,
-                                    isSpecialGood = false
+                                    isSpecialGood = true
                                 };
-                                if (string.IsNullOrEmpty(currentItem.queryHeader) == false)
-                                { detailsDone.textTop = GameManager.Formatt(currentItem.queryHeader, ColourType.moccasinText); }
+                                EventManager.i.PostNotification(EventType.OutcomeOpen, this, details);
+                                break;
+                            case "Goal":
+                                GameManager.i.tutorialScript.UpdateGoal(currentItem.goal);
+                                //change colour to completed (indicates that you're currently doing, or have done, the goal)
+                                ColorBlock goalColours = listOfButtons[index].colors;
+                                goalColours.normalColor = colourCompleted;
+                                listOfButtons[index].colors = goalColours;
+                                break;
+                            case "Information":
+                                EventManager.i.PostNotification(EventType.GameHelpOpen, this, currentItem.gameHelp);
+                                break;
+                            case "Question":
+                                /*
+                                if (currentItem.isQueryDone == false)
+                                {
+                                    TopicUIData data = GetTopicData(currentItem);
+                                    if (data != null)
+                                    { EventManager.i.PostNotification(EventType.TopicDisplayOpen, this, data); }
+                                    //change colour to completed (indicates that you're currently doing, or have done, the query)
+                                    ColorBlock itemColours = listOfButtons[index].colors;
+                                    itemColours.normalColor = colourCompleted;
+                                    listOfButtons[index].colors = itemColours;
+                                }
                                 else
                                 {
-                                    detailsDone.textTop = GameManager.Formatt("I beg your pardon", ColourType.moccasinText);
-                                    Debug.LogWarningFormat("Invalid queryHeader (Null or Empty) for \"{0}\"", currentItem.name);
-                                }
-                                //special outcome
-                                EventManager.i.PostNotification(EventType.OutcomeOpen, this, detailsDone);
-                            }*/
+                                    //query has already been done
+                                    ModalOutcomeDetails detailsDone = new ModalOutcomeDetails()
+                                    {
+                                        side = GameManager.i.sideScript.PlayerSide,
+                                        textBottom = "Haven't we already covered that?<br><br>I must be having a <b>Senior Moment</b>",
+                                        sprite = GameManager.i.tutorialScript.tutorial.sprite,
+                                        isAction = false,
+                                        isSpecial = true,
+                                        isSpecialGood = false
+                                    };
+                                    if (string.IsNullOrEmpty(currentItem.queryHeader) == false)
+                                    { detailsDone.textTop = GameManager.Formatt(currentItem.queryHeader, ColourType.moccasinText); }
+                                    else
+                                    {
+                                        detailsDone.textTop = GameManager.Formatt("I beg your pardon", ColourType.moccasinText);
+                                        Debug.LogWarningFormat("Invalid queryHeader (Null or Empty) for \"{0}\"", currentItem.name);
+                                    }
+                                    //special outcome
+                                    EventManager.i.PostNotification(EventType.OutcomeOpen, this, detailsDone);
+                                }*/
 
-                            TopicUIData data = GetTopicData(currentItem);
-                            if (data != null)
-                            { EventManager.i.PostNotification(EventType.TopicDisplayOpen, this, data); }
+                                TopicUIData data = GetTopicData(currentItem);
+                                if (data != null)
+                                { EventManager.i.PostNotification(EventType.TopicDisplayOpen, this, data); }
 
-                            /*//change colour to completed (indicates that you're currently doing, or have done, the query)
-                            ColorBlock itemColours = listOfButtons[index].colors;
-                            itemColours.normalColor = colourCompleted;
-                            listOfButtons[index].colors = itemColours;*/
+                                /*//change colour to completed (indicates that you're currently doing, or have done, the query)
+                                ColorBlock itemColours = listOfButtons[index].colors;
+                                itemColours.normalColor = colourCompleted;
+                                listOfButtons[index].colors = itemColours;*/
 
-                            break;
-                        default: Debug.LogWarningFormat("Unrecognised item.TutorialType \"{0}\"", currentItem.tutorialType.name); break;
+                                break;
+                            default: Debug.LogWarningFormat("Unrecognised item.TutorialType \"{0}\"", currentItem.tutorialType.name); break;
+                        }
                     }
+                    else { Debug.LogWarningFormat("Invalid currentItem (tutorial) (Null)"); }
                 }
-                else { Debug.LogWarningFormat("Invalid currentItem (tutorial) (Null)"); }
+                else { Debug.LogWarningFormat("Invalid index (is {0}, listOfSetItems.Count is {1})", index, listOfSetItems.Count); }
             }
-            else { Debug.LogWarningFormat("Invalid index (is {0}, listOfSetItems.Count is {1})", index, listOfSetItems.Count); }
+            else { Debug.LogWarning("Invalid index (button.buttonInteraction.returnValue (-1)"); }
         }
-        else { Debug.LogWarning("Invalid index (button.buttonInteraction.returnValue (-1)"); }
     }
     #endregion
 

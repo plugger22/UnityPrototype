@@ -4166,7 +4166,7 @@ public class EffectManager : MonoBehaviour
                 //Previous job
                 GameManager.i.playerScript.previousJob = optionText;
                 effectResolve.topText = string.Format("{0}It's official{1}", colourAlert, colourEnd);
-                effectResolve.bottomText = string.Format("Your previous occupation of<br><br>{0}{1}{2}<br><br>is now on the record", colourNeutral, optionText, colourEnd);
+                effectResolve.bottomText = string.Format("Your previous occupation of<br><br>{0}<size=115%>{1}</size>{2}<br><br>is now on the record", colourNeutral, optionText, colourEnd);
                 break;
             case "Sex":
                 switch (optionText)
@@ -4181,14 +4181,14 @@ public class EffectManager : MonoBehaviour
             case "Pet":
                 //Favourite Pet
                 GameManager.i.playerScript.pet = optionText;
-                effectResolve.topText = string.Format("{0}Your Favourite Pet is...{1}", colourAlert, colourEnd);
-                effectResolve.bottomText = string.Format("a {0}{1}{2}. Make sure somebody is feeding it<br><br>You're going to be busy", colourNeutral, optionText, colourEnd);
+                effectResolve.topText = string.Format("{0}Your Favourite Pet is a...{1}", colourAlert, colourEnd);
+                effectResolve.bottomText = string.Format("{0}<size=115%>{1}</size>{2}<br><br>Make sure somebody is feeding it<br><br>You're going to be busy", colourNeutral, optionText, colourEnd);
                 break;
             case "PetName":
                 //Pet Name
                 GameManager.i.playerScript.petName = optionText;
                 effectResolve.topText = string.Format("{0}Your {1} is called...{2}", colourAlert, GameManager.i.playerScript.pet, colourEnd);
-                effectResolve.bottomText = string.Format("{0}{1}{2}<br><br>It loves you to bits", colourNeutral, optionText, colourEnd);
+                effectResolve.bottomText = string.Format("{0}<size=115%>{1}</size>{2}<br><br>It loves you to bits", colourNeutral, optionText, colourEnd);
                 break;
             case "Name":
                 //Male/Female name
@@ -4214,7 +4214,7 @@ public class EffectManager : MonoBehaviour
                         default: Debug.LogWarningFormat("Unrecognised playerSide \"{0}\"", data.side); break;
                     }
                     effectResolve.topText = string.Format("{0}Good Choice!{1}", colourAlert, colourEnd);
-                    effectResolve.bottomText = string.Format("You'll be known as {0}{1}{2} until you've completed your first successful mission<br><br>You can then change it to whatever you'd like",
+                    effectResolve.bottomText = string.Format("You'll be known as {0}<size=110%>{1}</size>{2} until you've completed your first successful mission<br><br>You can then change it to whatever you'd like",
                         colourNeutral, optionText, colourEnd);
                 }
                 else { Debug.LogWarning("Invalid optionText (Null) for effect Query type Name"); }

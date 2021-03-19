@@ -21,6 +21,10 @@ public class TutorialManager : MonoBehaviour
     [Tooltip("Mininum number of TopicOptions for a Question type TutorialItem in listOfOptions")]
     [Range(4, 4)] public int minNumOfOptions = 4;
 
+    [Header("Queries")]
+    [Tooltip("% chance of a query option tooltip being a Random, textList, based one versus a fixed one")]
+    [Range(0, 100)] public int queryOptionTooltipChance = 25;
+
     [Header("Text Lists")]
     [Tooltip("Reasons for query tooltips")]
     public TextList textListGeneric;
@@ -606,6 +610,7 @@ public class TutorialManager : MonoBehaviour
     // - - - TutorialItem -> Query -> Options
     //
 
+    #region ProcessTutorialOption
     /// <summary>
     /// Process selected option from TopicUI.cs
     /// </summary>
@@ -678,7 +683,9 @@ public class TutorialManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid option (Null)"); }
     }
+    #endregion
 
+    #region ProcessTutorialIgnoreOption
     /// <summary>
     /// Process Ignore option from TopicUI.cs
     /// </summary>
@@ -751,7 +758,9 @@ public class TutorialManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfIgnoreEffects (Null)"); }
     }
+    #endregion
 
+    #region GetTutorialTooltip
     /// <summary>
     /// Get a tooltip.main text for a TutorialOption
     /// </summary>
@@ -761,15 +770,28 @@ public class TutorialManager : MonoBehaviour
         string tooltip = "Unknown";
         switch (queryType.name)
         {
-            case "Sex":
+            case "Sex": tooltip = textListGeneric.GetRandomRecord(); break;
             case "Name":
-                tooltip = textListGeneric.GetRandomRecord(); break;
-            case "Job": tooltip = textListJob.GetIndexedRecord(); break;
+                if (UnityEngine.Random.Range(0, 100) < queryOptionTooltipChance)
+                { tooltip = textListGeneric.GetRandomRecord(); }
+                else { tooltip = "You'll have the opportunity to change this later"; }
+                break;
+            case "Job":
+                if (UnityEngine.Random.Range(0, 100) < queryOptionTooltipChance)
+                { tooltip = textListGeneric.GetIndexedRecord(); }
+                else { tooltip = "You'll have the opportunity to change this later"; }
+                break;
+            case "Pet":
+            case "PetName":
+                if (UnityEngine.Random.Range(0, 100) < queryOptionTooltipChance)
+                { tooltip = textListGeneric.GetRandomRecord(); }
+                else { tooltip = "You'll have the opportunity to change this later"; }
+                break;
             default: Debug.LogWarningFormat("Unrecognised queryType \"{0}\"", queryType.name); break;
         }
         return tooltip;
-
     }
+    #endregion
 
     #endregion
 
@@ -780,33 +802,39 @@ public class TutorialManager : MonoBehaviour
     /// Back to previous tutorialSet (left arrow of tutorial Widget pressed)
     /// </summary>
     private void SetPreviousSet()
-    {
-        Debug.LogFormat("[Tst] TutorialManager.cs -> SetPreviousSet: Go BACK one TutorialSet{0}", "\n");
-        if (index > 0)
+    { 
+        //flush input buffer
+        Input.ResetInputAxes();
+        if (GameManager.i.inputScript.ModalState == ModalState.Normal)
         {
-            index--;
-            set = tutorial.listOfSets[index];
-            if (set != null)
+
+            Debug.LogFormat("[Tst] TutorialManager.cs -> SetPreviousSet: Go BACK one TutorialSet{0}", "\n");
+            if (index > 0)
             {
-                InitialiseTutorialSet(set);
-                //activate tutorialUI
-                EventManager.i.PostNotification(EventType.TutorialOpenUI, this, set, "TutorialManager.cs -> SetPreviousSet");
+                index--;
+                set = tutorial.listOfSets[index];
+                if (set != null)
+                {
+                    InitialiseTutorialSet(set);
+                    //activate tutorialUI
+                    EventManager.i.PostNotification(EventType.TutorialOpenUI, this, set, "TutorialManager.cs -> SetPreviousSet");
+                }
+                else { Debug.LogErrorFormat("Invalid set (Null) for tutorial \"{0}\" listOfSets[{1}]", tutorial.name, index); }
             }
-            else { Debug.LogErrorFormat("Invalid set (Null) for tutorial \"{0}\" listOfSets[{1}]", tutorial.name, index); }
-        }
-        else
-        {
-            //at the beginning of the tutorial -> Message
-            ModalOutcomeDetails details = new ModalOutcomeDetails()
+            else
             {
-                side = GameManager.i.sideScript.PlayerSide,
-                textTop = string.Format("{0}", GameManager.Formatt("We're back where we started", ColourType.neutralText)),
-                textBottom = string.Format("Nothing wrong with that, it's good to review what you've learnt<br><br>{0}", GameManager.Formatt("You are free to move around the Tutorial", ColourType.salmonText)),
-                sprite = tutorial.sprite,
-                isSpecial = true,
-                isSpecialGood = true
-            };
-            EventManager.i.PostNotification(EventType.OutcomeOpen, this, details);
+                //at the beginning of the tutorial -> Message
+                ModalOutcomeDetails details = new ModalOutcomeDetails()
+                {
+                    side = GameManager.i.sideScript.PlayerSide,
+                    textTop = string.Format("{0}", GameManager.Formatt("We're back where we started", ColourType.neutralText)),
+                    textBottom = string.Format("Nothing wrong with that, it's good to review what you've learnt<br><br>{0}", GameManager.Formatt("You are free to move around the Tutorial", ColourType.salmonText)),
+                    sprite = tutorial.sprite,
+                    isSpecial = true,
+                    isSpecialGood = true
+                };
+                EventManager.i.PostNotification(EventType.OutcomeOpen, this, details);
+            }
         }
     }
     #endregion
@@ -816,35 +844,40 @@ public class TutorialManager : MonoBehaviour
     /// Go to the Next tutorialSet (right arrow of tutorial Widget pressed)
     /// </summary>
     private void SetNextSet()
-    {
-        Debug.LogFormat("[Tst] TutorialManager.cs -> SetNextSet: Go FORWARD one TutorialSet{0}", "\n");
-        index++;
-        if (index < tutorial.listOfSets.Count)
+    {        
+        //flush input buffer
+        Input.ResetInputAxes();
+        if (GameManager.i.inputScript.ModalState == ModalState.Normal)
         {
-            set = tutorial.listOfSets[index];
-            if (set != null)
+            Debug.LogFormat("[Tst] TutorialManager.cs -> SetNextSet: Go FORWARD one TutorialSet{0}", "\n");
+            index++;
+            if (index < tutorial.listOfSets.Count)
             {
-                InitialiseTutorialSet(set);
-                //activate tutorialUI
-                EventManager.i.PostNotification(EventType.TutorialOpenUI, this, set, "TutorialManager.cs -> SetNextSet");
+                set = tutorial.listOfSets[index];
+                if (set != null)
+                {
+                    InitialiseTutorialSet(set);
+                    //activate tutorialUI
+                    EventManager.i.PostNotification(EventType.TutorialOpenUI, this, set, "TutorialManager.cs -> SetNextSet");
+                }
+                else { Debug.LogErrorFormat("Invalid set (Null) for tutorial \"{0}\" listOfSets[{1}]", tutorial.name, index); }
             }
-            else { Debug.LogErrorFormat("Invalid set (Null) for tutorial \"{0}\" listOfSets[{1}]", tutorial.name, index); }
-        }
-        else
-        {
-            //maxxed out sets
-            index--;
-            //Message
-            ModalOutcomeDetails details = new ModalOutcomeDetails()
+            else
             {
-                side = GameManager.i.sideScript.PlayerSide,
-                textTop = string.Format("Well that's it. Consider yourself {0}", GameManager.Formatt("trained and ready", ColourType.neutralText)),
-                textBottom = string.Format("Don't go embarrassing me now and get yourself killed<br><br>{0}", GameManager.Formatt("Press ESC to return to the Main Menu", ColourType.salmonText)),
-                sprite = tutorial.sprite,
-                isSpecial = true,
-                isSpecialGood = true
-            };
-            EventManager.i.PostNotification(EventType.OutcomeOpen, this, details);
+                //maxxed out sets
+                index--;
+                //Message
+                ModalOutcomeDetails details = new ModalOutcomeDetails()
+                {
+                    side = GameManager.i.sideScript.PlayerSide,
+                    textTop = string.Format("Well that's it. Consider yourself {0}", GameManager.Formatt("trained and ready", ColourType.neutralText)),
+                    textBottom = string.Format("Don't go embarrassing me now and get yourself killed<br><br>{0}", GameManager.Formatt("Press ESC to return to the Main Menu", ColourType.salmonText)),
+                    sprite = tutorial.sprite,
+                    isSpecial = true,
+                    isSpecialGood = true
+                };
+                EventManager.i.PostNotification(EventType.OutcomeOpen, this, details);
+            }
         }
     }
     #endregion
@@ -854,8 +887,14 @@ public class TutorialManager : MonoBehaviour
     /// Open Master Help (question on tutorial Widget pressed)
     /// </summary>
     private void SetMasterHelp()
-    {
-        Debug.LogFormat("[Tst] TutorialManager.cs -> SetMasterHelp: OPEN Master Helps{0}", "\n");
+    { 
+        //flush input buffer
+        Input.ResetInputAxes();
+        if (GameManager.i.inputScript.ModalState == ModalState.Normal)
+        {
+
+            Debug.LogFormat("[Tst] TutorialManager.cs -> SetMasterHelp: OPEN Master Helps{0}", "\n");
+        }
     }
     #endregion
 

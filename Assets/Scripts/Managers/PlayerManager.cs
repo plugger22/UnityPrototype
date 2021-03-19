@@ -247,6 +247,7 @@ public class PlayerManager : MonoBehaviour
                 SubInitialiseFastAccess();
                 SubInitialiseEvents();
                 SubInitialiseLevelAll();
+                SubInitialiseTutorialDefaults();
                 break;
             case GameState.FollowOnInitialisation:
                 SubInitialiseFollowOn();
@@ -294,12 +295,38 @@ public class PlayerManager : MonoBehaviour
         }
         //set personality factors
         personality.SetFactors(arrayOfFactors);
-        //sex -> DEBUG (placeholder)
-        sex = ActorSex.Male;
         //maximum innocence at start of campaign
         Innocence = 3;
         //set initial default value for drug stress immunity
         stressImmunityStart = GameManager.i.actorScript.playerAddictedImmuneStart;
+    }
+    #endregion
+
+    #region SubInitialiseTutorialDefaults
+    /// <summary>
+    /// Sets default values, if needed, for any player related tutorial questions that haven't been done based on PreloadManager.cs defaults
+    /// </summary>
+    private void SubInitialiseTutorialDefaults()
+    {
+        //Defaults -> sex
+        if (sex == ActorSex.None)
+        {
+            switch (GameManager.i.preloadScript.playerSex.name)
+            {
+                case "Male": sex = ActorSex.Male; break;
+                case "Female": sex = ActorSex.Female; break;
+                default: Debug.LogWarningFormat("Unrecognised preloadManager.sex \"{0}\"", GameManager.i.preloadScript.playerSex.name); break;
+            }
+        }
+        //Defaults -> previous job
+        if (string.IsNullOrEmpty(previousJob) == true)
+        { previousJob = GameManager.i.preloadScript.playerJob; }
+        //Defaults -> pet
+        if (string.IsNullOrEmpty(pet) == true)
+        { pet = GameManager.i.preloadScript.playerPet; }
+        //Defaults -> pet name
+        if (string.IsNullOrEmpty(petName) == true)
+        { petName = GameManager.i.preloadScript.playerPetName; }
     }
     #endregion
 

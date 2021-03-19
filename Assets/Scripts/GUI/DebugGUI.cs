@@ -1663,7 +1663,7 @@ public class DebugGUI : MonoBehaviour
                     case 8:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.i.playerScript.DebugDisplayPlayerStats();
-                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 750), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 900), analysis, customBackground);
                         break;
                     //Toggle Messages
                     case 9:
