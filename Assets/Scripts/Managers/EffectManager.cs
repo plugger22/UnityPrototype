@@ -4190,6 +4190,12 @@ public class EffectManager : MonoBehaviour
                 effectResolve.topText = string.Format("{0}Your {1} is called...{2}", colourAlert, GameManager.i.playerScript.pet, colourEnd);
                 effectResolve.bottomText = string.Format("{0}<size=115%>{1}</size>{2}<br><br>It loves you to bits", colourNeutral, optionText, colourEnd);
                 break;
+            case "Secret":
+                //Initial Secret
+                GameManager.i.playerScript.initialSecret = optionText;
+                effectResolve.topText = string.Format("{0}Your Innermost Secret is", colourAlert, GameManager.i.playerScript.pet, colourEnd);
+                effectResolve.bottomText = string.Format("{0}<size=115%>{1}</size>{2}<br><br>Best to keep that one to yourself", colourNeutral, optionText, colourEnd);
+                break;
             case "Name":
                 //Male/Female name
                 string fullName = optionText;

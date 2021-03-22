@@ -787,6 +787,11 @@ public class TutorialManager : MonoBehaviour
                 { tooltip = textListGeneric.GetRandomRecord(); }
                 else { tooltip = "You'll have the opportunity to change this later"; }
                 break;
+            case "Secret":
+                if (UnityEngine.Random.Range(0, 100) < queryOptionTooltipChance)
+                { tooltip = textListGeneric.GetRandomRecord(); }
+                else { tooltip = "We all have things that we'd prefer to keep private"; }
+                break;
             default: Debug.LogWarningFormat("Unrecognised queryType \"{0}\"", queryType.name); break;
         }
         return tooltip;

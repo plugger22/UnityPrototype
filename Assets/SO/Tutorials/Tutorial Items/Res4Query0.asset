@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 609e6bfe7fdf18e4281f5e96c5f710d0, type: 3}
+  m_Name: Res4Query0
+  m_EditorClassIdentifier: 
+  tutorialType: {fileID: 11400000, guid: 8b2847a7a246595458eee2b6a64e9b06, type: 2}
+  tag: Your darkest secret
+  set: {fileID: 11400000, guid: d890cee1da59bf948a3aed36ab19edf3, type: 2}
+  topText: 
+  bottomText: 
+  gameHelp: {fileID: 0}
+  goal: {fileID: 0}
+  queryType: {fileID: 11400000, guid: 1624c3733acc2b448b49f3040e1ac7e1, type: 2}
+  queryHeader: Your darkest Secret
+  queryText: Everybody has a skeleton in the closet<br><br>What's your secret?<br><br>Don't
+    worry, I'll tell <b>NOBODY</b>
+  isRandomOptions: 1
+  listOfOptions:
+  - {fileID: 11400000, guid: d41d3012d9c8ec042a9322aa4616101f, type: 2}
+  - {fileID: 11400000, guid: a66e9b21c9dc75440a4474f85b312807, type: 2}
+  - {fileID: 11400000, guid: aa7827a88d89b9f46957ca1e23c47fbc, type: 2}
+  - {fileID: 11400000, guid: 4294cd3d095ed314d84f552091a25551, type: 2}
+  - {fileID: 11400000, guid: 2e1ff48abdc297b46acb47f1c8c02aee, type: 2}
+  - {fileID: 11400000, guid: e54687cd0fe1c9d46ab4df809d0c45e6, type: 2}
+  - {fileID: 11400000, guid: e70a2d07ec0859941846479582d22c56, type: 2}
+  - {fileID: 11400000, guid: 6974fd2e1789536408ab19ab4b2270c7, type: 2}
+  - {fileID: 11400000, guid: b5cbcfa620e0b314da57384da05f2cc7, type: 2}
+  - {fileID: 11400000, guid: 15b14958e504edf47817d51acff90791, type: 2}
+  listOfIgnoreOptions:
+  - {fileID: 11400000, guid: a66e9b21c9dc75440a4474f85b312807, type: 2}
+  listOfOptionsAlt: []
+  listOfIgnoreOptionsAlt: []

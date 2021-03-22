@@ -2642,3 +2642,40 @@ City seed 25064 -> VirtualCity, Eurasia
 
 Dev seed 34302 -> Friday, 19 March 2021 5:53 PM
 City seed 47426 -> VirtualCity, Eurasia
+
+Dev seed 10687 -> Monday, 22 March 2021 3:05 PM
+City seed 29757 -> VirtualCity, Eurasia
+
+Dev seed 58137 -> Monday, 22 March 2021 4:26 PM
+City seed 17502 -> VirtualCity, Eurasia
+
+Dev seed 53113 -> Monday, 22 March 2021 4:36 PM
+City seed 41488 -> VirtualCity, Eurasia
+WARNING Unrecognised effect.outcome.name "TutOption3"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EffectManager:ResolveTutorialData(Effect, EffectDataInput) (at Assets/Scripts/Managers/EffectManager.cs:4222)
+	EffectManager:ProcessEffect(Effect, Node, EffectDataInput, Actor) (at Assets/Scripts/Managers/EffectManager.cs:2095)
+	TutorialManager:ProcessTutorialOption(TopicOption) (at Assets/Scripts/Managers/TutorialManager.cs:638)
+	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:1398)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:451)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 33181 -> Monday, 22 March 2021 4:42 PM
+City seed 27911 -> VirtualCity, Eurasia
+
+Dev seed 34846 -> Monday, 22 March 2021 4:47 PM
+City seed 18352 -> VirtualCity, Eurasia
+
+Dev seed 39618 -> Monday, 22 March 2021 4:56 PM
+
+Dev seed 35902 -> Monday, 22 March 2021 5:00 PM
+City seed 21938 -> VirtualCity, Eurasia
+
+Dev seed 7618 -> Monday, 22 March 2021 5:08 PM
+City seed 6848 -> VirtualCity, Eurasia
+
+Dev seed 10716 -> Monday, 22 March 2021 5:12 PM
+City seed 63724 -> VirtualCity, Eurasia
+City seed 30783 -> Londus, Eurasia

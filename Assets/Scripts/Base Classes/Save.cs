@@ -248,6 +248,7 @@ public class SavePlayerData
     public string backstory0;
     public string backstory1;
     public string previousJob;
+    public string playerSecret;
     public string pet;
     public string petName;
     public ActorStatus status;

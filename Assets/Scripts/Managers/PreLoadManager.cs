@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using gameAPI;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -30,6 +31,8 @@ public class PreLoadManager : MonoBehaviour
     public string playerPet;
     [Tooltip("Favourite Pet's name")]
     public string playerPetName;
+    [Tooltip("Player Secret")]
+    public string playerSecret;
 
 
     
@@ -38,16 +41,42 @@ public class PreLoadManager : MonoBehaviour
     [Tooltip("The maximum number of stats (Qualities) that an actor can have")]
     [Range(2, 4)] public int numOfQualities = 3;
 
-
-    public void OnEnable()
+    /// <summary>
+    /// Master Initialisation
+    /// </summary>
+    /// <param name="state"></param>
+    public void Initialise(GameState state)
     {
-        Debug.Assert(nameAuthority != null, "Invalid nameAuthority (Null)");
-        Debug.Assert(nameResistance != null, "Invalid nameResistance (Null)");
-        Debug.Assert(nameFirst != null, "Invalid nameFirst (Null)");
-        Debug.Assert(playerSex != null, "Invalid playerSex (Null)");
-        Debug.Assert(playerJob != null, "Invalid playerJob (Null)");
-        Debug.Assert(playerPet != null, "Invalid playerPet (Null)");
-        Debug.Assert(playerPetName != null, "Invalid playerPetName (Null)");
+        switch (state)
+        {
+            case GameState.TutorialOptions:
+            case GameState.NewInitialisation:
+            case GameState.LoadAtStart:
+            case GameState.LoadGame:
+            case GameState.StartUp:
+                SubInitialiseAsserts();
+                break;
+            case GameState.FollowOnInitialisation:
+                //do nothing
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
+                break;
+        }
     }
+
+    private void SubInitialiseAsserts()
+    {
+        Debug.Assert(string.IsNullOrEmpty(nameAuthority) == false, "Invalid nameAuthority (Null)");
+        Debug.Assert(string.IsNullOrEmpty(nameResistance) == false, "Invalid nameResistance (Null)");
+        Debug.Assert(string.IsNullOrEmpty(nameFirst) == false, "Invalid nameFirst (Null)");
+        Debug.Assert(playerSex != null, "Invalid playerSex (Null)");
+        Debug.Assert(string.IsNullOrEmpty(playerJob) == false, "Invalid playerJob (Null)");
+        Debug.Assert(string.IsNullOrEmpty(playerPet) == false, "Invalid playerPet (Null)");
+        Debug.Assert(string.IsNullOrEmpty(playerPetName) == false, "Invalid playerPetName (Null)");
+        Debug.Assert(string.IsNullOrEmpty(playerSecret) == false, "Invalid playerSecret (Null)");
+    }
+
+
 
 }

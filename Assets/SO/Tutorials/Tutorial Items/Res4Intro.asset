@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 609e6bfe7fdf18e4281f5e96c5f710d0, type: 3}
+  m_Name: Res4Intro
+  m_EditorClassIdentifier: 
+  tutorialType: {fileID: 11400000, guid: 6af73092ead59e34f89fadf31d6d355c, type: 2}
+  tag: Introduction
+  set: {fileID: 11400000, guid: d890cee1da59bf948a3aed36ab19edf3, type: 2}
+  topText: Fred again, Tutorial Set 4
+  bottomText: Are you still with us?
+  gameHelp: {fileID: 0}
+  goal: {fileID: 0}
+  queryType: {fileID: 0}
+  queryHeader: 
+  queryText: 
+  isRandomOptions: 0
+  listOfOptions: []
+  listOfIgnoreOptions: []
+  listOfOptionsAlt: []
+  listOfIgnoreOptionsAlt: []

@@ -487,6 +487,10 @@ public class GameManager : MonoBehaviour
         //
         // - - - Global Methods
         //
+        //PreLoad Manager -> Initialise
+        startMethod.handler = preloadScript.Initialise;
+        startMethod.className = "PreLoadManager";
+        listOfGlobalMethods.Add(startMethod);
         //Load Manager -> InitialiseStart
         startMethod.handler = loadScript.InitialiseStart;
         startMethod.className = "LoadManager";

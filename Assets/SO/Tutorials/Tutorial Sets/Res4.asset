@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d228a6c97b1decc4c97b0bf3ead188bc, type: 3}
+  m_Name: Res4
+  m_EditorClassIdentifier: 
+  tutorial: {fileID: 11400000, guid: c050560a8867a3a4c806544632dda679, type: 2}
+  notes: 5th set in Resistance Tutorial
+  index: 3
+  listOfFeaturesOff:
+  - {fileID: 11400000, guid: 7e2f496678746a1488d0508fb5ac34ef, type: 2}
+  - {fileID: 11400000, guid: 60c5546ae44161c4e96b856a75904210, type: 2}
+  - {fileID: 11400000, guid: 70e66f38820226347909bc5dfe71319a, type: 2}
+  - {fileID: 11400000, guid: 17e9781d9857d6c4cb1164f4f6c0deb8, type: 2}
+  - {fileID: 11400000, guid: e16c959b5f1eac342979baf4a1a9362b, type: 2}
+  - {fileID: 11400000, guid: 9ab41dcfbf11bf14f8fbeb9b7522f31a, type: 2}
+  listOfGUIOff:
+  - {fileID: 11400000, guid: 2b429498342b10042847ad6b6e67d783, type: 2}
+  - {fileID: 11400000, guid: 4ecda8036df900d48b4b25e77b1b6ad0, type: 2}
+  - {fileID: 11400000, guid: 7046d4b9b0e864d409b0b2019663b6b2, type: 2}
+  listOfTutorialItems:
+  - {fileID: 11400000, guid: 295e4b9a10452d041b791ecf4c0b515a, type: 2}
+  - {fileID: 11400000, guid: bfcc5d0e48b852248b63eb92bfd8a09a, type: 2}

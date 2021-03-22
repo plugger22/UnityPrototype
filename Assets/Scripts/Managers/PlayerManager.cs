@@ -58,6 +58,7 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector] public string previousJob;
     [HideInInspector] public string pet;
     [HideInInspector] public string petName;
+    [HideInInspector] public string initialSecret;                                   //starting secret
     //collections
     private bool[] arrayOfCaptureTools = new bool[4];                               //if true Player has CaptureTool.SO corresponding to array index (0 to 3) level of Innocence
     private List<string> listOfGear = new List<string>();                           //gear names of all gear items in inventory
@@ -327,6 +328,9 @@ public class PlayerManager : MonoBehaviour
         //Defaults -> pet name
         if (string.IsNullOrEmpty(petName) == true)
         { petName = GameManager.i.preloadScript.playerPetName; }
+        //Defaults -> player Secret
+        if (string.IsNullOrEmpty(initialSecret) == true)
+        { initialSecret = GameManager.i.preloadScript.playerSecret; }
     }
     #endregion
 
@@ -2603,6 +2607,7 @@ public class PlayerManager : MonoBehaviour
         builder.AppendFormat(" Previous Job: {0}{1}", previousJob, "\n");
         builder.AppendFormat(" Favourite Pet: {0}{1}", pet, "\n");
         builder.AppendFormat(" Pet Name: {0}{1}", petName, "\n");
+        builder.AppendFormat(" Initial Secret: {0}{1}", initialSecret, "\n");
         //Conditions
         if (listOfConditions != null)
         {
