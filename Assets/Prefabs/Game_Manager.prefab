@@ -823,6 +823,7 @@ MonoBehaviour:
   playerJob: Beekeeper
   playerPet: Dog
   playerPetName: Beethhoven
+  playerSecret: Beastiality
   numOfQualities: 3
 --- !u!114 &114364785414329898
 MonoBehaviour:
@@ -5315,17 +5316,22 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1a3b21ba4dec0bc4bbd9543d2b7f4fb2, type: 2}
   - {fileID: 11400000, guid: 38bac9cb2697b6642ab952c5d8453a47, type: 2}
   arrayOfSecrets:
-  - {fileID: 11400000, guid: 9a46c226ee2b1dc49bfaa1a81c4505b0, type: 2}
-  - {fileID: 11400000, guid: 04b9ee5bb7fec574da9b94d9986aefba, type: 2}
-  - {fileID: 11400000, guid: 54fb900087124a442bf806fd7bbe7974, type: 2}
-  - {fileID: 11400000, guid: cd8650d2b5edc2d4f9593e2a6b082ad9, type: 2}
-  - {fileID: 11400000, guid: d4246d7f5aa157a44a7bf87fc02dcc06, type: 2}
-  - {fileID: 11400000, guid: 393e717d538c90743ab029faffc63bbd, type: 2}
   - {fileID: 11400000, guid: 7a10539a44e230540b1aa07788159c35, type: 2}
   - {fileID: 11400000, guid: 029c9ae0652eacb46b5aa584c7908437, type: 2}
   - {fileID: 11400000, guid: bed62aab8c6244a40bc77dde8b4c2eb2, type: 2}
   - {fileID: 11400000, guid: 5dfe93c276dab67418ac1d6ad145c226, type: 2}
   - {fileID: 11400000, guid: 98d27052c6e43c84790c0c04a19f3626, type: 2}
+  - {fileID: 11400000, guid: 70b4a622e976c8a48995ff2fbbd7e70e, type: 2}
+  - {fileID: 11400000, guid: 393e717d538c90743ab029faffc63bbd, type: 2}
+  - {fileID: 11400000, guid: 2e7fce27d5e800849974fa974b050f25, type: 2}
+  - {fileID: 11400000, guid: 7c1972f8d28f75141a1ea1996e0d3099, type: 2}
+  - {fileID: 11400000, guid: 006e5c7dafc6ba442a43cb20972de7f6, type: 2}
+  - {fileID: 11400000, guid: 91ad651ee3516d54eb63d80ed311a6ff, type: 2}
+  - {fileID: 11400000, guid: 5792bf45b08e11f4199c18f33562f2af, type: 2}
+  - {fileID: 11400000, guid: 2b09172bb38f3ca4fb267e7f9898fafc, type: 2}
+  - {fileID: 11400000, guid: 9a46c226ee2b1dc49bfaa1a81c4505b0, type: 2}
+  - {fileID: 11400000, guid: 81d41a0881deab04387d9dea647fd85c, type: 2}
+  - {fileID: 11400000, guid: e8fbd79a6b821fb43852c102d8298e23, type: 2}
   arrayOfHQs:
   - {fileID: 11400000, guid: def353c1c0b965746b9a74ebc902e9f4, type: 2}
   - {fileID: 11400000, guid: 9632b738e5743594cb1ce08292d1d088, type: 2}
@@ -6569,6 +6575,7 @@ MonoBehaviour:
   previousJob: 
   pet: 
   petName: 
+  initialSecret: 
 --- !u!114 &114704934405690708
 MonoBehaviour:
   m_ObjectHideFlags: 1

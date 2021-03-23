@@ -2679,3 +2679,422 @@ City seed 6848 -> VirtualCity, Eurasia
 Dev seed 10716 -> Monday, 22 March 2021 5:12 PM
 City seed 63724 -> VirtualCity, Eurasia
 City seed 30783 -> Londus, Eurasia
+
+Dev seed 1610 -> Tuesday, 23 March 2021 9:31 AM
+City seed 52423 -> VirtualCity, Eurasia
+
+Dev seed 27322 -> Tuesday, 23 March 2021 10:09 AM
+City seed 1291 -> VirtualCity, Eurasia
+
+Dev seed 3243 -> Tuesday, 23 March 2021 10:28 AM
+City seed 51257 -> VirtualCity, Eurasia
+
+Dev seed 47304 -> Tuesday, 23 March 2021 10:30 AM
+City seed 5239 -> Londus, Eurasia
+
+Dev seed 43473 -> Tuesday, 23 March 2021 10:30 AM
+City seed 20288 -> VirtualCity, Eurasia
+
+Dev seed 61567 -> Tuesday, 23 March 2021 10:30 AM
+City seed 29762 -> Londus, Eurasia
+
+Dev seed 30645 -> Tuesday, 23 March 2021 10:39 AM
+City seed 21924 -> Londus, Eurasia
+ERROR Invalid secretName (Null)
+UnityEngine.Debug:LogError(Object)
+	DataManager:GetSecret(String) (at Assets/Scripts/Managers/DataManager.cs:5998)
+	PlayerManager:GetStartingSecret() (at Assets/Scripts/Managers/PlayerManager.cs:1576)
+	PlayerManager:SubInitialiseLevelAll() (at Assets/Scripts/Managers/PlayerManager.cs:438)
+	PlayerManager:Initialise(GameState) (at Assets/Scripts/Managers/PlayerManager.cs:250)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:930)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:989)
+	ControlManager:ProcessCloseNewGameOptions() (at Assets/Scripts/Managers/ControlManager.cs:191)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:85)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:340)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:472)
+	ERROR Invalid secret (Null) for initialSecret ""
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PlayerManager:GetStartingSecret() (at Assets/Scripts/Managers/PlayerManager.cs:1582)
+	PlayerManager:SubInitialiseLevelAll() (at Assets/Scripts/Managers/PlayerManager.cs:438)
+	PlayerManager:Initialise(GameState) (at Assets/Scripts/Managers/PlayerManager.cs:250)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:930)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:989)
+	ControlManager:ProcessCloseNewGameOptions() (at Assets/Scripts/Managers/ControlManager.cs:191)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:85)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:340)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:472)
+	
+Dev seed 13996 -> Tuesday, 23 March 2021 10:40 AM
+City seed 876 -> Londus, Eurasia
+
+Dev seed 61761 -> Tuesday, 23 March 2021 10:41 AM
+City seed 62473 -> VirtualCity, Eurasia
+City seed 47021 -> Londus, Eurasia
+WARNING Not found secret Arachnopobic, in dictOfSecrets
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetSecret(String) (at Assets/Scripts/Managers/DataManager.cs:5996)
+	PlayerManager:GetStartingSecret() (at Assets/Scripts/Managers/PlayerManager.cs:1577)
+	PlayerManager:SubInitialiseLevelAll() (at Assets/Scripts/Managers/PlayerManager.cs:439)
+	PlayerManager:Initialise(GameState) (at Assets/Scripts/Managers/PlayerManager.cs:251)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:930)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:989)
+	ControlManager:ProcessCloseNewGameOptions() (at Assets/Scripts/Managers/ControlManager.cs:191)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:85)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:340)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:472)
+	ERROR Invalid secret (Null) for initialSecret "Arachnopobic"
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PlayerManager:GetStartingSecret() (at Assets/Scripts/Managers/PlayerManager.cs:1583)
+	PlayerManager:SubInitialiseLevelAll() (at Assets/Scripts/Managers/PlayerManager.cs:439)
+	PlayerManager:Initialise(GameState) (at Assets/Scripts/Managers/PlayerManager.cs:251)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:930)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:989)
+	ControlManager:ProcessCloseNewGameOptions() (at Assets/Scripts/Managers/ControlManager.cs:191)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:85)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:340)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:472)
+	
+Dev seed 9534 -> Tuesday, 23 March 2021 10:50 AM
+City seed 61019 -> VirtualCity, Eurasia
+City seed 18757 -> Londus, Eurasia
+
+Dev seed 45456 -> Tuesday, 23 March 2021 10:57 AM
+City seed 18551 -> VirtualCity, Eurasia
+
+Dev seed 1061 -> Tuesday, 23 March 2021 11:06 AM
+City seed 29554 -> VirtualCity, Eurasia
+City seed 38736 -> Londus, Eurasia
+
+Dev seed 37840 -> Tuesday, 23 March 2021 11:18 AM
+City seed 27848 -> Londus, Eurasia
+
+Dev seed 54666 -> Tuesday, 23 March 2021 11:18 AM
+City seed 18999 -> Londus, Eurasia
+WARNING Not found secret Arachnopobic, in dictOfSecrets
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetSecret(String) (at Assets/Scripts/Managers/DataManager.cs:5996)
+	ValidationManager:ValidateTutorialData() (at Assets/Scripts/Managers/ValidationManager.cs:1967)
+	ValidationManager:Initialise(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:178)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:930)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:991)
+	ControlManager:ProcessCloseNewGameOptions() (at Assets/Scripts/Managers/ControlManager.cs:191)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:85)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:340)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:472)
+	
+Dev seed 65168 -> Tuesday, 23 March 2021 11:19 AM
+WARNING Secret SecretResP0 not found in dictionary, record not updated for dynamic data
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	FileManager:ReadDataData() (at Assets/Scripts/Managers/FileManager.cs:2662)
+	FileManager:LoadSaveData(SaveType) (at Assets/Scripts/Managers/FileManager.cs:257)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:426)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:64)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__3() (at Assets/Scripts/GUI/ModalMainMenu.cs:355)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Secret SecretResP1 not found in dictionary, record not updated for dynamic data
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	FileManager:ReadDataData() (at Assets/Scripts/Managers/FileManager.cs:2662)
+	FileManager:LoadSaveData(SaveType) (at Assets/Scripts/Managers/FileManager.cs:257)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:426)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:64)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__3() (at Assets/Scripts/GUI/ModalMainMenu.cs:355)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Secret SecretResP2 not found in dictionary, record not updated for dynamic data
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	FileManager:ReadDataData() (at Assets/Scripts/Managers/FileManager.cs:2662)
+	FileManager:LoadSaveData(SaveType) (at Assets/Scripts/Managers/FileManager.cs:257)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:426)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:64)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__3() (at Assets/Scripts/GUI/ModalMainMenu.cs:355)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Secret SecretResP3 not found in dictionary, record not updated for dynamic data
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	FileManager:ReadDataData() (at Assets/Scripts/Managers/FileManager.cs:2662)
+	FileManager:LoadSaveData(SaveType) (at Assets/Scripts/Managers/FileManager.cs:257)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:426)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:64)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__3() (at Assets/Scripts/GUI/ModalMainMenu.cs:355)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Secret SecretResP4 not found in dictionary, record not updated for dynamic data
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	FileManager:ReadDataData() (at Assets/Scripts/Managers/FileManager.cs:2662)
+	FileManager:LoadSaveData(SaveType) (at Assets/Scripts/Managers/FileManager.cs:257)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:426)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:64)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__3() (at Assets/Scripts/GUI/ModalMainMenu.cs:355)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Secret SecretResD0 not found in dictionary, record not updated for dynamic data
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	FileManager:ReadDataData() (at Assets/Scripts/Managers/FileManager.cs:2662)
+	FileManager:LoadSaveData(SaveType) (at Assets/Scripts/Managers/FileManager.cs:257)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:426)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:64)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__3() (at Assets/Scripts/GUI/ModalMainMenu.cs:355)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Secret SecretResD1 not found in dictionary, record not updated for dynamic data
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	FileManager:ReadDataData() (at Assets/Scripts/Managers/FileManager.cs:2662)
+	FileManager:LoadSaveData(SaveType) (at Assets/Scripts/Managers/FileManager.cs:257)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:426)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:64)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__3() (at Assets/Scripts/GUI/ModalMainMenu.cs:355)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Secret SecretResD2 not found in dictionary, record not updated for dynamic data
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	FileManager:ReadDataData() (at Assets/Scripts/Managers/FileManager.cs:2662)
+	FileManager:LoadSaveData(SaveType) (at Assets/Scripts/Managers/FileManager.cs:257)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:426)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:64)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__3() (at Assets/Scripts/GUI/ModalMainMenu.cs:355)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Secret SecretResD3 not found in dictionary, record not updated for dynamic data
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	FileManager:ReadDataData() (at Assets/Scripts/Managers/FileManager.cs:2662)
+	FileManager:LoadSaveData(SaveType) (at Assets/Scripts/Managers/FileManager.cs:257)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:426)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:64)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__3() (at Assets/Scripts/GUI/ModalMainMenu.cs:355)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Secret SecretResD4 not found in dictionary, record not updated for dynamic data
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	FileManager:ReadDataData() (at Assets/Scripts/Managers/FileManager.cs:2662)
+	FileManager:LoadSaveData(SaveType) (at Assets/Scripts/Managers/FileManager.cs:257)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:426)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:64)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__3() (at Assets/Scripts/GUI/ModalMainMenu.cs:355)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Not found secret SecretResP0, in dictOfSecrets
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetSecret(String) (at Assets/Scripts/Managers/DataManager.cs:5996)
+	FileManager:ReadDataData() (at Assets/Scripts/Managers/FileManager.cs:2673)
+	FileManager:LoadSaveData(SaveType) (at Assets/Scripts/Managers/FileManager.cs:257)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:426)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:64)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__3() (at Assets/Scripts/GUI/ModalMainMenu.cs:355)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Not found secret SecretResP1, in dictOfSecrets
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetSecret(String) (at Assets/Scripts/Managers/DataManager.cs:5996)
+	FileManager:ReadDataData() (at Assets/Scripts/Managers/FileManager.cs:2673)
+	FileManager:LoadSaveData(SaveType) (at Assets/Scripts/Managers/FileManager.cs:257)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:426)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:64)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__3() (at Assets/Scripts/GUI/ModalMainMenu.cs:355)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Not found secret SecretResP2, in dictOfSecrets
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetSecret(String) (at Assets/Scripts/Managers/DataManager.cs:5996)
+	FileManager:ReadDataData() (at Assets/Scripts/Managers/FileManager.cs:2673)
+	FileManager:LoadSaveData(SaveType) (at Assets/Scripts/Managers/FileManager.cs:257)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:426)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:64)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__3() (at Assets/Scripts/GUI/ModalMainMenu.cs:355)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Not found secret SecretResP3, in dictOfSecrets
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetSecret(String) (at Assets/Scripts/Managers/DataManager.cs:5996)
+	FileManager:ReadDataData() (at Assets/Scripts/Managers/FileManager.cs:2673)
+	FileManager:LoadSaveData(SaveType) (at Assets/Scripts/Managers/FileManager.cs:257)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:426)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:64)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__3() (at Assets/Scripts/GUI/ModalMainMenu.cs:355)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Not found secret SecretResP4, in dictOfSecrets
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetSecret(String) (at Assets/Scripts/Managers/DataManager.cs:5996)
+	FileManager:ReadDataData() (at Assets/Scripts/Managers/FileManager.cs:2673)
+	FileManager:LoadSaveData(SaveType) (at Assets/Scripts/Managers/FileManager.cs:257)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:426)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:64)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__3() (at Assets/Scripts/GUI/ModalMainMenu.cs:355)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Not found secret SecretResP0, in dictOfSecrets
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetSecret(String) (at Assets/Scripts/Managers/DataManager.cs:5996)
+	FileManager:ReadDataData() (at Assets/Scripts/Managers/FileManager.cs:2673)
+	FileManager:LoadSaveData(SaveType) (at Assets/Scripts/Managers/FileManager.cs:257)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:426)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:64)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__3() (at Assets/Scripts/GUI/ModalMainMenu.cs:355)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Not found secret SecretResP1, in dictOfSecrets
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetSecret(String) (at Assets/Scripts/Managers/DataManager.cs:5996)
+	FileManager:ReadDataData() (at Assets/Scripts/Managers/FileManager.cs:2673)
+	FileManager:LoadSaveData(SaveType) (at Assets/Scripts/Managers/FileManager.cs:257)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:426)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:64)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__3() (at Assets/Scripts/GUI/ModalMainMenu.cs:355)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Not found secret SecretResP2, in dictOfSecrets
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetSecret(String) (at Assets/Scripts/Managers/DataManager.cs:5996)
+	FileManager:ReadDataData() (at Assets/Scripts/Managers/FileManager.cs:2673)
+	FileManager:LoadSaveData(SaveType) (at Assets/Scripts/Managers/FileManager.cs:257)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:426)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:64)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__3() (at Assets/Scripts/GUI/ModalMainMenu.cs:355)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Not found secret SecretResP3, in dictOfSecrets
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetSecret(String) (at Assets/Scripts/Managers/DataManager.cs:5996)
+	FileManager:ReadDataData() (at Assets/Scripts/Managers/FileManager.cs:2673)
+	FileManager:LoadSaveData(SaveType) (at Assets/Scripts/Managers/FileManager.cs:257)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:426)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:64)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__3() (at Assets/Scripts/GUI/ModalMainMenu.cs:355)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Not found secret SecretResP4, in dictOfSecrets
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetSecret(String) (at Assets/Scripts/Managers/DataManager.cs:5996)
+	FileManager:ReadDataData() (at Assets/Scripts/Managers/FileManager.cs:2673)
+	FileManager:LoadSaveData(SaveType) (at Assets/Scripts/Managers/FileManager.cs:257)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:426)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:64)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__3() (at Assets/Scripts/GUI/ModalMainMenu.cs:355)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Not found secret SecretResD0, in dictOfSecrets
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetSecret(String) (at Assets/Scripts/Managers/DataManager.cs:5996)
+	FileManager:ReadDataData() (at Assets/Scripts/Managers/FileManager.cs:2682)
+	FileManager:LoadSaveData(SaveType) (at Assets/Scripts/Managers/FileManager.cs:257)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:426)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:64)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__3() (at Assets/Scripts/GUI/ModalMainMenu.cs:355)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Not found secret SecretResD1, in dictOfSecrets
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetSecret(String) (at Assets/Scripts/Managers/DataManager.cs:5996)
+	FileManager:ReadDataData() (at Assets/Scripts/Managers/FileManager.cs:2682)
+	FileManager:LoadSaveData(SaveType) (at Assets/Scripts/Managers/FileManager.cs:257)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:426)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:64)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__3() (at Assets/Scripts/GUI/ModalMainMenu.cs:355)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Not found secret SecretResD2, in dictOfSecrets
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetSecret(String) (at Assets/Scripts/Managers/DataManager.cs:5996)
+	FileManager:ReadDataData() (at Assets/Scripts/Managers/FileManager.cs:2682)
+	FileManager:LoadSaveData(SaveType) (at Assets/Scripts/Managers/FileManager.cs:257)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:426)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:64)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__3() (at Assets/Scripts/GUI/ModalMainMenu.cs:355)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Not found secret SecretResD3, in dictOfSecrets
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetSecret(String) (at Assets/Scripts/Managers/DataManager.cs:5996)
+	FileManager:ReadDataData() (at Assets/Scripts/Managers/FileManager.cs:2682)
+	FileManager:LoadSaveData(SaveType) (at Assets/Scripts/Managers/FileManager.cs:257)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:426)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:64)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__3() (at Assets/Scripts/GUI/ModalMainMenu.cs:355)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Not found secret SecretResD4, in dictOfSecrets
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetSecret(String) (at Assets/Scripts/Managers/DataManager.cs:5996)
+	FileManager:ReadDataData() (at Assets/Scripts/Managers/FileManager.cs:2682)
+	FileManager:LoadSaveData(SaveType) (at Assets/Scripts/Managers/FileManager.cs:257)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:426)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:64)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__3() (at Assets/Scripts/GUI/ModalMainMenu.cs:355)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Not found secret SecretResD0, in dictOfSecrets
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetSecret(String) (at Assets/Scripts/Managers/DataManager.cs:5996)
+	FileManager:ReadDataData() (at Assets/Scripts/Managers/FileManager.cs:2682)
+	FileManager:LoadSaveData(SaveType) (at Assets/Scripts/Managers/FileManager.cs:257)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:426)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:64)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__3() (at Assets/Scripts/GUI/ModalMainMenu.cs:355)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Not found secret SecretResD1, in dictOfSecrets
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetSecret(String) (at Assets/Scripts/Managers/DataManager.cs:5996)
+	FileManager:ReadDataData() (at Assets/Scripts/Managers/FileManager.cs:2682)
+	FileManager:LoadSaveData(SaveType) (at Assets/Scripts/Managers/FileManager.cs:257)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:426)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:64)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__3() (at Assets/Scripts/GUI/ModalMainMenu.cs:355)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Not found secret SecretResD2, in dictOfSecrets
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetSecret(String) (at Assets/Scripts/Managers/DataManager.cs:5996)
+	FileManager:ReadDataData() (at Assets/Scripts/Managers/FileManager.cs:2682)
+	FileManager:LoadSaveData(SaveType) (at Assets/Scripts/Managers/FileManager.cs:257)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:426)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:64)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__3() (at Assets/Scripts/GUI/ModalMainMenu.cs:355)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Not found secret SecretResD3, in dictOfSecrets
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetSecret(String) (at Assets/Scripts/Managers/DataManager.cs:5996)
+	FileManager:ReadDataData() (at Assets/Scripts/Managers/FileManager.cs:2682)
+	FileManager:LoadSaveData(SaveType) (at Assets/Scripts/Managers/FileManager.cs:257)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:426)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:64)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__3() (at Assets/Scripts/GUI/ModalMainMenu.cs:355)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Not found secret SecretResD4, in dictOfSecrets
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetSecret(String) (at Assets/Scripts/Managers/DataManager.cs:5996)
+	FileManager:ReadDataData() (at Assets/Scripts/Managers/FileManager.cs:2682)
+	FileManager:LoadSaveData(SaveType) (at Assets/Scripts/Managers/FileManager.cs:257)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:426)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:64)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__3() (at Assets/Scripts/GUI/ModalMainMenu.cs:355)
+	UnityEngine.EventSystems.EventSystem:Update()
+	City seed 30783 -> Londus, Eurasia
+WARNING Not found secret SecretResP4, in dictOfSecrets
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetSecret(String) (at Assets/Scripts/Managers/DataManager.cs:5996)
+	FileManager:ReadPlayerData() (at Assets/Scripts/Managers/FileManager.cs:2375)
+	FileManager:LoadSaveData(SaveType) (at Assets/Scripts/Managers/FileManager.cs:274)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:426)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:64)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__3() (at Assets/Scripts/GUI/ModalMainMenu.cs:355)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 34214 -> Tuesday, 23 March 2021 11:20 AM
+City seed 54096 -> Londus, Eurasia
+
+Dev seed 56892 -> Tuesday, 23 March 2021 11:21 AM
+City seed 54096 -> Londus, Eurasia
+
+Dev seed 17478 -> Tuesday, 23 March 2021 11:26 AM
+City seed 35183 -> VirtualCity, Eurasia

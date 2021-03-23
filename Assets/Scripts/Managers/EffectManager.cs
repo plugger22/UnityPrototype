@@ -4193,6 +4193,8 @@ public class EffectManager : MonoBehaviour
             case "Secret":
                 //Initial Secret
                 GameManager.i.playerScript.initialSecret = optionText;
+                //update secret
+                GameManager.i.playerScript.GetStartingSecret();
                 effectResolve.topText = string.Format("{0}Your Innermost Secret is", colourAlert, GameManager.i.playerScript.pet, colourEnd);
                 effectResolve.bottomText = string.Format("{0}<size=115%>{1}</size>{2}<br><br>Best to keep that one to yourself", colourNeutral, optionText, colourEnd);
                 break;

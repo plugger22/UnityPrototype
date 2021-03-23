@@ -11,6 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef9551e8460d46240b2ea11acbd0350e, type: 3}
   m_Name: TutRESq4_9
   m_EditorClassIdentifier: 
-  tag: Thumb Sucker
-  text: I only do it when nobody is watching
+  tag: Trichotillomania
+  text: I'm a compulsive hair puller
   query: {fileID: 11400000, guid: bfcc5d0e48b852248b63eb92bfd8a09a, type: 2}

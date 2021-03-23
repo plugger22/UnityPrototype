@@ -1850,6 +1850,7 @@ public class ValidationManager : MonoBehaviour
     private void ValidateTutorialData()
     {
         int count;
+        bool isSpecialCase;
         int maxTutorialItems = GameManager.i.tutorialScript.maxNumOfItems;
         int maxTutorialOptions = GameManager.i.topicScript.maxOptions;
         int minTutorialOptions = GameManager.i.tutorialScript.minNumOfOptions;
@@ -1941,6 +1942,9 @@ public class ValidationManager : MonoBehaviour
                                                           item.name, count, maxTutorialOptions, "\n");
                                                     }
                                                 }
+                                                isSpecialCase = false;
+                                                if (item.queryType.name.Equals("Secret", StringComparison.Ordinal) == true)
+                                                { isSpecialCase = true; }
                                                 //loop tutorialOptions in listsOfOptions
                                                 for (int m = 0; m < item.listOfOptions.Count; m++)
                                                 {
@@ -1956,6 +1960,16 @@ public class ValidationManager : MonoBehaviour
 
                                                     }
                                                     else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: TutorialOption \"{0}\" Invalid tutorialItem (Null){1}",  optionTutorial.name, "\n"); }
+                                                    //special case -> Secret Query
+                                                    if (isSpecialCase == true)
+                                                    {
+                                                        //tutorial option.tag should be found in dictOfSecrets
+                                                        if (GameManager.i.dataScript.GetSecret(optionTutorial.tag) == null)
+                                                        {
+                                                            Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: Secret Query tutorialOption \"{0}\" has an invalid tag \"{1}\" (not found in dictOfSecrets){2}",
+                                                              optionTutorial.name, optionTutorial.tag, "\n");
+                                                        }
+                                                    }
                                                 }
                                                 //loop tutorialOptions in listsOfIgnoreOptions
                                                 for (int m = 0; m < item.listOfIgnoreOptions.Count; m++)

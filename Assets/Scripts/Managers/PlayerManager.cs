@@ -247,8 +247,8 @@ public class PlayerManager : MonoBehaviour
                 SubInitialiseLevelStart();
                 SubInitialiseFastAccess();
                 SubInitialiseEvents();
+                SubInitialiseTutorialDefaults(); //needs to be BEFORE SubInitialiseAll
                 SubInitialiseLevelAll();
-                SubInitialiseTutorialDefaults();
                 break;
             case GameState.FollowOnInitialisation:
                 SubInitialiseFollowOn();
@@ -306,6 +306,7 @@ public class PlayerManager : MonoBehaviour
     #region SubInitialiseTutorialDefaults
     /// <summary>
     /// Sets default values, if needed, for any player related tutorial questions that haven't been done based on PreloadManager.cs defaults
+    /// NOTE: Needs to be BEFORE SubInitialiseLevelAll
     /// </summary>
     private void SubInitialiseTutorialDefaults()
     {
@@ -434,8 +435,9 @@ public class PlayerManager : MonoBehaviour
         InitialisePlayerStartNode();
         //Comes at end AFTER all other initialisations
         Power = 0;
-        //give the player a random secret (PLACEHOLDER -> should be player choice)
-        GetRandomStartSecret();
+        //assign chosen secret (not at start of tutorial as player will choose a secret during tutorial)
+        if (GameManager.i.inputScript.GameState != GameState.TutorialOptions)
+        { GetStartingSecret(); }
     }
     #endregion
 
@@ -1564,6 +1566,28 @@ public class PlayerManager : MonoBehaviour
             else { Debug.LogWarning("Invalid listOfPlayerSecrets (No records)"); }
         }
         else { Debug.LogWarning("Invalid listOfPlayerSecrets (Null)"); }
+    }
+
+    /// <summary>
+    /// Uses initialSecret field to populate player secretList with a starting secret from dBase
+    /// </summary>
+    public void GetStartingSecret()
+    {
+        //get name of initial secret (if already present)
+        string startSecret = "Unknown";
+        if (listOfSecrets.Count > 0)
+        { startSecret = listOfSecrets[0].name; }
+        //clear out listOfSecrets (in case of multiple new game starts)
+        listOfSecrets.Clear();
+        Secret secret = GameManager.i.dataScript.GetSecret(initialSecret);
+        if (secret != null)
+        {
+            listOfSecrets.Add(secret);
+            //check to prevent duplicate messages (eg. player did tutorial then started a game)
+            if (startSecret.Equals(initialSecret, StringComparison.Ordinal) == false)
+            { Debug.LogFormat("[Sec] PlayerManager.cs -> GetStartingSecret: player choses \"{0}\" secret{1}", secret.tag, "\n"); }
+        }
+        else { Debug.LogErrorFormat("Invalid secret (Null) for initialSecret \"{0}\"", initialSecret); }
     }
 
     /// <summary>

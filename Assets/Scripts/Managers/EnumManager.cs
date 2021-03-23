@@ -45,7 +45,7 @@
         None,
         MainMenuUnavailable,
         GearDisabled, RecruitingDisabled,
-        TutorialGoal, TutorialMenuUnavailable,
+        TutorialGoal, TutorialMenuUnavailable, TutorialDossierUnavailable,
         SomethingWrong,
         PlayerStatus, SideStatus, ActorStatus,
         DebugAI, DebugPlayer,

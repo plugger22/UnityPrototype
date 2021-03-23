@@ -385,7 +385,7 @@ public class GUIManager : MonoBehaviour
         colourEnd = GameManager.i.colourScript.GetEndTag();
     }
 
-
+    #region GUI...
     //
     // - - - GUI - - -
     //
@@ -414,7 +414,9 @@ public class GUIManager : MonoBehaviour
         Debug.Assert(level <= numOfModalLevels, string.Format("Invalid level {0}, max is numOfModalLevels {1}", level, numOfModalLevels));
         return arrayIsBlocked[level];
     }
+    #endregion
 
+    #region Alert Messages...
     //
     // - - - Alert Messages
     //
@@ -447,6 +449,7 @@ public class GUIManager : MonoBehaviour
         details.side = GameManager.i.sideScript.PlayerSide;
         CreateAlertMessage(type, details, data);
     }
+    #endregion
 
     #region CreateAlertMessage
     /// <summary>
@@ -489,6 +492,11 @@ public class GUIManager : MonoBehaviour
                 case AlertType.TutorialMenuUnavailable:
                     //GUI menu is temporarily unavailable for this part of the tutorial
                     details.textTop = string.Format("{0}Menu Unavailable{1}", colourBad, colourEnd);
+                    details.textBottom = string.Format("We've {0}switched it off{1} for this part of the <b>Tutorial</b><br><br>It's only <b>temporary</b>", colourAlert, colourEnd);
+                    break;
+                case AlertType.TutorialDossierUnavailable:
+                    //GUI dossier is temporarily unavailable for this part of the tutorial
+                    details.textTop = string.Format("{0}Personnel Dossier Unavailable{1}", colourBad, colourEnd);
                     details.textBottom = string.Format("We've {0}switched it off{1} for this part of the <b>Tutorial</b><br><br>It's only <b>temporary</b>", colourAlert, colourEnd);
                     break;
                 case AlertType.PlayerStatus:
@@ -607,6 +615,7 @@ public class GUIManager : MonoBehaviour
     }
     #endregion
 
+    #region Show Me...
     //
     // - - - Show Me
     //
@@ -683,7 +692,9 @@ public class GUIManager : MonoBehaviour
         //restore calling UI element
         EventManager.i.PostNotification(showMeData.restoreEvent, this, null, "GUIManager.cs -> ShowMeRestore");
     }
+    #endregion
 
+    #region Information Pipeline...
     //
     // - - - Information Pipeline
     //
@@ -995,7 +1006,9 @@ public class GUIManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfPipeLineDetails (Null)"); }
     }
+    #endregion
 
+    #region Tooltips...
     //
     // - - - Tooltips - - -
     //
@@ -1024,8 +1037,46 @@ public class GUIManager : MonoBehaviour
         string tooltipDetails = string.Format("{0}Keyboard Shortcut{1}{2}{3}SPACE{4}", colourGrey, colourEnd, "\n", colourNeutral, colourEnd);
         return new Tuple<string, string, string>(tooltipHeader, tooltipMain, tooltipDetails);
     }
+    #endregion
+    
+    #region Global Tooltips...
+    //
+    // - - - Global tooltips
+    //
 
+    /// <summary>
+    /// global Compatibility tooltip for consistency, returns only header, main and details
+    /// </summary>
+    /// <returns></returns>
+    public GenericTooltipData GetCompatibilityTooltip()
+    {
+        string tooltipHeader = string.Format("{0} <size=120%>{1}</size>{2}with Player",
+            GameManager.i.guiScript.compatibilityIcon,
+            GameManager.Formatt("Compatibility", ColourType.moccasinText), "\n");
+        string tooltipMain = string.Format("<align=\"left\">Due to Personalities{0}   {1} Good relations{2}   {3} Bad relations {4}{5} of Stars shows {6} of relationship.{7}{8}, doesn't change", "\n",
+            GameManager.Formatt(starIconGood, ColourType.goodText), "\n",
+            GameManager.Formatt(starIconBad, ColourType.badText), "\n",
+            GameManager.Formatt("Number", ColourType.salmonText),
+            GameManager.Formatt("Intensity", ColourType.salmonText), "\n",
+            GameManager.Formatt("Constant", ColourType.salmonText)
+            );
+        string tooltipDetails = string.Format("<align=\"left\">A character {0} ignore {1} ({2}) or {3} ({4}){5}{6} Opinion outcomes",
+            GameManager.Formatt("may", ColourType.salmonText),
+            GameManager.Formatt("GOOD", ColourType.salmonText),
+            GameManager.Formatt(starIconGood, ColourType.badText),
+            GameManager.Formatt("BAD", ColourType.salmonText),
+            GameManager.Formatt(starIconBad, ColourType.goodText), "\n", opinionIcon);
+        GenericTooltipData tooltip = new GenericTooltipData()
+        {
+            header = tooltipHeader,
+            main = tooltipMain,
+            details = tooltipDetails
+        };
+        return tooltip;
+    }
+    #endregion
 
+    #region Stars...
     //
     // - - - Stars - - -
     //
@@ -1071,42 +1122,9 @@ public class GUIManager : MonoBehaviour
         }
         return stars;
     }
+    #endregion
 
-    //
-    // - - - Global tooltips
-    //
-
-    /// <summary>
-    /// global Compatibility tooltip for consistency, returns only header, main and details
-    /// </summary>
-    /// <returns></returns>
-    public GenericTooltipData GetCompatibilityTooltip()
-    {
-        string tooltipHeader = string.Format("{0} <size=120%>{1}</size>{2}with Player",
-            GameManager.i.guiScript.compatibilityIcon,
-            GameManager.Formatt("Compatibility", ColourType.moccasinText), "\n");
-        string tooltipMain = string.Format("<align=\"left\">Due to Personalities{0}   {1} Good relations{2}   {3} Bad relations {4}{5} of Stars shows {6} of relationship.{7}{8}, doesn't change", "\n",
-            GameManager.Formatt(starIconGood, ColourType.goodText), "\n",
-            GameManager.Formatt(starIconBad, ColourType.badText), "\n",
-            GameManager.Formatt("Number", ColourType.salmonText),
-            GameManager.Formatt("Intensity", ColourType.salmonText), "\n",
-            GameManager.Formatt("Constant", ColourType.salmonText)
-            );
-        string tooltipDetails = string.Format("<align=\"left\">A character {0} ignore {1} ({2}) or {3} ({4}){5}{6} Opinion outcomes",
-            GameManager.Formatt("may", ColourType.salmonText),
-            GameManager.Formatt("GOOD", ColourType.salmonText),
-            GameManager.Formatt(starIconGood, ColourType.badText),
-            GameManager.Formatt("BAD", ColourType.salmonText),
-            GameManager.Formatt(starIconBad, ColourType.goodText), "\n", opinionIcon);
-        GenericTooltipData tooltip = new GenericTooltipData()
-        {
-            header = tooltipHeader,
-            main = tooltipMain,
-            details = tooltipDetails
-        };
-        return tooltip;
-    }
-
+    #region Debug
     //
     // - - - Debug - - -
     //
@@ -1149,8 +1167,9 @@ public class GUIManager : MonoBehaviour
             }
         }
         else { builder.Append(" No records"); }
-
         return builder.ToString();
     }
+    #endregion
+
 
 }

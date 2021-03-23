@@ -47,7 +47,7 @@ public class ActorClickUI : MonoBehaviour, IPointerClickHandler
                             };
                             EventManager.i.PostNotification(EventType.TabbedOpen, this, tabbedDetails, "ActorClickUI.cs -> OnPointerClick");
                         }
-                        else { GameManager.i.guiScript.SetAlertMessageModalOne(AlertType.TutorialMenuUnavailable); }
+                        else { GameManager.i.guiScript.SetAlertMessageModalOne(AlertType.TutorialDossierUnavailable); }
                         break;
                     case PointerEventData.InputButton.Right:
                         if (GameManager.i.guiScript.CheckIsBlocked() == false)

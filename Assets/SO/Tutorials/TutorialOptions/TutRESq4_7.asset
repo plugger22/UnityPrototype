@@ -11,6 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef9551e8460d46240b2ea11acbd0350e, type: 3}
   m_Name: TutRESq4_7
   m_EditorClassIdentifier: 
-  tag: Compulsive
-  text: I was born to shop. I spend to live
+  tag: Shopaholic
+  text: I was born to shop. I live to spend
   query: {fileID: 11400000, guid: bfcc5d0e48b852248b63eb92bfd8a09a, type: 2}
