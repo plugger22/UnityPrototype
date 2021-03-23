@@ -14,6 +14,7 @@ public class Personality
     private string profile;                                                                     //dict key name of profile
     private string profileDescriptor;                                                           //in-game descriptor, eg. 'Weak indication of a AntiSocial
     private string profileExplanation;                                                          //psychological explanation of profile
+    private bool isAlreadyDetermined;                                                           //true if personality already determined, eg. in tutorial, false otherwise
     //collections
     private List<string> listOfDescriptors = new List<string>();                                //list of personality descriptors
     private List<HistoryOpinion> listOfOpinion = new List<HistoryOpinion>();                    //list of all opinion changes
@@ -217,5 +218,18 @@ public class Personality
         }
         else { Debug.LogError("Invalid listOfOpinion (Null)"); }
     }
+
+    /// <summary>
+    /// Sets flag to indicate personality already determined, eg. in tutorial
+    /// </summary>
+    public void SetPersonalityDone()
+    { isAlreadyDetermined = true; }
+
+    /// <summary>
+    /// returns true if personality already done, false otherwise
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckIfPersonalityDone()
+    { return isAlreadyDetermined; }
 
 }

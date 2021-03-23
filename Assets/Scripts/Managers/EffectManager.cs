@@ -4215,10 +4215,13 @@ public class EffectManager : MonoBehaviour
                     case "Neuroticism High": arrayOfFactors[4] = +2; break;
                     default: Debug.LogWarningFormat("Unrecognised personality factor \"{0}\"", optionText); break;
                 }
-                //set players personality
-
-                //to do -> message
-
+                //set players personality 
+                arrayOfFactors = GameManager.i.personScript.SetPersonalityFactors(arrayOfFactors);
+                GameManager.i.playerScript.GetPersonality().SetFactors(arrayOfFactors);
+                GameManager.i.playerScript.GetPersonality().SetPersonalityDone();
+                //tmessage
+                effectResolve.topText = string.Format("{0}We've determined your Personality", colourAlert, GameManager.i.playerScript.pet, colourEnd);
+                effectResolve.bottomText = string.Format("Our Psychiatrist has been busy<br><br>{0}They took your input into account{1}", colourNeutral, colourEnd);
                 break;
             case "Name":
                 //Male/Female name

@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Name: TutRESq5_7
   m_EditorClassIdentifier: 
   tag: Agreeableness High
-  text: Why can't we trust each other?
+  text: Why can't we all trust each other?
   query: {fileID: 11400000, guid: c5344b572ff1d43448b13f0ab2372855, type: 2}

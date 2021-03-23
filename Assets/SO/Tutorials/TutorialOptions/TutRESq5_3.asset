@@ -11,6 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef9551e8460d46240b2ea11acbd0350e, type: 3}
   m_Name: TutRESq5_3
   m_EditorClassIdentifier: 
-  tag: Conscientousness High
+  tag: Conscientiousness High
   text: Organised and dependable, that's me
   query: {fileID: 11400000, guid: c5344b572ff1d43448b13f0ab2372855, type: 2}

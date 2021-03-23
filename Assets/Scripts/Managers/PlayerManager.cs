@@ -73,7 +73,7 @@ public class PlayerManager : MonoBehaviour
     private List<NodeActionData> listOfNodeActions = new List<NodeActionData>();
     #endregion
 
-
+    private int[] arrayOfFactors = new int[5];                  //personality factors (initial), no need to save, could be default values or could be from player choice in tutorial
 
     /*[HideInInspector] public bool isOrgActivatedCurePresent;*/
 
@@ -243,11 +243,11 @@ public class PlayerManager : MonoBehaviour
         {
             case GameState.TutorialOptions:
             case GameState.NewInitialisation:
+                SubInitialiseTutorialDefaults(); //needs to be first
                 SubInitialiseSessionStartEarly();
                 SubInitialiseLevelStart();
                 SubInitialiseFastAccess();
                 SubInitialiseEvents();
-                SubInitialiseTutorialDefaults(); //needs to be BEFORE SubInitialiseAll
                 SubInitialiseLevelAll();
                 break;
             case GameState.FollowOnInitialisation:
@@ -283,19 +283,27 @@ public class PlayerManager : MonoBehaviour
     #region SubInitialiseSessionStartEarly
     private void SubInitialiseSessionStartEarly()
     {
-        int[] arrayOfFactors = new int[5];
-        if (GameManager.i.testScript.testPersonality == null)
+        if (GameManager.i.inputScript.GameState != GameState.TutorialOptions)
         {
-            //Debug assign random personality
-            arrayOfFactors = GameManager.i.personScript.SetPersonalityFactors(new int[] { 99, 99, 99, 99, 99 });
+            if (GameManager.i.testScript.testPersonality == null)
+            {
+                //may have already been set in tutorial
+                if (personality.CheckIfPersonalityDone() == false)
+                {
+                    //assign random / semi-random personality
+                    arrayOfFactors = GameManager.i.personScript.SetPersonalityFactors(arrayOfFactors);
+                    //set personality factors
+                    personality.SetFactors(arrayOfFactors);
+                }
+            }
+            else
+            {
+                //use a test personality
+                arrayOfFactors = GameManager.i.testScript.testPersonality.GetFactors();
+                //set personality factors
+                personality.SetFactors(arrayOfFactors);
+            }
         }
-        else
-        {
-            //use a test personality
-            arrayOfFactors = GameManager.i.testScript.testPersonality.GetFactors();
-        }
-        //set personality factors
-        personality.SetFactors(arrayOfFactors);
         //maximum innocence at start of campaign
         Innocence = 3;
         //set initial default value for drug stress immunity
@@ -332,6 +340,8 @@ public class PlayerManager : MonoBehaviour
         //Defaults -> player Secret
         if (string.IsNullOrEmpty(initialSecret) == true)
         { initialSecret = GameManager.i.preloadScript.playerSecret; }
+        //Defaults -> personality factors (full random)
+        arrayOfFactors = new int[] { 99, 99, 99, 99, 99 };
     }
     #endregion
 
@@ -772,7 +782,7 @@ public class PlayerManager : MonoBehaviour
                 else
                 { Debug.LogError(string.Format("Invalid gear (Null) for gear {0}", gearName)); }
             }
-        /*else { Debug.LogWarning("You cannot exceed the maxium number of Gear items -> Gear NOT added"); }*/
+            /*else { Debug.LogWarning("You cannot exceed the maxium number of Gear items -> Gear NOT added"); }*/
         }
         else { Debug.LogWarningFormat("[Gea] PlayerManager.cs -> AddGear: Gear \"{0}\" can't be added as gear disabled (OptionManager.isGear {1}){2}", gearName, GameManager.i.optionScript.isGear, "\n"); }
         return false;
@@ -3059,7 +3069,26 @@ public class PlayerManager : MonoBehaviour
         return arrayOfCaptureTools[innocenceLevel];
     }
 
+    /*//
+    // - - - Personality EDIT: NOT NEEDED
+    //
 
+    /// <summary>
+    /// ArrayOfFactors is used to determine player's personality. Could come from default value (all random) or a tutorial player choice
+    /// </summary>
+    /// <param name="arrayOfFactors"></param>
+    public void SetPersonalityFactors(int[] arrayOfFactors)
+    {
+        if (arrayOfFactors != null)
+        {
+            if (arrayOfFactors.Length == GameManager.i.personScript.numOfFactors)
+            {
+                this.arrayOfFactors = arrayOfFactors;
+            }
+            else { Debug.LogErrorFormat("Invalid arrayOfFactors (is length {0}, should be {1})", arrayOfFactors.Length, GameManager.i.personScript.numOfFactors); }
+        }
+        else { Debug.LogError("Invalid arrayOfFactors (Null)"); }
+    }*/
 
 
 

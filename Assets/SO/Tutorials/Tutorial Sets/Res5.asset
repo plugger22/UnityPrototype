@@ -22,7 +22,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e16c959b5f1eac342979baf4a1a9362b, type: 2}
   - {fileID: 11400000, guid: 9ab41dcfbf11bf14f8fbeb9b7522f31a, type: 2}
   listOfGUIOff:
-  - {fileID: 11400000, guid: 2b429498342b10042847ad6b6e67d783, type: 2}
   - {fileID: 11400000, guid: 4ecda8036df900d48b4b25e77b1b6ad0, type: 2}
   - {fileID: 11400000, guid: 7046d4b9b0e864d409b0b2019663b6b2, type: 2}
-  listOfTutorialItems: []
+  listOfTutorialItems:
+  - {fileID: 11400000, guid: 6f3cbdb1c657d1743a58c3a55af229df, type: 2}
+  - {fileID: 11400000, guid: c5344b572ff1d43448b13f0ab2372855, type: 2}

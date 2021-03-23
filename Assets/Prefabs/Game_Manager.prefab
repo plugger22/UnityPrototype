@@ -1815,6 +1815,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: be81fee15c06fd541ae9f6bdfa8a6c46, type: 2}
   - {fileID: 11400000, guid: 3fda11eb21af8364585415c15df70f78, type: 2}
   - {fileID: 11400000, guid: d890cee1da59bf948a3aed36ab19edf3, type: 2}
+  - {fileID: 11400000, guid: 0d38225fe60cd4d43bc3e10405fe9d83, type: 2}
   arrayOfTutorialFeatures:
   - {fileID: 11400000, guid: 7e2f496678746a1488d0508fb5ac34ef, type: 2}
   - {fileID: 11400000, guid: 60c5546ae44161c4e96b856a75904210, type: 2}
@@ -1846,6 +1847,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c96b889f230661a4fa5dd2ec48b66e3e, type: 2}
   - {fileID: 11400000, guid: 295e4b9a10452d041b791ecf4c0b515a, type: 2}
   - {fileID: 11400000, guid: bfcc5d0e48b852248b63eb92bfd8a09a, type: 2}
+  - {fileID: 11400000, guid: 6f3cbdb1c657d1743a58c3a55af229df, type: 2}
+  - {fileID: 11400000, guid: c5344b572ff1d43448b13f0ab2372855, type: 2}
   arrayOfTutorialTypes:
   - {fileID: 11400000, guid: 6af73092ead59e34f89fadf31d6d355c, type: 2}
   - {fileID: 11400000, guid: 3ea5e079678bd114896744e070740f21, type: 2}
@@ -1937,6 +1940,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6974fd2e1789536408ab19ab4b2270c7, type: 2}
   - {fileID: 11400000, guid: b5cbcfa620e0b314da57384da05f2cc7, type: 2}
   - {fileID: 11400000, guid: 15b14958e504edf47817d51acff90791, type: 2}
+  - {fileID: 11400000, guid: 6af5d5cacad3f2a46a71aee00e9a858b, type: 2}
+  - {fileID: 11400000, guid: ee80f696992f87b4b9aaf7c80715c697, type: 2}
+  - {fileID: 11400000, guid: 0495c7223a9b09d448b0e62cf1989e40, type: 2}
+  - {fileID: 11400000, guid: a1e615724208f894296bb5700f6ef7ce, type: 2}
+  - {fileID: 11400000, guid: bd3c84cae0fbfc94ab7555377a644b2b, type: 2}
+  - {fileID: 11400000, guid: e26f41aa73266a946b21be2f975b3fae, type: 2}
+  - {fileID: 11400000, guid: fb15d2a8dc470984ba6c25a5f7dde492, type: 2}
+  - {fileID: 11400000, guid: c6965b0607fd4784085f26fe47fbaaac, type: 2}
+  - {fileID: 11400000, guid: e01815f5fb3c2da47b241e6ee6133cde, type: 2}
+  - {fileID: 11400000, guid: 237303ff37cbf2b4284cd198fceb303d, type: 2}
   arrayOfTutorialGoalTypes:
   - {fileID: 11400000, guid: 5237bc6f2db221e4cbec1efa3fbd5e9a, type: 2}
   arrayOfTutorialQueryTypes:
@@ -1946,6 +1959,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c7542b1ce5b968144ae5f8dc93c4280c, type: 2}
   - {fileID: 11400000, guid: 3540874f40e7d614a91705f2135b9c17, type: 2}
   - {fileID: 11400000, guid: 1624c3733acc2b448b49f3040e1ac7e1, type: 2}
+  - {fileID: 11400000, guid: 40531188e4fb0c144ba85206d10abd54, type: 2}
   arrayOfTutorialGUIFeatures:
   - {fileID: 11400000, guid: 2b429498342b10042847ad6b6e67d783, type: 2}
   - {fileID: 11400000, guid: 4ecda8036df900d48b4b25e77b1b6ad0, type: 2}
