@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// Handles Tutorial
@@ -772,25 +773,30 @@ public class TutorialManager : MonoBehaviour
         {
             case "Sex": tooltip = textListGeneric.GetRandomRecord(); break;
             case "Name":
-                if (UnityEngine.Random.Range(0, 100) < queryOptionTooltipChance)
+                if (Random.Range(0, 100) < queryOptionTooltipChance)
                 { tooltip = textListGeneric.GetRandomRecord(); }
                 else { tooltip = "You'll have the opportunity to change this later"; }
                 break;
             case "Job":
-                if (UnityEngine.Random.Range(0, 100) < queryOptionTooltipChance)
+                if (Random.Range(0, 100) < queryOptionTooltipChance)
                 { tooltip = textListGeneric.GetIndexedRecord(); }
                 else { tooltip = "You'll have the opportunity to change this later"; }
                 break;
             case "Pet":
             case "PetName":
-                if (UnityEngine.Random.Range(0, 100) < queryOptionTooltipChance)
+                if (Random.Range(0, 100) < queryOptionTooltipChance)
                 { tooltip = textListGeneric.GetRandomRecord(); }
                 else { tooltip = "You'll have the opportunity to change this later"; }
                 break;
             case "Secret":
-                if (UnityEngine.Random.Range(0, 100) < queryOptionTooltipChance)
+                if (Random.Range(0, 100) < queryOptionTooltipChance)
                 { tooltip = textListGeneric.GetRandomRecord(); }
                 else { tooltip = "We all have things that we'd prefer to keep private"; }
+                break;
+            case "Personality":
+                if (Random.Range(0, 100) < queryOptionTooltipChance)
+                { tooltip = textListGeneric.GetRandomRecord(); }
+                else { tooltip = "Our Psychiatrist will be examining you"; }
                 break;
             default: Debug.LogWarningFormat("Unrecognised queryType \"{0}\"", queryType.name); break;
         }

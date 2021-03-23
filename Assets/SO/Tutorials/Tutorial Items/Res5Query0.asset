@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 609e6bfe7fdf18e4281f5e96c5f710d0, type: 3}
+  m_Name: Res5Query0
+  m_EditorClassIdentifier: 
+  tutorialType: {fileID: 11400000, guid: 8b2847a7a246595458eee2b6a64e9b06, type: 2}
+  tag: Your Personality
+  set: {fileID: 11400000, guid: 0d38225fe60cd4d43bc3e10405fe9d83, type: 2}
+  topText: 
+  bottomText: 
+  gameHelp: {fileID: 0}
+  goal: {fileID: 0}
+  queryType: {fileID: 11400000, guid: 40531188e4fb0c144ba85206d10abd54, type: 2}
+  queryHeader: Your Personality
+  queryText: We'd like to get a sense of who you are<br><br>Choose an option that
+    you <b>identify with the most</b><br><br>Don't like any of them? We'll choose
+    for you
+  isRandomOptions: 1
+  listOfOptions:
+  - {fileID: 11400000, guid: 6af5d5cacad3f2a46a71aee00e9a858b, type: 2}
+  - {fileID: 11400000, guid: ee80f696992f87b4b9aaf7c80715c697, type: 2}
+  - {fileID: 11400000, guid: 0495c7223a9b09d448b0e62cf1989e40, type: 2}
+  - {fileID: 11400000, guid: a1e615724208f894296bb5700f6ef7ce, type: 2}
+  - {fileID: 11400000, guid: bd3c84cae0fbfc94ab7555377a644b2b, type: 2}
+  - {fileID: 11400000, guid: e26f41aa73266a946b21be2f975b3fae, type: 2}
+  - {fileID: 11400000, guid: fb15d2a8dc470984ba6c25a5f7dde492, type: 2}
+  - {fileID: 11400000, guid: c6965b0607fd4784085f26fe47fbaaac, type: 2}
+  - {fileID: 11400000, guid: e01815f5fb3c2da47b241e6ee6133cde, type: 2}
+  - {fileID: 11400000, guid: 237303ff37cbf2b4284cd198fceb303d, type: 2}
+  listOfIgnoreOptions:
+  - {fileID: 11400000, guid: 237303ff37cbf2b4284cd198fceb303d, type: 2}
+  listOfOptionsAlt: []
+  listOfIgnoreOptionsAlt: []

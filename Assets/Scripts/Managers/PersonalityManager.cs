@@ -102,6 +102,8 @@ public class PersonalityManager : MonoBehaviour
     private GlobalSide globalResistance;
     private GlobalSide globalAuthority;
 
+    #region Initialise...
+
     public void Initialise(GameState state)
     {
         switch (state)
@@ -182,6 +184,8 @@ public class PersonalityManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid arrayOfActors (Null)"); }
     }
+    #endregion
+
     #endregion
 
     #endregion

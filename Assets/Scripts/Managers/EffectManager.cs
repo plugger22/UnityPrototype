@@ -4198,6 +4198,28 @@ public class EffectManager : MonoBehaviour
                 effectResolve.topText = string.Format("{0}Your Innermost Secret is", colourAlert, GameManager.i.playerScript.pet, colourEnd);
                 effectResolve.bottomText = string.Format("{0}<size=115%>{1}</size>{2}<br><br>Best to keep that one to yourself", colourNeutral, optionText, colourEnd);
                 break;
+            case "Personality":
+
+                int[] arrayOfFactors = new int[5] { 99, 99, 99, 99, 99 };
+                switch (optionText)
+                {
+                    case "Openness Low": arrayOfFactors[0] = -2; break;
+                    case "Openness High": arrayOfFactors[0] = +2; break;
+                    case "Conscientiousness Low": arrayOfFactors[1] = -2; break;
+                    case "Conscientiousness High": arrayOfFactors[1] = +2; break;
+                    case "Extroversion Low": arrayOfFactors[2] = -2; break;
+                    case "Extroversion High": arrayOfFactors[2] = +2; break;
+                    case "Agreeableness Low": arrayOfFactors[3] = -2; break;
+                    case "Agreeableness High": arrayOfFactors[3] = +2; break;
+                    case "Neuroticism Low": arrayOfFactors[4] = -2; break;
+                    case "Neuroticism High": arrayOfFactors[4] = +2; break;
+                    default: Debug.LogWarningFormat("Unrecognised personality factor \"{0}\"", optionText); break;
+                }
+                //set players personality
+
+                //to do -> message
+
+                break;
             case "Name":
                 //Male/Female name
                 string fullName = optionText;

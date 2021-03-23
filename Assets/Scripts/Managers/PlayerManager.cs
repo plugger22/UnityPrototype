@@ -280,7 +280,7 @@ public class PlayerManager : MonoBehaviour
 
     #region Initialise SubMethods
 
-    #region SubInitialiseSessionStart
+    #region SubInitialiseSessionStartEarly
     private void SubInitialiseSessionStartEarly()
     {
         int[] arrayOfFactors = new int[5];
