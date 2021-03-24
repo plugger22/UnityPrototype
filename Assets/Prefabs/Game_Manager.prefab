@@ -356,7 +356,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d584344e0f087ea4eb1626b1bb7fdf58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  secretLearnBaseChance: 4
+  secretLearnBaseChance: 2
   secretBlackmailTimer: 4
   secretMaxNum: 4
   secretMaxEffects: 4
@@ -1609,6 +1609,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f86e231ef3f7d1b40a9c086b0d0da6bd, type: 2}
   arrayOfGameHelp:
   - {fileID: 11400000, guid: 695b16a6bbe55124680ffaddad0a0b60, type: 2}
+  - {fileID: 11400000, guid: 7ae51771a2d97054cbffb8896156f03d, type: 2}
   arrayOfActorDraftSex:
   - {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
   - {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}
@@ -1950,6 +1951,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c6965b0607fd4784085f26fe47fbaaac, type: 2}
   - {fileID: 11400000, guid: e01815f5fb3c2da47b241e6ee6133cde, type: 2}
   - {fileID: 11400000, guid: 237303ff37cbf2b4284cd198fceb303d, type: 2}
+  - {fileID: 11400000, guid: e6602592beb14f946b1d2ebc82931ea0, type: 2}
+  - {fileID: 11400000, guid: 824ad64f8288763489e1977f8cc4178c, type: 2}
+  - {fileID: 11400000, guid: 163d27ecb74041e47bde297756d592ea, type: 2}
+  - {fileID: 11400000, guid: d26eb503396ff1b4fb0441412c909244, type: 2}
+  - {fileID: 11400000, guid: 6ead51f523ea0944eb581565f42d4a36, type: 2}
   arrayOfTutorialGoalTypes:
   - {fileID: 11400000, guid: 5237bc6f2db221e4cbec1efa3fbd5e9a, type: 2}
   arrayOfTutorialQueryTypes:
@@ -6170,8 +6176,8 @@ MonoBehaviour:
   conditionWhoResistance: 999
   conditionResistance: {fileID: 0}
   playerInvisibility: -1
-  actorSlotID: 3
-  actorType: {fileID: 0}
+  actorSlotID: 0
+  actorType: {fileID: 11400000, guid: 268c960d386d285478b3ab6aaa5796bf, type: 2}
   actorDatapoint0: -1
   actorDatapoint1: -1
   actorDatapoint2: -1

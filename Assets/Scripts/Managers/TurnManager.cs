@@ -742,10 +742,10 @@ public class TurnManager : MonoBehaviour
             { EventManager.i.PostNotification(EventType.NewTurnShow, this, null, "TurnManager.cs -> UseAction"); }
             //set save flag to indicate there is unsaved progress
             GameManager.i.fileScript.SetSaveRequired();
-            //tutorial mode -> check status of any active goals
-            if (GameManager.i.inputScript.GameState == GameState.Tutorial)
-            { GameManager.i.tutorialScript.CheckGoals(); }
         }
+        //tutorial mode -> check status of any active goals
+        if (GameManager.i.inputScript.GameState == GameState.Tutorial)
+        { GameManager.i.tutorialScript.CheckGoals(); }
     }
 
     /// <summary>

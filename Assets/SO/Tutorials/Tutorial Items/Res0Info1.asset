@@ -16,10 +16,13 @@ MonoBehaviour:
   set: {fileID: 11400000, guid: 8684e764709be71419fb07dae908d1e0, type: 2}
   topText: 
   bottomText: 
-  gameHelp: {fileID: 0}
+  gameHelp: {fileID: 11400000, guid: 7ae51771a2d97054cbffb8896156f03d, type: 2}
   goal: {fileID: 0}
+  queryType: {fileID: 0}
   queryHeader: 
   queryText: 
   isRandomOptions: 0
   listOfOptions: []
   listOfIgnoreOptions: []
+  listOfOptionsAlt: []
+  listOfIgnoreOptionsAlt: []

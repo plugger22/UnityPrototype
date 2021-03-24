@@ -152,7 +152,7 @@ namespace packageAPI
         public string topText;
         public string bottomText;
         public bool isError;
-        public bool isLargeText;                                    //true if you want the effect to be shown in larger font size (115%), default false. Optional
+        public bool isLargeText;                                    //true if you want the effect to be shown in larger font size (110%), default false. Optional
         public List<Node> listOfNodes = new List<Node>();           //optional -> for 'Show Me' purposes in ModalOutcome
     }
 

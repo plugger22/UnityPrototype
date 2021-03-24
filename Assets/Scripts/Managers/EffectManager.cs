@@ -4213,6 +4213,11 @@ public class EffectManager : MonoBehaviour
                     case "Agreeableness High": arrayOfFactors[3] = +2; break;
                     case "Neuroticism Low": arrayOfFactors[4] = -2; break;
                     case "Neuroticism High": arrayOfFactors[4] = +2; break;
+                    case "Evil": arrayOfFactors[0] = -2; arrayOfFactors[1] = -2; arrayOfFactors[2] = -2; arrayOfFactors[3] = -2; arrayOfFactors[4] = 2; break;
+                    case "Boring": arrayOfFactors[0] = 0; arrayOfFactors[1] = 0; arrayOfFactors[2] = 0; arrayOfFactors[3] = 0; arrayOfFactors[4] = 0; break;
+                    case "Perfect": arrayOfFactors[0] = 2; arrayOfFactors[1] = 2; arrayOfFactors[2] = 2; arrayOfFactors[3] = 2; arrayOfFactors[4] = -2; break;
+                    case "Steady": arrayOfFactors[0] = 1; arrayOfFactors[1] = 1; arrayOfFactors[2] = 1; arrayOfFactors[3] = 1; arrayOfFactors[4] = -1; break;
+                    case "Wobbly": arrayOfFactors[0] = -1; arrayOfFactors[1] = -1; arrayOfFactors[2] = -1; arrayOfFactors[3] = -1; arrayOfFactors[4] = 1; break;
                     default: Debug.LogWarningFormat("Unrecognised personality factor \"{0}\"", optionText); break;
                 }
                 //set players personality 
@@ -5192,6 +5197,7 @@ public class EffectManager : MonoBehaviour
         effectResolve.topText = "Unknown effect";
         effectResolve.bottomText = "Unknown effect";
         effectResolve.isError = false;
+        effectResolve.isLargeText = false;
         switch (effect.outcome.name)
         {
             case "StoryInfo":

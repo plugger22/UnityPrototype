@@ -190,6 +190,12 @@ public class PlayerManager : MonoBehaviour
         get { return _invisibility; }
         set
         {
+            //stats (if losing invisibility), tick up for each level of invisibility lost
+            if (value < _invisibility)
+            { GameManager.i.dataScript.StatisticIncrement(StatType.PlayerInvisibilityLost, _invisibility - value); }
+            else if (value <= 0 && _invisibility == 0)
+            { GameManager.i.dataScript.StatisticIncrement(StatType.PlayerInvisibilityLost); }
+            //change value
             value = Mathf.Clamp(value, 0, GameManager.i.actorScript.maxStatValue);
             Debug.LogFormat("[Sta] -> PlayerManager.cs:  Player (Resistance) Invisibility changed from {0} to {1}{2}", _invisibility, value, "\n");
             _invisibility = value;

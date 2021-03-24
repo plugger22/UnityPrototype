@@ -12,31 +12,7 @@ MonoBehaviour:
   m_Name: Financial Centre (Large)
   m_EditorClassIdentifier: 
   descriptor: London
-  cityArcID: 2
-  numOfNodes: 25
-  minNodeSpacing: 1.25
-  connectionFrequency: 75
   sprite: {fileID: 21300000, guid: a884c1c83da884a4f8b7360806b8f53a, type: 3}
-  listOfOneConnArcs:
-  - {fileID: 11400000, guid: a000e873a8202b044ba60f811375b3a8, type: 2}
-  - {fileID: 11400000, guid: 1667605fc4382654f9baac2b83741900, type: 2}
-  listOfTwoConnArcs:
-  - {fileID: 11400000, guid: a000e873a8202b044ba60f811375b3a8, type: 2}
-  - {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}
-  - {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}
-  listOfThreeConnArcs:
-  - {fileID: 11400000, guid: 57b20377eb263fd469ff13fbcedd95c5, type: 2}
-  - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
-  - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
-  - {fileID: 11400000, guid: 6e4d8554b9a93064b86083fd577aae7a, type: 2}
-  listOfFourConnArcs:
-  - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
-  - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
-  - {fileID: 11400000, guid: 22da6f390f1942a47ac201efce0a17ad, type: 2}
-  - {fileID: 11400000, guid: 57b20377eb263fd469ff13fbcedd95c5, type: 2}
-  listOfFiveConnArcs:
-  - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
-  - {fileID: 11400000, guid: 22da6f390f1942a47ac201efce0a17ad, type: 2}
   size: {fileID: 11400000, guid: 46de56f28630afa43848b86b20f802d8, type: 2}
   spacing: {fileID: 11400000, guid: 74e65cfaf2985e34e8055e53c299ce10, type: 2}
   connections: {fileID: 11400000, guid: 4d648aa86af0dec46bac5d667af62aee, type: 2}
