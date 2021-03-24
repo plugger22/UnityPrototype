@@ -501,7 +501,7 @@ public class AnimationManager : MonoBehaviour
                     GameManager.i.SafeDestroy(car.carObject);
                     /*Debug.LogFormat("[Tst] AnimationManager.cs -> ResetTraffic: car destinationID {0} DESTROYED{1}", car.destinationID, "\n");*/
                 }
-                else { Debug.LogErrorFormat("Invalid car (Null) for listOfCarsTraffic[{0}]", i); }
+                else { Debug.LogWarningFormat("Invalid car (Null) for listOfCarsTraffic[{0}]", i); }
             }
             //empty list
             listOfCarsTraffic.Clear();

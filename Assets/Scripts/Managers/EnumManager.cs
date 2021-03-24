@@ -145,7 +145,6 @@
     //
     // - - - Actors - - -
     //
-    public enum ActorStatus { Active, Inactive, Reserve, RecruitPool, Captured, Dismissed, Promoted, Killed, Resigned, HQ }
     public enum ActorSex { None, Male, Female}
     public enum ActorHQ { None, Boss, SubBoss1, SubBoss2, SubBoss3, Worker, LeftHQ, Count}      //determines size of DataManager.cs -> arrayOfActorsHQ. Change enum add/remove/order and you'll need to...  
                                                                                                 //change code in DataManager -> InitialiseActorArrays
@@ -156,6 +155,7 @@
                                                                                                 //change TopicManager.cs -> GetHQSubTopics
                                                                                                 //change MetaManager.cs -> InitialiseHQ
 
+    public enum ActorStatus { Active, Inactive, Reserve, RecruitPool, Captured, Dismissed, Promoted, Killed, Resigned, HQ }
     public enum ActorInactive { None, LieLow, Breakdown, StressLeave, Dormant}                               //reason actor is inactive
     public enum ActorList { None, Reserve, Promoted, Dismissed, Disposed, Resigned, HQ}             //used as a parameter only to access lists (DataManager.cs -> GetActorList)
     public enum ActorTooltip { None, Breakdown, LieLow, Captured, Leave, Dormant}                            //actor sprite shows a relevant tooltip if other than 'None'

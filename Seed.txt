@@ -3848,3 +3848,33 @@ City seed 42446 -> Londus, Eurasia
 
 Dev seed 48491 -> Wednesday, 24 March 2021 5:25 PM
 City seed 14045 -> Londus, Eurasia
+
+Dev seed 38672 -> Thursday, 25 March 2021 9:34 AM
+City seed 58205 -> Londus, Eurasia
+
+Dev seed 48486 -> Thursday, 25 March 2021 9:39 AM
+City seed 108 -> Londus, Eurasia
+
+Dev seed 41911 -> Thursday, 25 March 2021 9:48 AM
+City seed 5149 -> Londus, Eurasia
+ERROR Invalid car (Null) for listOfCarsTraffic[0]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	AnimationManager:ResetTraffic() (at Assets/Scripts/Managers/AnimationManager.cs:504)
+	AnimationManager:StopAnimations() (at Assets/Scripts/Managers/AnimationManager.cs:239)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:315)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:190)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	NewTurnUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/NewTurnUI.cs:176)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 57699 -> Thursday, 25 March 2021 9:52 AM
+City seed 7375 -> Londus, Eurasia
+
+Dev seed 37579 -> Thursday, 25 March 2021 10:07 AM
+City seed 257 -> Londus, Eurasia
+
+Dev seed 7196 -> Thursday, 25 March 2021 10:21 AM
+City seed 62248 -> Londus, Eurasia
+
+Dev seed 7211 -> Thursday, 25 March 2021 10:27 AM
+City seed 402 -> Londus, Eurasia

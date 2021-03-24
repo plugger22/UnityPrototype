@@ -733,6 +733,10 @@ public class TurnManager : MonoBehaviour
                 //exceed action limit? (total includes any temporary adjustments)
                 remainder = _actionsTotal - _actionsCurrent;
             }
+            //zero out actions if player no longer active
+            if (GameManager.i.playerScript.status != ActorStatus.Active)
+            { _actionsCurrent = _actionsTotal; }
+            //fail safe check
             if (remainder < 0)
             { Debug.LogError("_actionsTotal exceeded by _actionsCurrent"); }
             else

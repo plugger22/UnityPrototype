@@ -39,7 +39,7 @@ public class GUIManager : MonoBehaviour
     [Range(0.1f, 1.0f)] public float flashConnectiontTime = 0.4f;
     [Tooltip("Flash interval (in real seconds) for InfoApp alerts over the top of Request and Meeting tabs")]
     [Range(0.1f, 1.0f)] public float flashInfoTabTime = 0.4f;
- 
+
     [Header("PopUp Texts")]
     [Tooltip("How long the full animation cycle lasts (seconds)")]
     [Range(1f, 3f)] public float timerMax = 2.0f;
@@ -964,6 +964,8 @@ public class GUIManager : MonoBehaviour
                 details.sprite = sprite;
                 EventManager.i.PostNotification(EventType.OutcomeOpen, this, details);
             }
+            //turn on new turn button
+            EventManager.i.PostNotification(EventType.NewTurnShow, this, null);
         }
     }
 
@@ -1038,7 +1040,7 @@ public class GUIManager : MonoBehaviour
         return new Tuple<string, string, string>(tooltipHeader, tooltipMain, tooltipDetails);
     }
     #endregion
-    
+
     #region Global Tooltips...
     //
     // - - - Global tooltips

@@ -134,8 +134,7 @@ public class ActionManager : MonoBehaviour
 
     #endregion
 
-
-
+    #region OnEvent
     /// <summary>
     /// Event Handler
     /// </summary>
@@ -250,15 +249,9 @@ public class ActionManager : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
-    /// <summary>
-    /// deregister events
-    /// </summary>
-    public void OnDisable()
-    {
-        EventManager.i.RemoveEvent(EventType.OutcomeOpen);
-    }
-
+    #region SetColours
     /// <summary>
     /// set colour palette for modal Outcome Window
     /// </summary>
@@ -276,8 +269,9 @@ public class ActionManager : MonoBehaviour
         colourGrey = GameManager.i.colourScript.GetColour(ColourType.greyText);
         colourEnd = GameManager.i.colourScript.GetEndTag();
     }
+    #endregion
 
-
+    #region ProcessNodeAction
     /// <summary>
     /// Processes node actor actions (Resistance and Authority Node actions)
     /// </summary>
@@ -515,7 +509,9 @@ public class ActionManager : MonoBehaviour
         //generate a create modal window event
         EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessNodeAction");
     }
+    #endregion
 
+    #region ProcessNodeGearAction
     /// <summary>
     /// Process Node Gear related actions (player's current node, Resistance)
     /// </summary>
@@ -635,8 +631,9 @@ public class ActionManager : MonoBehaviour
         else
         { EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessNodeGearAction"); }
     }
+    #endregion
 
-
+    #region ProcessManageActorAction
     /// <summary>
     /// Process Manage actor action (first of the nested Manage actor menu's -> provides 'Reserve', 'Dismiss' and 'Dispose' options
     /// </summary>
@@ -763,7 +760,9 @@ public class ActionManager : MonoBehaviour
             EventManager.i.PostNotification(EventType.OpenGenericPicker, this, genericDetails, "ActionManager.cs -> ProcessManagerActorAction");
         }
     }
+    #endregion
 
+    #region InitialiseReserveActorAction
     /// <summary>
     /// Process Manage -> Send to Reserve -> actor action (second level of the nested Manage actor menus)
     /// </summary>
@@ -926,7 +925,9 @@ public class ActionManager : MonoBehaviour
             EventManager.i.PostNotification(EventType.OpenGenericPicker, this, genericDetails, "ActionManager.cs -> InitialiseReserveActorAction");
         }
     }
+    #endregion
 
+    #region InitialiseDismissActorAction
     /// <summary>
     /// Process Manage -> Dismiss Actor -> actor action (second level of the nested Manage actor menus)
     /// </summary>
@@ -1086,7 +1087,9 @@ public class ActionManager : MonoBehaviour
             EventManager.i.PostNotification(EventType.OpenGenericPicker, this, genericDetails, "ActionManager.cs -> InitialiseDismissActorAction");
         }
     }
+    #endregion
 
+    #region InitialiseDisposeActorAction
     /// <summary>
     /// Process Manage -> Dispose of Actor -> actor action (second level of the nested Manage actor menus)
     /// </summary>
@@ -1259,6 +1262,7 @@ public class ActionManager : MonoBehaviour
             EventManager.i.PostNotification(EventType.OpenGenericPicker, this, genericDetails, "ActionManager.cs -> InitialiseDisposeActorAction");
         }
     }
+    #endregion
 
     #region ProcessLieLowActorAction
     /// <summary>
@@ -1374,6 +1378,8 @@ public class ActionManager : MonoBehaviour
         }
         //generate a create modal window event
         EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessLieLowPlayerAction");
+        //end of turn button
+        EventManager.i.PostNotification(EventType.NewTurnShow, this, null, "TurnManager.cs -> UseAction");
     }
     #endregion
 
@@ -1654,6 +1660,7 @@ public class ActionManager : MonoBehaviour
     }
     #endregion
 
+    #region StressLeaveStatistics
     /// <summary>
     /// submethod for ProcessStressLeavePlayer/Actor to take care of statistics
     /// </summary>
@@ -1673,7 +1680,9 @@ public class ActionManager : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
+    #region ProcessGiveGearAction
     /// <summary>
     /// Process Give Gear actor action (Resistance only) -> Player gives gear to actor
     /// </summary>
@@ -1784,7 +1793,9 @@ public class ActionManager : MonoBehaviour
         //generate a create modal window event
         EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessGiveGearAction");
     }
+    #endregion
 
+    #region ProcessTakeGearAction
     /// <summary>
     /// Process Take Gear  from actor action (Resistance only)
     /// </summary>
@@ -1895,7 +1906,9 @@ public class ActionManager : MonoBehaviour
         //generate a create modal window event
         EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessGiveGearAction");
     }
+    #endregion
 
+    #region ProcessPersonalGearAction
     /// <summary>
     /// Process Use Gear (Player use) action (Resistance only)
     /// </summary>
@@ -2041,8 +2054,9 @@ public class ActionManager : MonoBehaviour
         //generate a create modal window event
         EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessUseGearAction");
     }
+    #endregion
 
-
+    #region ProcessReassureActor
     /// <summary>
     /// Reserve pool actor is reassured via the right click action menu
     /// NOTE: calling method checks unhappyTimer > 0 & isReassured is false
@@ -2103,8 +2117,9 @@ public class ActionManager : MonoBehaviour
         //generate a create modal window event
         EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessReassureActor");
     }
+    #endregion
 
-
+    #region ProcessBullyActor
     /// <summary>
     /// Reserve pool actor is Bullied via the right click action menu
     /// NOTE: calling method checks unhappyTimer > 0 & that sufficient power onhand
@@ -2172,8 +2187,9 @@ public class ActionManager : MonoBehaviour
         //generate a create modal window event
         EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessThreatenActor");
     }
+    #endregion
 
-
+    #region ProcessLetGoActor
     /// <summary>
     /// Reserve pool actor is Let Go via the right click action menu
     /// NOTE: calling method checks unhappyTimer > 0 and isNewRecruit is true
@@ -2257,7 +2273,9 @@ public class ActionManager : MonoBehaviour
         //generate a create modal window event
         EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessLetGoActor");
     }
+    #endregion
 
+    #region ProcessFireReserveActor
     /// <summary>
     /// Reserve pool actor is Fired via the right click action menu
     /// NOTE: calling method checks that Player has enough Power
@@ -2356,7 +2374,9 @@ public class ActionManager : MonoBehaviour
         //generate a create modal window event
         EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessFireActor");
     }
+    #endregion
 
+    #region ProcessActiveDutyActor
     /// <summary>
     /// Reserve pool actor is recalled for Active Duty via the right click action menu
     /// NOTE: calling method checks unhappyTimer > 0 and isNewRecruit is true
@@ -2466,7 +2486,9 @@ public class ActionManager : MonoBehaviour
         //generate a create modal window event
         EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessActiveDutyActor");
     }
+    #endregion
 
+    #region ProcessNodeTarget
     /// <summary>
     /// Process attempt on node Target
     /// </summary>
@@ -2755,7 +2777,9 @@ public class ActionManager : MonoBehaviour
         }
         else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", nodeID); }
     }
+    #endregion
 
+    #region ProcessOutcomeHelp
     /// <summary>
     /// Assigns help tags to outcome details. Only the first four tags are taken into account, the rest are ignored
     /// </summary>
@@ -2782,7 +2806,9 @@ public class ActionManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid ModalOutcomeDetails (Null)"); }
     }
+    #endregion
 
+    #region ProcessReserveActorAction
     /// <summary>
     /// processes final selection for a Reserve Actor Action (both sides)
     /// </summary>
@@ -2969,7 +2995,9 @@ public class ActionManager : MonoBehaviour
         }
         else { GameManager.i.guiScript.SetAlertMessageModalOne(AlertType.RecruitingDisabled); }
     }
+    #endregion
 
+    #region ProcessDismissActorAction
     /// <summary>
     /// processes final selection for a Dismiss Actor Action
     /// </summary>
@@ -3024,7 +3052,7 @@ public class ActionManager : MonoBehaviour
                                         GameManager.i.hqScript.GetCurrentHQ().tag);
                                     moodText = GameManager.i.personScript.UpdateMood(MoodType.DismissPromote, actor.arc.name);
                                     actor.AddHistory(new HistoryActor() { text = "Has been Promoted" });
-                                    GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = string.Format("Promote {0}, {1}", actor.actorName, actor.arc.name)});
+                                    GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = string.Format("Promote {0}, {1}", actor.actorName, actor.arc.name) });
                                     GameManager.i.popUpFixedScript.SetData(slotID, "Promoted");
                                     break;
                                 case "DismissIncompetent":
@@ -3149,7 +3177,9 @@ public class ActionManager : MonoBehaviour
         //generate a create modal window event
         EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessDismissActorAction");
     }
+    #endregion
 
+    #region ProcessDisposeActorAction
     /// <summary>
     /// processes final selection for a Dispose Actor Action
     /// </summary>
@@ -3320,7 +3350,9 @@ public class ActionManager : MonoBehaviour
         //generate a create modal window event
         EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessDisposeActorAction");
     }
+    #endregion
 
+    #region ProcessTeamAction
     /// <summary>
     /// Handles Authority "ANY TEAM" action
     /// </summary>
@@ -3330,7 +3362,9 @@ public class ActionManager : MonoBehaviour
         GameManager.i.teamPickerScript.SetTeamPicker(details);
         EventManager.i.PostNotification(EventType.OpenTeamPicker, this, details, "ActionManager.cs -> ProcessTeamAction");
     }
+    #endregion
 
+    #region ProcessHandleActor
     /// <summary>
     /// 'Hande' Actor action. Branches to specific Generic Picker window depending on option selected
     /// </summary>
@@ -3387,7 +3421,6 @@ public class ActionManager : MonoBehaviour
         }
         else
         {
-
             if (handler != null)
             {
                 //activate Back button to enable user to flip back a window
@@ -3397,12 +3430,14 @@ public class ActionManager : MonoBehaviour
             }
         }
     }
+    #endregion
 
-
+    #region GetPlayerActionMenuHeader
     public string GetPlayerActionMenuHeader()
     { return string.Format("{0}Personal Actions{1}", colourResistance, colourEnd); }
+    #endregion
 
-
+    #region SetDefaultOutcome
     /// <summary>
     /// Default data set for outcome if a problem
     /// </summary>
@@ -3423,6 +3458,7 @@ public class ActionManager : MonoBehaviour
         }
         return outcomeDetails;
     }
+    #endregion
 
     //methods above here
 }

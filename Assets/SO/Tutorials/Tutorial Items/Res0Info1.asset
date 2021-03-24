@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Res0Info1
   m_EditorClassIdentifier: 
   tutorialType: {fileID: 11400000, guid: 716ea073e009ff84381f714833572864, type: 2}
-  tag: Getting Around
+  tag: Movement
   set: {fileID: 11400000, guid: 8684e764709be71419fb07dae908d1e0, type: 2}
   topText: 
   bottomText: 
