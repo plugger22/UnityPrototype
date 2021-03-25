@@ -80,6 +80,8 @@ public class LoadManager : MonoBehaviour
     public TutorialItem[] arrayOfTutorialItems;
     public TutorialType[] arrayOfTutorialTypes;
     public TutorialGoal[] arrayOfTutorialGoals;
+    public TutorialQuery[] arrayOfTutorialQueries;
+    public TutorialDialogue[] arrayOfTutorialDialogues;
     public TutorialOption[] arrayOfTutorialOptions;
     public TutorialGoalType[] arrayOfTutorialGoalTypes;
     public TutorialQueryType[] arrayOfTutorialQueryTypes;
@@ -1124,6 +1126,20 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTutorialTypes has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No TutorialTypes present"); }
+        //
+        // - - - Tutorial Queries (not stored in a collection)
+        //
+        numArray = arrayOfTutorialQueries.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTutorialQueries has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No TutorialQueries present"); }
+        //
+        // - - - Tutorial Dialogues (not stored in a collection)
+        //
+        numArray = arrayOfTutorialDialogues.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTutorialDialogues has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No TutorialDialogues present"); }
         //
         // - - - Tutorial Goal (not stored in a collection)
         //

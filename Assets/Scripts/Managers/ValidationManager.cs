@@ -1942,6 +1942,12 @@ public class ValidationManager : MonoBehaviour
                                                           item.name, count, maxTutorialOptions, "\n");
                                                     }
                                                 }
+                                                //tutorialQuery.item should match parent
+                                                if (item.name.Equals(item.query.item.name, StringComparison.Ordinal) == false)
+                                                {
+                                                    Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: TutorialQuery \"{0}\", item \"{2}\" doesn't match parent item \"{3}\"{4}",
+                                                      item.query.name, item.query.item.name, item.name, "\n");
+                                                }
                                                 isSpecialCase = false;
                                                 if (item.query.queryType.name.Equals("Secret", StringComparison.Ordinal) == true)
                                                 { isSpecialCase = true; }
@@ -1996,7 +2002,12 @@ public class ValidationManager : MonoBehaviour
 
                                                 break;
                                             case "Dialogue":
-
+                                                //tutorialDialogue.item should match parent
+                                                if (item.name.Equals(item.dialogue.item.name, StringComparison.Ordinal) == false)
+                                                {
+                                                    Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: TutorialDialogue \"{0}\", item \"{2}\" doesn't match parent item \"{3}\"{4}",
+                                                      item.dialogue.name, item.dialogue.item.name, item.name, "\n");
+                                                }
                                                 break;
                                             default: Debug.LogWarningFormat("Unrecognised item.tutorialType \"{0}\"", item.tutorialType.name); break;
                                         }
@@ -2200,6 +2211,10 @@ public class ValidationManager : MonoBehaviour
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfTutorialItems);
         //TutorialTypes
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfTutorialTypes);
+        //TutorialQueries
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfTutorialQueries);
+        //TutorialDialogues
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfTutorialDialogues);
         //TutorialGoals
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfTutorialGoals);
         //TutorialGoalTypes
