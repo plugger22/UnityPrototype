@@ -14,14 +14,18 @@ MonoBehaviour:
   tutorialType: {fileID: 11400000, guid: 6af73092ead59e34f89fadf31d6d355c, type: 2}
   tag: Introduction
   set: {fileID: 11400000, guid: 0e6e4f4202fc8ce4c81bc74b8e59543c, type: 2}
-  topText: Fred here, Tutorial Set 1
-  bottomText: Look sharp. The one before you? Dead within days. Didn't pay attention<br><br>Work
-    your way through the tasks on the right. Take your time
+  dialogue: {fileID: 11400000, guid: c9cb9dbfc961a274eb8da8c94af752c6, type: 2}
+  topText: Fred here. Hey, wake up!
+  bottomText: You can't sit on your backside all day watching SerialFlix<br><br>It's
+    time you understood the <b>security</b> on the Hyperloop<br><br>You need to move
+    but you <b>have to be smart about it</b>
   gameHelp: {fileID: 0}
   goal: {fileID: 0}
+  queryType: {fileID: 0}
   queryHeader: 
   queryText: 
   isRandomOptions: 0
   listOfOptions: []
   listOfIgnoreOptions: []
-  isQueryDone: 0
+  listOfOptionsAlt: []
+  listOfIgnoreOptionsAlt: []

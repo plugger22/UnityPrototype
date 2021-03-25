@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8ad4beabba4b3f418b499700208beb6, type: 3}
+  m_Name: Res0Query0
+  m_EditorClassIdentifier: 
+  item: {fileID: 11400000, guid: 94321c3fce5f3bf4a9450ccc98744962, type: 2}
+  queryType: {fileID: 11400000, guid: b3e8cb19811f5a34992ae54dd9a35dae, type: 2}
+  queryHeader: Your Orientation
+  queryText: The Resistance doesn't care if you're a confused, sexed up, Orangutan<br><br>You'll
+    be judged on your merits
+  isRandomOptions: 0
+  listOfOptions:
+  - {fileID: 11400000, guid: 9607f2b746acf41469bf8c88f98ba671, type: 2}
+  - {fileID: 11400000, guid: d98cf6dba71922b4cbb316498b31255f, type: 2}
+  - {fileID: 11400000, guid: 13a44eb2c9cf69641ad7b124ba202a39, type: 2}
+  - {fileID: 11400000, guid: f505b0a6c27e0504e8ec7178326af357, type: 2}
+  listOfIgnoreOptions:
+  - {fileID: 11400000, guid: d98cf6dba71922b4cbb316498b31255f, type: 2}
+  listOfOptionsAlt: []
+  listOfIgnoreOptionsAlt: []

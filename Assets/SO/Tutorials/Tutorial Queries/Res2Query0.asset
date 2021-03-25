@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8ad4beabba4b3f418b499700208beb6, type: 3}
+  m_Name: Res2Query0
+  m_EditorClassIdentifier: 
+  item: {fileID: 11400000, guid: 0ba135735cfb2314c9c4a1778a1aa27a, type: 2}
+  queryType: {fileID: 11400000, guid: 932d6256daa87c544beac8ae5099c73e, type: 2}
+  queryHeader: Your Job
+  queryText: What job did you do before joining us here at the Resistance?<br><br>We're
+    looking for useful skills...
+  isRandomOptions: 1
+  listOfOptions:
+  - {fileID: 11400000, guid: 69514e86ece5f2f459a0d40a918ebac6, type: 2}
+  - {fileID: 11400000, guid: a280ec036d8e7af46b930840b4e09a04, type: 2}
+  - {fileID: 11400000, guid: 924e68d3cededc04e9577b9ffdf24192, type: 2}
+  - {fileID: 11400000, guid: 893bad95b68a0b24c95d4df6db598056, type: 2}
+  - {fileID: 11400000, guid: 1b6c9d6bfe7374940be6d096b66d45ee, type: 2}
+  - {fileID: 11400000, guid: 44201d12857820947b49d0ec20337374, type: 2}
+  - {fileID: 11400000, guid: e0fb46a78fd130b488be11c9bf72f0e7, type: 2}
+  - {fileID: 11400000, guid: 836452e57025a8f419a8d21f9e8869af, type: 2}
+  - {fileID: 11400000, guid: 99feae060da509c45bc2e040f139115c, type: 2}
+  listOfIgnoreOptions:
+  - {fileID: 11400000, guid: 99feae060da509c45bc2e040f139115c, type: 2}
+  listOfOptionsAlt: []
+  listOfIgnoreOptionsAlt: []

@@ -1924,9 +1924,9 @@ public class ValidationManager : MonoBehaviour
                                         //Query item
                                         switch (item.tutorialType.name)
                                         {
-                                            case "Question":
+                                            case "Query":
                                                 //listOfOptions
-                                                count = item.listOfOptions.Count();
+                                                count = item.query.listOfOptions.Count();
                                                 //check mininum number Of options
                                                 if (count < minTutorialOptions)
                                                 {
@@ -1934,7 +1934,7 @@ public class ValidationManager : MonoBehaviour
                                                       item.name, count, minTutorialOptions, "\n");
                                                 }
                                                 //random -> any number, not random, check max number of Options
-                                                if (item.isRandomOptions == false)
+                                                if (item.query.isRandomOptions == false)
                                                 {
                                                     if (count > maxTutorialOptions)
                                                     {
@@ -1943,12 +1943,12 @@ public class ValidationManager : MonoBehaviour
                                                     }
                                                 }
                                                 isSpecialCase = false;
-                                                if (item.queryType.name.Equals("Secret", StringComparison.Ordinal) == true)
+                                                if (item.query.queryType.name.Equals("Secret", StringComparison.Ordinal) == true)
                                                 { isSpecialCase = true; }
                                                 //loop tutorialOptions in listsOfOptions
-                                                for (int m = 0; m < item.listOfOptions.Count; m++)
+                                                for (int m = 0; m < item.query.listOfOptions.Count; m++)
                                                 {
-                                                    TutorialOption optionTutorial = item.listOfOptions[m];
+                                                    TutorialOption optionTutorial = item.query.listOfOptions[m];
                                                     //option tutorialItem should match parent
                                                     if (optionTutorial.query!= null)
                                                     {
@@ -1972,9 +1972,9 @@ public class ValidationManager : MonoBehaviour
                                                     }
                                                 }
                                                 //loop tutorialOptions in listsOfIgnoreOptions
-                                                for (int m = 0; m < item.listOfIgnoreOptions.Count; m++)
+                                                for (int m = 0; m < item.query.listOfIgnoreOptions.Count; m++)
                                                 {
-                                                    TutorialOption optionTutorial = item.listOfIgnoreOptions[m];
+                                                    TutorialOption optionTutorial = item.query.listOfIgnoreOptions[m];
                                                     //option tutorialItem should match parent
                                                     if (optionTutorial.query != null)
                                                     {

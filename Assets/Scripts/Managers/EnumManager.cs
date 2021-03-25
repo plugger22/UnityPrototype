@@ -257,6 +257,7 @@
         StressLeaveResistance, StressLeaveAuthority,  
         PlayerBreakdown, PlayerLieLowTimes, PlayerLieLowDays, PlayerCaptured, PlayerCapturedDays, PlayerBetrayed, PlayerTimesStressed, PlayerStressedDays, PlayerSuperStressed, PlayerDoNothing,
         PlayerNodeActions, PlayerManageActions, PlayerMoveActions, PlayerTargetAttempts, PlayerGiveGear, PlayerAddictedDays, PlayerTimesCured, PlayerDaysOnJob, PlayerInvisibilityLost,
+        PlayerMoveSecureConnections,
         LieLowDaysTotal, GearTotal,
         TargetAttempts, TargetSuccesses,
         ActorsResignedAuthority, ActorsResignedResistance, ActorResistanceTraitors, ActorsRecruited, ActorConflicts, ActorLearntSecret, ActorCompatibilityGood, ActorCompatibilityBad,

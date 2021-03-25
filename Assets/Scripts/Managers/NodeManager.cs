@@ -2811,6 +2811,9 @@ public class NodeManager : MonoBehaviour
                         Connection connection = GameManager.i.dataScript.GetConnection(moveDetails.connectionID);
                         if (connection != null)
                         {
+                            //statistics
+                            if (connection.SecurityLevel != ConnectionType.None)
+                            { GameManager.i.dataScript.StatisticIncrement(StatType.PlayerMoveSecureConnections); }
                             //AI message
                             string textAI = string.Format("Player spotted moving to \"{0}\", {1}, ID {2}", node.nodeName, node.Arc.name, moveDetails.nodeID);
                             //display
@@ -2955,7 +2958,7 @@ public class NodeManager : MonoBehaviour
             if (data.isChangeInvisibility == true)
             {
                 //Detected
-                outcomeDetails.textTop = string.Format("You have been {0}DETECTED{1} moving to", colourBad, colourEnd);
+                outcomeDetails.textTop = string.Format("You have been {0}DETECTED{1}", colourBad, colourEnd);
                 outcomeDetails.textBottom = data.text;
                 outcomeDetails.sprite = GameManager.i.spriteScript.alarmSprite;
                 outcomeDetails.isAction = true;

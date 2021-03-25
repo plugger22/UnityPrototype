@@ -19,7 +19,7 @@ public class TutorialManager : MonoBehaviour
     [Header("Globals")]
     [Tooltip("Maximum number of Tutorial Items allowed per TutorialSet")]
     [Range(5, 15)] public int maxNumOfItems = 10;
-    [Tooltip("Mininum number of TopicOptions for a Question type TutorialItem in listOfOptions")]
+    [Tooltip("Mininum number of TopicOptions for a Query type TutorialItem in listOfOptions")]
     [Range(4, 4)] public int minNumOfOptions = 4;
 
     [Header("Queries")]
@@ -602,7 +602,7 @@ public class TutorialManager : MonoBehaviour
                 break;
             case GoalType.MoveSecurity:
                 //moved over a secure connection
-                goalValue = GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerInvisibilityLost);
+                goalValue = GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerMoveSecureConnections);
                 break;
         }
         return goalValue;

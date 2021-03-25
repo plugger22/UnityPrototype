@@ -329,7 +329,7 @@ public class TutorialUI : MonoBehaviour
                                     listOfInteractions[i].buttonText.text = string.Format("{0}", GameManager.i.guiScript.tutInfo);
                                     listOfInteractions[i].tooltip.tooltipDetails = "<b>Knowledge is power</b>. A detailed look at a topic";
                                     break;
-                                case "Question":
+                                case "Query":
                                     listOfInteractions[i].buttonText.text = "?";
                                     buttonColours.normalColor = colourQuestion;
                                     listOfInteractions[i].buttonText.text = string.Format("{0}", GameManager.i.guiScript.tutQuestion);
@@ -403,8 +403,8 @@ public class TutorialUI : MonoBehaviour
                                 ModalOutcomeDetails details = new ModalOutcomeDetails()
                                 {
                                     side = GameManager.i.sideScript.PlayerSide,
-                                    textTop = GameManager.Formatt(currentItem.topText, ColourType.moccasinText),
-                                    textBottom = currentItem.bottomText,
+                                    textTop = GameManager.Formatt(currentItem.dialogue.topText, ColourType.moccasinText),
+                                    textBottom = currentItem.dialogue.bottomText,
                                     sprite = GameManager.i.tutorialScript.tutorial.sprite,
                                     isAction = false,
                                     isSpecial = true,
@@ -422,7 +422,7 @@ public class TutorialUI : MonoBehaviour
                             case "Information":
                                 EventManager.i.PostNotification(EventType.GameHelpOpen, this, currentItem.gameHelp);
                                 break;
-                            case "Question":
+                            case "Query":
                                 /*
                                 if (currentItem.isQueryDone == false)
                                 {
@@ -495,8 +495,8 @@ public class TutorialUI : MonoBehaviour
             //data package
             TopicUIData data = new TopicUIData();
             data.topicName = item.tag;
-            data.header = item.queryHeader;
-            data.text = item.queryText;
+            data.header = item.query.queryHeader;
+            data.text = item.query.queryText;
             data.isBoss = false;
             data.nodeID = -1;
             data.uiType = TopicDecisionType.Tutorial;
@@ -504,10 +504,10 @@ public class TutorialUI : MonoBehaviour
             data.ignoreTooltipHeader = string.Format("<size=120%>{0}</size>", GameManager.Formatt("Disappointed", ColourType.badText));
             data.ignoreTooltipMain = "Yes, I am. Being able to make a decision is important, what's wrong with you?";
             data.ignoreTooltipDetails = string.Format("<size=115%>{0}</size>", GameManager.Formatt("I'll have to make it for you", ColourType.neutralText));
-            if (item.queryType != null)
+            if (item.query.queryType != null)
             {
                 //query item type
-                GameManager.i.tutorialScript.queryType = item.queryType;
+                GameManager.i.tutorialScript.queryType = item.query.queryType;
                 //Topic options
                 TopicOption[] arrayOfTopicOptions = GameManager.i.tutorialScript.tutorial.arrayOfOptions;
                 if (arrayOfTopicOptions != null)
@@ -534,32 +534,32 @@ public class TutorialUI : MonoBehaviour
                                 List<TutorialOption> listOfTutorialOptions = new List<TutorialOption>();
                                 List<TutorialOption> listOfTutorialIgnoreOptions = new List<TutorialOption>();
                                 //special cases where an Alt set of options may be needed
-                                switch (item.queryType.name)
+                                switch (item.query.queryType.name)
                                 {
                                     case "Name":
                                         switch (GameManager.i.playerScript.sex)
                                         {
                                             case ActorSex.Male:
-                                                listOfTutorialOptions = item.listOfOptions;
-                                                listOfTutorialIgnoreOptions = item.listOfIgnoreOptions;
+                                                listOfTutorialOptions = item.query.listOfOptions;
+                                                listOfTutorialIgnoreOptions = item.query.listOfIgnoreOptions;
                                                 break;
                                             case ActorSex.Female:
-                                                listOfTutorialOptions = item.listOfOptionsAlt;
-                                                listOfTutorialIgnoreOptions = item.listOfIgnoreOptionsAlt;
+                                                listOfTutorialOptions = item.query.listOfOptionsAlt;
+                                                listOfTutorialIgnoreOptions = item.query.listOfIgnoreOptionsAlt;
                                                 break;
                                             default: Debug.LogWarningFormat("Unrecognised ActorSex \"{0}\"", GameManager.i.playerScript.sex); break;
                                         }
                                         break;
                                     default:
-                                        listOfTutorialOptions = item.listOfOptions;
-                                        listOfTutorialIgnoreOptions = item.listOfIgnoreOptions;
+                                        listOfTutorialOptions = item.query.listOfOptions;
+                                        listOfTutorialIgnoreOptions = item.query.listOfIgnoreOptions;
                                         break;
                                 }
                                 count = listOfTutorialOptions.Count;
                                 //create temp list by Value (will be deleting
                                 List<TutorialOption> listOfTempOptions = new List<TutorialOption>(listOfTutorialOptions) { };
                                 // - - - RANDOM
-                                if (item.isRandomOptions == true)
+                                if (item.query.isRandomOptions == true)
                                 {
                                     limit = Mathf.Min(maxOptions, count);
                                     //select up to four tutorial options randomly
@@ -621,7 +621,7 @@ public class TutorialUI : MonoBehaviour
                                     if (option != null)
                                     {
                                         option.tooltipHeader = string.Format("<size=120%>{0}</size>", GameManager.Formatt(option.tag, ColourType.neutralText));
-                                        option.tooltipMain = GameManager.i.tutorialScript.GetTutorialTooltip(item.queryType);
+                                        option.tooltipMain = GameManager.i.tutorialScript.GetTutorialTooltip(item.query.queryType);
                                         //reassign option number to be the position in the listOfOptions
                                         option.optionNumber = index;
                                         //set all options as Valid

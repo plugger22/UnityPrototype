@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Name: MovementSecurity
   m_EditorClassIdentifier: 
   notes: Player moves through a secure connection
-  startTopText: Understand Hyperloop Security
+  startTopText: Hyperloop Security
   startBottomText: Move to different district using a secure Hyperloop connection<br><br>Go
-    ahead and ring the bell<br><br>Let's see what happens?
+    ahead and <b>ring the bell</b><br><br>Let's see what happens?
   finishTopText: Ding Ding. They now know where you've been
   finishBottomText: Is that a bad thing? It could be<br><br>They <b>don't like</b>
-    Resistance operatives<br><br>No sir, they'd prefer to <br>ERASE</b> you
+    Resistance operatives<br><br>No sir, they'd prefer to <b>ERASE</b> you
   goal0: {fileID: 11400000, guid: 138ab00f643f349409c32bebe2cb7424, type: 2}
   tracker0Notes: Secure Connections to move
   target0: 1

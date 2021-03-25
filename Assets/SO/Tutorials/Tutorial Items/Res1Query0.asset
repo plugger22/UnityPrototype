@@ -14,38 +14,7 @@ MonoBehaviour:
   tutorialType: {fileID: 11400000, guid: 8b2847a7a246595458eee2b6a64e9b06, type: 2}
   tag: Your Name
   set: {fileID: 11400000, guid: 0e6e4f4202fc8ce4c81bc74b8e59543c, type: 2}
-  topText: 
-  bottomText: 
+  dialogue: {fileID: 0}
   gameHelp: {fileID: 0}
   goal: {fileID: 0}
-  queryType: {fileID: 11400000, guid: 7b12844901fc9f9478441b5e50b7ecc1, type: 2}
-  queryHeader: Your Name
-  queryText: What are we going to call you?<br><br>New recruits don't get to use their
-    <b>own name</b>. Not yet, anyway
-  isRandomOptions: 1
-  listOfOptions:
-  - {fileID: 11400000, guid: 1bd7497d20068ac4c92f7fefdaa75e85, type: 2}
-  - {fileID: 11400000, guid: efdc3f22b5c0eda4ead314f8a3a942fc, type: 2}
-  - {fileID: 11400000, guid: 85bb0ff6c76e09049b7e75c402acf03a, type: 2}
-  - {fileID: 11400000, guid: fb78ff1ca1393ee4596a88d3066e3e60, type: 2}
-  - {fileID: 11400000, guid: 5d9510a2bb69b394fa03b24af2d8f144, type: 2}
-  - {fileID: 11400000, guid: 89a4abf95b7f4aa4ea6326a42e0b55f5, type: 2}
-  - {fileID: 11400000, guid: 05ff78f8de101d84e984560f8545d2ad, type: 2}
-  - {fileID: 11400000, guid: cec43b58deccab74686bb62b0d729890, type: 2}
-  - {fileID: 11400000, guid: 8042c6fd2bb64ab43a746ea37ce644e4, type: 2}
-  - {fileID: 11400000, guid: 1ab89e9322cd8f74da62511c326a3c89, type: 2}
-  listOfIgnoreOptions:
-  - {fileID: 11400000, guid: 1ab89e9322cd8f74da62511c326a3c89, type: 2}
-  listOfOptionsAlt:
-  - {fileID: 11400000, guid: 1eb4abbd2e2be834bb90ce1f02147b6c, type: 2}
-  - {fileID: 11400000, guid: aeb8863be2bfc694da552c64fc7bdb0b, type: 2}
-  - {fileID: 11400000, guid: 7cdbde38f78d26d4b979b0934cf9e7b0, type: 2}
-  - {fileID: 11400000, guid: 32c6bd84082ca97458fde423f23742af, type: 2}
-  - {fileID: 11400000, guid: 7fb4d1e5ef0c525459289a38d502bc96, type: 2}
-  - {fileID: 11400000, guid: 0474ee9b7bb196a40906349c123412ce, type: 2}
-  - {fileID: 11400000, guid: 3e563f7356a3c1f4489fbf7e2d107895, type: 2}
-  - {fileID: 11400000, guid: d45f7dce7cdd5dd4abaeb787c63c31b9, type: 2}
-  - {fileID: 11400000, guid: 66183460ab18b4645b794b8e60b17bab, type: 2}
-  - {fileID: 11400000, guid: d93fdd7a139e0c0448c6b1565686bc58, type: 2}
-  listOfIgnoreOptionsAlt:
-  - {fileID: 11400000, guid: d93fdd7a139e0c0448c6b1565686bc58, type: 2}
+  query: {fileID: 11400000, guid: 039191711e5abb94a9a7286637c128e4, type: 2}

@@ -3899,3 +3899,130 @@ City seed 8707 -> VirtualCity, Eurasia
 
 Dev seed 13164 -> Thursday, 25 March 2021 2:51 PM
 City seed 63385 -> Londus, Eurasia
+
+Dev seed 9164 -> Thursday, 25 March 2021 2:59 PM
+City seed 37981 -> Londus, Eurasia
+
+Dev seed 26643 -> Thursday, 25 March 2021 3:28 PM
+City seed 2850 -> Londus, Eurasia
+
+Dev seed 39632 -> Thursday, 25 March 2021 3:41 PM
+City seed 47138 -> VirtualCity, Eurasia
+
+Dev seed 48178 -> Thursday, 25 March 2021 3:44 PM
+City seed 28117 -> VirtualCity, Eurasia
+
+Dev seed 14510 -> Thursday, 25 March 2021 3:51 PM
+City seed 26329 -> VirtualCity, Eurasia
+
+Dev seed 24580 -> Thursday, 25 March 2021 4:31 PM
+City seed 12913 -> VirtualCity, Eurasia
+
+Dev seed 4956 -> Thursday, 25 March 2021 5:18 PM
+City seed 55061 -> VirtualCity, Eurasia
+
+Dev seed 13402 -> Thursday, 25 March 2021 5:26 PM
+City seed 21831 -> VirtualCity, Eurasia
+WARNING Unrecognised item.tutorialType "Query"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateTutorialData() (at Assets/Scripts/Managers/ValidationManager.cs:2001)
+	ValidationManager:Initialise(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:178)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:930)
+	GameManager:InitialiseTutorial() (at Assets/Scripts/GameManager.cs:1039)
+	ControlManager:ProcessTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:625)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:94)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:329)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised item.tutorialType "Query"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateTutorialData() (at Assets/Scripts/Managers/ValidationManager.cs:2001)
+	ValidationManager:Initialise(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:178)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:930)
+	GameManager:InitialiseTutorial() (at Assets/Scripts/GameManager.cs:1039)
+	ControlManager:ProcessTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:625)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:94)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:329)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised item.tutorialType "Query"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateTutorialData() (at Assets/Scripts/Managers/ValidationManager.cs:2001)
+	ValidationManager:Initialise(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:178)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:930)
+	GameManager:InitialiseTutorial() (at Assets/Scripts/GameManager.cs:1039)
+	ControlManager:ProcessTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:625)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:94)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:329)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised item.tutorialType "Query"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateTutorialData() (at Assets/Scripts/Managers/ValidationManager.cs:2001)
+	ValidationManager:Initialise(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:178)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:930)
+	GameManager:InitialiseTutorial() (at Assets/Scripts/GameManager.cs:1039)
+	ControlManager:ProcessTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:625)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:94)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:329)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised item.tutorialType "Query"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateTutorialData() (at Assets/Scripts/Managers/ValidationManager.cs:2001)
+	ValidationManager:Initialise(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:178)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:930)
+	GameManager:InitialiseTutorial() (at Assets/Scripts/GameManager.cs:1039)
+	ControlManager:ProcessTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:625)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:94)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:329)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised item.tutorialType "Query"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateTutorialData() (at Assets/Scripts/Managers/ValidationManager.cs:2001)
+	ValidationManager:Initialise(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:178)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:930)
+	GameManager:InitialiseTutorial() (at Assets/Scripts/GameManager.cs:1039)
+	ControlManager:ProcessTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:625)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:94)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:329)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised item.tutorialType "Query"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateTutorialData() (at Assets/Scripts/Managers/ValidationManager.cs:2001)
+	ValidationManager:Initialise(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:178)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:930)
+	GameManager:InitialiseTutorial() (at Assets/Scripts/GameManager.cs:1039)
+	ControlManager:ProcessTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:625)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:94)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:329)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised item.TutorialType "Query"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TutorialUI:SetTutorialUI(TutorialSet) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:338)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:257)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ControlManager:ProcessCloseTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:648)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:97)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:343)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:472)
+	
+Dev seed 17071 -> Thursday, 25 March 2021 5:27 PM
+City seed 64341 -> VirtualCity, Eurasia
+WARNING Unrecognised item.TutorialType "Query"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TutorialUI:SetTutorialUI(TutorialSet) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:338)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:257)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ControlManager:ProcessCloseTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:648)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:97)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:343)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:472)
+	
+Dev seed 30059 -> Thursday, 25 March 2021 5:28 PM
+City seed 59002 -> VirtualCity, Eurasia
