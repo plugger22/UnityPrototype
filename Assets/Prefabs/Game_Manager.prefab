@@ -1610,6 +1610,7 @@ MonoBehaviour:
   arrayOfGameHelp:
   - {fileID: 11400000, guid: 695b16a6bbe55124680ffaddad0a0b60, type: 2}
   - {fileID: 11400000, guid: 7ae51771a2d97054cbffb8896156f03d, type: 2}
+  - {fileID: 11400000, guid: 532a755c66254a049a5ddb3c85afdbe1, type: 2}
   arrayOfActorDraftSex:
   - {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
   - {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}
@@ -1850,6 +1851,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bfcc5d0e48b852248b63eb92bfd8a09a, type: 2}
   - {fileID: 11400000, guid: 6f3cbdb1c657d1743a58c3a55af229df, type: 2}
   - {fileID: 11400000, guid: c5344b572ff1d43448b13f0ab2372855, type: 2}
+  - {fileID: 11400000, guid: ab677d1f719b5de48bfb8777f4dfe109, type: 2}
+  - {fileID: 11400000, guid: 703089c631d223f4682010296de1cfca, type: 2}
   arrayOfTutorialTypes:
   - {fileID: 11400000, guid: 6af73092ead59e34f89fadf31d6d355c, type: 2}
   - {fileID: 11400000, guid: 3ea5e079678bd114896744e070740f21, type: 2}
@@ -1857,6 +1860,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8b2847a7a246595458eee2b6a64e9b06, type: 2}
   arrayOfTutorialGoals:
   - {fileID: 11400000, guid: 33e14c1b26727af4796ede7d57be31f2, type: 2}
+  - {fileID: 11400000, guid: ac9f60d65a658db4eb63cad394c0f21e, type: 2}
   arrayOfTutorialOptions:
   - {fileID: 11400000, guid: 9607f2b746acf41469bf8c88f98ba671, type: 2}
   - {fileID: 11400000, guid: d98cf6dba71922b4cbb316498b31255f, type: 2}
@@ -1958,6 +1962,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6ead51f523ea0944eb581565f42d4a36, type: 2}
   arrayOfTutorialGoalTypes:
   - {fileID: 11400000, guid: 5237bc6f2db221e4cbec1efa3fbd5e9a, type: 2}
+  - {fileID: 11400000, guid: 138ab00f643f349409c32bebe2cb7424, type: 2}
   arrayOfTutorialQueryTypes:
   - {fileID: 11400000, guid: 932d6256daa87c544beac8ae5099c73e, type: 2}
   - {fileID: 11400000, guid: 7b12844901fc9f9478441b5e50b7ecc1, type: 2}
@@ -6176,8 +6181,8 @@ MonoBehaviour:
   conditionWhoResistance: 999
   conditionResistance: {fileID: 0}
   playerInvisibility: -1
-  actorSlotID: 0
-  actorType: {fileID: 11400000, guid: 268c960d386d285478b3ab6aaa5796bf, type: 2}
+  actorSlotID: -1
+  actorType: {fileID: 0}
   actorDatapoint0: -1
   actorDatapoint1: -1
   actorDatapoint2: -1
