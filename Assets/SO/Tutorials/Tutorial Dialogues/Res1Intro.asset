@@ -14,5 +14,5 @@ MonoBehaviour:
   topText: Fred here. Hey, wake up!
   bottomText: You can't sit on your backside all day watching SerialFlix<br><br>It's
     time you understood the <b>security</b> on the Hyperloop<br><br>You have to move
-    but you <b>need to be smart about it</b>
+    around but you need to be <b>smart</b> about it
   item: {fileID: 11400000, guid: 8daec609db5c94d4c808e9a92441f9fe, type: 2}

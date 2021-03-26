@@ -247,7 +247,7 @@
     //
     // - - - Goals
     //
-    public enum GoalType { None, Move, MoveSecurity }                 //TutorialGoal.SO equivalents
+    public enum GoalType { None, Move, MoveSecurity, PlayerInvisibility }                 //TutorialGoal.SO equivalents
 
     //
     // - - - Statistics - - - 

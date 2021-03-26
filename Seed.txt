@@ -4029,3 +4029,35 @@ City seed 59002 -> VirtualCity, Eurasia
 
 Dev seed 32328 -> Thursday, 25 March 2021 7:37 PM
 City seed 49827 -> VirtualCity, Eurasia
+
+Dev seed 54982 -> Friday, 26 March 2021 10:48 AM
+City seed 62780 -> VirtualCity, Eurasia
+
+Dev seed 62833 -> Friday, 26 March 2021 10:59 AM
+City seed 25737 -> Londus, Eurasia
+
+Dev seed 8876 -> Friday, 26 March 2021 11:24 AM
+City seed 7892 -> VirtualCity, Eurasia
+
+Dev seed 26980 -> Friday, 26 March 2021 11:43 AM
+City seed 25664 -> VirtualCity, Eurasia
+WARNING Unrecognised goal "PlayerInvisibility (TutorialGoalType)"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TutorialManager:GetGoalType(TutorialGoalType) (at Assets/Scripts/Managers/TutorialManager.cs:580)
+	TutorialManager:UpdateGoal(TutorialGoal) (at Assets/Scripts/Managers/TutorialManager.cs:432)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:416)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:263)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid goalType (GoalType.None)
+UnityEngine.Debug:LogWarning(Object)
+	TutorialManager:UpdateGoal(TutorialGoal) (at Assets/Scripts/Managers/TutorialManager.cs:481)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:416)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:263)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 46331 -> Friday, 26 March 2021 11:48 AM
+City seed 58293 -> VirtualCity, Eurasia

@@ -577,6 +577,7 @@ public class TutorialManager : MonoBehaviour
             {
                 case "MoveBasic": goalType = GoalType.Move; break;
                 case "MoveSecurity": goalType = GoalType.MoveSecurity; break;
+                case "PlayerInvisibility": goalType = GoalType.PlayerInvisibility; break;
                 default: Debug.LogWarningFormat("Unrecognised goal \"{0}\"", goal); break;
             }
         }
@@ -603,6 +604,10 @@ public class TutorialManager : MonoBehaviour
             case GoalType.MoveSecurity:
                 //moved over a secure connection
                 goalValue = GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerMoveSecureConnections);
+                break;
+            case GoalType.PlayerInvisibility:
+                //player lost invisibility
+                goalValue = GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerInvisibilityLost);
                 break;
         }
         return goalValue;
