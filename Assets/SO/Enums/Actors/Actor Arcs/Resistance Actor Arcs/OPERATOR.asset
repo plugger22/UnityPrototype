@@ -12,13 +12,11 @@ MonoBehaviour:
   m_Name: OPERATOR
   m_EditorClassIdentifier: 
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
-  description: 
   actorName: Sid Vicious
   sprite: {fileID: 21300000, guid: e8c221bd51bffd746985d9a2db13476c, type: 3}
   nodeAction: {fileID: 11400000, guid: ccf3c7c5208a9a344b28ff30c37e55d2, type: 2}
   preferredTeam: {fileID: 0}
-  listPrefPrimary:
-  - {fileID: 11400000, guid: 1667605fc4382654f9baac2b83741900, type: 2}
-  listPrefExclude:
-  - {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}
   preferredGear: {fileID: 11400000, guid: a88df17476114704ab637e71e32b4140, type: 2}
+  summary: Muscle. Smart muscle
+  details: They can neutralise any Authority <b>TEAM</b> within the District. Discretely
+    and efficiently

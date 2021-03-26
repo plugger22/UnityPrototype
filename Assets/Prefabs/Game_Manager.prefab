@@ -1612,6 +1612,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7ae51771a2d97054cbffb8896156f03d, type: 2}
   - {fileID: 11400000, guid: 532a755c66254a049a5ddb3c85afdbe1, type: 2}
   - {fileID: 11400000, guid: b9d5b06e3c95671478801660d588f13d, type: 2}
+  - {fileID: 11400000, guid: dd5eafc56577fc04d9412a8eabaf7450, type: 2}
   arrayOfActorDraftSex:
   - {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
   - {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}
@@ -1856,6 +1857,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 703089c631d223f4682010296de1cfca, type: 2}
   - {fileID: 11400000, guid: 10a7a61b1d0482c41aa8fde11c8f9eaf, type: 2}
   - {fileID: 11400000, guid: da4deed10b85c874d856e2c1353fba57, type: 2}
+  - {fileID: 11400000, guid: c9f5762854feafb488bd93d4edab825a, type: 2}
+  - {fileID: 11400000, guid: 3bfa0fd44afacbd438fea1415d163e81, type: 2}
   arrayOfTutorialTypes:
   - {fileID: 11400000, guid: 6af73092ead59e34f89fadf31d6d355c, type: 2}
   - {fileID: 11400000, guid: 3ea5e079678bd114896744e070740f21, type: 2}
@@ -1880,6 +1883,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 99cf5372e4a30634f8379386da9eb3fd, type: 2}
   - {fileID: 11400000, guid: 3bf73be6b46266b4497c5c0369a774ae, type: 2}
   - {fileID: 11400000, guid: 09b7eeb167c5a1744bf3177e47e8b9ac, type: 2}
+  - {fileID: 11400000, guid: 48c0a57e8dd2d934f935a4de93ec1e76, type: 2}
   arrayOfTutorialOptions:
   - {fileID: 11400000, guid: 9607f2b746acf41469bf8c88f98ba671, type: 2}
   - {fileID: 11400000, guid: d98cf6dba71922b4cbb316498b31255f, type: 2}
@@ -6157,6 +6161,8 @@ MonoBehaviour:
   isActorRightMenu: 1
   isNodeLeftMenu: 1
   isNodeRightMenu: 1
+  isPlayerLeftMenu: 1
+  isPlayerRightMenu: 1
   isTopWidget: 1
   noNodes: 1
 --- !u!114 &114556544146557144

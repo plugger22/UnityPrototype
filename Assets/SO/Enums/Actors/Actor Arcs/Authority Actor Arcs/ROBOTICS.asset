@@ -12,13 +12,10 @@ MonoBehaviour:
   m_Name: ROBOTICS
   m_EditorClassIdentifier: 
   side: {fileID: 11400000, guid: bb86b913ff5927e499a6ca498217210c, type: 2}
-  description: It's only through factories full of robots that we can compete
   actorName: Sir Oswald
   sprite: {fileID: 21300000, guid: c55d85733ea294944a8ee33e1cd13b39, type: 3}
   nodeAction: {fileID: 11400000, guid: d304cedeb8b2d2c4e8b4e1066e7a33b5, type: 2}
   preferredTeam: {fileID: 11400000, guid: d59514a9341d2ee4f9fa3c75e39a50f0, type: 2}
-  listPrefPrimary:
-  - {fileID: 11400000, guid: 6e4d8554b9a93064b86083fd577aae7a, type: 2}
-  listPrefExclude:
-  - {fileID: 11400000, guid: a000e873a8202b044ba60f811375b3a8, type: 2}
   preferredGear: {fileID: 0}
+  summary: test
+  details: test

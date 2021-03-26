@@ -12,13 +12,11 @@ MonoBehaviour:
   m_Name: OBSERVER
   m_EditorClassIdentifier: 
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
-  description: 
   actorName: Wally Watcher
   sprite: {fileID: 21300000, guid: aa2bfbc87aa65fa469977ae64d323a08, type: 3}
   nodeAction: {fileID: 11400000, guid: b13c5fe19ec0ebe409be97bc21c15e65, type: 2}
   preferredTeam: {fileID: 0}
-  listPrefPrimary:
-  - {fileID: 11400000, guid: 57b20377eb263fd469ff13fbcedd95c5, type: 2}
-  listPrefExclude:
-  - {fileID: 11400000, guid: 1667605fc4382654f9baac2b83741900, type: 2}
   preferredGear: {fileID: 11400000, guid: 805f99c9900229e4ab288e5a82b2e46d, type: 2}
+  summary: The patient watchers
+  details: They'll insert a <b>TRACER</b> into the District which will feed you intel
+    on what's going on there

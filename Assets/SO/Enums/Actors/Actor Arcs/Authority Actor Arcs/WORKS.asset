@@ -12,13 +12,10 @@ MonoBehaviour:
   m_Name: WORKS
   m_EditorClassIdentifier: 
   side: {fileID: 11400000, guid: bb86b913ff5927e499a6ca498217210c, type: 2}
-  description: There are essential services that are required for everyday life
   actorName: Sir Edison
   sprite: {fileID: 21300000, guid: 21919cce44cf19643aded1cfcad97695, type: 3}
   nodeAction: {fileID: 11400000, guid: baa27ad6b90477e4e94cb6ed5cc27066, type: 2}
   preferredTeam: {fileID: 11400000, guid: 94454cd8cdb97934aac6ffc1506ac2bf, type: 2}
-  listPrefPrimary:
-  - {fileID: 11400000, guid: 1667605fc4382654f9baac2b83741900, type: 2}
-  listPrefExclude:
-  - {fileID: 11400000, guid: 57b20377eb263fd469ff13fbcedd95c5, type: 2}
   preferredGear: {fileID: 0}
+  summary: test
+  details: test

@@ -12,13 +12,10 @@ MonoBehaviour:
   m_Name: FAVOURS
   m_EditorClassIdentifier: 
   side: {fileID: 11400000, guid: bb86b913ff5927e499a6ca498217210c, type: 2}
-  description: Government is unable to function without the help of the large Corporations
   actorName: Sir Reginald
   sprite: {fileID: 21300000, guid: f7be41304f9c8d44e8124bd9ea059e8e, type: 3}
   nodeAction: {fileID: 11400000, guid: 206465b362300664aa9fc5a7ec403efc, type: 2}
   preferredTeam: {fileID: 11400000, guid: 4f789418549e6514db5d04de0de03768, type: 2}
-  listPrefPrimary:
-  - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
-  listPrefExclude:
-  - {fileID: 11400000, guid: 22da6f390f1942a47ac201efce0a17ad, type: 2}
   preferredGear: {fileID: 0}
+  summary: test
+  details: test

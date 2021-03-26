@@ -12,13 +12,10 @@ MonoBehaviour:
   m_Name: ELITES
   m_EditorClassIdentifier: 
   side: {fileID: 11400000, guid: bb86b913ff5927e499a6ca498217210c, type: 2}
-  description: The elites in their gated communities require special pampering
   actorName: Sir Caviar
   sprite: {fileID: 21300000, guid: e178d1e9f4678a44db7ed3c240b4ee19, type: 3}
   nodeAction: {fileID: 11400000, guid: abe0cf6900169d64a8a95ba3255df559, type: 2}
   preferredTeam: {fileID: 11400000, guid: 2f6e7cce33899234387606982c90b0f0, type: 2}
-  listPrefPrimary:
-  - {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}
-  listPrefExclude:
-  - {fileID: 11400000, guid: a000e873a8202b044ba60f811375b3a8, type: 2}
   preferredGear: {fileID: 0}
+  summary: test
+  details: test

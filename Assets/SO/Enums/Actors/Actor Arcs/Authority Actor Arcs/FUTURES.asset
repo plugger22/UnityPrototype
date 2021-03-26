@@ -12,13 +12,10 @@ MonoBehaviour:
   m_Name: FUTURES
   m_EditorClassIdentifier: 
   side: {fileID: 11400000, guid: bb86b913ff5927e499a6ca498217210c, type: 2}
-  description: The future lies in bigger and better automation
   actorName: Sir Einstein
   sprite: {fileID: 21300000, guid: d717241d8def069448743dd829d0a289, type: 3}
   nodeAction: {fileID: 11400000, guid: b7d7df3adf9a31848bdc6f42f3e3926d, type: 2}
   preferredTeam: {fileID: 11400000, guid: 501a950028915464a8f53020e636a235, type: 2}
-  listPrefPrimary:
-  - {fileID: 11400000, guid: 57b20377eb263fd469ff13fbcedd95c5, type: 2}
-  listPrefExclude:
-  - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
   preferredGear: {fileID: 0}
+  summary: test
+  details: test

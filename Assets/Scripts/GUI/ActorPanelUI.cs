@@ -63,12 +63,17 @@ public class ActorPanelUI : MonoBehaviour
 
     private GenericTooltipUI playerMoodTooltip;
     private GenericTooltipUI playerStressedTooltip;
+    private GenericTooltipUI actor0TypeTooltip;
+    private GenericTooltipUI actor1TypeTooltip;
+    private GenericTooltipUI actor2TypeTooltip;
+    private GenericTooltipUI actor3TypeTooltip;
 
     private bool isPowerUI;                                                     //gives status of Info UI display (true -> Shows Power, false -> COMPATIBILITY)
 
     private Image[] arrayOfPowerCircles = new Image[4];                        //used for more efficient access, populated in initialise. Actors only, index is actorSlotID (0 to 3)
     private TextMeshProUGUI[] arrayOfCompatibility = new TextMeshProUGUI[4];     //compatibility
     private GenericTooltipUI[] arrayOfCompatibilityTooltips = new GenericTooltipUI[4];    //compatibility tooltips
+    private GenericTooltipUI[] arrayOfTypeTooltips = new GenericTooltipUI[4]; //actorArc tooltips
 
     //fast access
     private Sprite vacantAuthorityActor;
@@ -109,6 +114,15 @@ public class ActorPanelUI : MonoBehaviour
         canvas2 = Actor2.GetComponent<CanvasGroup>();
         canvas3 = Actor3.GetComponent<CanvasGroup>();
         canvasPlayer = ActorPlayer.GetComponent<CanvasGroup>();
+        //actor arc type help
+        actor0TypeTooltip = type0.GetComponent<GenericTooltipUI>();
+        actor1TypeTooltip = type1.GetComponent<GenericTooltipUI>();
+        actor2TypeTooltip = type2.GetComponent<GenericTooltipUI>();
+        actor3TypeTooltip = type3.GetComponent<GenericTooltipUI>();
+        Debug.Assert(actor0TypeTooltip != null, "Invalid actor0TypeTooltip (Null)");
+        Debug.Assert(actor1TypeTooltip != null, "Invalid actor1TypeTooltip (Null)");
+        Debug.Assert(actor2TypeTooltip != null, "Invalid actor2TypeTooltip (Null)");
+        Debug.Assert(actor3TypeTooltip != null, "Invalid actor3TypeTooltip (Null)");
         //mood help
         playerMoodTooltip = moodStars.GetComponent<GenericTooltipUI>();
         playerStressedTooltip = playerStressed.GetComponent<GenericTooltipUI>();
@@ -119,6 +133,7 @@ public class ActorPanelUI : MonoBehaviour
         Debug.Assert(compatibility1 != null, "Invalid compatibility1 (Null)");
         Debug.Assert(compatibility2 != null, "Invalid compatibility2 (Null)");
         Debug.Assert(compatibility3 != null, "Invalid compatibility3 (Null)");
+
     }
 
     /// <summary>
@@ -206,16 +221,6 @@ public class ActorPanelUI : MonoBehaviour
         picture2.GetComponent<ActorClickUI>().actorSlotID = 2;
         picture3.GetComponent<ActorClickUI>().actorSlotID = 3;
 
-        type0.GetComponent<ActorTooltipUI>().actorSlotID = 0;
-        type1.GetComponent<ActorTooltipUI>().actorSlotID = 1;
-        type2.GetComponent<ActorTooltipUI>().actorSlotID = 2;
-        type3.GetComponent<ActorTooltipUI>().actorSlotID = 3;
-
-        type0.GetComponent<ActorTooltipUI>().isText = true;
-        type1.GetComponent<ActorTooltipUI>().isText = true;
-        type2.GetComponent<ActorTooltipUI>().isText = true;
-        type3.GetComponent<ActorTooltipUI>().isText = true;
-
         picture0.GetComponent<ActorTooltipUI>().actorSlotID = 0;
         picture1.GetComponent<ActorTooltipUI>().actorSlotID = 1;
         picture2.GetComponent<ActorTooltipUI>().actorSlotID = 2;
@@ -260,6 +265,11 @@ public class ActorPanelUI : MonoBehaviour
         arrayOfCompatibility[1] = compatibility1;
         arrayOfCompatibility[2] = compatibility2;
         arrayOfCompatibility[3] = compatibility3;
+        //initialise arrayOfTypeTooltips
+        arrayOfTypeTooltips[0] = actor0TypeTooltip;
+        arrayOfTypeTooltips[1] = actor1TypeTooltip;
+        arrayOfTypeTooltips[2] = actor2TypeTooltip;
+        arrayOfTypeTooltips[3] = actor3TypeTooltip;
         //array components and assignments
         for (int i = 0; i < 4; i++)
         {
@@ -348,6 +358,8 @@ public class ActorPanelUI : MonoBehaviour
                             {
                                 listOfActorTypes[index].text = arrayOfActors[index].arc.name;
                                 listOfActorPortraits[index].sprite = arrayOfActors[index].sprite;
+                                //arc Type tooltip
+                                SetActorArcTooltip(arrayOfActors[index], index);
                             }
                             else
                             {
@@ -375,6 +387,23 @@ public class ActorPanelUI : MonoBehaviour
             else { Debug.LogError("Invalid listOfActorPortraits (Null)"); }
         }
         else { Debug.LogError("Invalid listOfActorTypes (Null)"); }
+    }
+
+    /// <summary>
+    /// Sets tooltip on actorArc type name, eg. "Heavy", explaining what that actorArc does
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <param name="slotID"></param>
+    private void SetActorArcTooltip(Actor actor, int slotID)
+    {
+        if (actor != null)
+        {
+            arrayOfTypeTooltips[slotID].tooltipHeader = string.Format("<size=115%>{0}</size>",GameManager.Formatt(actor.arc.name, ColourType.neutralText));
+            arrayOfTypeTooltips[slotID].tooltipMain = GameManager.Formatt(actor.arc.summary, ColourType.salmonText);
+            arrayOfTypeTooltips[slotID].tooltipDetails = actor.arc.details;
+            arrayOfTypeTooltips[slotID].y_offset = 150;
+        }
+        else { Debug.LogErrorFormat("Invalid actor (Null) for slotID {0}", slotID); }
     }
 
     /// <summary>

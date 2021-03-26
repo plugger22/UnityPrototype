@@ -12,13 +12,11 @@ MonoBehaviour:
   m_Name: ANARCHIST
   m_EditorClassIdentifier: 
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
-  description: 
   actorName: Billy Banger
   sprite: {fileID: 21300000, guid: 8a947f318ba8ccf45895e42cc50c6af3, type: 3}
   nodeAction: {fileID: 11400000, guid: 8fed4f06752923d408be5a0c30310293, type: 2}
   preferredTeam: {fileID: 0}
-  listPrefPrimary:
-  - {fileID: 11400000, guid: 22da6f390f1942a47ac201efce0a17ad, type: 2}
-  listPrefExclude:
-  - {fileID: 11400000, guid: a000e873a8202b044ba60f811375b3a8, type: 2}
   preferredGear: {fileID: 11400000, guid: 11c5f192680724a4c96f53aec300aead, type: 2}
+  summary: Loves to blow things to bits
+  details: Will destroy key infrastructure in a District with explosives and lower
+    district <b>STABILITY</b>

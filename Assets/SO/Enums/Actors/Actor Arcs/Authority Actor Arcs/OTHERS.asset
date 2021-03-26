@@ -12,13 +12,10 @@ MonoBehaviour:
   m_Name: OTHERS
   m_EditorClassIdentifier: 
   side: {fileID: 11400000, guid: bb86b913ff5927e499a6ca498217210c, type: 2}
-  description: Somebody has to take charge of the milling masses of have nots of society
   actorName: Sir Bulldoze
   sprite: {fileID: 21300000, guid: 0b6fc422b6b300f41a331c39ce6df459, type: 3}
   nodeAction: {fileID: 11400000, guid: 7960309d1abfa024fac139cf32ae7b3e, type: 2}
   preferredTeam: {fileID: 11400000, guid: 0c9b77db0fab3174f80a06334170018c, type: 2}
-  listPrefPrimary:
-  - {fileID: 11400000, guid: a000e873a8202b044ba60f811375b3a8, type: 2}
-  listPrefExclude:
-  - {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}
   preferredGear: {fileID: 0}
+  summary: test
+  details: test

@@ -12,13 +12,10 @@ MonoBehaviour:
   m_Name: PLANNER
   m_EditorClassIdentifier: 
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
-  description: 
   actorName: Careful Ken
   sprite: {fileID: 21300000, guid: 96332a55984d94b48ba0d03d94b64c9b, type: 3}
   nodeAction: {fileID: 11400000, guid: 6df5542460e87924aa2705e2f1d68572, type: 2}
   preferredTeam: {fileID: 0}
-  listPrefPrimary:
-  - {fileID: 11400000, guid: 22da6f390f1942a47ac201efce0a17ad, type: 2}
-  listPrefExclude:
-  - {fileID: 11400000, guid: 6e4d8554b9a93064b86083fd577aae7a, type: 2}
   preferredGear: {fileID: 11400000, guid: 5a4c76688e4902243a2acc5bbdcb7540, type: 2}
+  summary: They look ahead. They know
+  details: They can gather intel on any known <b>TARGET</b> making it easier to attempt

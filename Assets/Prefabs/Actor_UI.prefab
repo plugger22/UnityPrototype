@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 114657106253111018}
   - component: {fileID: 114698499253433182}
   m_Layer: 5
-  m_Name: renown_circle0
+  m_Name: renown_circle3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -41,11 +41,10 @@ GameObject:
   - component: {fileID: 222116529127042428}
   - component: {fileID: 114669298691603514}
   - component: {fileID: 114993248299473808}
-  - component: {fileID: 114109782514330254}
   - component: {fileID: 114926450446108842}
   - component: {fileID: 114925707511946684}
   m_Layer: 5
-  m_Name: Face0
+  m_Name: Face3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -61,9 +60,9 @@ GameObject:
   - component: {fileID: 224897495305465086}
   - component: {fileID: 222632102642454530}
   - component: {fileID: 114333344759344438}
-  - component: {fileID: 114929586758671864}
+  - component: {fileID: 114722490277055700}
   m_Layer: 5
-  m_Name: Type0
+  m_Name: Type3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -82,7 +81,7 @@ GameObject:
   - component: {fileID: 114842514964971292}
   - component: {fileID: 114267499380779636}
   m_Layer: 5
-  m_Name: Compatibility0
+  m_Name: Compatibility3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -99,7 +98,7 @@ GameObject:
   - component: {fileID: 222001740216608240}
   - component: {fileID: 114656648834751530}
   m_Layer: 5
-  m_Name: renown_amount0
+  m_Name: renown_amount3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -164,18 +163,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actorSlotID: 0
---- !u!114 &114109782514330254
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1153942594690806}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c272a1b1037d5b4f82bddc02b37168b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actorSlotID: 0
 --- !u!114 &114163109063792072
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -218,6 +205,7 @@ MonoBehaviour:
   connID: 0
   testTag: 
   isIgnoreClick: 0
+  tooltipType: 0
 --- !u!114 &114309640588895928
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -641,6 +629,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8330b0ecfe5ff4d43aa0f893078461cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114722490277055700
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1643721797393278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca7d8d72305dd0342acffd3c30b3c77f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  x_offset: 0
+  y_offset: 0
+  nodeID: 0
+  connID: 0
+  testTag: 
+  isIgnoreClick: 0
+  tooltipType: 0
 --- !u!114 &114842514964971292
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -685,19 +694,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actorSlotID: 0
---- !u!114 &114929586758671864
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1643721797393278}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3967b908fb54efb48a39887f3481ccc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actorSlotID: 0
-  isText: 0
 --- !u!114 &114993248299473808
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -795,7 +791,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 75, y: -190}
+  m_AnchoredPosition: {x: 1075, y: -190}
   m_SizeDelta: {x: 150, y: 190}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!224 &224235728454222266

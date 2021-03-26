@@ -25,4 +25,6 @@ MonoBehaviour:
   listOfGUIOff: []
   listOfTutorialItems:
   - {fileID: 11400000, guid: 2f16ad5d6a7fbb640bf5acab159bff6c, type: 2}
+  - {fileID: 11400000, guid: c9f5762854feafb488bd93d4edab825a, type: 2}
+  - {fileID: 11400000, guid: 3bfa0fd44afacbd438fea1415d163e81, type: 2}
   - {fileID: 11400000, guid: 0ba135735cfb2314c9c4a1778a1aa27a, type: 2}

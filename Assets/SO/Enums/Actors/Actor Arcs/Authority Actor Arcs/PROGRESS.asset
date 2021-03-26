@@ -12,13 +12,10 @@ MonoBehaviour:
   m_Name: PROGRESS
   m_EditorClassIdentifier: 
   side: {fileID: 11400000, guid: bb86b913ff5927e499a6ca498217210c, type: 2}
-  description: Government is here for a reason. Progress for those that matter.
   actorName: Sir Humphrey
   sprite: {fileID: 21300000, guid: c0207b986c8f4e549a8978842d17e28e, type: 3}
   nodeAction: {fileID: 11400000, guid: 62722faf68544b4429f851707f7cd83d, type: 2}
   preferredTeam: {fileID: 11400000, guid: 680da4bd7751d3346939b8f9f5d8350c, type: 2}
-  listPrefPrimary:
-  - {fileID: 11400000, guid: 22da6f390f1942a47ac201efce0a17ad, type: 2}
-  listPrefExclude:
-  - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
   preferredGear: {fileID: 0}
+  summary: test
+  details: test

@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Name: HEAVY
   m_EditorClassIdentifier: 
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
-  description: 
   actorName: Butterbean
   sprite: {fileID: 21300000, guid: 7bbf2ee2c617a774f898a6889352d063, type: 3}
   nodeAction: {fileID: 11400000, guid: bf622e4d53db3d340998f7259104ff06, type: 2}
   preferredTeam: {fileID: 0}
-  listPrefPrimary:
-  - {fileID: 11400000, guid: 6e4d8554b9a93064b86083fd577aae7a, type: 2}
-  listPrefExclude:
-  - {fileID: 11400000, guid: a000e873a8202b044ba60f811375b3a8, type: 2}
   preferredGear: {fileID: 11400000, guid: 378cee33565b65c42aff9c940e94919c, type: 2}
+  summary: Riots and mayhem
+  details: If conditions are right - current Distric Stability 1 or less, at least
+    one neighbouring district has Stability more than Zero<br><br>They'll fire up
+    anarchy on the streets and lower the <b>STABILITY</b> of their current, and any
+    neighbouring Districts
