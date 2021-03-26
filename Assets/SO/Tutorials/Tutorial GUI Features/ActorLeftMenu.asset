@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1aac1bc0287271445bc86157689296b4, type: 3}
   m_Name: ActorLeftMenu
   m_EditorClassIdentifier: 
-  notes: 'Left click on an actor or player
+  notes: 'Left click on an actor
 
 
 '

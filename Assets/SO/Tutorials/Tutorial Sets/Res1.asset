@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Name: Res1
   m_EditorClassIdentifier: 
   tutorial: {fileID: 11400000, guid: c050560a8867a3a4c806544632dda679, type: 2}
-  notes: 2nd set in Resistance Tutorial
+  notes: '2nd set in Resistance Tutorial
+
+    Connection security and Invisibility'
   index: 1
   listOfFeaturesOff:
   - {fileID: 11400000, guid: 60b4bacf16a2f574fa7fa81a919e7bbc, type: 2}
@@ -33,6 +35,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4ecda8036df900d48b4b25e77b1b6ad0, type: 2}
   - {fileID: 11400000, guid: 7046d4b9b0e864d409b0b2019663b6b2, type: 2}
   - {fileID: 11400000, guid: b624e75a5ef516045a64c1b6b4c72e16, type: 2}
+  - {fileID: 11400000, guid: a0a472708aaecea4bb36070d6e449bc2, type: 2}
   listOfTutorialItems:
   - {fileID: 11400000, guid: 8daec609db5c94d4c808e9a92441f9fe, type: 2}
   - {fileID: 11400000, guid: ab677d1f719b5de48bfb8777f4dfe109, type: 2}

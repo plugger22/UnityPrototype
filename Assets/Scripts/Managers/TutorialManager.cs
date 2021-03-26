@@ -347,6 +347,9 @@ public class TutorialManager : MonoBehaviour
                 }
                 else { Debug.LogWarningFormat("Invalid feature (Null) for listOfFeaturesToToggleOff[{0}]", i); }
             }
+            //Set subordinates -> not at the start, though as other stuff not yet initialised
+            if (GameManager.i.inputScript.GameState != GameState.TutorialOptions)
+            { GameManager.i.featureScript.ToggleOnMapActors(GameManager.i.optionScript.isSubordinates); }
         }
         else { Debug.LogError("Invalid listOfFeaturesToToggleOff (Null)"); }
         #endregion
@@ -370,6 +373,8 @@ public class TutorialManager : MonoBehaviour
             //set all features true
             GameManager.i.optionScript.isActorLeftMenu = true;
             GameManager.i.optionScript.isActorRightMenu = true;
+            GameManager.i.optionScript.isPlayerLeftMenu = true;
+            GameManager.i.optionScript.isPlayerRightMenu = true;
             GameManager.i.optionScript.isNodeLeftMenu = true;
             GameManager.i.optionScript.isNodeRightMenu = true;
             GameManager.i.optionScript.isTopWidget = true;
@@ -388,6 +393,14 @@ public class TutorialManager : MonoBehaviour
                         case "ActorRightMenu":
                             GameManager.i.optionScript.isActorRightMenu = false;
                             Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: ActorRightMenu toggled Off{0}", "\n");
+                            break;
+                        case "PlayerLeftMenu":
+                            GameManager.i.optionScript.isPlayerLeftMenu = false;
+                            Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: PlayerLeftMenu toggled Off{0}", "\n");
+                            break;
+                        case "PlayerRightMenu":
+                            GameManager.i.optionScript.isPlayerRightMenu = false;
+                            Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: PlayerRightMenu toggled Off{0}", "\n");
                             break;
                         case "NodeLeftMenu":
                             GameManager.i.optionScript.isNodeLeftMenu = false;

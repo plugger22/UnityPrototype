@@ -45,6 +45,8 @@ public class OptionManager : MonoBehaviour
     [HideInInspector] public bool isActorRightMenu = true;                          //right click actor menu
     [HideInInspector] public bool isNodeLeftMenu = true;                            //left click node menu
     [HideInInspector] public bool isNodeRightMenu = true;                           //right click node menu
+    [HideInInspector] public bool isPlayerLeftMenu = true;                          //left click player menu
+    [HideInInspector] public bool isPlayerRightMenu = true;                         //right click player menu
     [HideInInspector] public bool isTopWidget = true;                               //top centre widget (turn, actions, support, etc)
 
     //Backing fields (use underscore)
@@ -78,6 +80,8 @@ public class OptionManager : MonoBehaviour
         //gui functionality
         isActorLeftMenu = true;
         isActorRightMenu = true;
+        isPlayerLeftMenu = true;
+        isPlayerRightMenu = true;
         isNodeLeftMenu = true;
         isNodeRightMenu = true;
         isTopWidget = true;
@@ -134,6 +138,8 @@ public class OptionManager : MonoBehaviour
             .AppendFormat("{0}- GUI Functionality{1}", "\n", "\n")
             .AppendFormat(" Actor Left Click Menu -> {0}{1}", isActorLeftMenu, "\n")
             .AppendFormat(" Actor Right Click Menu -> {0}{1}", isActorRightMenu, "\n")
+            .AppendFormat(" Player Left Click Menu -> {0}{1}", isPlayerLeftMenu, "\n")
+            .AppendFormat(" Player Right Click Menu -> {0}{1}", isPlayerRightMenu, "\n")
             .AppendFormat(" Node Left Click Menu -> {0}{1}", isNodeLeftMenu, "\n")
             .AppendFormat(" Node Right Click Menu -> {0}{1}", isNodeRightMenu, "\n")
             .AppendFormat(" Top Centre Widget -> {0}{1}", isTopWidget, "\n")

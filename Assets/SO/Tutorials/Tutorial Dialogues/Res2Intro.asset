@@ -11,7 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20d501b51a4f7c44893a54b01e66d52c, type: 3}
   m_Name: Res2Intro
   m_EditorClassIdentifier: 
-  topText: Fred again. What's that smell?
-  bottomText: Look sharp. The one before you? Dead within days. Didn't pay attention<br><br>Work
-    your way through the tasks on the right. Take your time
+  topText: Fred again. Time to step up
+  bottomText: We won't send you into a city on your own<br><br>You'll have a team
+    of <b>four</b> handpicked operatives<br><br>Don't forget that you'll be their
+    boss
   item: {fileID: 11400000, guid: 2f16ad5d6a7fbb640bf5acab159bff6c, type: 2}

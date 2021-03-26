@@ -32,7 +32,7 @@ public class PlayerClickUI : MonoBehaviour, IPointerClickHandler
         switch (eventData.button)
         {
             case PointerEventData.InputButton.Left:
-                if (GameManager.i.optionScript.isActorLeftMenu == true)
+                if (GameManager.i.optionScript.isPlayerLeftMenu == true)
                 {
                     //player review
                     TabbedUIData tabbedDetails = new TabbedUIData()
@@ -53,7 +53,7 @@ public class PlayerClickUI : MonoBehaviour, IPointerClickHandler
                     { proceedFlag = false; alertType = AlertType.SideStatus; }
                     if (GameManager.i.playerScript.status != ActorStatus.Active)
                     { proceedFlag = false; alertType = AlertType.PlayerStatus; }
-                    if (GameManager.i.optionScript.isActorRightMenu == false)
+                    if (GameManager.i.optionScript.isPlayerRightMenu == false)
                     { proceedFlag = false; alertType = AlertType.TutorialMenuUnavailable; }
                     /*//Action Menu -> not valid if  Player inactive
                     else if (GameManager.instance.playerScript.status != ActorStatus.Active)
