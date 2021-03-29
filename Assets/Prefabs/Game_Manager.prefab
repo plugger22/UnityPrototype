@@ -769,7 +769,7 @@ MonoBehaviour:
   listOfAgreeablenessBad:
   - Not promising subordinates sent to the Reserves
   - Bullying subordinates in the Reserves
-  - Personally coerciing  (drugs, money, etc.) district VIPs
+  - Personally coercing  (drugs, money, etc.) district VIPs
   listOfConscientiousnessGood:
   - Personally hacking district security systems
   listOfConscientiousnessBad:
@@ -6209,8 +6209,8 @@ MonoBehaviour:
   conditionWhoResistance: 999
   conditionResistance: {fileID: 0}
   playerInvisibility: -1
-  actorSlotID: -1
-  actorType: {fileID: 0}
+  actorSlotID: 0
+  actorType: {fileID: 11400000, guid: 33cfb0c161a7cde409d27df1080bd2c8, type: 2}
   actorDatapoint0: -1
   actorDatapoint1: -1
   actorDatapoint2: -1
@@ -6858,6 +6858,7 @@ MonoBehaviour:
   reviewTimeInterval: 0.1
   actorFontSize: 18
   maxInventoryOptions: 4
+  maxPickerOptions: 3
   outcomeBarTimerGrow: 0.75
   outcomeBarTimerShrink: 0.5
   outcomeHighlightTimer: 1

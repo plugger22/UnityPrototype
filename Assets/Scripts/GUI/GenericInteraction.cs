@@ -16,6 +16,7 @@ namespace gameAPI
         public TextMeshProUGUI displayText;
         public GenericTooltipUI imageTooltip;
         public GenericTooltipUI textTooltip;
+        public ImageInteraction imageInteraction;
 
         [HideInInspector] public GenericReturnData data;
 
@@ -36,6 +37,7 @@ namespace gameAPI
             Debug.Assert(displayText != null, "Invalid displayText (Null)");
             Debug.Assert(imageTooltip != null, "Invalid imageTooltip (Null)");
             Debug.Assert(textTooltip != null, "Invalid textTooltip (Null)");
+            Debug.Assert(imageInteraction != null, "Invalid imageInteraction (Null)");
         }
 
         /// <summary>

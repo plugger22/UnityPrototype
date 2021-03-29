@@ -1,11 +1,11 @@
-﻿using System.Collections;
+﻿using gameAPI;
+using packageAPI;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using packageAPI;
-using gameAPI;
 
 /// <summary>
 /// Actor based tooltip, reference static instance in GameManager
@@ -37,7 +37,7 @@ public class TooltipActor : MonoBehaviour
     private float fadeInTime;
     private int offset;
 
-                        
+
 
     //fast access
     private int gracePeriod = -1;                    //actor gear grace period
@@ -264,10 +264,10 @@ public class TooltipActor : MonoBehaviour
                     dividerMiddleLower.gameObject.SetActive(true);
                     actorConditions.gameObject.SetActive(true);
                     StringBuilder builderCondition = new StringBuilder();
-                    foreach(Condition condition in listOfConditions)
+                    foreach (Condition condition in listOfConditions)
                     {
                         if (builderCondition.Length > 0) { builderCondition.AppendLine(); }
-                        switch(condition.type.name)
+                        switch (condition.type.name)
                         {
                             case "Good":
                                 builderCondition.AppendFormat("{0}{1}{2}", colourGood, condition.tag, colourEnd);
@@ -296,14 +296,25 @@ public class TooltipActor : MonoBehaviour
                 }
                 else { Debug.LogWarning("Invalid listOfConditions (Null)"); }
             }
-            //Trait
-            actorTrait.text = string.Format("<size=120%>{0}</size>", data.actor.GetTrait().tagFormatted);
+
+            //trait
+            if (data.trait != null)
+            {
+                //Trait
+                actorTrait.text = string.Format("<size=120%>{0}</size>", data.trait.tagFormatted);
+                //trait description (replaces Action)
+                actorAction.text = data.trait.description;
+            }
+            else { Debug.LogWarningFormat("Invalid trait (Null) for \"{0}\", {1}, ID {2}", data.actor.actorName, data.actor.arc.name, data.actor.actorID); }
         }
         else { Debug.LogWarning("Invalid Actor (Null)"); }
-        //action
+
+        /*//action
         if (data.action != null)
         { actorAction.text = string.Format("{0}<b>{1}</b>{2}", colourAction, data.action.tag, colourEnd); }
-        else { Debug.LogWarning(string.Format("Actor \"{0}\" has an invalid Action (Null)", data.actor.actorName)); }
+        else { Debug.LogWarning(string.Format("Actor \"{0}\" has an invalid Action (Null)", data.actor.actorName)); }*/
+
+
 
         /*//qualities -> EDIT no longer used as replaced by a single text field for both qualities and stars combined (below)
         int numOfQualities = GameManager.instance.actorScript.numOfQualities;
@@ -427,7 +438,7 @@ public class TooltipActor : MonoBehaviour
     /// </summary>
     public void CloseTooltip(string callingMethod = "Unknown")
     {
-        Debug.LogFormat("[UI] TooltipActor.cs -> CloseTooltip: called by {0}{1}",  callingMethod, "\n");
+        Debug.LogFormat("[UI] TooltipActor.cs -> CloseTooltip: called by {0}{1}", callingMethod, "\n");
         tooltipActorObject.SetActive(false);
         tooltipActorCanvas.gameObject.SetActive(false);
     }

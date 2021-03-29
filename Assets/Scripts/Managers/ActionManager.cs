@@ -650,7 +650,7 @@ public class ActionManager : MonoBehaviour
         //Initialise nested option windows & disable back button as you are on the top level of the nested options
         GameManager.i.genericPickerScript.InitialiseNestedOptions(details);
         GameManager.i.genericPickerScript.SetBackButton(EventType.None);
-        //color code for button tooltip header text, eg. "Operator"ss
+        //color code for button tooltip header text, eg. "Operator"
         if (playerSide.level == GameManager.i.globalScript.sideAuthority.level)
         { colourSide = colourAuthority; isResistance = false; }
         else { colourSide = colourResistance; isResistance = true; }

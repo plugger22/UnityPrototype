@@ -373,6 +373,7 @@ public class ActorPanelUI : MonoBehaviour
                                         Debug.LogError(string.Format("Invalid side.level \"{0}\" {1}", side.name, side.level));
                                         break;
                                 }
+                                SetVacantActorArcTooltip(index);
                             }
                         }
                         //Update Power/Compatibility indicators (switches off for Vacant actors)
@@ -404,6 +405,18 @@ public class ActorPanelUI : MonoBehaviour
             arrayOfTypeTooltips[slotID].y_offset = 150;
         }
         else { Debug.LogErrorFormat("Invalid actor (Null) for slotID {0}", slotID); }
+    }
+
+    /// <summary>
+    /// Sets tooltip for actor arcs at vacant actor slots
+    /// </summary>
+    /// <param name="slotID"></param>
+    private void SetVacantActorArcTooltip(int slotID)
+    {
+        arrayOfTypeTooltips[slotID].tooltipHeader = string.Format("<size=115%>{0}</size>", GameManager.Formatt("VACANT", ColourType.neutralText));
+        arrayOfTypeTooltips[slotID].tooltipMain = string.Format("{0}", GameManager.Formatt("Activate a subordinate in the Reserves", ColourType.salmonText));
+        arrayOfTypeTooltips[slotID].tooltipDetails = "Missing subordinates are a handicap";
+        arrayOfTypeTooltips[slotID].y_offset = 150;
     }
 
     /// <summary>

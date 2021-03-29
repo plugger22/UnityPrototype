@@ -74,6 +74,7 @@ GameObject:
   - component: {fileID: 222182148204800300}
   - component: {fileID: 114208060934142652}
   - component: {fileID: 114431065326647324}
+  - component: {fileID: 114324033588494796}
   m_Layer: 5
   m_Name: pickImage0
   m_TagString: Untagged
@@ -115,7 +116,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -142,7 +143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -224,11 +225,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -242,6 +243,19 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &114324033588494796
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1730240400533328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d1ccda501f1f4f4c90e2404e8633642, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlightImage: {fileID: 114517864303121806}
+  isActive: 0
 --- !u!114 &114431065326647324
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -306,6 +320,7 @@ MonoBehaviour:
   displayText: {fileID: 114224462496235574}
   imageTooltip: {fileID: 114431065326647324}
   textTooltip: {fileID: 114121118258925834}
+  imageInteraction: {fileID: 114324033588494796}
   isActive: 0
 --- !u!222 &222046537281905920
 CanvasRenderer:

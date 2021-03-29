@@ -284,7 +284,6 @@ namespace modalAPI
 
         public GenericPickerDetails()
             {
-
             subState = ModalGenericPickerSubState.Normal;
             int maxOptions = GameManager.i.guiScript.maxPickerOptions;
             arrayOfOptions = new GenericOptionDetails[maxOptions];

@@ -4357,3 +4357,104 @@ UnityEngine.Debug:LogError(Object)
 	<GetNodeActions>c__AnonStorey6:<>m__3() (at Assets/Scripts/Managers/ActorManager.cs:2140)
 	UnityEngine.EventSystems.EventSystem:Update()
 	
+Dev seed 24105 -> Monday, 29 March 2021 3:22 PM
+City seed 31770 -> Londus, Eurasia
+
+Dev seed 22791 -> Monday, 29 March 2021 3:24 PM
+City seed 64966 -> Londus, Eurasia
+
+Dev seed 13105 -> Monday, 29 March 2021 3:36 PM
+City seed 61961 -> Londus, Eurasia
+
+Dev seed 27601 -> Monday, 29 March 2021 3:53 PM
+City seed 2265 -> Londus, Eurasia
+
+Dev seed 64911 -> Monday, 29 March 2021 3:54 PM
+City seed 5333 -> Londus, Eurasia
+
+Dev seed 31573 -> Monday, 29 March 2021 4:00 PM
+City seed 43460 -> Londus, Eurasia
+
+Dev seed 38151 -> Monday, 29 March 2021 4:05 PM
+City seed 1557 -> Londus, Eurasia
+
+Dev seed 43335 -> Monday, 29 March 2021 4:06 PM
+City seed 15179 -> Londus, Eurasia
+
+Dev seed 42527 -> Monday, 29 March 2021 4:17 PM
+City seed 61042 -> Londus, Eurasia
+
+Dev seed 19832 -> Monday, 29 March 2021 4:19 PM
+City seed 25117 -> Londus, Eurasia
+
+Dev seed 50919 -> Monday, 29 March 2021 4:20 PM
+City seed 47440 -> Londus, Eurasia
+
+Dev seed 51993 -> Monday, 29 March 2021 4:23 PM
+City seed 49608 -> Londus, Eurasia
+
+Dev seed 6051 -> Monday, 29 March 2021 4:24 PM
+City seed 5473 -> Londus, Eurasia
+
+Dev seed 63263 -> Monday, 29 March 2021 4:25 PM
+City seed 284 -> Londus, Eurasia
+
+Dev seed 24229 -> Monday, 29 March 2021 4:26 PM
+City seed 51099 -> Londus, Eurasia
+
+Dev seed 59675 -> Monday, 29 March 2021 4:27 PM
+City seed 32063 -> Londus, Eurasia
+
+Dev seed 14255 -> Monday, 29 March 2021 4:29 PM
+City seed 19543 -> Londus, Eurasia
+
+Dev seed 42162 -> Monday, 29 March 2021 4:30 PM
+City seed 62569 -> Londus, Eurasia
+
+Dev seed 59334 -> Monday, 29 March 2021 5:06 PM
+City seed 45283 -> Londus, Eurasia
+
+Dev seed 42705 -> Monday, 29 March 2021 5:07 PM
+City seed 53720 -> Londus, Eurasia
+
+Dev seed 6332 -> Monday, 29 March 2021 5:07 PM
+City seed 26506 -> Londus, Eurasia
+
+Dev seed 17570 -> Monday, 29 March 2021 5:08 PM
+City seed 42958 -> Londus, Eurasia
+
+Dev seed 42301 -> Monday, 29 March 2021 5:08 PM
+City seed 29716 -> Londus, Eurasia
+
+Dev seed 26738 -> Monday, 29 March 2021 5:09 PM
+City seed 34496 -> Londus, Eurasia
+
+Dev seed 2541 -> Monday, 29 March 2021 5:14 PM
+City seed 16265 -> Londus, Eurasia
+
+Dev seed 59347 -> Monday, 29 March 2021 5:15 PM
+City seed 22944 -> Londus, Eurasia
+
+Dev seed 43303 -> Monday, 29 March 2021 5:30 PM
+City seed 2261 -> Londus, Eurasia
+
+Dev seed 39887 -> Monday, 29 March 2021 5:33 PM
+City seed 27525 -> Londus, Eurasia
+
+Dev seed 32536 -> Monday, 29 March 2021 5:35 PM
+City seed 37406 -> Londus, Eurasia
+
+Dev seed 39505 -> Monday, 29 March 2021 5:37 PM
+City seed 40891 -> Londus, Eurasia
+
+Dev seed 53006 -> Monday, 29 March 2021 5:39 PM
+City seed 42711 -> Londus, Eurasia
+
+Dev seed 46303 -> Monday, 29 March 2021 5:43 PM
+City seed 7446 -> Londus, Eurasia
+
+Dev seed 25960 -> Monday, 29 March 2021 5:47 PM
+City seed 43930 -> Londus, Eurasia
+
+Dev seed 21958 -> Monday, 29 March 2021 5:47 PM
+City seed 34255 -> Londus, Eurasia

@@ -4313,11 +4313,11 @@ public class ActorManager : MonoBehaviour
                                 optionDetails.optionID = actor.actorID;
                                 optionDetails.text = actor.arc.name;
                                 optionDetails.sprite = actor.sprite;
-                                //tooltip
-                                GenericTooltipDetails tooltipDetails = new GenericTooltipDetails();
+                                //tooltip -> image
+                                GenericTooltipDetails tooltipImage = new GenericTooltipDetails();
                                 //arc type and name plus compatibility
                                 dataStars = actor.GetPersonality().GetCompatibilityWithPlayer();
-                                tooltipDetails.textHeader = string.Format("{0}<size=120%>{1}{2}</size>{3}{4}Compatibility<pos=57%>{5}{6}", colourRecruit, actor.actorName, colourEnd,
+                                tooltipImage.textHeader = string.Format("{0}<size=125%>{1}{2}</size>{3}{4}Compatibility<pos=57%>{5}{6}", colourRecruit, actor.actorName, colourEnd,
                                     "\n", colourNormal, colourEnd, GameManager.i.guiScript.GetCompatibilityStars(dataStars));
                                 //stats
                                 string[] arrayOfQualities = GameManager.i.dataScript.GetQualities(details.side);
@@ -4331,14 +4331,20 @@ public class ActorManager : MonoBehaviour
                                     builder.AppendFormat("{0}<pos=57%>{1}{2}", arrayOfQualities[1], GameManager.i.guiScript.GetNormalStars(dataStars), "\n");
                                     dataStars = actor.GetDatapoint(ActorDatapoint.Datapoint2);
                                     builder.AppendFormat("{0}<pos=57%>{1}{2}", arrayOfQualities[2], GameManager.i.guiScript.GetNormalStars(dataStars), "\n");
-                                    tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, builder.ToString(), colourEnd);
+                                    tooltipImage.textMain = string.Format("{0}{1}{2}", colourNormal, builder.ToString(), colourEnd);
                                 }
-                                //trait and action
-                                tooltipDetails.textDetails = string.Format("{0}<size=120%>{1}</size>{2}{3}{4}{5}{6}{7}{8}", "<font=\"Bangers SDF\">", "<cspace=0.6em>", actor.GetTrait().tagFormatted,
-                                    "</cspace>", "</font>", "\n", colourNormal, actor.arc.nodeAction.tag, colourEnd);
+                                //trait and description
+                                tooltipImage.textDetails = string.Format("{0}<size=140%>{1}</size>{2}{3}{4}{5}{6}{7}{8}", "<font=\"Bangers SDF\">", "<cspace=0.6em>", actor.GetTrait().tagFormatted,
+                                    "</cspace>", "</font>", "\n", colourNormal, actor.GetTrait().description, colourEnd);
+                                //tooltip -> text
+                                GenericTooltipDetails tooltipText = new GenericTooltipDetails();
+                                tooltipText.textHeader = string.Format("{0}<size=120%>{1}</size>{2}", colourNeutral, actor.arc.name, colourEnd);
+                                tooltipText.textMain = string.Format("{0}{1}{2}", colourAlert, actor.arc.summary, colourEnd);
+                                tooltipText.textDetails = string.Format("{0}{1}{2}", colourNormal, actor.arc.details, colourEnd);
                                 //add to master arrays
                                 genericDetails.arrayOfOptions[i] = optionDetails;
-                                genericDetails.arrayOfImageTooltips[i] = tooltipDetails;
+                                genericDetails.arrayOfImageTooltips[i] = tooltipImage;
+                                genericDetails.arrayOfTextTooltips[i] = tooltipText;
                             }
                             else { Debug.LogError(string.Format("Invalid actor (Null) for gearID {0}", listOfPickerActors[i])); }
                         }

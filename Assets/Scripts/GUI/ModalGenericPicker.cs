@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using gameAPI;
+using modalAPI;
+using packageAPI;
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using modalAPI;
-using gameAPI;
-using System.Text;
-using System;
-using packageAPI;
 
 /// <summary>
 /// handles Modal Generic UI (picker with 2 to 3 choices that can be used for a wide range of purposes)
@@ -49,6 +47,10 @@ public class ModalGenericPicker : MonoBehaviour
     private EventType defaultReturnEvent;                           //event to trigger once confirmation button is clicked
     private EventType backReturnEvent;                              //event triggered when back button clicked (dynamic -> SetBackButton)
     private ModalActionDetails nestedDetails;                       //used only if there are multiple, nested, option windows (dynamic -> InitialiseNestedOptions)
+
+    private GenericInteraction[] arrayOfInteractions;
+    private GenericTooltipUI[] arrayOfImageTooltips;
+    private GenericTooltipUI[] arrayOfTextTooltips;
 
     private string colourGood;
     private string colourEffect;
@@ -124,6 +126,10 @@ public class ModalGenericPicker : MonoBehaviour
     {
         maxOptions = GameManager.i.guiScript.maxPickerOptions;
         Debug.Assert(maxOptions == 3, "Invalid maxOptions (must be 3)");
+        //arrays
+        arrayOfInteractions = new GenericInteraction[maxOptions];
+        arrayOfImageTooltips = new GenericTooltipUI[maxOptions];
+        arrayOfTextTooltips = new GenericTooltipUI[maxOptions];
         //confirm button event
         buttonConfirmInteraction = buttonConfirm.GetComponent<ButtonInteraction>();
         if (buttonConfirmInteraction != null)
@@ -143,6 +149,27 @@ public class ModalGenericPicker : MonoBehaviour
         { buttonBackInteraction.SetButton(EventType.BackButtonGeneric); }
         else { Debug.LogError("Invalid buttonBackInteraction (Null)"); }
         backReturnEvent = EventType.None;
+        //tooltips
+        for (int i = 0; i < maxOptions; i++)
+        {
+            //interaction
+            GenericInteraction interaction = arrayOfGenericOptions[i].GetComponent<GenericInteraction>();
+            if (interaction != null)
+            {
+                arrayOfInteractions[i] = interaction;
+                //tooltip image
+                GenericTooltipUI tooltipImage = interaction.imageTooltip;
+                if (tooltipImage != null)
+                { arrayOfImageTooltips[i] = tooltipImage; }
+                else { Debug.LogErrorFormat("Invalid tooltipImage (Null) for arrayOfInteractions[{0}]", i); }
+                //tooltip text
+                GenericTooltipUI tooltipText = interaction.textTooltip;
+                if (tooltipText != null)
+                { arrayOfTextTooltips[i] = tooltipText; }
+                else { Debug.LogErrorFormat("Invalid tooltipText (Null) for arrayOfInteractions[{0}]", i); }
+            }
+            else { Debug.LogErrorFormat("Invalid interaction (Null) for arrayOfGenericOptions[{0}]", i); }
+        }
     }
     #endregion
 
@@ -253,7 +280,6 @@ public class ModalGenericPicker : MonoBehaviour
         //open Generic picker
         bool errorFlag = false;
         CanvasGroup genericCanvasGroup;
-        GenericInteraction genericData;
         //set modal status
         GameManager.i.guiScript.SetIsBlocked(true);
         //activate main panel
@@ -304,8 +330,8 @@ public class ModalGenericPicker : MonoBehaviour
                 {
                     if (arrayOfGenericOptions[i] != null)
                     {
-                        genericData = arrayOfGenericOptions[i].GetComponent<GenericInteraction>();
-                        if (genericData != null)
+                        GenericInteraction interaction = arrayOfInteractions[i];
+                        if (interaction != null)
                         {
                             //there are 'maxOptions' options but not all of them may be used
                             if (details.arrayOfOptions[i] != null)
@@ -317,43 +343,57 @@ public class ModalGenericPicker : MonoBehaviour
                                     //activate option
                                     arrayOfGenericOptions[i].SetActive(true);
                                     //populate data
-                                    genericData.optionImage.sprite = details.arrayOfOptions[i].sprite;
-                                    genericData.displayText.text = details.arrayOfOptions[i].text;
-                                    genericData.data.optionID = details.arrayOfOptions[i].optionID;
-                                    genericData.data.optionName = details.arrayOfOptions[i].optionName;
-                                    genericData.data.optionNested = details.arrayOfOptions[i].optionText;
-                                    genericData.data.actorSlotID = details.actorSlotID;
+                                    interaction.optionImage.sprite = details.arrayOfOptions[i].sprite;
+                                    interaction.displayText.text = details.arrayOfOptions[i].text;
+                                    interaction.imageInteraction.data.optionID = details.arrayOfOptions[i].optionID;
+                                    interaction.imageInteraction.data.optionName = details.arrayOfOptions[i].optionName;
+                                    interaction.imageInteraction.data.optionNested = details.arrayOfOptions[i].optionText;
+                                    interaction.imageInteraction.data.actorSlotID = details.actorSlotID;
                                     //option Active or Not?
                                     if (details.arrayOfOptions[i].isOptionActive == true)
                                     {
                                         //activate option 
                                         genericCanvasGroup.alpha = 1.0f;
                                         genericCanvasGroup.interactable = true;
-                                        genericData.isActive = true;
+                                        interaction.imageInteraction.isActive = true;
                                     }
                                     else
                                     {
                                         //deactivate option
                                         genericCanvasGroup.alpha = 0.25f;
                                         genericCanvasGroup.interactable = false;
-                                        genericData.isActive = false;
+                                        interaction.imageInteraction.isActive = false;
                                     }
-                                    //tooltips
-                                    GenericTooltipUI tooltipUI = arrayOfGenericOptions[i].GetComponent<GenericTooltipUI>();
-                                    if (tooltipUI != null)
+                                    //tooltip -> Image
+                                    GenericTooltipUI tooltipImage = arrayOfImageTooltips[i];
+                                    if (details.arrayOfImageTooltips[i] != null)
                                     {
-                                        GenericTooltipDetails tooltipDetails = details.arrayOfImageTooltips[i];
-                                        if (tooltipDetails != null)
-                                        {
-                                            tooltipUI.tooltipHeader = details.arrayOfImageTooltips[i].textHeader;
-                                            tooltipUI.tooltipMain = details.arrayOfImageTooltips[i].textMain;
-                                            tooltipUI.tooltipDetails = details.arrayOfImageTooltips[i].textDetails;
-                                            tooltipUI.x_offset = 55;
-                                        }
-                                        else { Debug.LogError(string.Format("Invalid tooltipDetails (Null) for arrayOfOptions[\"{0}\"]", i)); }
+                                        tooltipImage.tooltipHeader = details.arrayOfImageTooltips[i].textHeader;
+                                        tooltipImage.tooltipMain = details.arrayOfImageTooltips[i].textMain;
+                                        tooltipImage.tooltipDetails = details.arrayOfImageTooltips[i].textDetails;
                                     }
                                     else
-                                    { Debug.LogError(string.Format("Invalid tooltipUI (Null) for arrayOfOptions[\"{0}\"]", i)); }
+                                    {
+                                        //default values
+                                        tooltipImage.tooltipHeader = "";
+                                        tooltipImage.tooltipMain = "";
+                                        tooltipImage.tooltipDetails = "";
+                                    }
+                                    //tooltip -> Text
+                                    GenericTooltipUI tooltipText = arrayOfTextTooltips[i];
+                                    if (details.arrayOfTextTooltips[i] != null)
+                                    {
+                                        tooltipText.tooltipHeader = details.arrayOfTextTooltips[i].textHeader;
+                                        tooltipText.tooltipMain = details.arrayOfTextTooltips[i].textMain;
+                                        tooltipText.tooltipDetails = details.arrayOfTextTooltips[i].textDetails;
+                                    }
+                                    else
+                                    {
+                                        //default values
+                                        tooltipText.tooltipHeader = "";
+                                        tooltipText.tooltipMain = "";
+                                        tooltipText.tooltipDetails = "";
+                                    }
                                 }
                                 else { Debug.LogError(string.Format("Invalid genericCanvasGroup for arrayOfGenericOptions[{0}]", i)); }
 
@@ -535,7 +575,7 @@ public class ModalGenericPicker : MonoBehaviour
                             Gear gear = GameManager.i.dataScript.GetGear(data.optionName);
                             if (gear != null)
                             {
-                                text = string.Format("Save {0}{1}{2} for {3}{4} Renown{5} (have {6}{7}{8})", colourEffect, gear.tag.ToUpper(), colourEnd, 
+                                text = string.Format("Save {0}{1}{2} for {3}{4} Renown{5} (have {6}{7}{8})", colourEffect, gear.tag.ToUpper(), colourEnd,
                                     colourNeutral, datapoint, colourEnd, colourGood, GameManager.i.playerScript.Power, colourEnd);
                                 Debug.LogFormat("[UI] -> ModalGenericPicker: gear {0} selected{1}", data.optionName, "\n");
                             }
@@ -716,7 +756,7 @@ public class ModalGenericPicker : MonoBehaviour
                     text = string.Format("{0}Target{1} {2}selection{3}", colourEffect, colourEnd, colourNormal, colourEnd);
                     break;
                 case EventType.GenericCompromisedGear:
-                    text = string.Format("{0}Use Renown to {1}{2}SAVE ONE{3}{4} item{5} <size=70%>(optional)</size>", colourNormal, colourEnd, colourNeutral, colourEnd, 
+                    text = string.Format("{0}Use Renown to {1}{2}SAVE ONE{3}{4} item{5} <size=70%>(optional)</size>", colourNormal, colourEnd, colourNeutral, colourEnd,
                         colourNormal, colourEnd);
                     break;
                 case EventType.GenericRecruitActorResistance:
@@ -805,7 +845,7 @@ public class ModalGenericPicker : MonoBehaviour
     /// </summary>
     private void SetSide()
     {
-        switch(GameManager.i.sideScript.PlayerSide.level)
+        switch (GameManager.i.sideScript.PlayerSide.level)
         {
             case 1:
                 //Authority

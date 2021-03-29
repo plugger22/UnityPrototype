@@ -990,7 +990,7 @@ public class EffectManager : MonoBehaviour
                                                 val = GameManager.i.dataScript.CheckNumOfActorsInReserve();
                                                 compareTip = ComparisonCheck(GameManager.i.actorScript.maxNumOfReserveActors, val, criteria.comparison);
                                                 if (compareTip != null)
-                                                { BuildString(result, "maxxed Recruit allowance"); }
+                                                { BuildString(result, "No space in Reserves"); }
                                                 break;
                                             case "InvisibilityNOTMax":
                                                 //check invisibility is less than the max value -> Actor / Player

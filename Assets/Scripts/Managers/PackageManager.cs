@@ -52,6 +52,7 @@ namespace packageAPI
         public Vector3 tooltipPos;
         public Actor actor;
         public Action action;
+        public Trait trait;
         public Gear gear;
         public List<string> listOfSecrets;
         public string[] arrayOfQualities;

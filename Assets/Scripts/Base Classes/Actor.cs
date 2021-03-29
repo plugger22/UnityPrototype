@@ -1272,6 +1272,7 @@ namespace gameAPI
                 actor = this,
                 action = arc.nodeAction,
                 gear = gear,
+                trait = trait,
                 listOfSecrets = GetSecretsTooltipList(),
                 arrayOfQualities = GameManager.i.dataScript.GetQualities(side),
                 arrayOfStats = GameManager.i.dataScript.GetActorStats(slotID, side)
