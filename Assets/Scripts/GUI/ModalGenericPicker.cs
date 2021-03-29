@@ -14,8 +14,7 @@ using packageAPI;
 public class ModalGenericPicker : MonoBehaviour
 {
 
-    [Tooltip("Max number of options allowed in Modal Generic Picker")]
-    [Range(3, 3)] public int maxOptions = 3;
+    public int maxOptions;                                          //max options allowed in picker
 
     public Canvas modalPickerCanvas;
     public GameObject modalGenericObject;
@@ -40,7 +39,6 @@ public class ModalGenericPicker : MonoBehaviour
     private ButtonInteraction buttonCancelInteraction;
     private ButtonInteraction buttonBackInteraction;                //specifically for the Back button as it can be dynamically updated
     private GenericHelpTooltipUI help;
-    private static ModalGenericPicker modalGenericPicker;
 
     private int optionIDSelected;                                   //slot ID (eg arrayOfGenericOptions [index] of selected option [EDIT: Not sure about this, I think it is teamID, targetID, actorID etc)
     private string optionTextSelected;                              //used for nested Generic Picker windows, ignore otherwise
@@ -59,6 +57,8 @@ public class ModalGenericPicker : MonoBehaviour
     private string colourNeutral;
     private string colourEnd;
 
+    #region static instance...
+    private static ModalGenericPicker modalGenericPicker;
 
     /// <summary>
     /// Static instance so the Modal Generic Picker can be accessed from any script
@@ -74,10 +74,34 @@ public class ModalGenericPicker : MonoBehaviour
         }
         return modalGenericPicker;
     }
+    #endregion
 
-    private void Awake()
+    #region Initialisation...
+
+    public void Initialise(GameState state)
     {
-        //asserts
+        switch (state)
+        {
+            case GameState.TutorialOptions:
+            case GameState.LoadGame:
+            case GameState.NewInitialisation:
+            case GameState.LoadAtStart:
+                SubInitialiseAsserts();
+                SubInitialiseSessionStart();
+                SubInitialiseEvents();
+                break;
+            case GameState.FollowOnInitialisation:
+                //do nothing
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
+                break;
+        }
+    }
+
+    #region SubInitialiseAsserts
+    private void SubInitialiseAsserts()
+    {
         Debug.Assert(modalPickerCanvas != null, "Invalid modalPickerCanvas (Null)");
         Debug.Assert(modalGenericObject != null, "Invalid modalGenericObject (Null)");
         Debug.Assert(modalPanelObject != null, "Invalid modalPanelObject (Null)");
@@ -91,6 +115,15 @@ public class ModalGenericPicker : MonoBehaviour
         Debug.Assert(buttonBack != null, "Invalid buttonBack (Null)");
         Debug.Assert(buttonConfirm != null, "Invalid buttonConfirm (Null)");
         Debug.Assert(buttonHelp != null, "Invalid GenericHelpTooltipUI (Null)");
+
+    }
+    #endregion
+
+    #region SubInitialiseSessionStart
+    private void SubInitialiseSessionStart()
+    {
+        maxOptions = GameManager.i.guiScript.maxPickerOptions;
+        Debug.Assert(maxOptions == 3, "Invalid maxOptions (must be 3)");
         //confirm button event
         buttonConfirmInteraction = buttonConfirm.GetComponent<ButtonInteraction>();
         if (buttonConfirmInteraction != null)
@@ -111,10 +144,11 @@ public class ModalGenericPicker : MonoBehaviour
         else { Debug.LogError("Invalid buttonBackInteraction (Null)"); }
         backReturnEvent = EventType.None;
     }
+    #endregion
 
-    private void Start()
+    #region SubInitialiseEvents
+    private void SubInitialiseEvents()
     {
-        Debug.Assert(maxOptions == 3, "Invalid maxOptions (must be 3)");
         //register listener
         EventManager.i.AddListener(EventType.OpenGenericPicker, OnEvent, "ModalGenericPicker");
         EventManager.i.AddListener(EventType.CloseGenericPicker, OnEvent, "ModalGenericPicker");
@@ -126,6 +160,10 @@ public class ModalGenericPicker : MonoBehaviour
         EventManager.i.AddListener(EventType.ConfirmGenericDeactivate, OnEvent, "ModalGenericPicker");
         EventManager.i.AddListener(EventType.BackButtonGeneric, OnEvent, "ModalGenericPicker");
     }
+    #endregion
+
+    #endregion
+
 
     /// <summary>
     /// Event Handler
@@ -304,12 +342,12 @@ public class ModalGenericPicker : MonoBehaviour
                                     GenericTooltipUI tooltipUI = arrayOfGenericOptions[i].GetComponent<GenericTooltipUI>();
                                     if (tooltipUI != null)
                                     {
-                                        GenericTooltipDetails tooltipDetails = details.arrayOfTooltips[i];
+                                        GenericTooltipDetails tooltipDetails = details.arrayOfImageTooltips[i];
                                         if (tooltipDetails != null)
                                         {
-                                            tooltipUI.tooltipHeader = details.arrayOfTooltips[i].textHeader;
-                                            tooltipUI.tooltipMain = details.arrayOfTooltips[i].textMain;
-                                            tooltipUI.tooltipDetails = details.arrayOfTooltips[i].textDetails;
+                                            tooltipUI.tooltipHeader = details.arrayOfImageTooltips[i].textHeader;
+                                            tooltipUI.tooltipMain = details.arrayOfImageTooltips[i].textMain;
+                                            tooltipUI.tooltipDetails = details.arrayOfImageTooltips[i].textDetails;
                                             tooltipUI.x_offset = 55;
                                         }
                                         else { Debug.LogError(string.Format("Invalid tooltipDetails (Null) for arrayOfOptions[\"{0}\"]", i)); }

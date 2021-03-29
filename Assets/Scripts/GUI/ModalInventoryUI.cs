@@ -13,7 +13,7 @@ using UnityEngine.UI;
 /// </summary>
 public class ModalInventoryUI : MonoBehaviour
 {
-
+    public Canvas inventoryCanvas;
     public GameObject modalInventoryObject;
     public GameObject modalPanelObject;
     public GameObject modalHeaderObject;
@@ -32,14 +32,14 @@ public class ModalInventoryUI : MonoBehaviour
     private GenericTooltipUI[] arrayOfTooltipsSprites;          //used for fast access to tooltip components (Sprites)
     private GenericTooltipUI[] arrayOfTooltipsStars;            //used for fast access to tooltip components for Stars (bottomText)
     private GenericTooltipUI[] arrayOfTooltipsCompatibility;    //used for fast access to tooltip components for Compatibility (topText)
+    private GenericTooltipUI[] arrayOfTooltipsTexts;            //used for fast access to tooltip components for Upper Text (actor Arcs, etc.)
 
-    private static ModalInventoryUI modalInventoryUI;
     private ButtonInteraction buttonInteraction;
     private GenericHelpTooltipUI help;
-
     private InventoryDelegate handler;                          //method to be called for an option refresh (passed into SetInventoryUI)
 
-
+    #region static Instance...
+    private static ModalInventoryUI modalInventoryUI;
 
     /// <summary>
     /// Static instance so the ModalInventoryUI can be accessed from any script
@@ -55,6 +55,7 @@ public class ModalInventoryUI : MonoBehaviour
         }
         return modalInventoryUI;
     }
+    #endregion
 
     public void Initialise(GameState state)
     {
@@ -64,6 +65,7 @@ public class ModalInventoryUI : MonoBehaviour
             case GameState.LoadGame:
             case GameState.NewInitialisation:
             case GameState.LoadAtStart:
+                SubInitialiseAsserts();
                 SubInitialiseSessionStart();
                 SubInitialiseEvents();
                 break;
@@ -77,7 +79,26 @@ public class ModalInventoryUI : MonoBehaviour
     }
 
 
-    #region Initialise SubMethods
+    #region Initialise SubMethods...
+
+    #region SubInitialiseAsserts
+    private void SubInitialiseAsserts()
+    {
+        //Asserts
+        Debug.Assert(inventoryCanvas != null, "Invalid inventoryCanvas (Null)");
+        Debug.Assert(modalInventoryObject != null, "Invalid modalInventoryObject (Null)");
+        Debug.Assert(modalPanelObject != null, "Invalid modalPanelObject (Null)");
+        Debug.Assert(modalHeaderObject != null, "Invalid modalHeaderObject (Null)");
+        Debug.Assert(modalPanel != null, "Invalid modalPanel (Null)");
+        Debug.Assert(headerPanel != null, "Invalid headerPanel (Null)");
+        Debug.Assert(topText != null, "Invalid topText (Null)");
+        Debug.Assert(bottomText != null, "Invalid bottomText (Null)");
+        Debug.Assert(headerText != null, "Invalid headerText (Null)");
+        Debug.Assert(buttonHelp != null, "Invalid GenericHelpTooltipUI (Null)");
+        Debug.Assert(buttonCancel != null, "Invalid buttonCancel (Null)");
+
+    }
+    #endregion
 
     #region SubInitialiseSessionStart
     /// <summary>
@@ -88,9 +109,6 @@ public class ModalInventoryUI : MonoBehaviour
         //inventory interaction & tooltip arrays set up
         int numOfOptions = arrayOfInventoryOptions.Length;
         Debug.AssertFormat(numOfOptions == GameManager.i.guiScript.maxInventoryOptions, "Mismatch on Option numbers (is {0}, should be {1})", numOfOptions, GameManager.i.guiScript.maxInventoryOptions);
-        //Asserts
-        Debug.Assert(buttonHelp != null, "Invalid GenericHelpTooltipUI (Null)");
-        Debug.Assert(buttonCancel != null, "Invalid buttonCancel (Null)");
         //cancel button event
         buttonInteraction = buttonCancel.GetComponent<ButtonInteraction>();
         if (buttonInteraction != null)
@@ -104,6 +122,7 @@ public class ModalInventoryUI : MonoBehaviour
         arrayOfTooltipsSprites = new GenericTooltipUI[numOfOptions];
         arrayOfTooltipsStars = new GenericTooltipUI[numOfOptions];
         arrayOfTooltipsCompatibility = new GenericTooltipUI[numOfOptions];
+        arrayOfTooltipsTexts = new GenericTooltipUI[numOfOptions];
         for (int i = 0; i < numOfOptions; i++)
         {
             if (arrayOfInventoryOptions[i] != null)
@@ -128,11 +147,21 @@ public class ModalInventoryUI : MonoBehaviour
                     if (tooltipCompatibility != null)
                     { arrayOfTooltipsCompatibility[i] = tooltipCompatibility; }
                     else { Debug.LogErrorFormat("Invalid GenericTooltipUI for interaction.tooltipCompatibility \"{0}\" (Null)", i); }
+                    //tooltip -> texts (upperText, optional)
+                    GenericTooltipUI tooltipText = interaction.tooltipText.GetComponent<GenericTooltipUI>();
+                    if (tooltipText != null)
+                    { arrayOfTooltipsTexts[i] = tooltipText; }
+                    else { Debug.LogErrorFormat("Invalid GenericTooltipUI for interaction.tooltipText \"{0}\" (Null)", i); }
                 }
                 else { Debug.LogErrorFormat("Invalid InventoryInteraction for arrayOfInventoryOptions[{0}] (Null)", i); }
             }
             else { Debug.LogErrorFormat("Invalid arrayOfInventoryOptions[{0}] (Null)", i); }
         }
+        //toggle main objects
+        inventoryCanvas.gameObject.SetActive(false);
+        modalPanelObject.SetActive(true);
+        modalInventoryObject.SetActive(true);
+        modalHeaderObject.SetActive(true);
     }
     #endregion
 
@@ -149,9 +178,7 @@ public class ModalInventoryUI : MonoBehaviour
 
     #endregion
 
-
-
-
+    #region OnEvent
     /// <summary>
     /// Event Handler
     /// </summary>
@@ -181,6 +208,7 @@ public class ModalInventoryUI : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
     #region SetInventoryUI
     /// <summary>
@@ -196,9 +224,7 @@ public class ModalInventoryUI : MonoBehaviour
         //tooltips off
         GameManager.i.guiScript.SetTooltipsOff();
         //activate main panel
-        modalPanelObject.SetActive(true);
-        modalInventoryObject.SetActive(true);
-        modalHeaderObject.SetActive(true);
+        inventoryCanvas.gameObject.SetActive(true);
         //delegate method to be called in the event of refresh
         handler = details.handler;
         //populate dialogue
@@ -346,6 +372,26 @@ public class ModalInventoryUI : MonoBehaviour
                                     arrayOfTooltipsCompatibility[i].tooltipDetails = "";
                                 }
                             }
+                            //tooltip data -> upper Text
+                            if (arrayOfTooltipsTexts[i] != null)
+                            {
+                                if (details.arrayOfTooltipsTexts[i] != null)
+                                {
+                                    arrayOfTooltipsTexts[i].gameObject.SetActive(true);
+                                    arrayOfTooltipsTexts[i].tooltipHeader = details.arrayOfTooltipsTexts[i].textHeader;
+                                    arrayOfTooltipsTexts[i].tooltipMain = details.arrayOfTooltipsTexts[i].textMain;
+                                    arrayOfTooltipsTexts[i].tooltipDetails = details.arrayOfTooltipsTexts[i].textDetails;
+                                    arrayOfTooltipsTexts[i].x_offset = 55;
+                                    arrayOfTooltipsTexts[i].y_offset = 15;
+                                }
+                                else
+                                {
+                                    //this tooltip is optional, fill with blank data otherwise previously used data will be used
+                                    arrayOfTooltipsTexts[i].tooltipHeader = "";
+                                    arrayOfTooltipsTexts[i].tooltipMain = "";
+                                    arrayOfTooltipsTexts[i].tooltipDetails = "";
+                                }
+                            }
                         }
                         else
                         {
@@ -394,13 +440,13 @@ public class ModalInventoryUI : MonoBehaviour
     }
     #endregion
 
-
+    #region CloseInventory
     /// <summary>
     /// Close Inventory UI
     /// </summary>
     private void CloseInventoryUI()
     {
-        modalInventoryObject.SetActive(false);
+        inventoryCanvas.gameObject.SetActive(false);
         GameManager.i.guiScript.SetIsBlocked(false);
         //close generic tooltip (safety check)
         GameManager.i.tooltipGenericScript.CloseTooltip("ModalInventoryUI.cs -> CloseInventory");
@@ -410,8 +456,9 @@ public class ModalInventoryUI : MonoBehaviour
         GameManager.i.inputScript.ResetStates();
         Debug.LogFormat("[UI] ModalInventoryUI.cs -> CloseInventoryUI{0}", "\n");
     }
+    #endregion
 
-
+    #region RefreshInventoryUI
     /// <summary>
     /// Updates options and redraws options after an action has been taken
     /// </summary>
@@ -492,8 +539,9 @@ public class ModalInventoryUI : MonoBehaviour
             Debug.LogError("Invalid handler (null)");
         }
     }
+    #endregion
 
-
+    #region GearRightClicked
     /// <summary>
     /// Method to run when a gear option is right clicked (info display)
     /// </summary>
@@ -528,6 +576,7 @@ public class ModalInventoryUI : MonoBehaviour
             Debug.LogError(string.Format("Invalid Gear (Null) for gear / optionData {0}", optionName));
         }
     }
+    #endregion
 
     /*/// <summary>
     /// Method to run when a gear option is left clicked (action menu)

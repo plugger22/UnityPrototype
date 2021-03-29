@@ -4224,3 +4224,136 @@ City seed 38153 -> Londus, Eurasia
 
 Dev seed 24437 -> Friday, 26 March 2021 6:03 PM
 City seed 27437 -> Londus, Eurasia
+
+Dev seed 43950 -> Monday, 29 March 2021 9:10 AM
+City seed 30813 -> Londus, Eurasia
+
+Dev seed 30104 -> Monday, 29 March 2021 9:12 AM
+City seed 9071 -> Londus, Eurasia
+
+Dev seed 64481 -> Monday, 29 March 2021 9:18 AM
+City seed 41836 -> Londus, Eurasia
+
+Dev seed 6591 -> Monday, 29 March 2021 9:38 AM
+City seed 43175 -> Londus, Eurasia
+
+Dev seed 46593 -> Monday, 29 March 2021 9:40 AM
+City seed 1729 -> Londus, Eurasia
+
+Dev seed 1730 -> Monday, 29 March 2021 10:18 AM
+City seed 65105 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorManager.InitialiseHqHierarchyInventory () (at Assets/Scripts/Managers/ActorManager.cs:4524)
+	ActorManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ActorManager.cs:519)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:374)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:399)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:472)
+	
+Dev seed 63679 -> Monday, 29 March 2021 10:22 AM
+City seed 57654 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorManager.InitialiseHqHierarchyInventory () (at Assets/Scripts/Managers/ActorManager.cs:4524)
+	ActorManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ActorManager.cs:519)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:374)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:399)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:472)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	
+Dev seed 28854 -> Monday, 29 March 2021 10:29 AM
+City seed 61352 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorManager.InitialiseHqHierarchyInventory () (at Assets/Scripts/Managers/ActorManager.cs:4524)
+	ActorManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ActorManager.cs:519)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:374)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:399)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:472)
+	
+Dev seed 30432 -> Monday, 29 March 2021 10:35 AM
+City seed 44619 -> Londus, Eurasia
+
+Dev seed 32959 -> Monday, 29 March 2021 10:37 AM
+City seed 54597 -> Londus, Eurasia
+
+Dev seed 21621 -> Monday, 29 March 2021 10:41 AM
+City seed 32636 -> Londus, Eurasia
+
+Dev seed 61762 -> Monday, 29 March 2021 10:46 AM
+City seed 44066 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+TMPro.TMP_Text.FillCharacterVertexBuffers (System.Int32 i, System.Int32 index_X4) (at C:/Users/Owner/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMP_Text.cs:4958)
+	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/Owner/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:3578)
+	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/Owner/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2648)
+	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/Owner/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2648)
+	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/Owner/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2648)
+	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/Owner/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2648)
+	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/Owner/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2648)
+	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/Owner/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2648)
+	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/Owner/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2648)
+	TMPro.TextMeshProUGUI.OnPreRenderCanvas () (at C:/Users/Owner/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:1641)
+	TMPro.TextMeshProUGUI.Rebuild (UnityEngine.UI.CanvasUpdate update) (at C:/Users/Owner/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TextMeshProUGUI.cs:209)
+	UnityEngine.UI.CanvasUpdateRegistry.PerformUpdate () (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/CanvasUpdateRegistry.cs:150)
+	UnityEngine.Canvas:ForceUpdateCanvases()
+	TooltipGeneric:SetTooltip(GenericTooltipData) (at Assets/Scripts/GUI/Tooltips/TooltipGeneric.cs:105)
+	<ShowGenericTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericTooltipUI.cs:153)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 12216 -> Monday, 29 March 2021 10:48 AM
+City seed 25434 -> Londus, Eurasia
+
+Dev seed 53967 -> Monday, 29 March 2021 10:56 AM
+City seed 61262 -> Londus, Eurasia
+
+Dev seed 1007 -> Monday, 29 March 2021 10:59 AM
+City seed 56347 -> Londus, Eurasia
+
+Dev seed 32338 -> Monday, 29 March 2021 11:08 AM
+City seed 12661 -> Londus, Eurasia
+
+Dev seed 17850 -> Monday, 29 March 2021 11:21 AM
+City seed 6785 -> Londus, Eurasia
+
+Dev seed 51574 -> Monday, 29 March 2021 11:29 AM
+City seed 13138 -> Londus, Eurasia
+
+Dev seed 31799 -> Monday, 29 March 2021 12:08 PM
+City seed 29165 -> Londus, Eurasia
+ERROR Invalid tooltipUI (Null) for arrayOfOptions["0"]
+UnityEngine.Debug:LogError(Object)
+	ModalGenericPicker:SetGenericPicker(GenericPickerDetails) (at Assets/Scripts/GUI/ModalGenericPicker.cs:356)
+	ModalGenericPicker:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalGenericPicker.cs:181)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ActorManager:InitialiseGenericPickerRecruit(ModalActionDetails) (at Assets/Scripts/Managers/ActorManager.cs:4373)
+	ActorManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActorManager.cs:502)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	<GetNodeActions>c__AnonStorey6:<>m__3() (at Assets/Scripts/Managers/ActorManager.cs:2140)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ERROR Invalid tooltipUI (Null) for arrayOfOptions["1"]
+UnityEngine.Debug:LogError(Object)
+	ModalGenericPicker:SetGenericPicker(GenericPickerDetails) (at Assets/Scripts/GUI/ModalGenericPicker.cs:356)
+	ModalGenericPicker:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalGenericPicker.cs:181)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ActorManager:InitialiseGenericPickerRecruit(ModalActionDetails) (at Assets/Scripts/Managers/ActorManager.cs:4373)
+	ActorManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActorManager.cs:502)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	<GetNodeActions>c__AnonStorey6:<>m__3() (at Assets/Scripts/Managers/ActorManager.cs:2140)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ERROR Invalid tooltipUI (Null) for arrayOfOptions["2"]
+UnityEngine.Debug:LogError(Object)
+	ModalGenericPicker:SetGenericPicker(GenericPickerDetails) (at Assets/Scripts/GUI/ModalGenericPicker.cs:356)
+	ModalGenericPicker:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalGenericPicker.cs:181)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ActorManager:InitialiseGenericPickerRecruit(ModalActionDetails) (at Assets/Scripts/Managers/ActorManager.cs:4373)
+	ActorManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActorManager.cs:502)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	<GetNodeActions>c__AnonStorey6:<>m__3() (at Assets/Scripts/Managers/ActorManager.cs:2140)
+	UnityEngine.EventSystems.EventSystem:Update()
+	

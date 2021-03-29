@@ -21,6 +21,7 @@ public class InventoryInteraction : MonoBehaviour, IPointerClickHandler
     //public GenericTooltipUI tooltipSprite;                        //EDIT -> tooltip component attached to gameobject rather than sprite as can't get mouseover and click detection from sprite without code change
     public GenericTooltipUI tooltipStars;
     public GenericTooltipUI tooltipCompatibility;
+    public GenericTooltipUI tooltipText;                            //upper text
 
     [HideInInspector] public int optionData;                                            //multipurpose field to hold ID of actor, etc.
     [HideInInspector] public string optionName;                                         //multipurpose field for key name fields, eg. gear
@@ -34,6 +35,7 @@ public class InventoryInteraction : MonoBehaviour, IPointerClickHandler
         Debug.Assert(textUpper != null, "Invalid textUpper (Null)");
         Debug.Assert(textLower != null, "Invalid textLower (Null)");
         Debug.Assert(tooltipStars != null, "Invalid tooltipStars (Null)");
+        Debug.Assert(tooltipText != null, "Invalid tooltipText (Null)");
     }
 
     /// <summary>

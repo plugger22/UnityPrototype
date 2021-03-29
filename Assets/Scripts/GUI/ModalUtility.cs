@@ -279,10 +279,18 @@ namespace modalAPI
         public bool isHaltExecution;                                                               //if true execution is halted until outcome obtained, ignore otherwise
         public ModalGenericPickerSubState subState;                                                         //can be ignored unless needed
         public GenericOptionDetails[] arrayOfOptions = new GenericOptionDetails[3];                 //only the first three are recognised
-        public GenericTooltipDetails[] arrayOfTooltips = new GenericTooltipDetails[3];              //same [index] for both arrays. Keep in synch!!
+        public GenericTooltipDetails[] arrayOfImageTooltips = new GenericTooltipDetails[3];              //same [index] for both arrays. Keep in synch!!
+        public GenericTooltipDetails[] arrayOfTextTooltips = new GenericTooltipDetails[3];
 
         public GenericPickerDetails()
-            { subState = ModalGenericPickerSubState.Normal; }
+            {
+
+            subState = ModalGenericPickerSubState.Normal;
+            int maxOptions = GameManager.i.guiScript.maxPickerOptions;
+            arrayOfOptions = new GenericOptionDetails[maxOptions];
+            arrayOfImageTooltips = new GenericTooltipDetails[maxOptions];
+            arrayOfTextTooltips = new GenericTooltipDetails[maxOptions];
+        }
     }
 
     /// <summary>
@@ -346,6 +354,7 @@ namespace modalAPI
         public GenericTooltipDetails[] arrayOfTooltipsSprite;                                   //same [index] for both arrays. Keep in synch!! -> Sprite tooltip
         public GenericTooltipDetails[] arrayOfTooltipsStars;                                    //same [index] for both arrays. Keep in synch!! -> bottom text (Stars) tooltip, optional
         public GenericTooltipDetails[] arrayOfTooltipsCompatibility;                            //same [index] for both arrays. Keep in synch!! -> top text (Stars) tooltip, optional
+        public GenericTooltipDetails[] arrayOfTooltipsTexts;                                    //same [index] for both arrays. Keep in synch! -> upper text (actor arcs) tooltip, optional
 
         public InventoryInputData()
         {
@@ -354,6 +363,7 @@ namespace modalAPI
             arrayOfTooltipsSprite = new GenericTooltipDetails[maxOptions];
             arrayOfTooltipsStars = new GenericTooltipDetails[maxOptions];
             arrayOfTooltipsCompatibility = new GenericTooltipDetails[maxOptions];
+            arrayOfTooltipsTexts = new GenericTooltipDetails[maxOptions];
         }
     }
 

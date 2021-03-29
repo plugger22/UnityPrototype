@@ -14,6 +14,8 @@ namespace gameAPI
         public Image highlightImage;
         public Image optionImage;
         public TextMeshProUGUI displayText;
+        public GenericTooltipUI imageTooltip;
+        public GenericTooltipUI textTooltip;
 
         [HideInInspector] public GenericReturnData data;
 
@@ -28,6 +30,12 @@ namespace gameAPI
         {
             isSelected = false;
             data = new GenericReturnData();
+            //asserts
+            Debug.Assert(highlightImage != null, "Invalid highlightImage (Null)");
+            Debug.Assert(optionImage != null, "Invalid optionImage (Null)");
+            Debug.Assert(displayText != null, "Invalid displayText (Null)");
+            Debug.Assert(imageTooltip != null, "Invalid imageTooltip (Null)");
+            Debug.Assert(textTooltip != null, "Invalid textTooltip (Null)");
         }
 
         /// <summary>

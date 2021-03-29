@@ -596,7 +596,7 @@ public class GearManager : MonoBehaviour
                                 optionDetails.sprite = gear.sprite;
                                 //add to master arrays
                                 genericDetails.arrayOfOptions[index] = optionDetails;
-                                genericDetails.arrayOfTooltips[index] = tooltipDetails;
+                                genericDetails.arrayOfImageTooltips[index] = tooltipDetails;
                             }
                         }
                         else if (gear.timesUsed > 0)
@@ -614,7 +614,7 @@ public class GearManager : MonoBehaviour
                                 optionDetails.isOptionActive = false;
                                 //add to master arrays
                                 genericDetails.arrayOfOptions[index] = optionDetails;
-                                genericDetails.arrayOfTooltips[index] = tooltipDetails;
+                                genericDetails.arrayOfImageTooltips[index] = tooltipDetails;
                             }
                         }
                     }
@@ -815,7 +815,7 @@ public class GearManager : MonoBehaviour
                                     optionDetails.sprite = gear.sprite;
                                     //add to master arrays
                                     genericDetails.arrayOfOptions[i] = optionDetails;
-                                    genericDetails.arrayOfTooltips[i] = tooltipDetails;
+                                    genericDetails.arrayOfImageTooltips[i] = tooltipDetails;
                                 }
                                 else { Debug.LogError(string.Format("Invalid tooltip Details (Null) for gearID {0}", arrayOfGear[i])); }
                             }

@@ -838,6 +838,10 @@ public class GameManager : MonoBehaviour
         startMethod.handler = inventoryScript.Initialise;
         startMethod.className = "ModalInventoryUI";
         listOfUIMethods.Add(startMethod);
+        //ModalGenericPicker
+        startMethod.handler = genericPickerScript.Initialise;
+        startMethod.className = "ModalGenericPicker";
+        listOfUIMethods.Add(startMethod);
         //BillboardUI
         startMethod.handler = billboardScript.Initialise;
         startMethod.className = "BillboardUI";

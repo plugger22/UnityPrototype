@@ -41,14 +41,12 @@ public class ActorArc : ScriptableObject
         Debug.AssertFormat(string.IsNullOrEmpty(summary) == false, "Invalid summary (Null or Empty) for {0}", name);
         Debug.AssertFormat(string.IsNullOrEmpty(details) == false, "Invalid explanation (Null or Empty) for {0}", name);
         //conditional
-        switch (side.level)
+        switch (side.name)
         {
-            case 1:
-                //authority
+            case "Authority":
                 Debug.AssertFormat(preferredTeam != null, "Invalid preferred Team (Null) for {0}", name);
                 break;
-            case 2:
-                //resistance
+            case "Resistance":
                 Debug.AssertFormat(preferredGear != null, "Invalid preferred gear (Null) for {0}", name);
                 Debug.AssertFormat(nodeAction != null, "Invalid nodeAction (Null) for {0}", name);
                 break;

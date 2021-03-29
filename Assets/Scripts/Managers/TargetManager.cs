@@ -1909,7 +1909,7 @@ public class TargetManager : MonoBehaviour
                                     optionDetails.sprite = GameManager.i.spriteScript.targetInfoSprite;
                                     //add to master arrays
                                     genericDetails.arrayOfOptions[i] = optionDetails;
-                                    genericDetails.arrayOfTooltips[i] = tooltipDetails;
+                                    genericDetails.arrayOfImageTooltips[i] = tooltipDetails;
                                 }
                                 else { Debug.LogErrorFormat("Invalid tooltip Details (Null) for target {0}", target.targetName); }
                             }

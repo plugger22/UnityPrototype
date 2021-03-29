@@ -736,7 +736,7 @@ public class ActionManager : MonoBehaviour
                 }
                 //add options to picker data package
                 genericDetails.arrayOfOptions = arrayOfGenericOptions;
-                genericDetails.arrayOfTooltips = arrayOfTooltips;
+                genericDetails.arrayOfImageTooltips = arrayOfTooltips;
             }
             else { Debug.LogError("Invalid listOfManageOptions (Null)"); errorFlag = true; }
 
@@ -901,7 +901,7 @@ public class ActionManager : MonoBehaviour
                 }
                 //add options to picker data package
                 genericDetails.arrayOfOptions = arrayOfGenericOptions;
-                genericDetails.arrayOfTooltips = arrayOfTooltips;
+                genericDetails.arrayOfImageTooltips = arrayOfTooltips;
             }
             else { Debug.LogError("Invalid listOfManageOptions (Null)"); errorFlag = true; }
 
@@ -1063,7 +1063,7 @@ public class ActionManager : MonoBehaviour
                 }
                 //add options to picker data package
                 genericDetails.arrayOfOptions = arrayOfGenericOptions;
-                genericDetails.arrayOfTooltips = arrayOfTooltips;
+                genericDetails.arrayOfImageTooltips = arrayOfTooltips;
             }
             else { Debug.LogError("Invalid listOfManageOptions (Null)"); errorFlag = true; }
 
@@ -1238,7 +1238,7 @@ public class ActionManager : MonoBehaviour
                 }
                 //add options to picker data package
                 genericDetails.arrayOfOptions = arrayOfGenericOptions;
-                genericDetails.arrayOfTooltips = arrayOfTooltips;
+                genericDetails.arrayOfImageTooltips = arrayOfTooltips;
             }
             else { Debug.LogError("Invalid listOfManageOptions (Null)"); errorFlag = true; }
 

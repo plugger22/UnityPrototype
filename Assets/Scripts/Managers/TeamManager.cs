@@ -1188,7 +1188,7 @@ public class TeamManager : MonoBehaviour
                         else { Debug.LogError(string.Format("Invalid actor (Null) fro team.ActorSlotID {0}", team.actorSlotID)); }
                         //add to master arrays
                         genericDetails.arrayOfOptions[i] = optionDetails;
-                        genericDetails.arrayOfTooltips[i] = tooltipDetails;
+                        genericDetails.arrayOfImageTooltips[i] = tooltipDetails;
                     }
                     else { Debug.LogError(string.Format("Invalid team (Null) for listOfTeams[{0}]", i)); }
                     //check that limit hasn't been exceeded (maxGenericOptions)
@@ -1274,7 +1274,7 @@ public class TeamManager : MonoBehaviour
                         tooltipDetails.textDetails = string.Format("{0}Automatic success{1}", colourEffect, colourEnd);
                         //add to master arrays
                         genericDetails.arrayOfOptions[i] = optionDetails;
-                        genericDetails.arrayOfTooltips[i] = tooltipDetails;
+                        genericDetails.arrayOfImageTooltips[i] = tooltipDetails;
                     }
                     else { Debug.LogError(string.Format("Invalid team (Null) for listOfTeams[{0}]", i)); }
                     //check that limit hasn't been exceeded (maxGenericOptions)

@@ -96,6 +96,10 @@ public class GUIManager : MonoBehaviour
     [Tooltip("Max number of options available in UI")]
     [Range(4, 4)] public int maxInventoryOptions = 4;
 
+    [Header("ModalGenericPickerUI")]
+    [Tooltip("Max number of options available in UI")]
+    [Range(3, 3)] public int maxPickerOptions = 3;
+
     [Header("ModalOutcomeUI")]
     [Tooltip("Time for blackBars to Grow for Outcome Special mode (seconds)")]
     [Range(0.5f, 1.5f)] public float outcomeBarTimerGrow = 0.75f;

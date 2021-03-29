@@ -4338,7 +4338,7 @@ public class ActorManager : MonoBehaviour
                                     "</cspace>", "</font>", "\n", colourNormal, actor.arc.nodeAction.tag, colourEnd);
                                 //add to master arrays
                                 genericDetails.arrayOfOptions[i] = optionDetails;
-                                genericDetails.arrayOfTooltips[i] = tooltipDetails;
+                                genericDetails.arrayOfImageTooltips[i] = tooltipDetails;
                             }
                             else { Debug.LogError(string.Format("Invalid actor (Null) for gearID {0}", listOfPickerActors[i])); }
                         }
@@ -4511,11 +4511,18 @@ public class ActorManager : MonoBehaviour
                         tooltipDetailsCompatibility.textHeader = compatibilityData.header;
                         tooltipDetailsCompatibility.textMain = compatibilityData.main;
                         tooltipDetailsCompatibility.textDetails = compatibilityData.details;
+                        //tooltip -> actor arcs (upper text) -> similar for all
+                        GenericTooltipDetails tooltipDetailsTexts = new GenericTooltipDetails();
+                        tooltipDetailsTexts.textHeader = string.Format("{0}<size=120%>{1}</size>{2}", colourAlert, title, colourEnd);
+                        tooltipDetailsTexts.textMain = string.Format("Once at HQ, roles, eg. {0}, {1}serve no purpose{2}", actor.arc.name, colourNeutral, colourEnd);
+                        tooltipDetailsTexts.textDetails = string.Format("{0} is {1}fully committed{2} to carrying out {3} HQ responsibilities", 
+                            actor.actorName, colourAlert, colourEnd, actor.sex == ActorSex.Male ? "his" : "her");
                         //add to arrays
                         data.arrayOfOptions[i - offset] = optionData;
                         data.arrayOfTooltipsSprite[i - offset] = tooltipDetailsSprite;
                         data.arrayOfTooltipsStars[i - offset] = tooltipDetailsStars;
                         data.arrayOfTooltipsCompatibility[i - offset] = tooltipDetailsCompatibility;
+                        data.arrayOfTooltipsTexts[i - offset] = tooltipDetailsTexts;
                         //help
                         data.help0 = "hq_over_0";
                         data.help1 = "hq_over_1";
@@ -5079,10 +5086,27 @@ public class ActorManager : MonoBehaviour
                                 tooltipDetailsCompatibility.textHeader = compatibilityData.header;
                                 tooltipDetailsCompatibility.textMain = compatibilityData.main;
                                 tooltipDetailsCompatibility.textDetails = compatibilityData.details;
+                                //tooltip -> Trait (trait -> similar for all)
+                                GenericTooltipDetails tooltipDetailsTrait = new GenericTooltipDetails();
+                                Trait trait = actor.GetTrait();
+                                if (trait != null)
+                                {
+                                    tooltipDetailsTrait.textHeader = string.Format("{0}<size=120%>{1}</size>{2}", trait.typeOfTrait.name.Equals("Good", StringComparison.Ordinal) == true ? colourGood : colourBad, 
+                                        trait.tag, colourEnd);
+                                    tooltipDetailsTrait.textMain = trait.description;
+                                }
+                                else { Debug.LogWarningFormat("Invalid trait (Null) for {0}, {1}, ID {2}", actor.actorName, actor.arc.name, actor.actorID); }
+                                //tooltip -> actor Arc (upper text -> similar for all)
+                                GenericTooltipDetails tooltipDetailsText = new GenericTooltipDetails();
+                                tooltipDetailsText.textHeader = string.Format("{0}<size=120%>{1}</size>{2}", colourNeutral, actor.arc.name, colourEnd);
+                                tooltipDetailsText.textMain = string.Format("{0}{1}{2}", colourAlert, actor.arc.summary, colourEnd);
+                                tooltipDetailsText.textDetails = actor.arc.details;
                                 //add to arrays
                                 data.arrayOfOptions[i] = optionData;
                                 data.arrayOfTooltipsSprite[i] = tooltipDetails;
                                 data.arrayOfTooltipsCompatibility[i] = tooltipDetailsCompatibility;
+                                data.arrayOfTooltipsStars[i] = tooltipDetailsTrait;
+                                data.arrayOfTooltipsTexts[i] = tooltipDetailsText;
 
                             }
                             else
