@@ -21,4 +21,5 @@ MonoBehaviour:
     receive preferential treatment
   textBottom: This works well for everybody, provided they do as they are told and
     don't raise concerns about the high incidence of worker deaths in the ZeroG construction
-    bays that form most of the The Hub
+    bays that form most of The Hub
+  isKnown: 0

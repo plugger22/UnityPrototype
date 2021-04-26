@@ -222,6 +222,17 @@ public class TutorialManager : MonoBehaviour
         UpdateFeatures(set.listOfFeaturesOff, set.listOfGUIOff);
         //Goals reset
         GameManager.i.dataScript.ClearListOfTutorialGoals();
+        //Make sure Player is Active
+        if (GameManager.i.playerScript.status != ActorStatus.Active)
+        {
+            GameManager.i.playerScript.status = ActorStatus.Active;
+            GameManager.i.playerScript.inactiveStatus = ActorInactive.None;
+            GameManager.i.playerScript.tooltipStatus = ActorTooltip.None;
+            //alpha
+            GameManager.i.actorPanelScript.UpdatePlayerAlpha(GameManager.i.guiScript.alphaActive);
+        }
+        //Hide New turn button (may not be required but do so regardless)
+        EventManager.i.PostNotification(EventType.NewTurnHide, this, null, "TutorialManager.cs -> InitialiseTutorialSet");
     }
     #endregion
 
