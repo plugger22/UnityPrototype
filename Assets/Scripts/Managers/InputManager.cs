@@ -518,7 +518,9 @@ public class InputManager : MonoBehaviour
                         case ModalSubState.Outcome:
                             //Any key -> normal or special modes
                             if (Input.anyKeyDown == true)
-                            { EventManager.i.PostNotification(EventType.OutcomeClose, this, null, "InputManager.cs -> ProcessKeyInput AnyKeyDown"); }
+                            {
+                                EventManager.i.PostNotification(EventType.OutcomeClose, this, null, "InputManager.cs -> ProcessKeyInput AnyKeyDown");
+                            }
                             break;
                         #endregion
 

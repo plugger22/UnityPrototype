@@ -523,7 +523,7 @@ public class ModalOutcome : MonoBehaviour
     }
 
     /// <summary>
-    /// grow/shrink blue line highlights along black bars behind the specialOutcome panel
+    /// grow/shrink coloured line highlights along black bars behind the specialOutcome panel
     /// </summary>
     /// <returns></returns>
     IEnumerator RunHighlights()
