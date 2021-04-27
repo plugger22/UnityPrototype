@@ -231,8 +231,11 @@ public class TutorialManager : MonoBehaviour
             //alpha
             GameManager.i.actorPanelScript.UpdatePlayerAlpha(GameManager.i.guiScript.alphaActive);
         }
-        //Hide New turn button (may not be required but do so regardless)
-        EventManager.i.PostNotification(EventType.NewTurnHide, this, null, "TutorialManager.cs -> InitialiseTutorialSet");
+        if (GameManager.i.isSession == true)
+        {
+            //Hide New turn button (may not be required but do so regardless)
+            EventManager.i.PostNotification(EventType.NewTurnHide, this, null, "TutorialManager.cs -> InitialiseTutorialSet");
+        }
     }
     #endregion
 

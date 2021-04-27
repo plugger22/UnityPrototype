@@ -413,79 +413,83 @@ public class ModalOutcome : MonoBehaviour
             //ignore if autoRun true
             if (GameManager.i.turnScript.CheckIsAutoRun() == false)
             {
-                //reset input
-                Input.ResetInputAxes();
-                //exit any generic or node tooltips
-                GameManager.i.tooltipGenericScript.CloseTooltip("ModalOutcome.cs -> SetModalOutcomeSpecial");
-                GameManager.i.tooltipNodeScript.CloseTooltip("ModalOutcome.cs -> SetModalOutcomeSpecial");
-                GameManager.i.tooltipHelpScript.CloseTooltip("ModalOutcome.cs -> SetModalOutcomeSpecial");
-                reason = details.reason;
-                triggerEvent = details.triggerEvent;
-                //set modal true
-                GameManager.i.guiScript.SetIsBlocked(true, details.modalLevel);
-                //toggle panels
-                panelNormal.gameObject.SetActive(false);
-                canvasSpecial.gameObject.SetActive(true);
-
-                //register action status
-                isAction = details.isAction;
-
-                #region archive
-                /*//Show Me
-                if (details.listOfNodes != null && details.listOfNodes.Count > 0)
+                if (CheckModalOutcomeActive() == false)
                 {
+                    //reset input
+                    Input.ResetInputAxes();
+                    //exit any generic or node tooltips
+                    GameManager.i.tooltipGenericScript.CloseTooltip("ModalOutcome.cs -> SetModalOutcomeSpecial");
+                    GameManager.i.tooltipNodeScript.CloseTooltip("ModalOutcome.cs -> SetModalOutcomeSpecial");
+                    GameManager.i.tooltipHelpScript.CloseTooltip("ModalOutcome.cs -> SetModalOutcomeSpecial");
+                    reason = details.reason;
+                    triggerEvent = details.triggerEvent;
+                    //set modal true
+                    GameManager.i.guiScript.SetIsBlocked(true, details.modalLevel);
+                    //toggle panels
+                    panelNormal.gameObject.SetActive(false);
+                    canvasSpecial.gameObject.SetActive(true);
 
-                    //showMe data
-                    listOfShowMeNodes = details.listOfNodes;
-                    //disable Confirm, activate Show Me button
-                    confirmButtonNormal.gameObject.SetActive(false);
-                    showMeButtonNormal.gameObject.SetActive(true);
-                    //events to call to handle underlying UI (if any)
-                    hideOtherEvent = details.hideEvent;
-                    restoreOtherEvent = details.restoreEvent;
+                    //register action status
+                    isAction = details.isAction;
+
+                    #region archive
+                    /*//Show Me
+                    if (details.listOfNodes != null && details.listOfNodes.Count > 0)
+                    {
+
+                        //showMe data
+                        listOfShowMeNodes = details.listOfNodes;
+                        //disable Confirm, activate Show Me button
+                        confirmButtonNormal.gameObject.SetActive(false);
+                        showMeButtonNormal.gameObject.SetActive(true);
+                        //events to call to handle underlying UI (if any)
+                        hideOtherEvent = details.hideEvent;
+                        restoreOtherEvent = details.restoreEvent;
+                    }
+                    else
+                    {
+                        listOfShowMeNodes.Clear();
+                        //disable ShowMe, activate Confirm button
+                        confirmButtonNormal.gameObject.SetActive(true);
+                        showMeButtonNormal.gameObject.SetActive(false);
+                        //default settings for events
+                        hideOtherEvent = EventType.None;
+                        restoreOtherEvent = EventType.None;
+                    }*/
+
+                    //set opacity to zero (invisible)
+                    //SetOpacity(0f);
+                    #endregion
+
+                    //set up modalOutcome elements
+                    topTextSpecial.text = details.textTop;
+                    bottomTextSpecial.text = details.textBottom;
+                    /*bottomTextSpecial.text = string.Format("{0}{1}{2}<size=80%>Press ANY Key to exit</size>", details.textBottom, "\n", "\n");*/
+                    if (details.sprite != null)
+                    { portraitSpecial.sprite = details.sprite; }
+                    //open Canvas
+                    outcomeCanvas.gameObject.SetActive(true);
+
+                    //set blackBar to min width
+                    blackBarTransform.sizeDelta = new Vector2(specialWidth, blackBarTransform.sizeDelta.y);
+                    //highlight colour
+                    if (details.isSpecialGood == true)
+                    { highlight.color = colourGood; }
+                    else { highlight.color = colourBad; }
+                    //set states
+                    ModalStateData package = new ModalStateData() { mainState = ModalSubState.Outcome };
+                    GameManager.i.inputScript.SetModalState(package);
+                    //pass through data for when the outcome window is closed
+                    modalLevel = details.modalLevel;
+                    modalState = details.modalState;
+                    Debug.LogFormat("[UI] ModalOutcome.cs -> SetModalOutcomeSpecial{0}", "\n");
+                    //fixed popUps
+                    GameManager.i.popUpFixedScript.ExecuteFixed(0.75f);
+                    //grow black bars
+                    myCoroutineBarGrow = StartCoroutine("GrowBlackBar");
+                    myCoroutineHighlights = StartCoroutine("RunHighlights");
                 }
-                else
-                {
-                    listOfShowMeNodes.Clear();
-                    //disable ShowMe, activate Confirm button
-                    confirmButtonNormal.gameObject.SetActive(true);
-                    showMeButtonNormal.gameObject.SetActive(false);
-                    //default settings for events
-                    hideOtherEvent = EventType.None;
-                    restoreOtherEvent = EventType.None;
-                }*/
-
-                //set opacity to zero (invisible)
-                //SetOpacity(0f);
-                #endregion
-
-                //set up modalOutcome elements
-                topTextSpecial.text = details.textTop;
-                bottomTextSpecial.text = details.textBottom;
-                /*bottomTextSpecial.text = string.Format("{0}{1}{2}<size=80%>Press ANY Key to exit</size>", details.textBottom, "\n", "\n");*/
-                if (details.sprite != null)
-                { portraitSpecial.sprite = details.sprite; }
-                //open Canvas
-                outcomeCanvas.gameObject.SetActive(true);
-
-                //set blackBar to min width
-                blackBarTransform.sizeDelta = new Vector2(specialWidth, blackBarTransform.sizeDelta.y);
-                //highlight colour
-                if (details.isSpecialGood == true)
-                { highlight.color = colourGood; }
-                else { highlight.color = colourBad; }
-                //set states
-                ModalStateData package = new ModalStateData() { mainState = ModalSubState.Outcome };
-                GameManager.i.inputScript.SetModalState(package);
-                //pass through data for when the outcome window is closed
-                modalLevel = details.modalLevel;
-                modalState = details.modalState;
-                Debug.LogFormat("[UI] ModalOutcome.cs -> SetModalOutcomeSpecial{0}", "\n");
-                //fixed popUps
-                GameManager.i.popUpFixedScript.ExecuteFixed(0.75f);
-                //grow black bars
-                myCoroutineBarGrow = StartCoroutine("GrowBlackBar");
-                myCoroutineHighlights = StartCoroutine("RunHighlights");
+                else { Debug.LogWarning("Can't start a new Modal Outcome as an instance is already active"); }
             }
         }
         else { Debug.LogWarning("Invalid ModalOutcomeDetails package (Null)"); }
@@ -599,7 +603,7 @@ public class ModalOutcome : MonoBehaviour
     public bool CheckModalOutcomeActive()
     {
         //return modalOutcomeObject.activeSelf;
-        return outcomeObject.activeSelf;
+        return outcomeCanvas.gameObject.activeSelf;
     }
     #endregion
 
@@ -636,8 +640,7 @@ public class ModalOutcome : MonoBehaviour
     private void CloseModalOutcome()
     {
         Debug.LogFormat("[UI] ModalOutcome.cs -> CloseModalOutcome{0}", "\n");
-        //toggle canvas off
-        outcomeCanvas.gameObject.SetActive(false);
+
         //close tooltips
         GameManager.i.guiScript.SetTooltipsOff();
         //stop coroutine -> failsafe
@@ -649,6 +652,10 @@ public class ModalOutcome : MonoBehaviour
         GameManager.i.guiScript.SetIsBlocked(false, modalLevel);
         //set game state
         GameManager.i.inputScript.ResetStates(modalState);
+        //reset (needs to be BEFORE toggling canvas off)
+        isSpecial = false;
+        //toggle canvas off
+        outcomeCanvas.gameObject.SetActive(false);
         //end of turn check
         if (isAction == true)
         {
@@ -663,8 +670,7 @@ public class ModalOutcome : MonoBehaviour
         //check trigger event
         if (triggerEvent != EventType.None)
         { EventManager.i.PostNotification(triggerEvent, this, null, "ModalOutcome.cs -> CloseModalOutcome"); }
-        //reset
-        isSpecial = false;
+
     }
     #endregion
 

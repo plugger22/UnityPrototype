@@ -4673,3 +4673,99 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:329)
 	UnityEngine.EventSystems.EventSystem:Update()
 	City seed 40115 -> VirtualCity, Eurasia
+
+Dev seed 44911 -> Tuesday, 27 April 2021 12:13 PM
+WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "NewTurnHide"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:361)
+	TutorialManager:InitialiseTutorialSet(TutorialSet) (at Assets/Scripts/Managers/TutorialManager.cs:235)
+	TutorialManager:InitialiseTutorial() (at Assets/Scripts/Managers/TutorialManager.cs:199)
+	TutorialManager:SubInitialiseTutorial() (at Assets/Scripts/Managers/TutorialManager.cs:100)
+	TutorialManager:Initialise(GameState) (at Assets/Scripts/Managers/TutorialManager.cs:65)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:934)
+	GameManager:InitialiseTutorial() (at Assets/Scripts/GameManager.cs:1037)
+	ControlManager:ProcessTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:625)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:94)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:329)
+	UnityEngine.EventSystems.EventSystem:Update()
+	City seed 59784 -> VirtualCity, Eurasia
+
+Dev seed 55831 -> Tuesday, 27 April 2021 12:15 PM
+WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "NewTurnHide"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:361)
+	TutorialManager:InitialiseTutorialSet(TutorialSet) (at Assets/Scripts/Managers/TutorialManager.cs:235)
+	TutorialManager:InitialiseTutorial() (at Assets/Scripts/Managers/TutorialManager.cs:199)
+	TutorialManager:SubInitialiseTutorial() (at Assets/Scripts/Managers/TutorialManager.cs:100)
+	TutorialManager:Initialise(GameState) (at Assets/Scripts/Managers/TutorialManager.cs:65)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:934)
+	GameManager:InitialiseTutorial() (at Assets/Scripts/GameManager.cs:1037)
+	ControlManager:ProcessTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:625)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:94)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:329)
+	UnityEngine.EventSystems.EventSystem:Update()
+	City seed 15774 -> VirtualCity, Eurasia
+
+Dev seed 35177 -> Tuesday, 27 April 2021 12:16 PM
+WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "NewTurnHide"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:361)
+	TutorialManager:InitialiseTutorialSet(TutorialSet) (at Assets/Scripts/Managers/TutorialManager.cs:235)
+	TutorialManager:InitialiseTutorial() (at Assets/Scripts/Managers/TutorialManager.cs:199)
+	TutorialManager:SubInitialiseTutorial() (at Assets/Scripts/Managers/TutorialManager.cs:100)
+	TutorialManager:Initialise(GameState) (at Assets/Scripts/Managers/TutorialManager.cs:65)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:934)
+	GameManager:InitialiseTutorial() (at Assets/Scripts/GameManager.cs:1037)
+	ControlManager:ProcessTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:625)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:94)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:329)
+	UnityEngine.EventSystems.EventSystem:Update()
+	City seed 5725 -> VirtualCity, Eurasia
+
+Dev seed 26801 -> Tuesday, 27 April 2021 12:19 PM
+WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "NewTurnHide"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:361)
+	TutorialManager:InitialiseTutorialSet(TutorialSet) (at Assets/Scripts/Managers/TutorialManager.cs:235)
+	TutorialManager:InitialiseTutorial() (at Assets/Scripts/Managers/TutorialManager.cs:199)
+	TutorialManager:SubInitialiseTutorial() (at Assets/Scripts/Managers/TutorialManager.cs:100)
+	TutorialManager:Initialise(GameState) (at Assets/Scripts/Managers/TutorialManager.cs:65)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:934)
+	GameManager:InitialiseTutorial() (at Assets/Scripts/GameManager.cs:1037)
+	ControlManager:ProcessTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:625)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:94)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:329)
+	UnityEngine.EventSystems.EventSystem:Update()
+	City seed 34809 -> VirtualCity, Eurasia
+
+Dev seed 65493 -> Tuesday, 27 April 2021 12:22 PM
+WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "NewTurnHide"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:361)
+	TutorialManager:InitialiseTutorialSet(TutorialSet) (at Assets/Scripts/Managers/TutorialManager.cs:235)
+	TutorialManager:InitialiseTutorial() (at Assets/Scripts/Managers/TutorialManager.cs:199)
+	TutorialManager:SubInitialiseTutorial() (at Assets/Scripts/Managers/TutorialManager.cs:100)
+	TutorialManager:Initialise(GameState) (at Assets/Scripts/Managers/TutorialManager.cs:65)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:934)
+	GameManager:InitialiseTutorial() (at Assets/Scripts/GameManager.cs:1037)
+	ControlManager:ProcessTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:625)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:94)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:329)
+	UnityEngine.EventSystems.EventSystem:Update()
+	City seed 57098 -> VirtualCity, Eurasia
+
+Dev seed 42125 -> Tuesday, 27 April 2021 12:38 PM
+City seed 16122 -> VirtualCity, Eurasia
+
+Dev seed 21917 -> Tuesday, 27 April 2021 12:38 PM
+City seed 16018 -> Londus, Eurasia
+City seed 10564 -> VirtualCity, Eurasia
+
+Dev seed 16061 -> Tuesday, 27 April 2021 12:39 PM
+City seed 65490 -> Londus, Eurasia
+City seed 15921 -> VirtualCity, Eurasia
