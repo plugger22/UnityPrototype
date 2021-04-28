@@ -605,6 +605,8 @@ public class TutorialManager : MonoBehaviour
                 case "MoveBasic": goalType = GoalType.Move; break;
                 case "MoveSecurity": goalType = GoalType.MoveSecurity; break;
                 case "PlayerInvisibility": goalType = GoalType.PlayerInvisibility; break;
+                case "PlayerNodeAction": goalType = GoalType.PlayerNodeActions; break;
+                case "SubordinateNodeAction": goalType = GoalType.SubordinateNodeActions; break;
                 default: Debug.LogWarningFormat("Unrecognised goal \"{0}\"", goal); break;
             }
         }
@@ -636,6 +638,16 @@ public class TutorialManager : MonoBehaviour
                 //player lost invisibility
                 goalValue = GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerInvisibilityLost);
                 break;
+            case GoalType.PlayerNodeActions:
+                //player node actions (excluding target attempts)
+                goalValue = GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerNodeActions);
+                break;
+            case GoalType.SubordinateNodeActions:
+                //subordinate node actions (excluding target attempts)
+                goalValue = GameManager.i.dataScript.StatisticGetLevel(StatType.SubordinateNodeActions);
+                break;
+            case GoalType.None: break;
+            default: Debug.LogWarningFormat("Unrecognised goalType \"{0}\"", goalType); break;
         }
         return goalValue;
     }

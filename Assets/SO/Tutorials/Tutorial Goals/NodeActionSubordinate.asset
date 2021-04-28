@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14ce46f3171943c4288c53f60de62339, type: 3}
+  m_Name: NodeActionSubordinate
+  m_EditorClassIdentifier: 
+  notes: Subordinate executes a node action
+  startTopText: Indirect District Actions
+  startBottomText: Sometimes it's good to blow smoke at the Authority<br><br>Confuse
+    them. Have one of your Subordinates do something <b>Elsewhere</b><br><br>Pick
+    one of your team, find a <b>Contact</b> (Mouseover) and <b>Left click</b> on that
+    district to carry out the action
+  finishTopText: It's not always wise to lead from the front
+  finishBottomText: Your subordinate gains the <b>Power</b> benefit but, like you
+    did, loses <b>Invisibility</b><br><br>The Authority?<br><br>They now think that
+    you're <b>OVER THERE</b>
+  goal0: {fileID: 11400000, guid: ba62225d5bff00f47aa57cf97a9cca20, type: 2}
+  tracker0Notes: Subordinate node actions
+  target0: 1
+  goal1: {fileID: 0}
+  tracker1Notes: 
+  target1: -1

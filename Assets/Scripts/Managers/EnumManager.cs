@@ -247,7 +247,7 @@
     //
     // - - - Goals
     //
-    public enum GoalType { None, Move, MoveSecurity, PlayerInvisibility }                 //TutorialGoal.SO equivalents
+    public enum GoalType { None, Move, MoveSecurity, PlayerInvisibility, PlayerNodeActions, SubordinateNodeActions }                 //TutorialGoal.SO equivalents
 
     //
     // - - - Statistics - - - 
@@ -258,6 +258,7 @@
         PlayerBreakdown, PlayerLieLowTimes, PlayerLieLowDays, PlayerCaptured, PlayerCapturedDays, PlayerBetrayed, PlayerTimesStressed, PlayerStressedDays, PlayerSuperStressed, PlayerDoNothing,
         PlayerNodeActions, PlayerManageActions, PlayerMoveActions, PlayerTargetAttempts, PlayerGiveGear, PlayerAddictedDays, PlayerTimesCured, PlayerDaysOnJob, PlayerInvisibilityLost,
         PlayerMoveSecureConnections,
+        SubordinateNodeActions,
         LieLowDaysTotal, GearTotal,
         TargetAttempts, TargetSuccesses,
         ActorsResignedAuthority, ActorsResignedResistance, ActorResistanceTraitors, ActorsRecruited, ActorConflicts, ActorLearntSecret, ActorCompatibilityGood, ActorCompatibilityBad,

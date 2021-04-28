@@ -1996,7 +1996,11 @@ public class TargetManager : MonoBehaviour
                     StringBuilder builderTop = new StringBuilder();
                     StringBuilder builderBottom = new StringBuilder();
                     //check if player action
-                    if (node.nodeID == GameManager.i.nodeScript.GetPlayerNodeID()) { isPlayer = true; }
+                    if (node.nodeID == GameManager.i.nodeScript.GetPlayerNodeID())
+                    {
+                        isPlayer = true;
+                        sprite = GameManager.i.playerScript.sprite;
+                    }
                     //update target info level
                     target.intel = target.newIntel;
                     if (target.intel > maxTargetInfo)
@@ -2048,6 +2052,7 @@ public class TargetManager : MonoBehaviour
                         //add to actor's personal list
                         actor.AddNodeAction(nodeActionData);
                         Debug.LogFormat("[Tst] TargetManager.cs -> ProcessTargetInfo: nodeActionData added to {0}, {1}{2}", actor.actorName, actor.arc.name, "\n");
+                        GameManager.i.dataScript.StatisticIncrement(StatType.SubordinateNodeActions);
                     }
                     else
                     {

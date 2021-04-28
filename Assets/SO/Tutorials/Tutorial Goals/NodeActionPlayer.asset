@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14ce46f3171943c4288c53f60de62339, type: 3}
+  m_Name: NodeActionPlayer
+  m_EditorClassIdentifier: 
+  notes: Player executes a node action
+  startTopText: Direct District Actions
+  startBottomText: Strike a blow for the Resistance. Left Click on your current district<br><br>Are
+    there any options available to <b>mess with the Authority?</b><br><br>Do it. If
+    none are present, move to a different district and try again
+  finishTopText: Score one for the Resistance!
+  finishBottomText: Notice that your <b>Power</b> has gone up by one<br><br>Your <b>Invisibility</b>
+    has also dropped by one<br><br>The Authority now have an idea where you are
+  goal0: {fileID: 11400000, guid: d4a26b5bdf1c4ce4ba8a2645f57ff6ab, type: 2}
+  tracker0Notes: Player node actions
+  target0: 1
+  goal1: {fileID: 0}
+  tracker1Notes: 
+  target1: -1

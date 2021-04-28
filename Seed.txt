@@ -4769,3 +4769,117 @@ City seed 10564 -> VirtualCity, Eurasia
 Dev seed 16061 -> Tuesday, 27 April 2021 12:39 PM
 City seed 65490 -> Londus, Eurasia
 City seed 15921 -> VirtualCity, Eurasia
+
+Dev seed 62547 -> Wednesday, 28 April 2021 9:56 AM
+City seed 58410 -> Londus, Eurasia
+City seed 2185 -> VirtualCity, Eurasia
+
+Dev seed 4404 -> Wednesday, 28 April 2021 10:56 AM
+City seed 6117 -> Londus, Eurasia
+City seed 41479 -> VirtualCity, Eurasia
+
+Dev seed 63851 -> Wednesday, 28 April 2021 11:16 AM
+City seed 17827 -> Londus, Eurasia
+
+Dev seed 45425 -> Wednesday, 28 April 2021 2:52 PM
+WARNING [Val] ValidateSO: MISMATCH on TutorialItem, array 22, assets 23 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialItem[]) (at Assets/Scripts/Managers/ValidationManager.cs:2256)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2211)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:934)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:429)
+	WARNING [Val] ValidateSO: MISMATCH on GameHelp, array 5, assets 6 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(GameHelp[]) (at Assets/Scripts/Managers/ValidationManager.cs:2256)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2231)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:934)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:429)
+	City seed 53974 -> Londus, Eurasia
+
+Dev seed 3064 -> Wednesday, 28 April 2021 2:52 PM
+WARNING [Val] ValidateSO: MISMATCH on TutorialItem, array 22, assets 23 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialItem[]) (at Assets/Scripts/Managers/ValidationManager.cs:2256)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2211)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:934)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:429)
+	WARNING [Val] ValidateSO: MISMATCH on GameHelp, array 5, assets 6 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(GameHelp[]) (at Assets/Scripts/Managers/ValidationManager.cs:2256)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2231)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:934)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:429)
+	City seed 46253 -> VirtualCity, Eurasia
+
+Dev seed 945 -> Wednesday, 28 April 2021 3:04 PM
+WARNING [Val] ValidateSO: MISMATCH on TutorialItem, array 22, assets 23 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialItem[]) (at Assets/Scripts/Managers/ValidationManager.cs:2256)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2211)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:934)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:429)
+	WARNING [Val] ValidateSO: MISMATCH on GameHelp, array 5, assets 6 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(GameHelp[]) (at Assets/Scripts/Managers/ValidationManager.cs:2256)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2231)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:934)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:429)
+	City seed 35536 -> VirtualCity, Eurasia
+
+Dev seed 19075 -> Wednesday, 28 April 2021 3:19 PM
+City seed 32088 -> VirtualCity, Eurasia
+
+Dev seed 4737 -> Wednesday, 28 April 2021 3:21 PM
+City seed 23951 -> Londus, Eurasia
+
+Dev seed 41662 -> Wednesday, 28 April 2021 3:46 PM
+City seed 13463 -> Londus, Eurasia
+City seed 24140 -> VirtualCity, Eurasia
+WARNING Unrecognised goalType "None"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TutorialManager:GetGoalValue(GoalType) (at Assets/Scripts/Managers/TutorialManager.cs:649)
+	TutorialManager:UpdateGoal(TutorialGoal) (at Assets/Scripts/Managers/TutorialManager.cs:486)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:416)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:263)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised goalType "None"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TutorialManager:GetGoalValue(GoalType) (at Assets/Scripts/Managers/TutorialManager.cs:649)
+	TutorialManager:UpdateGoal(TutorialGoal) (at Assets/Scripts/Managers/TutorialManager.cs:486)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:416)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:263)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 25715 -> Wednesday, 28 April 2021 4:12 PM
+City seed 6300 -> Londus, Eurasia
+City seed 46025 -> VirtualCity, Eurasia
+WARNING TutorialManager.cs -> UpdateGoal: Can't add goal "NodeActionSubordinate",  as already present in listOfGoals
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TutorialManager:UpdateGoal(TutorialGoal) (at Assets/Scripts/Managers/TutorialManager.cs:465)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:416)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:263)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 38645 -> Wednesday, 28 April 2021 4:34 PM
+City seed 21532 -> Londus, Eurasia
+City seed 44778 -> VirtualCity, Eurasia
+
+Dev seed 22684 -> Wednesday, 28 April 2021 4:37 PM
+City seed 23811 -> Londus, Eurasia
+City seed 40146 -> VirtualCity, Eurasia
+
+Dev seed 5244 -> Wednesday, 28 April 2021 4:44 PM
+City seed 55319 -> Londus, Eurasia
+
+Dev seed 25393 -> Wednesday, 28 April 2021 4:48 PM
+City seed 61779 -> Londus, Eurasia
+
+Dev seed 38454 -> Wednesday, 28 April 2021 4:49 PM
+City seed 44275 -> Londus, Eurasia

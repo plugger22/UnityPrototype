@@ -298,7 +298,8 @@ public class ActionManager : MonoBehaviour
                     if (details.side.level == GameManager.i.globalScript.sideResistance.level)
                     {
                         int actorID = actor.actorID;
-                        if (node.nodeID == GameManager.i.nodeScript.GetPlayerNodeID()) { actorID = 999; isPlayer = true; }
+                        if (node.nodeID == GameManager.i.nodeScript.GetPlayerNodeID())
+                        { actorID = 999; isPlayer = true; }
                         captureDetails = GameManager.i.captureScript.CheckCaptured(node.nodeID, actorID);
                     }
                     if (captureDetails != null)
@@ -338,7 +339,9 @@ public class ActionManager : MonoBehaviour
                             effectReturn = GameManager.i.effectScript.ProcessEffect(effect, node, dataInput, actor);
                             if (effectReturn != null)
                             {
-                                outcomeDetails.sprite = actor.sprite;
+                                //sprite
+                                if (isPlayer == true) { outcomeDetails.sprite = GameManager.i.playerScript.sprite; }
+                                else { outcomeDetails.sprite = actor.sprite; }
                                 //specail outcome gfx
                                 outcomeDetails.isSpecial = true;
                                 //update stringBuilder texts
@@ -412,6 +415,8 @@ public class ActionManager : MonoBehaviour
                                 }
                                 //add to actor's personal list
                                 actor.AddNodeAction(nodeActionData);
+                                //statistics
+                                GameManager.i.dataScript.StatisticIncrement(StatType.SubordinateNodeActions);
                                 /*Debug.LogFormat("[Tst] ActionManager.cs -> ProcessNodeAction: nodeActionData added to {0}, {1}{2}", actor.actorName, actor.arc.name, "\n");*/
                             }
                             else
@@ -586,6 +591,7 @@ public class ActionManager : MonoBehaviour
                     //statistics
                     if (isPlayer == true)
                     { GameManager.i.dataScript.StatisticIncrement(StatType.PlayerNodeActions); }
+                    else { GameManager.i.dataScript.StatisticIncrement(StatType.SubordinateNodeActions); }
                     GameManager.i.dataScript.StatisticIncrement(StatType.NodeActionsResistance);
                 }
                 else

@@ -1613,6 +1613,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 532a755c66254a049a5ddb3c85afdbe1, type: 2}
   - {fileID: 11400000, guid: b9d5b06e3c95671478801660d588f13d, type: 2}
   - {fileID: 11400000, guid: dd5eafc56577fc04d9412a8eabaf7450, type: 2}
+  - {fileID: 11400000, guid: 77ec93847121dc542a7a4fabebcb9487, type: 2}
   arrayOfActorDraftSex:
   - {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
   - {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}
@@ -1859,6 +1860,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: da4deed10b85c874d856e2c1353fba57, type: 2}
   - {fileID: 11400000, guid: c9f5762854feafb488bd93d4edab825a, type: 2}
   - {fileID: 11400000, guid: 3bfa0fd44afacbd438fea1415d163e81, type: 2}
+  - {fileID: 11400000, guid: 0051ad6a584d5dc49a6db16d0afcb523, type: 2}
+  - {fileID: 11400000, guid: 8d4143b13636b814591348e0838fb230, type: 2}
+  - {fileID: 11400000, guid: c3001f6859e908748b96eed7baf3c978, type: 2}
+  - {fileID: 11400000, guid: faa053c12d6f4f04190b3146cd1f2f9e, type: 2}
   arrayOfTutorialTypes:
   - {fileID: 11400000, guid: 6af73092ead59e34f89fadf31d6d355c, type: 2}
   - {fileID: 11400000, guid: 3ea5e079678bd114896744e070740f21, type: 2}
@@ -1868,6 +1873,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 33e14c1b26727af4796ede7d57be31f2, type: 2}
   - {fileID: 11400000, guid: ac9f60d65a658db4eb63cad394c0f21e, type: 2}
   - {fileID: 11400000, guid: f33e5cdc3e35a4847b7607b0a97e9c35, type: 2}
+  - {fileID: 11400000, guid: 6bd85dc23dcd92c40b888438e05b1696, type: 2}
+  - {fileID: 11400000, guid: 6a36492cc9066d14b8e2c284a1702562, type: 2}
   arrayOfTutorialQueries:
   - {fileID: 11400000, guid: 79c9fe7515698064cb2345d2573a9993, type: 2}
   - {fileID: 11400000, guid: 039191711e5abb94a9a7286637c128e4, type: 2}
@@ -1884,6 +1891,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3bf73be6b46266b4497c5c0369a774ae, type: 2}
   - {fileID: 11400000, guid: 09b7eeb167c5a1744bf3177e47e8b9ac, type: 2}
   - {fileID: 11400000, guid: 48c0a57e8dd2d934f935a4de93ec1e76, type: 2}
+  - {fileID: 11400000, guid: 13e50f61f5a24a94981272c16b2508ca, type: 2}
   arrayOfTutorialOptions:
   - {fileID: 11400000, guid: 9607f2b746acf41469bf8c88f98ba671, type: 2}
   - {fileID: 11400000, guid: d98cf6dba71922b4cbb316498b31255f, type: 2}
@@ -1987,6 +1995,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5237bc6f2db221e4cbec1efa3fbd5e9a, type: 2}
   - {fileID: 11400000, guid: 138ab00f643f349409c32bebe2cb7424, type: 2}
   - {fileID: 11400000, guid: f27c634cef5cfff42972926acb1a4400, type: 2}
+  - {fileID: 11400000, guid: d4a26b5bdf1c4ce4ba8a2645f57ff6ab, type: 2}
+  - {fileID: 11400000, guid: ba62225d5bff00f47aa57cf97a9cca20, type: 2}
   arrayOfTutorialQueryTypes:
   - {fileID: 11400000, guid: 932d6256daa87c544beac8ae5099c73e, type: 2}
   - {fileID: 11400000, guid: 7b12844901fc9f9478441b5e50b7ecc1, type: 2}
@@ -6209,8 +6219,8 @@ MonoBehaviour:
   conditionWhoResistance: 999
   conditionResistance: {fileID: 0}
   playerInvisibility: -1
-  actorSlotID: 0
-  actorType: {fileID: 11400000, guid: 33cfb0c161a7cde409d27df1080bd2c8, type: 2}
+  actorSlotID: -1
+  actorType: {fileID: 0}
   actorDatapoint0: -1
   actorDatapoint1: -1
   actorDatapoint2: -1
@@ -7047,7 +7057,7 @@ MonoBehaviour:
   gameHelpScript: {fileID: 0}
   newTurnScript: {fileID: 0}
   seedDev: 0
-  autoRunTurns: 0
+  autoRunTurns: 20
   scenarioStartLevel: 0
   isPerformanceLog: 1
   isDataValidation: 1

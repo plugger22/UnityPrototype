@@ -5385,6 +5385,8 @@ public class ActorManager : MonoBehaviour
                                     //add to actor's personal list
                                     actorCurrent.AddNodeAction(nodeActionData);
                                     /*Debug.LogFormat("[Tst] ActorManager.cs -> ProcessRecruitChoiceResistance: nodeActionData added to {0}, {1}{2}", actorCurrent.actorName, actorCurrent.arc.name, "\n");*/
+                                    //statistics
+                                    GameManager.i.dataScript.StatisticIncrement(StatType.SubordinateNodeActions);
                                 }
                                 else
                                 {
