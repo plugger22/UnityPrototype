@@ -1277,6 +1277,8 @@ public class GearManager : MonoBehaviour
                                     };
                                     //add to actor's personal list
                                     actor.AddNodeAction(nodeActionData);
+                                    //statistics
+                                    GameManager.i.dataScript.StatisticIncrement(StatType.SubordinateNodeActions);
                                     Debug.LogFormat("[Tst] GearManager.cs -> ProcessGearChoice: nodeActionData added to {0}, {1}{2}", actor.actorName, actor.arc.name, "\n");
                                 }
                                 else

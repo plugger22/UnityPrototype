@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 609e6bfe7fdf18e4281f5e96c5f710d0, type: 3}
+  m_Name: Res6Query0
+  m_EditorClassIdentifier: 
+  tutorialType: {fileID: 11400000, guid: 8b2847a7a246595458eee2b6a64e9b06, type: 2}
+  tag: Your Personality
+  set: {fileID: 11400000, guid: 0d38225fe60cd4d43bc3e10405fe9d83, type: 2}
+  dialogue: {fileID: 0}
+  gameHelp: {fileID: 0}
+  goal: {fileID: 0}
+  query: {fileID: 11400000, guid: b91528910925b124ca16c56ce5f5e313, type: 2}
