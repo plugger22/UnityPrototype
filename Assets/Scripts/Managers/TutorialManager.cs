@@ -847,6 +847,11 @@ public class TutorialManager : MonoBehaviour
                 { tooltip = textListGeneric.GetRandomRecord(); }
                 else { tooltip = "Our Psychiatrist will be examining you"; }
                 break;
+            case "Reason":
+                if (Random.Range(0, 100) < queryOptionTooltipChance)
+                { tooltip = textListGeneric.GetRandomRecord(); }
+                else { tooltip = "Don't worry, we'll take anyone"; }
+                break;
             default: Debug.LogWarningFormat("Unrecognised queryType \"{0}\"", queryType.name); break;
         }
         return tooltip;

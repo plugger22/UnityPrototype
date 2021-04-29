@@ -251,6 +251,7 @@ public class SavePlayerData
     public string playerSecret;
     public string pet;
     public string petName;
+    public string reasonJoined;
     public ActorStatus status;
     public ActorTooltip tooltipStatus;
     public ActorInactive inactiveStatus;

@@ -9,20 +9,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d228a6c97b1decc4c97b0bf3ead188bc, type: 3}
-  m_Name: Res5
+  m_Name: Res6
   m_EditorClassIdentifier: 
   tutorial: {fileID: 11400000, guid: c050560a8867a3a4c806544632dda679, type: 2}
-  notes: 6th set in Resistance Tutorial
-  index: 5
+  notes: 7th set in Resistance Tutorial
+  index: 6
   listOfFeaturesOff:
   - {fileID: 11400000, guid: 7e2f496678746a1488d0508fb5ac34ef, type: 2}
   - {fileID: 11400000, guid: 60c5546ae44161c4e96b856a75904210, type: 2}
   - {fileID: 11400000, guid: 70e66f38820226347909bc5dfe71319a, type: 2}
-  - {fileID: 11400000, guid: 9ab41dcfbf11bf14f8fbeb9b7522f31a, type: 2}
   - {fileID: 11400000, guid: e16c959b5f1eac342979baf4a1a9362b, type: 2}
+  - {fileID: 11400000, guid: 9ab41dcfbf11bf14f8fbeb9b7522f31a, type: 2}
   listOfGUIOff:
   - {fileID: 11400000, guid: 4ecda8036df900d48b4b25e77b1b6ad0, type: 2}
-  - {fileID: 11400000, guid: 7046d4b9b0e864d409b0b2019663b6b2, type: 2}
+  - {fileID: 11400000, guid: 262a2750ea2c48041a39b611630cb536, type: 2}
   listOfTutorialItems:
-  - {fileID: 11400000, guid: 6f3cbdb1c657d1743a58c3a55af229df, type: 2}
-  - {fileID: 11400000, guid: c5344b572ff1d43448b13f0ab2372855, type: 2}
+  - {fileID: 11400000, guid: d52c843496f953846ab188ecf33ebf11, type: 2}
+  - {fileID: 11400000, guid: 55b2e5eed833a824d81f6c88410cbac5, type: 2}

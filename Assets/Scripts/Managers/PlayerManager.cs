@@ -58,6 +58,7 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector] public string previousJob;
     [HideInInspector] public string pet;
     [HideInInspector] public string petName;
+    [HideInInspector] public string reasonJoined;                                    //reason joined the Resistance 'I joined because [...]'
     [HideInInspector] public string initialSecret;                                   //starting secret
     //collections
     private bool[] arrayOfCaptureTools = new bool[4];                               //if true Player has CaptureTool.SO corresponding to array index (0 to 3) level of Innocence
