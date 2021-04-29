@@ -185,7 +185,12 @@ public class TutorialManager : MonoBehaviour
                 GameManager.i.cityScript.SetCity(tutorial.scenario.city);
                 Debug.LogFormat("[Tut] TutorialManager.cs -> InitialiseTutorial: city \"{0}\" loaded{1}", tutorial.scenario.city.tag, "\n");
                 //get index
-                index = GameManager.i.dataScript.GetTutorialIndex(tutorial.name);
+                if (GameManager.i.tutorialStartLevel > -1)
+                {
+                    //Development override -> if value > max allowed, use max
+                    index = Mathf.Min(GameManager.i.tutorialStartLevel, tutorial.listOfSets.Count);
+                }
+                else { index = GameManager.i.dataScript.GetTutorialIndex(tutorial.name); }
                 if (index > -1)
                 {
                     Debug.LogFormat("[Tut] TutorialManager.cs -> InitialiseTutorial: index \"{0}\" loaded{1}", index, "\n");
@@ -850,7 +855,7 @@ public class TutorialManager : MonoBehaviour
             case "Reason":
                 if (Random.Range(0, 100) < queryOptionTooltipChance)
                 { tooltip = textListGeneric.GetRandomRecord(); }
-                else { tooltip = "Don't worry, we'll take anyone"; }
+                else { tooltip = "Rest easy, we'll take anyone"; }
                 break;
             default: Debug.LogWarningFormat("Unrecognised queryType \"{0}\"", queryType.name); break;
         }

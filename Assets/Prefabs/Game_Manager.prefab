@@ -824,6 +824,7 @@ MonoBehaviour:
   playerPet: Dog
   playerPetName: Beethhoven
   playerSecret: Beastiality
+  playerReason: Doing Good
   numOfQualities: 3
 --- !u!114 &114364785414329898
 MonoBehaviour:
@@ -6195,6 +6196,7 @@ MonoBehaviour:
   isPlayerLeftMenu: 1
   isPlayerRightMenu: 1
   isTopWidget: 1
+  isNewTurnButton: 1
   noNodes: 1
 --- !u!114 &114556544146557144
 MonoBehaviour:
@@ -6659,6 +6661,7 @@ MonoBehaviour:
   previousJob: 
   pet: 
   petName: 
+  reasonJoined: 
   initialSecret: 
 --- !u!114 &114704934405690708
 MonoBehaviour:
@@ -7080,6 +7083,7 @@ MonoBehaviour:
   seedDev: 0
   autoRunTurns: 0
   scenarioStartLevel: 0
+  tutorialStartLevel: 6
   isPerformanceLog: 1
   isDataValidation: 1
   isValidateSO: 1

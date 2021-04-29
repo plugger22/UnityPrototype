@@ -11,6 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef9551e8460d46240b2ea11acbd0350e, type: 3}
   m_Name: TutRESq6_7
   m_EditorClassIdentifier: 
-  tag: Angry
+  tag: Being Angry
   text: Are you talking to ME?
   query: {fileID: 11400000, guid: 55b2e5eed833a824d81f6c88410cbac5, type: 2}

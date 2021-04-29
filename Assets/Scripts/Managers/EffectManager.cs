@@ -4193,8 +4193,8 @@ public class EffectManager : MonoBehaviour
             case "Reason":
                 //Reason for joining Resistance
                 GameManager.i.playerScript.reasonJoined = optionText;
-                effectResolve.topText = string.Format("{0}You've joined the Resistance because{1}", colourAlert, colourEnd);
-                effectResolve.bottomText = string.Format("{0}<size=115%>{1}</size>{2}<br><br>Mmmm...", colourNeutral, optionText, colourEnd);
+                effectResolve.topText = string.Format("{0}You've joined the Resistance because you believe in{1}", colourAlert, colourEnd);
+                effectResolve.bottomText = string.Format("{0}<size=115%>{1}</size>{2}<br><br>Mmmmm.... Interesting", colourNeutral, optionText, colourEnd);
                 break;
             case "Secret":
                 //Initial Secret

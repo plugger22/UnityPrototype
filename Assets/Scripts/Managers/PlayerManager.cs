@@ -349,6 +349,9 @@ public class PlayerManager : MonoBehaviour
         { initialSecret = GameManager.i.preloadScript.playerSecret; }
         //Defaults -> personality factors (full random)
         arrayOfFactors = new int[] { 99, 99, 99, 99, 99 };
+        //Defaults -> reason
+        if (string.IsNullOrEmpty(reasonJoined) == true)
+        { reasonJoined = GameManager.i.preloadScript.playerReason; }
     }
     #endregion
 

@@ -131,6 +131,8 @@ public class GameManager : MonoBehaviour
     public int autoRunTurns = 0;
     [Tooltip("Scenario level to start a new game on (default 0")]
     [Range(0, 4)] public int scenarioStartLevel = 0;
+    [Tooltip("Tutorial level (set) to start with (default -1, will use previously saved set for that tutorial)")]
+    [Range(-1, 10)] public int tutorialStartLevel = -1;
 
     [Header("Debug Options")]
     [Tooltip("Switch ON to get a performance log of initialisation at Session Start")]

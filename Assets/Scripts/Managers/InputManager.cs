@@ -376,8 +376,13 @@ public class InputManager : MonoBehaviour
                         //new turn only if in normal play game / tutorial state
                         if (CheckNormalMode() == true)
                         {
-                            //Force a new turn (perhaps didn't want to take any actions), otherwise TurnManager.cs handles this once action quota used up
-                            EventManager.i.PostNotification(EventType.NewTurn, this, null, "InputManager.cs -> ProcessKeyInput NewTurn");
+                            if (GameState == GameState.Tutorial && GameManager.i.optionScript.isActions == false)
+                            { /*Do nothing*/}
+                            else
+                            {
+                                //Force a new turn (perhaps didn't want to take any actions), otherwise TurnManager.cs handles this once action quota used up
+                                EventManager.i.PostNotification(EventType.NewTurn, this, null, "InputManager.cs -> ProcessKeyInput NewTurn");
+                            }
                         }
                     }
                     else if (Input.GetButtonDown("ShowReserves") == true)

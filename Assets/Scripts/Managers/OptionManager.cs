@@ -40,6 +40,7 @@ public class OptionManager : MonoBehaviour
     [HideInInspector] public bool showPower = true;                                 //if true power UI elements shown for actors and player, if false show compatibility instead
     [HideInInspector] public bool connectorTooltips = false;                        //if true then connectors have tooltips
     [HideInInspector] public bool fullMoodInfo = false;
+
     //GUI functionality
     [HideInInspector] public bool isActorLeftMenu = true;                           //left click actor menu
     [HideInInspector] public bool isActorRightMenu = true;                          //right click actor menu

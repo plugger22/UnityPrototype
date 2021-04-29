@@ -145,8 +145,11 @@ public class NewTurnUI : MonoBehaviour, IPointerClickHandler
     /// </summary>
     private void SetNewTurn()
     {
-        turnCanvas.gameObject.SetActive(true);
-        Debug.LogFormat("[UI] NewTurnUI.cs -> SetNewTurn: Switch ON NewTurnUI{0}", "\n");
+        if (GameManager.i.optionScript.isActions == true)
+        {
+            turnCanvas.gameObject.SetActive(true);
+            Debug.LogFormat("[UI] NewTurnUI.cs -> SetNewTurn: Switch ON NewTurnUI{0}", "\n");
+        }
     }
     #endregion
 

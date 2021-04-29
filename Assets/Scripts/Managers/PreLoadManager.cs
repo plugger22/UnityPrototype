@@ -33,6 +33,8 @@ public class PreLoadManager : MonoBehaviour
     public string playerPetName;
     [Tooltip("Player Secret")]
     public string playerSecret;
+    [Tooltip("Reason for joining the Resistance. 'I joined because I believe in [...]'")]
+    public string playerReason;
 
 
     

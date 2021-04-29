@@ -14,7 +14,8 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: 55b2e5eed833a824d81f6c88410cbac5, type: 2}
   queryType: {fileID: 11400000, guid: 7b363de65e409b740a5375f42cfc853b, type: 2}
   queryHeader: Motivation
-  queryText: Could you tell us <b>why</b> you chose to join the Resistance?
+  queryText: Could you tell us <b>why</b> you chose to join the Resistance?<br><br>We
+    like to know what motivates our recruits
   isRandomOptions: 1
   listOfOptions:
   - {fileID: 11400000, guid: c6ff0c9488c441942a0b3f3901bd3460, type: 2}
@@ -31,6 +32,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 706ff5311e419b6449ead88f33ce1724, type: 2}
   - {fileID: 11400000, guid: 1284d611b46740441a51679e009bff26, type: 2}
   listOfIgnoreOptions:
-  - {fileID: 11400000, guid: c6ff0c9488c441942a0b3f3901bd3460, type: 2}
+  - {fileID: 11400000, guid: 37624d5ba87299c43847b178db2a8099, type: 2}
   listOfOptionsAlt: []
   listOfIgnoreOptionsAlt: []

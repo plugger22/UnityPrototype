@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: Res6Query0
   m_EditorClassIdentifier: 
   tutorialType: {fileID: 11400000, guid: 8b2847a7a246595458eee2b6a64e9b06, type: 2}
-  tag: Your Personality
-  set: {fileID: 11400000, guid: 0d38225fe60cd4d43bc3e10405fe9d83, type: 2}
+  tag: Your Motivation
+  set: {fileID: 11400000, guid: 86f18f9a6fcbd55468a84e0655da9853, type: 2}
   dialogue: {fileID: 0}
   gameHelp: {fileID: 0}
   goal: {fileID: 0}
