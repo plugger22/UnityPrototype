@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ab361a1a459bf14689c17095d14e446, type: 3}
+  m_Name: tutRES12
+  m_EditorClassIdentifier: 
+  actorName: Nina Powell
+  firstName: Nina
+  lastName: Powell
+  sprite: {fileID: 21300000, guid: c051c39bca0f7f8468bd562b9a858f50, type: 3}
+  arc: {fileID: 11400000, guid: 79fb6b3426257194faf6776c7cb489d2, type: 2}
+  trait: {fileID: 11400000, guid: e2276f99dcf907a47b7ef1532dfcd5bc, type: 2}
+  level: 1
+  power: 0
+  status: {fileID: 11400000, guid: f52d9e83b05732d4cb27c200536658b7, type: 2}
+  sex: {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
+  backstory0: 
+  backstory1: 
+  listOfIdentity:
+  - Expert
+  listOfDescriptors:
+  - Intimidating
+  - Elegant
+  listOfGoals:
+  - Cure an ill
+  listOfMotivation:
+  - Wealth
+  listOfFocus: []
