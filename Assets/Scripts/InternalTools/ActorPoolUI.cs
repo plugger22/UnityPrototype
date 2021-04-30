@@ -243,6 +243,7 @@ public class ActorPoolUI : MonoBehaviour
         quitPoolInteraction.SetButton(ToolEventType.CloseActorPoolUI);
         createPoolInteraction.SetButton(ToolEventType.CreatePoolUI);
         confirmCancelInteraction.SetButton(ToolEventType.DeletePoolCancel);
+        confirmDeleteInteraction.SetButton(ToolEventType.DeletePoolConfirm);
         helpPoolInteraction.SetButton(ToolEventType.HelpPoolUI);
         helpExitInteraction.SetButton(ToolEventType.HelpToolsExit);
         dataInteraction0.SetButton(ToolEventType.DataButton0);
@@ -638,12 +639,12 @@ public class ActorPoolUI : MonoBehaviour
         //delete actorDrafts -> reverse loop
         for (int i = listOfActorDrafts.Count - 1; i >= 0; i--)
         {
-            path = string.Format("Assets/SO/ActorDrafts/{0}.asset", listOfActorDrafts[i].name);
+            path = string.Format("Assets/SO/Tools/ActorDrafts/{0}.asset", listOfActorDrafts[i].name);
             if (AssetDatabase.DeleteAsset(path) == false)
             { Debug.LogWarningFormat("{0} failed to delete", path); }
         }
         //delete actorPool
-        path = string.Format("Assets/SO/ActorPools/{0}.asset", poolObject.name);
+        path = string.Format("Assets/SO/Tools/ActorPools/{0}.asset", poolObject.name);
         if (AssetDatabase.DeleteAsset(path) == false)
         { Debug.LogWarningFormat("{0} failed to delete", path); }
         else
@@ -1038,9 +1039,14 @@ public class ActorPoolUI : MonoBehaviour
         //any unsaved changes in previous pool
         if (flagPool == true)
         {
-            ToolManager.i.actorFileScript.WriteActorPool(poolObject);
-            Debug.LogFormat("[Fil] ActorPoolUI.cs -> DropDownPoolSelected: UNSAVED changes in \"{0}\" saved{1}", poolObject.name, "\n");
-            flagPool = false;
+            //allow for a recently deleted actorPool
+            if (poolObject != null)
+            {
+                ToolManager.i.actorFileScript.WriteActorPool(poolObject);
+                Debug.LogFormat("[Fil] ActorPoolUI.cs -> DropDownPoolSelected: UNSAVED changes in \"{0}\" saved{1}", poolObject.name, "\n");
+                flagPool = false;
+            }
+            else { Debug.LogWarning("Invalid poolObject (Null). Ignore if your are DELETING a pool"); }
         }
         //set new poolObject
         UpdatePoolObject();
