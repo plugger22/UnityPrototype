@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Name: TutRESq3_28
   m_EditorClassIdentifier: 
   tag: Jack
-  text: Jack
+  text: I like the sound of <b>Jack</b>
   query: {fileID: 11400000, guid: c96b889f230661a4fa5dd2ec48b66e3e, type: 2}

@@ -11,6 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20d501b51a4f7c44893a54b01e66d52c, type: 3}
   m_Name: Res3Intro
   m_EditorClassIdentifier: 
-  topText: Fred again, Tutorial Set 3
-  bottomText: How are things going?
+  topText: Subordinates, huh?
+  bottomText: Love 'em or hate 'em, you need to know how to deal with them
   item: {fileID: 11400000, guid: 6ffd612106e21724e8726b75d49924b3, type: 2}

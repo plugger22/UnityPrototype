@@ -171,15 +171,14 @@ public class FeatureManager : MonoBehaviour
             //activate onMap actors
             GameManager.i.optionScript.isSubordinates = true;
             GameManager.i.dataScript.ToggleTopicType("Actor", false);
-            GameManager.i.actorScript.ToggleOnMapActors();
         }
         else
         {
             //disable onMap actors
             GameManager.i.optionScript.isSubordinates = false;
             GameManager.i.dataScript.ToggleTopicType("Actor");
-            GameManager.i.actorScript.ToggleOnMapActors(false);
         }
+        GameManager.i.actorScript.ToggleOnMapActors(isActive);
     }
     #endregion
 

@@ -368,7 +368,32 @@ public class TutorialManager : MonoBehaviour
             }
             //Set subordinates -> not at the start, though as other stuff not yet initialised
             if (GameManager.i.inputScript.GameState != GameState.TutorialOptions)
-            { GameManager.i.featureScript.ToggleOnMapActors(GameManager.i.optionScript.isSubordinates); }
+            {
+                //activate / deactivate on map actors
+                float alpha;
+                GlobalSide globalResistance = GameManager.i.globalScript.sideResistance;
+                if (GameManager.i.optionScript.isSubordinates == true)
+                { alpha = GameManager.i.guiScript.alphaActive; }
+                else { alpha = GameManager.i.guiScript.alphaInactive; }
+                Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(globalResistance);
+                if (arrayOfActors != null)
+                {
+                    for (int i = 0; i < arrayOfActors.Length; i++)
+                    {
+                        //check actor is present in slot (not vacant)
+                        if (GameManager.i.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
+                        {
+                            Actor actor = arrayOfActors[i];
+                            if (actor != null)
+                            {
+                                //update actor panel
+                                GameManager.i.actorPanelScript.UpdateActorAlpha(actor.slotID, alpha);
+                            }
+                        }
+                    }
+                }
+                else { Debug.LogError("Invalid arrayOfActors (Null)"); }
+            }
         }
         else { Debug.LogError("Invalid listOfFeaturesToToggleOff (Null)"); }
         #endregion
@@ -872,7 +897,7 @@ public class TutorialManager : MonoBehaviour
     /// Back to previous tutorialSet (left arrow of tutorial Widget pressed)
     /// </summary>
     private void SetPreviousSet()
-    { 
+    {
         //flush input buffer
         Input.ResetInputAxes();
         if (GameManager.i.inputScript.ModalState == ModalState.Normal)
@@ -914,7 +939,7 @@ public class TutorialManager : MonoBehaviour
     /// Go to the Next tutorialSet (right arrow of tutorial Widget pressed)
     /// </summary>
     private void SetNextSet()
-    {        
+    {
         //flush input buffer
         Input.ResetInputAxes();
         if (GameManager.i.inputScript.ModalState == ModalState.Normal)
@@ -957,7 +982,7 @@ public class TutorialManager : MonoBehaviour
     /// Open Master Help (question on tutorial Widget pressed)
     /// </summary>
     private void SetMasterHelp()
-    { 
+    {
         //flush input buffer
         Input.ResetInputAxes();
         if (GameManager.i.inputScript.ModalState == ModalState.Normal)

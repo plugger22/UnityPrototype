@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Name: TutRESq3_33
   m_EditorClassIdentifier: 
   tag: Lucy
-  text: Lucy
+  text: <b>Lucy</b>. I saw the movie
   query: {fileID: 11400000, guid: c96b889f230661a4fa5dd2ec48b66e3e, type: 2}

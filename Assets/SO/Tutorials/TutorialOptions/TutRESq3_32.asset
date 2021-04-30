@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Name: TutRESq3_32
   m_EditorClassIdentifier: 
   tag: Ruby
-  text: Ruby
+  text: Ruby because of their red eyes
   query: {fileID: 11400000, guid: c96b889f230661a4fa5dd2ec48b66e3e, type: 2}

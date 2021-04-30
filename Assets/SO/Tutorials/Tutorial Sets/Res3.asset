@@ -22,10 +22,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e16c959b5f1eac342979baf4a1a9362b, type: 2}
   - {fileID: 11400000, guid: 60b4bacf16a2f574fa7fa81a919e7bbc, type: 2}
   listOfGUIOff:
-  - {fileID: 11400000, guid: 2b429498342b10042847ad6b6e67d783, type: 2}
-  - {fileID: 11400000, guid: 4ecda8036df900d48b4b25e77b1b6ad0, type: 2}
   - {fileID: 11400000, guid: 3fc3cf403714826438976deb8559517b, type: 2}
+  - {fileID: 11400000, guid: 4ecda8036df900d48b4b25e77b1b6ad0, type: 2}
   listOfTutorialItems:
   - {fileID: 11400000, guid: 6ffd612106e21724e8726b75d49924b3, type: 2}
   - {fileID: 11400000, guid: 168a0cb22f88d7b47a75f838959ad276, type: 2}
+  - {fileID: 11400000, guid: b8f613ae1fd09824786ddb18f57bce01, type: 2}
   - {fileID: 11400000, guid: c96b889f230661a4fa5dd2ec48b66e3e, type: 2}

@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Name: TutRESq3_37
   m_EditorClassIdentifier: 
   tag: Lola
-  text: Lola
+  text: <b>Lola</b>. That's a great name
   query: {fileID: 11400000, guid: c96b889f230661a4fa5dd2ec48b66e3e, type: 2}

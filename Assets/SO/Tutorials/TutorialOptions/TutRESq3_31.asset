@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Name: TutRESq3_31
   m_EditorClassIdentifier: 
   tag: Coco
-  text: Coco
+  text: <b>Coco</b>, don't laugh, I like it
   query: {fileID: 11400000, guid: c96b889f230661a4fa5dd2ec48b66e3e, type: 2}

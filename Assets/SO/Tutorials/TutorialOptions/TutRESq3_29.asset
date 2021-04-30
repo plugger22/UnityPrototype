@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Name: TutRESq3_29
   m_EditorClassIdentifier: 
   tag: Bella
-  text: Bella
+  text: They look just like a <b>Bella</b>
   query: {fileID: 11400000, guid: c96b889f230661a4fa5dd2ec48b66e3e, type: 2}

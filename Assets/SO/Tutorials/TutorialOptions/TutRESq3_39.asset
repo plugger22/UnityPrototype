@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Name: TutRESq3_39
   m_EditorClassIdentifier: 
   tag: Buttercup
-  text: Buttercup
+  text: <b>Buttercup</b> Nothing else feels right
   query: {fileID: 11400000, guid: c96b889f230661a4fa5dd2ec48b66e3e, type: 2}
