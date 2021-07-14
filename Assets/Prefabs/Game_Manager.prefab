@@ -2037,6 +2037,36 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b624e75a5ef516045a64c1b6b4c72e16, type: 2}
   - {fileID: 11400000, guid: a0a472708aaecea4bb36070d6e449bc2, type: 2}
   - {fileID: 11400000, guid: 3fc3cf403714826438976deb8559517b, type: 2}
+  arrayOfTutorialActorTypes:
+  - {fileID: 11400000, guid: 5479442d4230e2c4ab80652c76806e21, type: 2}
+  - {fileID: 11400000, guid: 2a7ff57b45ebd8f4a98e4b0d34b9d153, type: 2}
+  - {fileID: 11400000, guid: d9abe35603826ed48a3638bedfd97c0a, type: 2}
+  - {fileID: 11400000, guid: 721b21ec43c41d24db8debab30c5a22d, type: 2}
+  - {fileID: 11400000, guid: 1038be37c0920cb4aa94c305069682be, type: 2}
+  - {fileID: 11400000, guid: c045978422cf7fd4ca80de7490ae6aea, type: 2}
+  - {fileID: 11400000, guid: 7885d3adb81977b41aa8edbd12359a7b, type: 2}
+  - {fileID: 11400000, guid: 281c81cff43173241ab184ff760b27a7, type: 2}
+  - {fileID: 11400000, guid: 2446f59e6de75824d8e4eb28f10ee086, type: 2}
+  - {fileID: 11400000, guid: bc549d674db682942af0e7ea086992bc, type: 2}
+  - {fileID: 11400000, guid: fa7ddbf47108fbc4ea61cc9f3d490374, type: 2}
+  - {fileID: 11400000, guid: aec827616f620ba49a07595e31b0a616, type: 2}
+  - {fileID: 11400000, guid: 1c4a2b12794e2604ea532bf0b8ecf3ca, type: 2}
+  - {fileID: 11400000, guid: 52cb89c40cdc13447be329840d5b369b, type: 2}
+  - {fileID: 11400000, guid: 211453348f43b224aac1bf28816f086b, type: 2}
+  - {fileID: 11400000, guid: 77fb719e98236b748983d09a281a97a2, type: 2}
+  - {fileID: 11400000, guid: 336ab252626645341ba7aa2bf5befd09, type: 2}
+  - {fileID: 11400000, guid: 7e8e2fce364cca64fa48212a0eda63fe, type: 2}
+  - {fileID: 11400000, guid: 13d01fa3b25705b4aa255cf9f4436191, type: 2}
+  - {fileID: 11400000, guid: 19c568f5e9b467c4a88cfc4064c1594f, type: 2}
+  - {fileID: 11400000, guid: 4cb94ef3549351a4da70305d05a7ec8d, type: 2}
+  - {fileID: 11400000, guid: b7d6b8274e4983846963cb2c86a5cc51, type: 2}
+  - {fileID: 11400000, guid: 730277e8eebbcd848b59487993317d16, type: 2}
+  - {fileID: 11400000, guid: 8957c137f9837f54792576c6cc9a3c9e, type: 2}
+  - {fileID: 11400000, guid: 595008d2badbb364186ea173623859da, type: 2}
+  - {fileID: 11400000, guid: 97b6f5df3c148ec42a8c8fc465edb4bf, type: 2}
+  - {fileID: 11400000, guid: 8b411a0c6f243b9429b096c5a8e70159, type: 2}
+  arrayOfTutorialActorConfigs:
+  - {fileID: 11400000, guid: ede910bcff73263429ccc25cceacd3ae, type: 2}
   arrayOfFiveFactorModel:
   - {fileID: 11400000, guid: 456adeff3cd08484bb73dab8396a5d8d, type: 2}
   - {fileID: 11400000, guid: 7acfd5c74d59ce64198cf88e42ca66ff, type: 2}

@@ -1789,3 +1789,30 @@ City seed 54838 -> VirtualCity, Eurasia
 
 Dev seed 8458 -> Wednesday, 14 July 2021 3:33 PM
 City seed 8450 -> VirtualCity, Eurasia
+
+Dev seed 34657 -> Wednesday, 14 July 2021 4:17 PM
+City seed 55894 -> VirtualCity, Eurasia
+
+Dev seed 52051 -> Wednesday, 14 July 2021 4:48 PM
+WARNING  LoadManager.cs -> InitialiseStart: No TutorialActorTypes present
+UnityEngine.Debug:LogWarning(Object)
+	LoadManager:InitialiseStart(GameState) (at Assets/Scripts/Managers/LoadManager.cs:1185)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:936)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:431)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialActorType, array 0, assets 27 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialActorType[]) (at Assets/Scripts/Managers/ValidationManager.cs:2258)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2229)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:936)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:431)
+	
+Dev seed 50682 -> Wednesday, 14 July 2021 4:49 PM
+
+Dev seed 35640 -> Wednesday, 14 July 2021 4:58 PM
+City seed 39578 -> Londus, Eurasia
+
+Dev seed 8747 -> Wednesday, 14 July 2021 5:06 PM
+City seed 38760 -> VirtualCity, Eurasia
+
+Dev seed 7927 -> Wednesday, 14 July 2021 5:23 PM
+City seed 18305 -> Londus, Eurasia

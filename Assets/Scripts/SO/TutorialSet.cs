@@ -8,14 +8,17 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Tutorial / TutorialSet")]
 public class TutorialSet : ScriptableObject
 {
+    [Header("Main")]
     [Tooltip("provide a reference to which tutorial this set is associated with to enable validation")]
     public Tutorial tutorial;
-
     [Tooltip("Developer notes only, not used in-game")]
     [TextArea]public string notes;
-
     [Tooltip("Where the set sits within the tutorial sequence (zero based)")]
     [Range(0, 10)] public int index;
+
+    [Header("Configuration")]
+    [Tooltip("Specifies the actor line up, if needed. Leave as 'none' if not required")]
+    public TutorialActorConfig actorConfig;
 
     [Header("Features OFF")]
     [Tooltip("List of features switched OFF for this tutorial set")]

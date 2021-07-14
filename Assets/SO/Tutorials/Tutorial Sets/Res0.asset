@@ -16,6 +16,7 @@ MonoBehaviour:
 
     Movement'
   index: 0
+  actorConfig: {fileID: 11400000, guid: ede910bcff73263429ccc25cceacd3ae, type: 2}
   listOfFeaturesOff:
   - {fileID: 11400000, guid: 60af24f1ab6cad24784d77e56f88cc75, type: 2}
   - {fileID: 11400000, guid: 9ab41dcfbf11bf14f8fbeb9b7522f31a, type: 2}
