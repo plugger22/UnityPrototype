@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 427f6772736667547a34eb4cfb79a586, type: 3}
+  m_Name: tutRES47
+  m_EditorClassIdentifier: 
+  actorName: Charles Beckhelling
+  firstName: Charles
+  lastName: Beckhelling
+  sprite: {fileID: 21300000, guid: 5f6fc0092b9642044b567f1b26c9ed84, type: 3}
+  arc: {fileID: 11400000, guid: 33cfb0c161a7cde409d27df1080bd2c8, type: 2}
+  trait: {fileID: 11400000, guid: 584dbea69bd95c247847a49eddba102e, type: 2}
+  level: 3
+  power: 0
+  status: {fileID: 11400000, guid: bbc55e5c679455d48afc96a6be96878a, type: 2}
+  sex: {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}
+  backstory0: Charles hates animals. Nothing gets him angrier than the sight of a
+    real life animal roaming the countryside. People are more important than things
+    on four legs and people need to eat. Why dine on a fungus burger when you can
+    have fresh rabbit stew?
+  backstory1: Charles will give you a job if you to tell him how many helpless critters
+    you've kicked to death in the last week. Bloody boots with brain splatter are
+    a bonus.

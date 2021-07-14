@@ -30,6 +30,9 @@ public class ToolDataManager : MonoBehaviour
     private CharacterMotivation[] arrayOfMotivationLookup;
     private CharacterFocus[] arrayOfFocusLookup;
     private CharacterSpecial[] arrayOfSpecialLookup;
+    private CharacterPlace[] arrayOfPlacesLookup;
+    private CharacterPeople[] arrayOfPeopleLookup;
+    private CharacterOpposition[] arrayOfOppositionLookup;
 
 
     //Organisations
@@ -55,6 +58,9 @@ public class ToolDataManager : MonoBehaviour
         arrayOfMotivationLookup = new CharacterMotivation[size];
         arrayOfFocusLookup = new CharacterFocus[size];
         arrayOfSpecialLookup = new CharacterSpecial[size];
+        arrayOfPlacesLookup = new CharacterPlace[size];
+        arrayOfPeopleLookup = new CharacterPeople[size];
+        arrayOfOppositionLookup = new CharacterOpposition[size];
     }
 
     #region Stories
@@ -428,6 +434,15 @@ public class ToolDataManager : MonoBehaviour
     public CharacterFocus[] GetArrayOfCharacterFocus()
     { return arrayOfFocusLookup; }
 
+    public CharacterPlace[] GetArrayOfCharacterPlace()
+    { return arrayOfPlacesLookup; }
+
+    public CharacterPeople[] GetArrayOfCharacterPeople()
+    { return arrayOfPeopleLookup; }
+
+    public CharacterOpposition[] GetArrayOfCharacterOpposition()
+    { return arrayOfOppositionLookup; }
+
     /// <summary>
     /// Get random CharacterSpecial. Returns null if a problem
     /// </summary>
@@ -598,6 +613,94 @@ public class ToolDataManager : MonoBehaviour
             else { listOfFocus.Add(focus.tag); }
         }
         return listOfFocus;
+    }
+
+
+    /// <summary>
+    /// Get a list of character Places. Returns empty list if a problem
+    /// </summary>
+    /// <returns></returns>
+    public List<string> GetCharacterPlace()
+    {
+        List<string> listOfPlaces = new List<string>();
+        int rnd = Random.Range(0, 100);
+        CharacterPlace place = arrayOfPlacesLookup[rnd];
+        //check roll again
+        if (place.isRollAgain == true)
+        {
+            int counter = 0;
+            do
+            {
+                rnd = Random.Range(0, 100);
+                place = arrayOfPlacesLookup[rnd];
+                if (place.isRollAgain == false)
+                {
+                    listOfPlaces.Add(place.tag);
+                    counter++;
+                }
+            }
+            while (counter < 2);
+        }
+        else { listOfPlaces.Add(place.tag); }
+        return listOfPlaces;
+    }
+
+    /// <summary>
+    /// Get a list of character People. Returns empty list if a problem
+    /// </summary>
+    /// <returns></returns>
+    public List<string> GetCharacterPeople()
+    {
+        List<string> listOfPeople = new List<string>();
+        int rnd = Random.Range(0, 100);
+        CharacterPeople person = arrayOfPeopleLookup[rnd];
+        //check roll again
+        if (person.isRollAgain == true)
+        {
+            int counter = 0;
+            do
+            {
+                rnd = Random.Range(0, 100);
+                person = arrayOfPeopleLookup[rnd];
+                if (person.isRollAgain == false)
+                {
+                    listOfPeople.Add(person.tag);
+                    counter++;
+                }
+            }
+            while (counter < 2);
+        }
+        else { listOfPeople.Add(person.tag); }
+        return listOfPeople;
+    }
+
+    /// <summary>
+    /// Get a list of character Opposition. Returns empty list if a problem
+    /// </summary>
+    /// <returns></returns>
+    public List<string> GetCharacterOpposition()
+    {
+        List<string> listOfOpposition = new List<string>();
+        int rnd = Random.Range(0, 100);
+        CharacterOpposition opposition = arrayOfOppositionLookup[rnd];
+        //check roll again
+        if (opposition.isRollAgain == true)
+        {
+            int counter = 0;
+            do
+            {
+                rnd = Random.Range(0, 100);
+                opposition = arrayOfOppositionLookup[rnd];
+                if (opposition.isRollAgain == false)
+                {
+                    listOfOpposition.Add(opposition.tag);
+                    counter++;
+                }
+            }
+            while (counter < 2);
+        }
+        else { listOfOpposition.Add(opposition.tag); }
+        return listOfOpposition;
     }
 
     #endregion

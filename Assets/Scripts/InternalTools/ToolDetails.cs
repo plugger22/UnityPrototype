@@ -23,6 +23,9 @@ public class ToolDetails : MonoBehaviour
         InitialiseCharacterGoal();
         InitialiseCharacterMotivation();
         InitialiseCharacterFocus();
+        InitialiseCharacterPlaces();
+        InitialiseCharacterPeople();
+        InitialiseCharacterOpposition();
         //organisations
         InitialiseOrganisationType();
         InitialiseOrganisationOrigin();
@@ -4303,6 +4306,1419 @@ public class ToolDetails : MonoBehaviour
             /*Debug.LogFormat("[Tst] ToolDetails.cs -> InitialiseCharacterFocus: arrayOfFocus has {0} records{1}", count, "\n");*/
         }
         else { Debug.LogError("Invalid arrayOfFocus (Null)"); }
+    }
+    #endregion
+
+    #region InitialiseCharacterPlaces
+    /// <summary>
+    /// Character places
+    /// </summary>
+    private void InitialiseCharacterPlaces()
+    {
+        List<CharacterPlace> listOfCharacterPlaces = new List<CharacterPlace>() {
+            new CharacterPlace() {
+                tag = "Afterlife",
+                listToRoll = new List<int> {1},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Amusement Park",
+                listToRoll = new List<int> {2},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Arcade",
+                listToRoll = new List<int> {3},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Armoury",
+                listToRoll = new List<int> {4},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Auction",
+                listToRoll = new List<int> {5},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Auditorium",
+                listToRoll = new List<int> {6},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Bank",
+                listToRoll = new List<int> {7},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Barracks",
+                listToRoll = new List<int> {8},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Bathhouse",
+                listToRoll = new List<int> {9},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Beach",
+                listToRoll = new List<int> {10},
+                isRollAgain = false
+            },
+
+            new CharacterPlace() {
+                tag = "Bordello",
+                listToRoll = new List<int> {11},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Bridge",
+                listToRoll = new List<int> {12},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Mars",
+                listToRoll = new List<int> {13},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Business Office",
+                listToRoll = new List<int> {14},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Camping Out",
+                listToRoll = new List<int> {15},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Carnival",
+                listToRoll = new List<int> {16},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Castle",
+                listToRoll = new List<int> {17},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Cave",
+                listToRoll = new List<int> {18},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Charitable Shelter",
+                listToRoll = new List<int> {19},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Church",
+                listToRoll = new List<int> {20},
+                isRollAgain = false
+            },
+
+            new CharacterPlace() {
+                tag = "Control Room",
+                listToRoll = new List<int> {21},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Correctional System",
+                listToRoll = new List<int> {22},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Crash Site",
+                listToRoll = new List<int> {23},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Crater",
+                listToRoll = new List<int> {24},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Crossroads",
+                listToRoll = new List<int> {25},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Dam",
+                listToRoll = new List<int> {26},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Docks",
+                listToRoll = new List<int> {27},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Dormitory",
+                listToRoll = new List<int> {28},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Dungeon",
+                listToRoll = new List<int> {29},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Farm",
+                listToRoll = new List<int> {30},
+                isRollAgain = false
+            },
+
+            new CharacterPlace() {
+                tag = "Festival",
+                listToRoll = new List<int> {31},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Forest",
+                listToRoll = new List<int> {32},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Foundry",
+                listToRoll = new List<int> {33},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Frontier",
+                listToRoll = new List<int> {34},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Government Office",
+                listToRoll = new List<int> {35},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Graveyard",
+                listToRoll = new List<int> {36},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Headquarters",
+                listToRoll = new List<int> {37},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Home",
+                listToRoll = new List<int> {38},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Hospital",
+                listToRoll = new List<int> {39},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Hotel",
+                listToRoll = new List<int> {40},
+                isRollAgain = false
+            },
+
+            new CharacterPlace() {
+                tag = "Hovel",
+                listToRoll = new List<int> {41},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Institution",
+                listToRoll = new List<int> {42},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Island",
+                listToRoll = new List<int> {43},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Junkyard",
+                listToRoll = new List<int> {44},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Lair",
+                listToRoll = new List<int> {45},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Landmark",
+                listToRoll = new List<int> {46},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Law Enforcement Office",
+                listToRoll = new List<int> {47},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Library",
+                listToRoll = new List<int> {48},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Limbo",
+                listToRoll = new List<int> {49},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Locked Out",
+                listToRoll = new List<int> {50},
+                isRollAgain = false
+            },
+
+            new CharacterPlace() {
+                tag = "Lost/Stranded",
+                listToRoll = new List<int> {51},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "The Hub",
+                listToRoll = new List<int> {52},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Mansion",
+                listToRoll = new List<int> {53},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Market Place",
+                listToRoll = new List<int> {54},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Maze",
+                listToRoll = new List<int> {55},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Military Installation",
+                listToRoll = new List<int> {56},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Luna",
+                listToRoll = new List<int> {57},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Morgue",
+                listToRoll = new List<int> {58},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Mountain",
+                listToRoll = new List<int> {59},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Neutral Ground",
+                listToRoll = new List<int> {60},
+                isRollAgain = false
+            },
+
+            new CharacterPlace() {
+                tag = "News Office",
+                listToRoll = new List<int> {61},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Nightclub/Rave",
+                listToRoll = new List<int> {62},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Oasis",
+                listToRoll = new List<int> {63},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Orphanage",
+                listToRoll = new List<int> {64},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Outpost",
+                listToRoll = new List<int> {65},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Park",
+                listToRoll = new List<int> {66},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Parking Lot",
+                listToRoll = new List<int> {67},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Port/Transport Hub",
+                listToRoll = new List<int> {68},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Public Forum",
+                listToRoll = new List<int> {69},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Refuse Dump",
+                listToRoll = new List<int> {70},
+                isRollAgain = false
+            },
+
+            new CharacterPlace() {
+                tag = "Resort/Spa",
+                listToRoll = new List<int> {71},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Restaurant",
+                listToRoll = new List<int> {72},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Restroom",
+                listToRoll = new List<int> {73},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "River",
+                listToRoll = new List<int> {74},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Road",
+                listToRoll = new List<int> {75},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Rooftop",
+                listToRoll = new List<int> {76},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Ruins",
+                listToRoll = new List<int> {77},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Safehouse",
+                listToRoll = new List<int> {78},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "School",
+                listToRoll = new List<int> {79},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Sewer",
+                listToRoll = new List<int> {80},
+                isRollAgain = false
+            },
+
+            new CharacterPlace() {
+                tag = "Ship",
+                listToRoll = new List<int> {81},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Space",
+                listToRoll = new List<int> {82},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Stadium",
+                listToRoll = new List<int> {83},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Stage",
+                listToRoll = new List<int> {84},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Store",
+                listToRoll = new List<int> {85},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Stronghold",
+                listToRoll = new List<int> {86},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Suburb",
+                listToRoll = new List<int> {87},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Suburban Retail Centre",
+                listToRoll = new List<int> {88},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Tavern",
+                listToRoll = new List<int> {89},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Theatre",
+                listToRoll = new List<int> {90},
+                isRollAgain = false
+            },
+
+            new CharacterPlace() {
+                tag = "Tower",
+                listToRoll = new List<int> {91},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Town Square",
+                listToRoll = new List<int> {92},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Underground",
+                listToRoll = new List<int> {93},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Underwater",
+                listToRoll = new List<int> {94},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Vehicle",
+                listToRoll = new List<int> {95},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Volcano",
+                listToRoll = new List<int> {96},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Warehouse",
+                listToRoll = new List<int> {97},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Wilderness",
+                listToRoll = new List<int> {98},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Wildlife Preserve",
+                listToRoll = new List<int> {99},
+                isRollAgain = false
+            },
+            new CharacterPlace() {
+                tag = "Zoo",
+                listToRoll = new List<int> {100},
+                isRollAgain = false
+            }
+        };
+
+        CharacterPlace[] arrayOfPlace = ToolManager.i.toolDataScript.GetArrayOfCharacterPlace();
+        if (arrayOfPlace != null)
+        {
+            int count;
+            int index;
+            //populate array
+            for (int i = 0; i < listOfCharacterPlaces.Count; i++)
+            {
+                CharacterPlace place = listOfCharacterPlaces[i];
+                if (place != null)
+                {
+                    count = place.listToRoll.Count;
+                    if (count > 0)
+                    {
+                        for (int j = 0; j < count; j++)
+                        {
+                            index = place.listToRoll[j] - 1;
+                            arrayOfPlace[index] = place;
+                        }
+                    }
+                    else { Debug.LogWarningFormat("Invalid count (Zero) for characterPlaces \"{0}\"", place.tag); }
+                }
+                else { Debug.LogWarningFormat("Invalid characterPlaces (Null) for listOfCharacterPlaces[{0}]", "\n"); }
+            }
+            //data validation
+            count = 0;
+            for (int i = 0; i < arrayOfPlace.Length; i++)
+            {
+                if (arrayOfPlace[i] == null)
+                { Debug.LogWarningFormat("Invalid characterPlace (Null) for arrayOfPlace[{0}]", i); }
+                else { count++; }
+            }
+            /*Debug.LogFormat("[Tst] ToolDetails.cs -> InitialiseCharacterPlaces: arrayOfPlace has {0} records{1}", count, "\n");*/
+        }
+        else { Debug.LogError("Invalid arrayOfPlace (Null)"); }
+    }
+    #endregion
+
+    #region InitialiseCharacterPeople
+    /// <summary>
+    /// Character People
+    /// </summary>
+    private void InitialiseCharacterPeople()
+    {
+        List<CharacterPeople> listOfCharacterPeople = new List<CharacterPeople>() {
+            new CharacterPeople() {
+                tag = "Actor",
+                listToRoll = new List<int> {1},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Advisor",
+                listToRoll = new List<int> {2},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Agent",
+                listToRoll = new List<int> {3},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Anthropomorphic Object",
+                listToRoll = new List<int> {4},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Aristrocrat",
+                listToRoll = new List<int> {5},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Artificial Intelligence",
+                listToRoll = new List<int> {6},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Artisan",
+                listToRoll = new List<int> {7},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Athlete",
+                listToRoll = new List<int> {8},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Author",
+                listToRoll = new List<int> {9},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Banker",
+                listToRoll = new List<int> {10},
+                isRollAgain = false
+            },
+
+            new CharacterPeople() {
+                tag = "Bar Fly",
+                listToRoll = new List<int> {11},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Bounty Hunter",
+                listToRoll = new List<int> {12},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Bully",
+                listToRoll = new List<int> {13},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Cannonfodder",
+                listToRoll = new List<int> {14},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Caretaker",
+                listToRoll = new List<int> {15},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Carpenter",
+                listToRoll = new List<int> {16},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Casanova",
+                listToRoll = new List<int> {17},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Child",
+                listToRoll = new List<int> {18},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Clergy",
+                listToRoll = new List<int> {19},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Collector",
+                listToRoll = new List<int> {20},
+                isRollAgain = false
+            },
+
+            new CharacterPeople() {
+                tag = "Common Criminal",
+                listToRoll = new List<int> {21},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Concerned Parent",
+                listToRoll = new List<int> {22},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Conspiracy Theorist",
+                listToRoll = new List<int> {23},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Crazed Loner",
+                listToRoll = new List<int> {24},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Demon",
+                listToRoll = new List<int> {25},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Desparate Citizen",
+                listToRoll = new List<int> {26},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Devil's Advocate",
+                listToRoll = new List<int> {27},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Driver",
+                listToRoll = new List<int> {28},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Eccentric Millionaire",
+                listToRoll = new List<int> {29},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Elder",
+                listToRoll = new List<int> {30},
+                isRollAgain = false
+            },
+
+            new CharacterPeople() {
+                tag = "Elected Official",
+                listToRoll = new List<int> {31},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Expert",
+                listToRoll = new List<int> {32},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Farmer",
+                listToRoll = new List<int> {33},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Fixer",
+                listToRoll = new List<int> {34},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Gambler",
+                listToRoll = new List<int> {35},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Genius",
+                listToRoll = new List<int> {36},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Government Agent",
+                listToRoll = new List<int> {37},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Guard",
+                listToRoll = new List<int> {38},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Guide",
+                listToRoll = new List<int> {39},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Healer",
+                listToRoll = new List<int> {40},
+                isRollAgain = false
+            },
+
+            new CharacterPeople() {
+                tag = "Heir",
+                listToRoll = new List<int> {41},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Hired Muscle",
+                listToRoll = new List<int> {42},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Historian",
+                listToRoll = new List<int> {43},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Horseman",
+                listToRoll = new List<int> {44},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Hostage",
+                listToRoll = new List<int> {45},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Hunter",
+                listToRoll = new List<int> {46},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Idiot Savant",
+                listToRoll = new List<int> {47},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Immortals",
+                listToRoll = new List<int> {48},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Informant",
+                listToRoll = new List<int> {49},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Janitor",
+                listToRoll = new List<int> {50},
+                isRollAgain = false
+            },
+
+            new CharacterPeople() {
+                tag = "Judge",
+                listToRoll = new List<int> {51},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Kingpin",
+                listToRoll = new List<int> {52},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Law Enforcement Officer",
+                listToRoll = new List<int> {53},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Lawyer",
+                listToRoll = new List<int> {54},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Leader",
+                listToRoll = new List<int> {55},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Local Legend",
+                listToRoll = new List<int> {56},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Magician",
+                listToRoll = new List<int> {57},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Mason",
+                listToRoll = new List<int> {58},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Mechanic",
+                listToRoll = new List<int> {59},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Mercenaries",
+                listToRoll = new List<int> {60},
+                isRollAgain = false
+            },
+
+            new CharacterPeople() {
+                tag = "Musician",
+                listToRoll = new List<int> {61},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Ninjas",
+                listToRoll = new List<int> {62},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Noble",
+                listToRoll = new List<int> {63},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Philosopher",
+                listToRoll = new List<int> {64},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Pirate",
+                listToRoll = new List<int> {65},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Prisoner",
+                listToRoll = new List<int> {66},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Private Investigator",
+                listToRoll = new List<int> {67},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Prophet",
+                listToRoll = new List<int> {68},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Prostitute",
+                listToRoll = new List<int> {69},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Pundit",
+                listToRoll = new List<int> {70},
+                isRollAgain = false
+            },
+
+            new CharacterPeople() {
+                tag = "Rebel",
+                listToRoll = new List<int> {71},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Recluse",
+                listToRoll = new List<int> {72},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Red Shirt",
+                listToRoll = new List<int> {73},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Relative",
+                listToRoll = new List<int> {74},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Religious Fanatics",
+                listToRoll = new List<int> {75},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Repairman",
+                listToRoll = new List<int> {76},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Robot/Automation",
+                listToRoll = new List<int> {77},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Sailor",
+                listToRoll = new List<int> {78},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Salesman",
+                listToRoll = new List<int> {79},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Scribe",
+                listToRoll = new List<int> {80},
+                isRollAgain = false
+            },
+
+            new CharacterPeople() {
+                tag = "Security Forces",
+                listToRoll = new List<int> {81},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Serial Killer",
+                listToRoll = new List<int> {82},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Servant",
+                listToRoll = new List<int> {83},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Shopkeeper",
+                listToRoll = new List<int> {84},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Slave",
+                listToRoll = new List<int> {85},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Smith",
+                listToRoll = new List<int> {86},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Soldier",
+                listToRoll = new List<int> {87},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Speaker",
+                listToRoll = new List<int> {88},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Sportsman",
+                listToRoll = new List<int> {89},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Spy",
+                listToRoll = new List<int> {90},
+                isRollAgain = false
+            },
+
+            new CharacterPeople() {
+                tag = "Student",
+                listToRoll = new List<int> {91},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Swindler",
+                listToRoll = new List<int> {92},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Teacher",
+                listToRoll = new List<int> {93},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Technician",
+                listToRoll = new List<int> {94},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Thief",
+                listToRoll = new List<int> {95},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Thug",
+                listToRoll = new List<int> {96},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Troubled Youth",
+                listToRoll = new List<int> {97},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Undertaker",
+                listToRoll = new List<int> {98},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Vagrant",
+                listToRoll = new List<int> {99},
+                isRollAgain = false
+            },
+            new CharacterPeople() {
+                tag = "Village Idiot",
+                listToRoll = new List<int> {100},
+                isRollAgain = false
+            }
+        };
+
+        CharacterPeople[] arrayOfPeople = ToolManager.i.toolDataScript.GetArrayOfCharacterPeople();
+        if (arrayOfPeople != null)
+        {
+            int count;
+            int index;
+            //populate array
+            for (int i = 0; i < listOfCharacterPeople.Count; i++)
+            {
+                CharacterPeople person = listOfCharacterPeople[i];
+                if (person != null)
+                {
+                    count = person.listToRoll.Count;
+                    if (count > 0)
+                    {
+                        for (int j = 0; j < count; j++)
+                        {
+                            index = person.listToRoll[j] - 1;
+                            arrayOfPeople[index] = person;
+                        }
+                    }
+                    else { Debug.LogWarningFormat("Invalid count (Zero) for characterPeople \"{0}\"", person.tag); }
+                }
+                else { Debug.LogWarningFormat("Invalid characterPeople (Null) for listOfCharacterPeople[{0}]", "\n"); }
+            }
+            //data validation
+            count = 0;
+            for (int i = 0; i < arrayOfPeople.Length; i++)
+            {
+                if (arrayOfPeople[i] == null)
+                { Debug.LogWarningFormat("Invalid characterPeople (Null) for arrayOfPeople[{0}]", i); }
+                else { count++; }
+            }
+            /*Debug.LogFormat("[Tst] ToolDetails.cs -> InitialiseCharacterPeople: arrayOfPeople has {0} records{1}", count, "\n");*/
+        }
+        else { Debug.LogError("Invalid arrayOfPeople (Null)"); }
+    }
+    #endregion
+
+    #region InitialiseCharacterOpposition
+    /// <summary>
+    /// Character 
+    /// </summary>
+    private void InitialiseCharacterOpposition()
+    {
+        List<CharacterOpposition> listOfCharacterOpposition = new List<CharacterOpposition>() {
+            new CharacterOpposition() {
+                tag = "Artifact",
+                listToRoll = new List<int> {1, 2},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Big Business",
+                listToRoll = new List<int> {3, 4},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Charismatic Leader",
+                listToRoll = new List<int> {5, 6},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Common Criminal",
+                listToRoll = new List<int> {7, 8},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Conspiracy",
+                listToRoll = new List<int> {9, 10},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Crazed Loner",
+                listToRoll = new List<int> {11, 12},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Demon",
+                listToRoll = new List<int> {13, 14},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Desperate Citizen",
+                listToRoll = new List<int> {15, 16},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Deity",
+                listToRoll = new List<int> {17, 18},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Disease",
+                listToRoll = new List<int> {19, 20},
+                isRollAgain = false
+            },
+
+            new CharacterOpposition() {
+                tag = "Divine Creation",
+                listToRoll = new List<int> {21, 22},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Doppelganger",
+                listToRoll = new List<int> {23, 24},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Evil Mastermind",
+                listToRoll = new List<int> {25, 26},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Family",
+                listToRoll = new List<int> {27, 28},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Force of Nature",
+                listToRoll = new List<int> {29, 30},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Government Agents",
+                listToRoll = new List<int> {31, 32},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Hired Muscle",
+                listToRoll = new List<int> {33, 34},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Immortals",
+                listToRoll = new List<int> {35, 36},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Infestation",
+                listToRoll = new List<int> {37, 38},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Invaders/Outsiders",
+                listToRoll = new List<int> {39, 40},
+                isRollAgain = false
+            },
+
+            new CharacterOpposition() {
+                tag = "Kingpin",
+                listToRoll = new List<int> {41, 42},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Law Enforcement",
+                listToRoll = new List<int> {43, 44},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Machines gone Mad",
+                listToRoll = new List<int> {45, 46},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Mercenaries",
+                listToRoll = new List<int> {47, 48},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Military",
+                listToRoll = new List<int> {49, 50},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Mindless Horde",
+                listToRoll = new List<int> {51, 52},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Misguided Hero",
+                listToRoll = new List<int> {53, 54},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Mob",
+                listToRoll = new List<int> {55, 56},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Movie Monsters",
+                listToRoll = new List<int> {57, 58},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Mutants",
+                listToRoll = new List<int> {59, 60},
+                isRollAgain = false
+            },
+
+            new CharacterOpposition() {
+                tag = "Mythical Legend",
+                listToRoll = new List<int> {61, 62},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Organised Crime",
+                listToRoll = new List<int> {63, 64},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Political Group",
+                listToRoll = new List<int> {65, 66},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Rebels",
+                listToRoll = new List<int> {67, 68},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Religious Fanatics",
+                listToRoll = new List<int> {69, 70},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Security Forces",
+                listToRoll = new List<int> {71, 72},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Serial Killer",
+                listToRoll = new List<int> {73, 74},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Societal Pressure/Custom",
+                listToRoll = new List<int> {75, 76},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Spy",
+                listToRoll = new List<int> {77, 78},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Street Gang/Gang Member",
+                listToRoll = new List<int> {79, 80},
+                isRollAgain = false
+            },
+
+            new CharacterOpposition() {
+                tag = "The System",
+                listToRoll = new List<int> {81, 82},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Ticking Time Bomb",
+                listToRoll = new List<int> {83, 84},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Tragic Villain",
+                listToRoll = new List<int> {85, 86},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Traitor",
+                listToRoll = new List<int> {87, 88},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Troubled Youth",
+                listToRoll = new List<int> {89, 90},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Undead",
+                listToRoll = new List<int> {91, 92},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Underground Pariahs",
+                listToRoll = new List<int> {93, 94},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Warlord",
+                listToRoll = new List<int> {95, 96},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Wild Animals",
+                listToRoll = new List<int> {97, 98},
+                isRollAgain = false
+            },
+            new CharacterOpposition() {
+                tag = "Yourself",
+                listToRoll = new List<int> {99, 100},
+                isRollAgain = false
+            }
+        };
+
+        CharacterOpposition[] arrayOfOpposition = ToolManager.i.toolDataScript.GetArrayOfCharacterOpposition();
+        if (arrayOfOpposition != null)
+        {
+            int count;
+            int index;
+            //populate array
+            for (int i = 0; i < listOfCharacterOpposition.Count; i++)
+            {
+                CharacterOpposition opposition = listOfCharacterOpposition[i];
+                if (opposition != null)
+                {
+                    count = opposition.listToRoll.Count;
+                    if (count > 0)
+                    {
+                        for (int j = 0; j < count; j++)
+                        {
+                            index = opposition.listToRoll[j] - 1;
+                            arrayOfOpposition[index] = opposition;
+                        }
+                    }
+                    else { Debug.LogWarningFormat("Invalid count (Zero) for characterOpposition \"{0}\"", opposition.tag); }
+                }
+                else { Debug.LogWarningFormat("Invalid characterOpposition (Null) for listOfCharacterOpposition[{0}]", "\n"); }
+            }
+            //data validation
+            count = 0;
+            for (int i = 0; i < arrayOfOpposition.Length; i++)
+            {
+                if (arrayOfOpposition[i] == null)
+                { Debug.LogWarningFormat("Invalid characterOpposition (Null) for arrayOfOpposition[{0}]", i); }
+                else { count++; }
+            }
+            /*Debug.LogFormat("[Tst] ToolDetails.cs -> InitialiseCharacterOpposition: arrayOfOpposition has {0} records{1}", count, "\n");*/
+        }
+        else { Debug.LogError("Invalid arrayOfOpposition (Null)"); }
     }
     #endregion
 

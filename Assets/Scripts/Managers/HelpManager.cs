@@ -799,7 +799,7 @@ public class HelpManager : MonoBehaviour
         //ActorPolitic -> Good/Bad
         data = new HelpData();
         data.tag = "topicSub_1";
-        data.header = "Good and Bad";
+        data.header = "Good or Bad Event";
         data.text = string.Format("The good and bad versions of each topic depend on the {0}Player's Mood{1}. You're the leader and you set the tone", colourAlert, colourEnd);
         listOfHelp.Add(data);
 
@@ -812,7 +812,7 @@ public class HelpManager : MonoBehaviour
         //ActorMatch -> Good/Bad
         data = new HelpData();
         data.tag = "topicSub_3";
-        data.header = "Good and Bad";
+        data.header = "Good or Bad Event";
         data.text = string.Format("The good and bad versions of each topic depend on the {0}Player's Mood{1}. You're in charge and you set the example", colourAlert, colourEnd);
         listOfHelp.Add(data);
 
@@ -825,7 +825,7 @@ public class HelpManager : MonoBehaviour
         //ActorGear -> Good/Bad
         data = new HelpData();
         data.tag = "topicSub_25";
-        data.header = "Good and Bad";
+        data.header = "Good or Bad Event";
         data.text = string.Format("The good and bad versions of each topic depend on your {0}Subordinates Opinion{1}", colourAlert, colourEnd);
         listOfHelp.Add(data);
 
@@ -838,7 +838,7 @@ public class HelpManager : MonoBehaviour
         //ActorDistrict -> Good/Bad
         data = new HelpData();
         data.tag = "topicSub_5";
-        data.header = "Good and Bad";
+        data.header = "Good or Bad Event";
         data.text = string.Format("The good and bad versions of each topic depend on your {0}Subordinates Opinion{1}", colourAlert, colourEnd);
         listOfHelp.Add(data);
         //ActorDistrict -> Tracking
@@ -857,7 +857,7 @@ public class HelpManager : MonoBehaviour
         //ActorContact -> Good/Bad
         data = new HelpData();
         data.tag = "topicSub_8";
-        data.header = "Good and Bad";
+        data.header = "Good or Bad Event";
         data.text = string.Format("The good and bad versions of each topic depend on the {0}Subordinates Opinion{1}", colourAlert, colourEnd);
         listOfHelp.Add(data);
         //ActorContact -> Networks
@@ -876,7 +876,7 @@ public class HelpManager : MonoBehaviour
         //PlayerConditions -> Good/Bad
         data = new HelpData();
         data.tag = "topicSub_11";
-        data.header = "Good and Bad";
+        data.header = "Good or Bad Event";
         data.text = string.Format("The good and bad versions of each topic depend on your {0}Mood{1}. How people relate to you has a lot to do with how you project yourself", colourAlert, colourEnd);
         listOfHelp.Add(data);
 
@@ -889,7 +889,7 @@ public class HelpManager : MonoBehaviour
         //PlayerStats -> Good/Bad
         data = new HelpData();
         data.tag = "topicSub_13";
-        data.header = "Good and Bad";
+        data.header = "Good or Bad Event";
         data.text = string.Format("The good and bad versions of each topic depend on your {0}Mood{1}. How people view you has a lot to do with how you project yourself", colourAlert, colourEnd);
         listOfHelp.Add(data);
         //PlayerStats -> Tracking
@@ -934,7 +934,7 @@ public class HelpManager : MonoBehaviour
         //HQ -> Tracking
         data = new HelpData();
         data.tag = "topicSub_20";
-        data.header = "Good and Bad";
+        data.header = "Good or Bad Event";
         data.text = string.Format("Internal politics are a sad fact of life for any organisation. Your {0}HQ Approval Level{1} determines whether they are good or bad", colourAlert, colourEnd);
         listOfHelp.Add(data);
 
@@ -969,7 +969,7 @@ public class HelpManager : MonoBehaviour
         //Story -> Good and Bad
         data = new HelpData();
         data.tag = "topicSub_27";
-        data.header = "Good and Bad";
+        data.header = "Good or Bad Event";
         data.text = string.Format("This is one of {0}three{1} stories, drawn from a {2}pool{3}, that weave throughout the {4}campaign{5}. Each story has a good or bad path that is {6}randomly{7}" +
             " determined at the start", colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);

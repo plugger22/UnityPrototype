@@ -11,6 +11,7 @@ public class Tutorial : ScriptableObject
 
     public GlobalSide side;
     public Scenario scenario;
+    public ActorPoolFinal pool;
 
     [Tooltip("sprite of character who is conducting tutorial")]
     public Sprite sprite;
@@ -29,6 +30,7 @@ public class Tutorial : ScriptableObject
     {
         Debug.AssertFormat(side != null, "Invalid side (Null) for {0}", name);
         Debug.AssertFormat(scenario != null, "Invalid scenario (Null) for {0}", name);
+        Debug.AssertFormat(pool != null, "Invalid actorPoolFinal (Null) for {0}", name);
     }
 
 }

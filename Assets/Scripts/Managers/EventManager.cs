@@ -16,6 +16,7 @@ public enum EventType
     //Game State -> ControlManager.cs
     ExitLevel,
     ExitGame,
+    ExitGameTutorial,
     ExitCampaign,
     CreateNewGame,
     NewGameOptions,
@@ -283,8 +284,9 @@ public enum EventType
     ReleaseActor
 };
 
-//EventManager to send events to listeners
-//Works with IListener implementations
+/// <summary>
+/// EventManager to send events to listeners -> Works with IListener implementations
+/// </summary>
 public class EventManager : MonoBehaviour
 {
     public static EventManager i = null;
@@ -295,7 +297,7 @@ public class EventManager : MonoBehaviour
     //Array of listener objects (all objects registered to listen for events)
     private Dictionary<EventType, List<OnEvent>> dictOfListeners = new Dictionary<EventType, List<OnEvent>>();
 
-
+    #region Awake
     /// <summary>
     /// Internal initialisation
     /// </summary>
@@ -311,7 +313,9 @@ public class EventManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    #endregion
 
+    #region AddListener
     /// <summary>
     /// Function to add specified listener-object to array of listeners
     /// </summary>
@@ -340,7 +344,9 @@ public class EventManager : MonoBehaviour
         }
         Debug.Log(string.Format("[Evm] -> Listener Added -> type: {0},  sender: {1}{2}", eventType, methodName, "\n"));
     }
+    #endregion
 
+    #region PostNotification
     /// <summary>
     /// Function to post event to listeners
     /// </summary>
@@ -375,17 +381,25 @@ public class EventManager : MonoBehaviour
             }
         }
     }
+    #endregion
 
 
-    //Remove event type entry from dictionary, including all listeners
+    #region RemoveEvent
+    /// <summary>
+    /// Remove event type entry from dictionary, including all listeners
+    /// </summary>
+    /// <param name="eventType"></param>
     public void RemoveEvent(EventType eventType)
     {
         //Remove entry from dictionary
         dictOfListeners.Remove(eventType);
     }
+    #endregion
 
-
-    //Remove all redundant entries from the Dictionary
+    #region RemoveRedundancies
+    /// <summary>
+    /// Remove all redundant entries from the Dictionary
+    /// </summary>
     public void RemoveRedundancies()
     {
         //Create new dictionary
@@ -413,6 +427,6 @@ public class EventManager : MonoBehaviour
         //Replace listeners object with new, optimized dictionary
         dictOfListeners = TmpListeners;
     }
-
+    #endregion
 
 }

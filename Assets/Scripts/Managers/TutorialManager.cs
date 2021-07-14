@@ -995,6 +995,14 @@ public class TutorialManager : MonoBehaviour
 
     #endregion
 
+    #region GetActorPool
+    /// <summary>
+    /// ActorManager.cs -> LoadActorPool calls this to access relevant pool
+    /// </summary>
+    /// <returns></returns>
+    public ActorPoolFinal GetActorPool()
+    { return tutorial.pool; }
+    #endregion
 
     #region DebugDisplayTutorialData
     /// <summary>

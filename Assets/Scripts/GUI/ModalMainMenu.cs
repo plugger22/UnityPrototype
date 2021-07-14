@@ -260,6 +260,8 @@ public class ModalMainMenu : MonoBehaviour
                 details.isCustomise = false;
                 details.isCredits = false;
                 details.isMainMenu = true;
+                details.isExit = false;
+                details.isExitTutorial = true;
                 break;
             default: Debug.LogWarningFormat("Unrecognised menuType \"{0}\"", menuType); break;
         }
@@ -458,7 +460,7 @@ public class ModalMainMenu : MonoBehaviour
             }
             details.listOfButtonDetails.Add(button10);
         }
-        //Exit to Desktop button
+        //Exit to Desktop button -> from Game
         if (detailsMain.isExit == true)
         {
             EventButtonDetails button11 = new EventButtonDetails()
@@ -468,6 +470,19 @@ public class ModalMainMenu : MonoBehaviour
                 buttonTooltipMain = string.Format("{0}Leave the game and exit to the desktop{1}", colourNormal, colourEnd),
                 buttonTooltipDetail = string.Format("{0}HQ will hold the fort until you return{1}", colourAlert, colourEnd),
                 action = () => { EventManager.i.PostNotification(EventType.ExitGame, this, gameState, "ModalMainMenu.cs -> InitialiseMainMenu"); }
+            };
+            details.listOfButtonDetails.Add(button11);
+        }
+        //Exit to Desktop button -> from Tutorial
+        if (detailsMain.isExitTutorial == true)
+        {
+            EventButtonDetails button11 = new EventButtonDetails()
+            {
+                buttonTitle = "EXIT to Desktop",
+                buttonTooltipHeader = string.Format("{0}EXIT{1}", colourSide, colourEnd),
+                buttonTooltipMain = string.Format("{0}Leave the game and exit to the desktop{1}", colourNormal, colourEnd),
+                buttonTooltipDetail = string.Format("{0}HQ will hold the fort until you return{1}<br>{2}Your progress will automatically be saved{3}", colourAlert, colourEnd, colourNormal, colourEnd),
+                action = () => { EventManager.i.PostNotification(EventType.ExitGameTutorial, this, gameState, "ModalMainMenu.cs -> InitialiseMainMenu"); }
             };
             details.listOfButtonDetails.Add(button11);
         }

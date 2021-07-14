@@ -243,7 +243,6 @@ public class FileManager : MonoBehaviour
         LoadGameState loadGameState = new LoadGameState();
         if (read != null)
         {
-
             switch (saveType)
             {
                 case SaveType.PlayerSave:
@@ -251,7 +250,6 @@ public class FileManager : MonoBehaviour
                     GlobalSide playerSide = GameManager.i.dataScript.GetGlobalSide(read.gameData.playerSide);
                     if (playerSide != null)
                     {
-
                         loadGameState.gameState = read.gameStatus.gameState;
                         //side (player) at start
                         ReadDataData();
@@ -298,6 +296,7 @@ public class FileManager : MonoBehaviour
                     break;
                 default: Debug.LogWarningFormat("Unrecognised saveType \"{0}\"", saveType); break;
             }
+
 
         }
         return loadGameState;

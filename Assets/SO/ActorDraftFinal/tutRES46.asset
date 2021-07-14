@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 427f6772736667547a34eb4cfb79a586, type: 3}
+  m_Name: tutRES46
+  m_EditorClassIdentifier: 
+  actorName: Katie Windsor
+  firstName: Katie
+  lastName: Windsor
+  sprite: {fileID: 21300000, guid: 96332a55984d94b48ba0d03d94b64c9b, type: 3}
+  arc: {fileID: 11400000, guid: acb9718e84f6a6740810786455da2a6e, type: 2}
+  trait: {fileID: 11400000, guid: 837bf57d2df9488449695af72f57a7be, type: 2}
+  level: 3
+  power: 0
+  status: {fileID: 11400000, guid: bbc55e5c679455d48afc96a6be96878a, type: 2}
+  sex: {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
+  backstory0: Katie grew up a thinker. You have to be in order to help your father
+    repair run down vehicles with little in the way of tools or manuals. Katie would
+    figure it out logically, in between worrying about the zombie uprising that she
+    is certain will take over London one day.
+  backstory1: That's why she likes to pretend that she is a foreigner. The zombies
+    won't eat you if you don't like greasy chips. She read that in a book. Useful
+    knowledge.

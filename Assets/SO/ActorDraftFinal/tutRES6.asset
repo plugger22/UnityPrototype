@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 427f6772736667547a34eb4cfb79a586, type: 3}
+  m_Name: tutRES6
+  m_EditorClassIdentifier: 
+  actorName: Francis Raghaven
+  firstName: Francis
+  lastName: Raghaven
+  sprite: {fileID: 21300000, guid: 96332a55984d94b48ba0d03d94b64c9b, type: 3}
+  arc: {fileID: 11400000, guid: acb9718e84f6a6740810786455da2a6e, type: 2}
+  trait: {fileID: 11400000, guid: 5e419ee7ddb808e488b854181aa29cb4, type: 2}
+  level: 2
+  power: 4
+  status: {fileID: 11400000, guid: 745709acc9a885940bf510a33f017691, type: 2}
+  sex: {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}
+  backstory0: Francis used to be a criminal. He ran with a bad gang and has the tattooes
+    to show it. His old gang hasn't forgotten him.
+  backstory1: 

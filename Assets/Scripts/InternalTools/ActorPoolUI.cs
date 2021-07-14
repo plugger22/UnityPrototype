@@ -1228,6 +1228,7 @@ public class ActorPoolUI : MonoBehaviour
 
     private void UpdateBackstory0()
     {
+        //update text
         actorObject.backstory0 = backstory0.text;
         flagBackstory0 = false;
         //changes in pool
@@ -1236,6 +1237,7 @@ public class ActorPoolUI : MonoBehaviour
 
     private void UpdateBackstory1()
     {
+        //update text
         actorObject.backstory1 = backstory1.text;
         flagBackstory1 = false;
         //changes in pool
@@ -1515,7 +1517,7 @@ public class ActorPoolUI : MonoBehaviour
         }
         builder.AppendLine();
         // - - - Focus
-        builder.AppendLine("<b>Focus</b>");
+        builder.AppendLine("<b>Main Focus</b>");
         tempList = actorObject.listOfFocus;
         if (tempList != null && tempList.Count > 0)
         {
@@ -1526,6 +1528,54 @@ public class ActorPoolUI : MonoBehaviour
         {
             actorObject.listOfFocus = ToolManager.i.toolDataScript.GetCharacterFocus();
             tempList = actorObject.listOfFocus;
+            for (int i = 0; i < tempList.Count; i++)
+            { builder.AppendLine(tempList[i]); }
+        }
+        builder.AppendLine();
+        // - - - Places
+        builder.AppendLine("<b>Places</b>");
+        tempList = actorObject.listOfPlaces;
+        if (tempList != null && tempList.Count > 0)
+        {
+            for (int i = 0; i < tempList.Count; i++)
+            { builder.AppendLine(tempList[i]); }
+        }
+        else
+        {
+            actorObject.listOfPlaces = ToolManager.i.toolDataScript.GetCharacterPlace();
+            tempList = actorObject.listOfPlaces;
+            for (int i = 0; i < tempList.Count; i++)
+            { builder.AppendLine(tempList[i]); }
+        }
+        builder.AppendLine();
+        // - - - People
+        builder.AppendLine("<b>People</b>");
+        tempList = actorObject.listOfPeople;
+        if (tempList != null && tempList.Count > 0)
+        {
+            for (int i = 0; i < tempList.Count; i++)
+            { builder.AppendLine(tempList[i]); }
+        }
+        else
+        {
+            actorObject.listOfPeople = ToolManager.i.toolDataScript.GetCharacterPeople();
+            tempList = actorObject.listOfPeople;
+            for (int i = 0; i < tempList.Count; i++)
+            { builder.AppendLine(tempList[i]); }
+        }
+        builder.AppendLine();
+        // - - - Opposition
+        builder.AppendLine("<b>Opposition</b>");
+        tempList = actorObject.listOfOpposition;
+        if (tempList != null && tempList.Count > 0)
+        {
+            for (int i = 0; i < tempList.Count; i++)
+            { builder.AppendLine(tempList[i]); }
+        }
+        else
+        {
+            actorObject.listOfOpposition = ToolManager.i.toolDataScript.GetCharacterOpposition();
+            tempList = actorObject.listOfOpposition;
             for (int i = 0; i < tempList.Count; i++)
             { builder.AppendLine(tempList[i]); }
         }

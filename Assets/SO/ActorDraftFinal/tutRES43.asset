@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 427f6772736667547a34eb4cfb79a586, type: 3}
+  m_Name: tutRES43
+  m_EditorClassIdentifier: 
+  actorName: Norah Prefect
+  firstName: Norah
+  lastName: Prefect
+  sprite: {fileID: 21300000, guid: 7bbf2ee2c617a774f898a6889352d063, type: 3}
+  arc: {fileID: 11400000, guid: 0e5101dc3946aa543a729ea87a09ee67, type: 2}
+  trait: {fileID: 11400000, guid: 9a949e167c67a4649b0f86f10916903b, type: 2}
+  level: 3
+  power: 0
+  status: {fileID: 11400000, guid: bbc55e5c679455d48afc96a6be96878a, type: 2}
+  sex: {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
+  backstory0: Norah sees herself as a suburban thug. One who preys on desparate citizens
+    because why wouldn't you? If they weren't losers, she wouldn't have to beat them
+    up. Nobodies fault but their own.
+  backstory1: The Purple Pig People understand Norah and absolve her of any sin. Which
+    is useful to Norah as she likes to  swim shoulder deep in bad deeds.

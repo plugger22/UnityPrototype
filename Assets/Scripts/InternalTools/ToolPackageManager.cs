@@ -26,8 +26,8 @@ namespace toolsAPI
     public enum SpecialType { None, Organisation, OrgOrChar, Object }    //OrgOrChar -> 50/50 chance of either (plotPoints)
     public enum MetaAction { CharacterExits, CharacterReturns, CharacterUpgrade, CharacterDowngrade, CharacterStepsUp, CharacterStepsDown, PlotLineCombo }
     public enum ConstantScope { Game, Campaign }                        //NOTE: Order matters
-    public enum ConstantDistribution { Low, Medium, High}                //can't use ConstantFrequency as it's a keyword, NOTE: Order matters
-    public enum ConstantSummaryType { Plotpoint, Character, Organisation, Object, Total, Count}     //NOTE: Order matters
+    public enum ConstantDistribution { Low, Medium, High }                //can't use ConstantFrequency as it's a keyword, NOTE: Order matters
+    public enum ConstantSummaryType { Plotpoint, Character, Organisation, Object, Total, Count }     //NOTE: Order matters
     public enum TurningPointType { None, New, Development, Conclusion }
     public enum CharacterSex { None, Male, Female }
 
@@ -1328,7 +1328,7 @@ namespace toolsAPI
         /// <summary>
         /// default constructor
         /// </summary>
-        public MetaPlotpoint() {}
+        public MetaPlotpoint() { }
 
         /// <summary>
         /// copy constructor
@@ -1433,6 +1433,42 @@ namespace toolsAPI
     /// Character Focus
     /// </summary>
     public class CharacterFocus
+    {
+        public string tag;
+        public List<int> listToRoll;
+        public bool isRollAgain;                  //if true then roll twice
+    }
+    #endregion
+
+    #region CharacterPlace
+    /// <summary>
+    /// Character Place
+    /// </summary>
+    public class CharacterPlace
+    {
+        public string tag;
+        public List<int> listToRoll;
+        public bool isRollAgain;                  //if true then roll twice
+    }
+    #endregion
+
+    #region CharacterPlace
+    /// <summary>
+    /// Character People
+    /// </summary>
+    public class CharacterPeople
+    {
+        public string tag;
+        public List<int> listToRoll;
+        public bool isRollAgain;                  //if true then roll twice
+    }
+    #endregion
+
+    #region CharacterOpposition
+    /// <summary>
+    /// Character Opposition
+    /// </summary>
+    public class CharacterOpposition
     {
         public string tag;
         public List<int> listToRoll;

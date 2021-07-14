@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 427f6772736667547a34eb4cfb79a586, type: 3}
+  m_Name: tutRES45
+  m_EditorClassIdentifier: 
+  actorName: Ernie Dingo
+  firstName: Ernie
+  lastName: Dingo
+  sprite: {fileID: 21300000, guid: e8c221bd51bffd746985d9a2db13476c, type: 3}
+  arc: {fileID: 11400000, guid: 263a792d486e45c479c3e25c59a47157, type: 2}
+  trait: {fileID: 11400000, guid: da4a57d4fd990da459ef0d1af153cad8, type: 2}
+  level: 3
+  power: 0
+  status: {fileID: 11400000, guid: bbc55e5c679455d48afc96a6be96878a, type: 2}
+  sex: {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}
+  backstory0: Ernie knows animals. He grew up next to one of the last remaining zoos.
+    Where animals festered and died slow deaths of neglect. Ernie used to creep in
+    at night and let them out of their cages. Before he hunted them down and killed
+    them.
+  backstory1: Ernie is proud of the fact that he is the only man alive to have scalped
+    and gutted a tiger, a lion and a mangy, incontinent, elephant. It's an acheivement.

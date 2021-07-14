@@ -456,10 +456,13 @@ public class ActorManager : MonoBehaviour
         //tutorial
         else
         {
+            /*
             //create active, OnMap actors (need to do both sides for purposes of setting up contacts)
             InitialiseActors(maxNumOfOnMapActors, GameManager.i.globalScript.sideResistance);
             InitialiseActors(maxNumOfOnMapActors, GameManager.i.globalScript.sideAuthority);
             InitialisePoolActors();
+            */
+            LoadActorPool();
         }
         //set actor alpha to active for all onMap slots
         if (GameManager.i.optionScript.isSubordinates == true)
@@ -716,7 +719,18 @@ public class ActorManager : MonoBehaviour
     /// </summary>
     private void LoadActorPool()
     {
-        ActorPoolFinal pool = GameManager.i.campaignScript.campaign.actorPool;
+
+        ActorPoolFinal pool = null;
+        //get Campaign (default) or Tutorial actorPool
+        switch (GameManager.i.inputScript.GameState)
+        {
+            case GameState.TutorialOptions:
+                pool = GameManager.i.tutorialScript.GetActorPool();
+                break;
+            default:
+                pool = GameManager.i.campaignScript.campaign.actorPool;
+                break;
+        }
         if (pool != null)
         {
             List<ActorDraftFinal> listOfOnMapTemp = new List<ActorDraftFinal>();
@@ -4521,7 +4535,7 @@ public class ActorManager : MonoBehaviour
                         GenericTooltipDetails tooltipDetailsTexts = new GenericTooltipDetails();
                         tooltipDetailsTexts.textHeader = string.Format("{0}<size=120%>{1}</size>{2}", colourAlert, title, colourEnd);
                         tooltipDetailsTexts.textMain = string.Format("Once at HQ, roles, eg. {0}, {1}serve no purpose{2}", actor.arc.name, colourNeutral, colourEnd);
-                        tooltipDetailsTexts.textDetails = string.Format("{0} is {1}fully committed{2} to carrying out {3} HQ responsibilities", 
+                        tooltipDetailsTexts.textDetails = string.Format("{0} is {1}fully committed{2} to carrying out {3} HQ responsibilities",
                             actor.actorName, colourAlert, colourEnd, actor.sex == ActorSex.Male ? "his" : "her");
                         //add to arrays
                         data.arrayOfOptions[i - offset] = optionData;
@@ -5097,7 +5111,7 @@ public class ActorManager : MonoBehaviour
                                 Trait trait = actor.GetTrait();
                                 if (trait != null)
                                 {
-                                    tooltipDetailsTrait.textHeader = string.Format("{0}<size=120%>{1}</size>{2}", trait.typeOfTrait.name.Equals("Good", StringComparison.Ordinal) == true ? colourGood : colourBad, 
+                                    tooltipDetailsTrait.textHeader = string.Format("{0}<size=120%>{1}</size>{2}", trait.typeOfTrait.name.Equals("Good", StringComparison.Ordinal) == true ? colourGood : colourBad,
                                         trait.tag, colourEnd);
                                     tooltipDetailsTrait.textMain = trait.description;
                                 }

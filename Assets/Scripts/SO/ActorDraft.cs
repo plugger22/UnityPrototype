@@ -37,4 +37,7 @@ public class ActorDraft : ScriptableObject
     public List<string> listOfGoals;
     public List<string> listOfMotivation;
     public List<string> listOfFocus;
+    public List<string> listOfPlaces;
+    public List<string> listOfPeople;
+    public List<string> listOfOpposition;
 }

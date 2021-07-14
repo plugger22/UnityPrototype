@@ -25,6 +25,7 @@ public class ControlManager : MonoBehaviour
         EventManager.i.AddListener(EventType.CloseMetaOverall, OnEvent, "ControlManager");
         EventManager.i.AddListener(EventType.ExitLevel, OnEvent, "ControlManager");
         EventManager.i.AddListener(EventType.ExitGame, OnEvent, "ControlManager");
+        EventManager.i.AddListener(EventType.ExitGameTutorial, OnEvent, "ControlManager");
         EventManager.i.AddListener(EventType.ExitCampaign, OnEvent, "ControlManager");
         EventManager.i.AddListener(EventType.ResumeGame, OnEvent, "ControlManager");
         EventManager.i.AddListener(EventType.ResumeMetaGame, OnEvent, "ControlManager");
@@ -122,6 +123,9 @@ public class ControlManager : MonoBehaviour
                 break;
             case EventType.ExitGame:
                 ProcessCloseGame();
+                break;
+            case EventType.ExitGameTutorial:
+                ProcessCloseGameTutorial();
                 break;
             default:
                 Debug.LogErrorFormat("Invalid eventType {0}{1}", eventType, "\n");
@@ -604,7 +608,6 @@ public class ControlManager : MonoBehaviour
         //set background
         GameManager.i.modalGUIScript.SetBackground(Background.TutorialOptions);
         //admin for new game
-        //revert to playGame state by default
         GameManager.i.inputScript.GameState = GameState.NewInitialisation;
         //create new game -> DEBUG: resets campaign so assumes brand new campaign
         GameManager.i.campaignScript.Reset();
@@ -790,6 +793,31 @@ public class ControlManager : MonoBehaviour
         GameManager.i.animateScript.StopAnimations();
         //save existing game state
         gameState = GameManager.i.inputScript.GameState;
+        //quit game
+        GameManager.i.turnScript.Quit();
+    }
+    #endregion
+
+    #region ProcessCloseGameTutorial
+    /// <summary>
+    /// Exit to desktop from within Tutorial
+    /// </summary>
+    private void ProcessCloseGameTutorial()
+    {
+        Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessCloseGameTutorial: QUIT game option selected{0}", "\n");
+        //shutdown animations
+        GameManager.i.animateScript.StopAnimations();
+        //save existing game state
+        gameState = GameManager.i.inputScript.GameState;
+        //update dictionary
+        GameManager.i.dataScript.UpdateTutorialIndex(GameManager.i.tutorialScript.tutorial.name, GameManager.i.tutorialScript.index);
+        //Debug -> time save game process
+        GameManager.i.testScript.StartTimer();
+        GameManager.i.fileScript.WriteSaveData(new LoadGameState() { gameState = GameState.Tutorial, restorePoint = RestorePoint.None }, SaveType.Tutorial);
+        GameManager.i.fileScript.SaveGame(SaveType.Tutorial);
+        //how long did it take?
+        long timeElapsed = GameManager.i.testScript.StopTimer();
+        Debug.LogFormat("[Per] ControlManager.cs -> ProcessCloseGameTutorial: SAVE GAME took {0} ms", timeElapsed);
         //quit game
         GameManager.i.turnScript.Quit();
     }

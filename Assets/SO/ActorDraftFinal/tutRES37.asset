@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 427f6772736667547a34eb4cfb79a586, type: 3}
+  m_Name: tutRES37
+  m_EditorClassIdentifier: 
+  actorName: Aurora Downie
+  firstName: Aurora
+  lastName: Downie
+  sprite: {fileID: 21300000, guid: 96332a55984d94b48ba0d03d94b64c9b, type: 3}
+  arc: {fileID: 11400000, guid: acb9718e84f6a6740810786455da2a6e, type: 2}
+  trait: {fileID: 11400000, guid: dc8a591757aa5fa4e896a61094c92585, type: 2}
+  level: 2
+  power: 0
+  status: {fileID: 11400000, guid: bbc55e5c679455d48afc96a6be96878a, type: 2}
+  sex: {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
+  backstory0: Aurora loves her job. She considers herself one of a small group of
+    elite planners who have the ability to shift the dial, whenever needed. It doesn't
+    matter if she's having a bad day or she's being hunted down by the Authority,
+    she'll tweak that dial or die trying.
+  backstory1: It's an endearing quality that makes her an extremely valuable employee.
+    Tough, loyal and smart are winning traits in anyone's Resistance movement

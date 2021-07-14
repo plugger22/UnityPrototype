@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 427f6772736667547a34eb4cfb79a586, type: 3}
+  m_Name: tutRES27
+  m_EditorClassIdentifier: 
+  actorName: James McQuirky
+  firstName: James
+  lastName: McQuirky
+  sprite: {fileID: 21300000, guid: e8c221bd51bffd746985d9a2db13476c, type: 3}
+  arc: {fileID: 11400000, guid: 263a792d486e45c479c3e25c59a47157, type: 2}
+  trait: {fileID: 11400000, guid: 1edff31528bf3cc48951d9bd99ad5644, type: 2}
+  level: 1
+  power: 0
+  status: {fileID: 11400000, guid: bbc55e5c679455d48afc96a6be96878a, type: 2}
+  sex: {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}
+  backstory0: When you are half the size of other people and possessed of a cowardly
+    nature you need to work hard on first impressions. James wants you to know that
+    he know's people. All kinds of people. Important people. People that trust him.
+  backstory1: James mixes. Where ever there are people huddled together James can
+    be seen clasping hands, listening keenly and trying his utmost to be liked.

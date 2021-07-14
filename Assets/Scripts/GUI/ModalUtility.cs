@@ -95,6 +95,7 @@ namespace modalAPI
         public bool isInformation;
         public bool isMainMenu;                                         //exit to main menu
         public bool isExit;                                             //exit to desktop
+        public bool isExitTutorial;
 
         public ModalMainMenuDetails()
         {
@@ -113,6 +114,7 @@ namespace modalAPI
             isInformation = true;
             isMainMenu = false;
             isExit = true;
+            isExitTutorial = false;
         }
     }
 

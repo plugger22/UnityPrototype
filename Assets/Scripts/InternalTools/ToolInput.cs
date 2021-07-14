@@ -12,6 +12,7 @@ public class ToolInput : MonoBehaviour
     private ToolModalType _modalType;
     private ToolModalSubNew _modalSubNew;
 
+
     #region properties
     //needs to be updated whenever changed
     public ToolModal ModalState
@@ -201,14 +202,19 @@ public class ToolInput : MonoBehaviour
                     switch (_modalType)
                     {
                         case ToolModalType.Edit:
-                            if (Input.GetButtonDown("Horizontal"))
+                            //Press Left Control first
+                            if (Input.GetButton("LeftControl"))
                             {
-                                //right / left arrows
-                                x_axis = Input.GetAxisRaw("Horizontal");
-                                if (x_axis > 0)
-                                { ToolEvents.i.PostNotification(ToolEventType.NextActorDraft, this, null, "ToolInput.cs -> ProcessKeyInput Horizontal RIGHT"); }
-                                else if (x_axis < 0)
-                                { ToolEvents.i.PostNotification(ToolEventType.PreviousActorDraft, this, null, "ToolInput.cs -> ProcessKeyInput Horizontal LEFT"); }
+                                //Press arrow key second
+                                if (Input.GetButtonDown("Horizontal"))
+                                {
+                                    //right / left arrows
+                                    x_axis = Input.GetAxisRaw("Horizontal");
+                                    if (x_axis > 0)
+                                    { ToolEvents.i.PostNotification(ToolEventType.NextActorDraft, this, null, "ToolInput.cs -> ProcessKeyInput Horizontal RIGHT"); }
+                                    else if (x_axis < 0)
+                                    { ToolEvents.i.PostNotification(ToolEventType.PreviousActorDraft, this, null, "ToolInput.cs -> ProcessKeyInput Horizontal LEFT"); }
+                                }
                             }
                             break;
                         case ToolModalType.Input:
