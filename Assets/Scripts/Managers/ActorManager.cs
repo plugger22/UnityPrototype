@@ -1027,21 +1027,71 @@ public class ActorManager : MonoBehaviour
     }
     #endregion
 
-    #region ConfigureTutorialActors
+    #region ConfigureTutorialActors...
     /// <summary>
     /// Done at start of tutorial and everytime player changes tutorial sets
     /// Sets up OnMap and Reserve actors by pulling them from the respective pools
+    /// 'isChangeContacts' true for changing sets, NOT for start of tutorial
     /// </summary>
-    public void ConfigureTutorialActors()
+    public void ConfigureTutorialActors(bool isChangeContacts = false)
     {
         int count;
         TutorialActorType actorType;
         GlobalSide side = GameManager.i.tutorialScript.GetTutorialSide();
         string cityName = GameManager.i.cityScript.GetCityName();
+        //Remove any existing OnMap actors
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(side);
+        if (arrayOfActors != null)
+        {
+            for (int i = 0; i < arrayOfActors.Length; i++)
+            {
+                if (GameManager.i.dataScript.CheckActorSlotStatus(i, side) == true)
+                {
+                    Actor actor = arrayOfActors[i];
+                    if (actor != null)
+                    {
+                        //remove actor and their contacts
+                        GameManager.i.dataScript.RemoveCurrentActor(side, actor, ActorStatus.RecruitPool);
+                        //reassign to recruit pool
+                        GameManager.i.dataScript.AddActorToRecruitPool(actor.actorID, actor.level, side);
+                    }
+                    else { Debug.LogErrorFormat("Invalid actor (Null) in arrayOfActors[{0}]", i); }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfActors (Null)"); }
+        //remove an existing actors from reserve prior to a new configuration
+        List<int> listOfReserves = GameManager.i.dataScript.GetListOfReserveActors(side);
+        if (listOfReserves != null)
+        {
+            count = listOfReserves.Count;
+            //ignore if reserves empty
+            if (count > 0)
+            {
+                //reverse loop as deletes as you go
+                for (int i = count - 1; i >= 0; i--)
+                {
+                    Actor actor = GameManager.i.dataScript.GetActor(listOfReserves[i]);
+                    if (actor != null)
+                    {
+                        //contacts -? Do BEFORE Removing actor
+                        GameManager.i.dataScript.RemoveContactsActor(actor.actorID);
+                        //remove from reserves and place back into pool
+                        ProcessTutorialRemoveFromReserves(actor, side);
+
+                    }
+                    else { Debug.LogErrorFormat("Invalid actor (Null) for listOfReserves[{0}]", i); }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid listOfReserves (Null)"); }
+        // - - - New Configuration
         TutorialActorConfig config = GameManager.i.tutorialScript.GetActorConfiguration();
         if (config != null)
         {
+            //
             // - - - OnMap
+            //
             if (config.listOfOnMapArcs != null)
             {
                 count = config.listOfOnMapArcs.Count;
@@ -1055,7 +1105,14 @@ public class ActorManager : MonoBehaviour
                         {
                             Actor actor = GameManager.i.dataScript.GetActorFromRecruitPool(actorType.arc, actorType.level, side);
                             if (actor != null)
-                            { ProcessTutorialOnMapActor(actor, i, side, cityName); }
+                            {
+                                ProcessTutorialOnMapActor(actor, i, side, cityName);
+                                if (isChangeContacts == true)
+                                {
+                                    //contacts (already predone at tutorial initialisation so should be quicker)
+                                    GameManager.i.contactScript.SetActorContacts(actor);
+                                }
+                            }
                             else { Debug.LogErrorFormat("Invalid actor (Null) for actorArc \"{0}\", lvl {1}, side {2}", actorType.arc, actorType.level, side); }
                         }
                         else { Debug.LogErrorFormat("Invalid tutorialActorType (Null) for config.listOfOnMapArcs[{0}]", i); }
@@ -1075,7 +1132,9 @@ public class ActorManager : MonoBehaviour
                 //use default line up
                 ProcessTutorialDefaultLineUp(side, cityName);
             }
+            //
             // - - - Reserves
+            //
             if (config.listOfReserveArcs != null)
             {
                 count = config.listOfReserveArcs.Count;
@@ -1094,10 +1153,12 @@ public class ActorManager : MonoBehaviour
                                     //place in reserves
                                     ProcessTutorialReserveActor(actor, side);
                                 }
-                                else { Debug.LogErrorFormat("Invalid actor (Null) for actorArc \"{0}\", lvl {1}, side {2}", actorType.arc, actorType.level, side); }
+                                else { Debug.LogErrorFormat("Invalid actor (Null) for actorArc \"{0}\", lvl {1}, side {2}", actorType.arc, actorType.level, side.name); }
                             }
                             else { Debug.LogErrorFormat("Invalid tutorialActorType (Null) for config.listOfReserveArcs[{0}]", i); }
                         }
+                        //log
+                        Debug.LogFormat("[Tut] ActorManager.cs -> ProcessTutorialReserveActor: {0} actor{1} added to Reserves, config file \"{2}\"", count, count != 1 ? "s" : "", config.name);
                     }
                 }
                 else { Debug.LogWarningFormat("Invalid config.listOfReserveArcs (is {0}, max allowed {1}) -> ignored, Reserves left empty for config \"{2}\"", count, maxNumOfReserveActors, config.name); }
@@ -1197,14 +1258,28 @@ public class ActorManager : MonoBehaviour
             actor.numOfCities++;
             //history
             actor.AddHistory(new HistoryActor() { text = "Recruited (Reserves)" });
-            //log
-            Debug.LogFormat("[Tut] ActorManager.cs -> ProcessTutorialReserveActor: {0}, {1}, ID {2}, lvl {3} added to the Reserves)", actor.actorName, actor.arc.name, actor.actorID, actor.level);
         }
     }
 
+    /// <summary>
+    /// Remove and actor from reserves (clean out reserves prior to configuring for a new set)
+    /// </summary>
+    /// <param name="actor"></param>
+    private void ProcessTutorialRemoveFromReserves(Actor actor, GlobalSide side)
+    {
+        //change actors status
+        actor.Status = ActorStatus.RecruitPool;
+        actor.ResetStates();
+        //place actor back in the appropriate recruit pool
+        List<int> recruitPoolList = GameManager.i.dataScript.GetActorRecruitPool(actor.level, side);
+        if (recruitPoolList != null)
+        { recruitPoolList.Add(actor.actorID); }
+        else { Debug.LogErrorFormat("Invalid recruitPoolList (Null) for actor.level {0} & GlobalSide {1}", actor.level, side); }
+        //remove actor from reserve list
+        GameManager.i.dataScript.RemoveActorFromReservePool(side, actor);
+    }
+
     #endregion
-
-
 
     #region InitialiseActors
     /// <summary>
@@ -1642,6 +1717,8 @@ public class ActorManager : MonoBehaviour
     /// </summary>
     public void InitialiseActorContacts(GlobalSide side)
     {
+
+        //Normal -> assign contacts to OnMap actors
         Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(side);
         if (arrayOfActors != null)
         {
@@ -1654,6 +1731,72 @@ public class ActorManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid arrayOfActors (Null)"); }
+        if (GameManager.i.inputScript.GameState == GameState.TutorialOptions)
+        {
+            //
+            // - - - tutorial (add contacts to everybody (apart from HQ) to speed up admin when changing tutorial sets
+            //
+            int count;
+            //reserves -> add contacts
+            List<int> listOfReserves = GameManager.i.dataScript.GetListOfReserveActors(side);
+            if (listOfReserves != null)
+            {
+                count = listOfReserves.Count;
+                if (count > 0)
+                {
+                    for (int i = 0; i < count; i++)
+                    {
+                        Actor actor = GameManager.i.dataScript.GetActor(listOfReserves[i]);
+                        if (actor != null)
+                        { GameManager.i.contactScript.SetActorContacts(actor); }
+                        else { Debug.LogErrorFormat("Invalid actor (Null) for listOfReserves[{0}]", i); }
+                    }
+                }
+            }
+            else { Debug.LogErrorFormat("Invalid listofReserves for side \"{0}\"", side.name); }
+            //level one pool
+            List<int> listOfLevelOne = GameManager.i.dataScript.GetActorRecruitPool(1, side);
+            if (listOfLevelOne != null)
+            {
+                count = listOfLevelOne.Count;
+                for (int i = 0; i < count; i++)
+                {
+                    Actor actor = GameManager.i.dataScript.GetActor(listOfLevelOne[i]);
+                    if (actor != null)
+                    { GameManager.i.contactScript.SetActorContacts(actor); }
+                    else { Debug.LogErrorFormat("Invalid actor (Null) for listOfLevelOne[{0}]", i); }
+                }
+            }
+            else { Debug.LogError("Invalid listOfLevelOne (Null)"); }
+            //level two pool
+            List<int> listOfLevelTwo = GameManager.i.dataScript.GetActorRecruitPool(2, side);
+            if (listOfLevelTwo != null)
+            {
+                count = listOfLevelTwo.Count;
+                for (int i = 0; i < count; i++)
+                {
+                    Actor actor = GameManager.i.dataScript.GetActor(listOfLevelTwo[i]);
+                    if (actor != null)
+                    { GameManager.i.contactScript.SetActorContacts(actor); }
+                    else { Debug.LogErrorFormat("Invalid actor (Null) for listOfLevelTwo[{0}]", i); }
+                }
+            }
+            else { Debug.LogError("Invalid listOfLevelTwo (Null)"); }
+            //level three pool
+            List<int> listOfLevelThree = GameManager.i.dataScript.GetActorRecruitPool(3, side);
+            if (listOfLevelThree != null)
+            {
+                count = listOfLevelThree.Count;
+                for (int i = 0; i < count; i++)
+                {
+                    Actor actor = GameManager.i.dataScript.GetActor(listOfLevelThree[i]);
+                    if (actor != null)
+                    { GameManager.i.contactScript.SetActorContacts(actor); }
+                    else { Debug.LogErrorFormat("Invalid actor (Null) for listOfLevelThree[{0}]", i); }
+                }
+            }
+            else { Debug.LogError("Invalid listOfLevelThree (Null)"); }
+        }
     }
     #endregion
 

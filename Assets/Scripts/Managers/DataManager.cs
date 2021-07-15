@@ -4311,6 +4311,9 @@ public class DataManager : MonoBehaviour
                     //update contacts (not for game or level start -> sequencing issues)
                     if (GameManager.i.turnScript.Turn > 0 && GameManager.i.inputScript.CheckNormalMode() == true)
                     { GameManager.i.contactScript.SetActorContacts(actor); }
+                    //update contacts if tutorial change of set or start
+                    else if (GameManager.i.inputScript.GameState == GameState.Tutorial)
+                    { GameManager.i.contactScript.SetActorContacts(actor); }
                     //update actor GUI display
                     GameManager.i.actorPanelScript.UpdateActorPanel();
                 }
@@ -4405,6 +4408,9 @@ public class DataManager : MonoBehaviour
                         RemoveActorAdmin(side, actor, status);
                         return true;
                     }
+                    break;
+                case ActorStatus.RecruitPool:
+                    RemoveActorAdmin(side, actor, status);
                     break;
                 default:
                     Debug.LogError(string.Format("Invalid Status \"{0}\" for {1}, {2}, ID {3}", status, actor.arc.name, actor.actorName, actor.actorID));
@@ -4601,7 +4607,7 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Returns actors reserve list for specified side, null if a problem
+    /// Returns actors reserve list for specified side, null if a problem. Empty list returned if nobody in reserves
     /// </summary>
     /// <param name="side"></param>
     /// <returns></returns>

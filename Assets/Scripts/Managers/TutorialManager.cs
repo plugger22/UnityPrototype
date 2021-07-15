@@ -911,6 +911,8 @@ public class TutorialManager : MonoBehaviour
                 if (set != null)
                 {
                     InitialiseTutorialSet(set);
+                    //configure actors
+                    GameManager.i.actorScript.ConfigureTutorialActors(true);
                     //activate tutorialUI
                     EventManager.i.PostNotification(EventType.TutorialOpenUI, this, set, "TutorialManager.cs -> SetPreviousSet");
                 }
@@ -952,6 +954,8 @@ public class TutorialManager : MonoBehaviour
                 if (set != null)
                 {
                     InitialiseTutorialSet(set);
+                    //configure actors
+                    GameManager.i.actorScript.ConfigureTutorialActors(true);
                     //activate tutorialUI
                     EventManager.i.PostNotification(EventType.TutorialOpenUI, this, set, "TutorialManager.cs -> SetNextSet");
                 }

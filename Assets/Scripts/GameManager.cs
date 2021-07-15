@@ -1011,7 +1011,7 @@ public class GameManager : MonoBehaviour
 
     #region InitialiseTutorial
     /// <summary>
-    /// Tutorial training simulation
+    /// Tutorial training simulation -> gameState.TutorialOptions
     /// </summary>
     public void InitialiseTutorial()
     {
