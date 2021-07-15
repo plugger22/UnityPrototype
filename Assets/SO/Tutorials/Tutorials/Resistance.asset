@@ -29,3 +29,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 38bcac9c0133d6f438bac14fa414d13e, type: 2}
   - {fileID: 11400000, guid: d36192a3ec606bc4da7d308d7dfff8e6, type: 2}
   ignoreOption: {fileID: 11400000, guid: 1cdc6f72dfdaa514fb2e662c63234c4b, type: 2}
+  listOfDefaultArcs:
+  - {fileID: 11400000, guid: 585f6ebe97311aa4396d0c79f6faf1df, type: 2}
+  - {fileID: 11400000, guid: 79fb6b3426257194faf6776c7cb489d2, type: 2}
+  - {fileID: 11400000, guid: 268c960d386d285478b3ab6aaa5796bf, type: 2}
+  - {fileID: 11400000, guid: 37d9dfd62535e6b438debd5d11731168, type: 2}

@@ -725,112 +725,154 @@ public class ActorManager : MonoBehaviour
         switch (GameManager.i.inputScript.GameState)
         {
             case GameState.TutorialOptions:
+                //Tutorial
                 pool = GameManager.i.tutorialScript.GetActorPool();
+
+                #region Create tutorial actors
+                //Difference from normal -> All actors created and placed into pools 1/2/3 + HQ. OnMap lineup ignored till done (sorted out on a set by set basis)
+                if (pool != null)
+                {
+                    //hq hierarchy
+                    CreateActorFinal(pool.side, pool.hqBoss0);
+                    CreateActorFinal(pool.side, pool.hqBoss1);
+                    CreateActorFinal(pool.side, pool.hqBoss2);
+                    CreateActorFinal(pool.side, pool.hqBoss3);
+                    //hq workers
+                    for (int i = 0; i < pool.listHqWorkers.Count; i++)
+                    { CreateActorFinal(pool.side, pool.listHqWorkers[i]); }
+                    //Pool level One
+                    for (int i = 0; i < pool.listLevelOne.Count; i++)
+                    { CreateActorFinal(pool.side, pool.listLevelOne[i]); }
+                    //Pool level Two
+                    for (int i = 0; i < pool.listLevelTwo.Count; i++)
+                    { CreateActorFinal(pool.side, pool.listLevelTwo[i]); }
+                    //Pool level Three
+                    for (int i = 0; i < pool.listLevelThree.Count; i++)
+                    { CreateActorFinal(pool.side, pool.listLevelThree[i]); }
+                    //need to create a random set of OnMap actors for the AI (for the contacts)
+                    switch (pool.side.level)
+                    {
+                        case 1: InitialiseActors(maxNumOfOnMapActors, GameManager.i.globalScript.sideResistance); break;
+                        case 2: InitialiseActors(maxNumOfOnMapActors, GameManager.i.globalScript.sideAuthority); break;
+                        default: Debug.LogWarningFormat("Unrecognised pool.side \"{0}\", level {1}", pool.side, pool.side.level); break;
+                    }
+                }
+                else { Debug.LogError("Invalid actorPoolFinal (Null)"); }
+                #endregion
+
+                //set up onMap and Reserve actors
+                ConfigureTutorialActors();
                 break;
             default:
+                //Campaign
                 pool = GameManager.i.campaignScript.campaign.actorPool;
-                break;
-        }
-        if (pool != null)
-        {
-            List<ActorDraftFinal> listOfOnMapTemp = new List<ActorDraftFinal>();
-            List<ActorDraftFinal> listOfLevelOneTemp = new List<ActorDraftFinal>();
-            //Random choice of OnMap actors from ActorPoolFinal.listLevelOne or use actors as specified
-            if (GameManager.i.optionScript.isOnMapRandom == true)
-            {
 
-                //Random -> create copies of actorDrafts in temp list
-                for (int i = 0; i < pool.listLevelOne.Count; i++)
+                #region Create campaign actors
+                if (pool != null)
                 {
-                    //create a new actorDraftFinal for the tempList
-                    ActorDraftFinal actorCopy = CopyActorDraftFinal(pool.listLevelOne[i]);
-                    //add to tempList
-                    listOfLevelOneTemp.Add(actorCopy);
-                }
-                //place onMap actor draft copies in level one temp pool
-                for (int i = 0; i < pool.listOnMap.Count; i++)
-                {
-                    //create a new actorDraftFinal for the tempList
-                    ActorDraftFinal actorCopy = CopyActorDraftFinal(pool.listOnMap[i]);
-                    actorCopy.status = statusPool;
-                    //add to tempList
-                    listOfLevelOneTemp.Add(actorCopy);
-                }
-                //Randomly select four actors from level One pool to be OnMap -> unique Arcs only
-                List<string> listOfArcs = new List<string>();
-                int counter = 0;
-                int index;
-                ActorDraftFinal actorTemp;
-                while (listOfOnMapTemp.Count < maxNumOfOnMapActors)
-                {
-                    actorTemp = listOfLevelOneTemp[Random.Range(0, listOfLevelOneTemp.Count)];
-                    if (listOfArcs.Exists(x => x.Equals(actorTemp.arc.name, StringComparison.Ordinal)) == false)
+                    List<ActorDraftFinal> listOfOnMapTemp = new List<ActorDraftFinal>();
+                    List<ActorDraftFinal> listOfLevelOneTemp = new List<ActorDraftFinal>();
+                    //Random choice of OnMap actors from ActorPoolFinal.listLevelOne or use actors as specified
+                    if (GameManager.i.optionScript.isOnMapRandom == true)
                     {
-                        //add arc to exclusion list
-                        listOfArcs.Add(actorTemp.arc.name);
-                        //change actor status
-                        actorTemp.status = statusOnMap;
-                        //add to OnMap list
-                        listOfOnMapTemp.Add(actorTemp);
-                        //remove from level One list
-                        index = listOfLevelOneTemp.FindIndex(x => x.actorName.Equals(actorTemp.actorName, StringComparison.Ordinal));
-                        if (index > -1)
-                        { listOfLevelOneTemp.RemoveAt(index); }
-                        else { Debug.LogWarningFormat("Couldn't find actorTemp \"{0}\" in listOfLevelOnTemp", actorTemp.name); }
-                        //reset counter
-                        counter = 0;
+
+                        //Random -> create copies of actorDrafts in temp list
+                        for (int i = 0; i < pool.listLevelOne.Count; i++)
+                        {
+                            //create a new actorDraftFinal for the tempList
+                            ActorDraftFinal actorCopy = CopyActorDraftFinal(pool.listLevelOne[i]);
+                            //add to tempList
+                            listOfLevelOneTemp.Add(actorCopy);
+                        }
+                        //place onMap actor draft copies in level one temp pool
+                        for (int i = 0; i < pool.listOnMap.Count; i++)
+                        {
+                            //create a new actorDraftFinal for the tempList
+                            ActorDraftFinal actorCopy = CopyActorDraftFinal(pool.listOnMap[i]);
+                            actorCopy.status = statusPool;
+                            //add to tempList
+                            listOfLevelOneTemp.Add(actorCopy);
+                        }
+                        //Randomly select four actors from level One pool to be OnMap -> unique Arcs only
+                        List<string> listOfArcs = new List<string>();
+                        int counter = 0;
+                        int index;
+                        ActorDraftFinal actorTemp;
+                        while (listOfOnMapTemp.Count < maxNumOfOnMapActors)
+                        {
+                            actorTemp = listOfLevelOneTemp[Random.Range(0, listOfLevelOneTemp.Count)];
+                            if (listOfArcs.Exists(x => x.Equals(actorTemp.arc.name, StringComparison.Ordinal)) == false)
+                            {
+                                //add arc to exclusion list
+                                listOfArcs.Add(actorTemp.arc.name);
+                                //change actor status
+                                actorTemp.status = statusOnMap;
+                                //add to OnMap list
+                                listOfOnMapTemp.Add(actorTemp);
+                                //remove from level One list
+                                index = listOfLevelOneTemp.FindIndex(x => x.actorName.Equals(actorTemp.actorName, StringComparison.Ordinal));
+                                if (index > -1)
+                                { listOfLevelOneTemp.RemoveAt(index); }
+                                else { Debug.LogWarningFormat("Couldn't find actorTemp \"{0}\" in listOfLevelOnTemp", actorTemp.name); }
+                                //reset counter
+                                counter = 0;
+                            }
+                            else
+                            {
+                                //increment counter
+                                counter++;
+                                if (counter > 20) { Debug.LogWarningFormat("No match for unique actor arc found -> tried {0} times (there are {1} OnMap actors", counter, listOfOnMapTemp.Count); }
+                                if (counter > 30) { Debug.LogError("No match -> counter > 30"); }
+                            }
+                        }
                     }
                     else
                     {
-                        //increment counter
-                        counter++;
-                        if (counter > 20) { Debug.LogWarningFormat("No match for unique actor arc found -> tried {0} times (there are {1} OnMap actors", counter, listOfOnMapTemp.Count); }
-                        if (counter > 30) { Debug.LogError("No match -> counter > 30"); }
+                        //use ActorPoolFinal actors as specified -> use temp lists to avoid messing up ActorPoolFinal.SO
+                        listOfOnMapTemp.AddRange(pool.listOnMap);
+                        listOfLevelOneTemp.AddRange(pool.listLevelOne);
                     }
+                    //hq hierarchy
+                    CreateActorFinal(pool.side, pool.hqBoss0);
+                    CreateActorFinal(pool.side, pool.hqBoss1);
+                    CreateActorFinal(pool.side, pool.hqBoss2);
+                    CreateActorFinal(pool.side, pool.hqBoss3);
+                    //hq workers
+                    for (int i = 0; i < pool.listHqWorkers.Count; i++)
+                    { CreateActorFinal(pool.side, pool.listHqWorkers[i]); }
+                    //OnMap
+                    for (int i = 0; i < listOfOnMapTemp.Count; i++)
+                    { CreateActorFinal(pool.side, listOfOnMapTemp[i], i); }
+                    //Pool level One
+                    for (int i = 0; i < listOfLevelOneTemp.Count; i++)
+                    { CreateActorFinal(pool.side, listOfLevelOneTemp[i]); }
+                    //Pool level Two
+                    for (int i = 0; i < pool.listLevelTwo.Count; i++)
+                    { CreateActorFinal(pool.side, pool.listLevelTwo[i]); }
+                    //Pool level Three
+                    for (int i = 0; i < pool.listLevelThree.Count; i++)
+                    { CreateActorFinal(pool.side, pool.listLevelThree[i]); }
+                    //need to create a random set of OnMap actors for the AI (for the contacts)
+                    switch (pool.side.level)
+                    {
+                        case 1: InitialiseActors(maxNumOfOnMapActors, GameManager.i.globalScript.sideResistance); break;
+                        case 2: InitialiseActors(maxNumOfOnMapActors, GameManager.i.globalScript.sideAuthority); break;
+                        default: Debug.LogWarningFormat("Unrecognised pool.side \"{0}\", level {1}", pool.side, pool.side.level); break;
+                    }
+                    /*
+                    //delete Temp files -> EDIT maybe not needed if assets aren't saved to file?
+                    for (int i = listOfOnMapTemp.Count - 1; i >= 0; i--)
+                    { Destroy(listOfOnMapTemp[i]);  }
+                    for (int i = listOfLevelOneTemp.Count - 1; i >= 0; i--)
+                    { Destroy(listOfLevelOneTemp[i]); }
+                    */
                 }
-            }
-            else
-            {
-                //use ActorPoolFinal actors as specified -> use temp lists to avoid messing up ActorPoolFinal.SO
-                listOfOnMapTemp.AddRange(pool.listOnMap);
-                listOfLevelOneTemp.AddRange(pool.listLevelOne);
-            }
-            //hq hierarchy
-            CreateActorFinal(pool.side, pool.hqBoss0);
-            CreateActorFinal(pool.side, pool.hqBoss1);
-            CreateActorFinal(pool.side, pool.hqBoss2);
-            CreateActorFinal(pool.side, pool.hqBoss3);
-            //hq workers
-            for (int i = 0; i < pool.listHqWorkers.Count; i++)
-            { CreateActorFinal(pool.side, pool.listHqWorkers[i]); }
-            //OnMap
-            for (int i = 0; i < listOfOnMapTemp.Count; i++)
-            { CreateActorFinal(pool.side, listOfOnMapTemp[i], i); }
-            //Pool level One
-            for (int i = 0; i < listOfLevelOneTemp.Count; i++)
-            { CreateActorFinal(pool.side, listOfLevelOneTemp[i]); }
-            //Pool level Two
-            for (int i = 0; i < pool.listLevelTwo.Count; i++)
-            { CreateActorFinal(pool.side, pool.listLevelTwo[i]); }
-            //Pool level Three
-            for (int i = 0; i < pool.listLevelThree.Count; i++)
-            { CreateActorFinal(pool.side, pool.listLevelThree[i]); }
-            //need to create a random set of OnMap actors for the AI (for the contacts)
-            switch (pool.side.level)
-            {
-                case 1: InitialiseActors(maxNumOfOnMapActors, GameManager.i.globalScript.sideResistance); break;
-                case 2: InitialiseActors(maxNumOfOnMapActors, GameManager.i.globalScript.sideAuthority); break;
-                default: Debug.LogWarningFormat("Unrecognised pool.side \"{0}\", level {1}", pool.side, pool.side.level); break;
-            }
-            /*
-            //delete Temp files -> EDIT maybe not needed if assets aren't saved to file?
-            for (int i = listOfOnMapTemp.Count - 1; i >= 0; i--)
-            { Destroy(listOfOnMapTemp[i]);  }
-            for (int i = listOfLevelOneTemp.Count - 1; i >= 0; i--)
-            { Destroy(listOfLevelOneTemp[i]); }
-            */
+                else { Debug.LogError("Invalid actorPoolFinal (Null)"); }
+                #endregion
+
+                break;
         }
-        else { Debug.LogError("Invalid actorPoolFinal (Null)"); }
+
     }
     #endregion
 
@@ -984,6 +1026,185 @@ public class ActorManager : MonoBehaviour
         else { Debug.LogError("Invalid ActorDraftFinal (Null)"); }
     }
     #endregion
+
+    #region ConfigureTutorialActors
+    /// <summary>
+    /// Done at start of tutorial and everytime player changes tutorial sets
+    /// Sets up OnMap and Reserve actors by pulling them from the respective pools
+    /// </summary>
+    public void ConfigureTutorialActors()
+    {
+        int count;
+        TutorialActorType actorType;
+        GlobalSide side = GameManager.i.tutorialScript.GetTutorialSide();
+        string cityName = GameManager.i.cityScript.GetCityName();
+        TutorialActorConfig config = GameManager.i.tutorialScript.GetActorConfiguration();
+        if (config != null)
+        {
+            // - - - OnMap
+            if (config.listOfOnMapArcs != null)
+            {
+                count = config.listOfOnMapArcs.Count;
+                if (count == maxNumOfOnMapActors)
+                {
+                    //Use OnMap lineUp specified in configuration SO (sets arc type and level)
+                    for (int i = 0; i < maxNumOfOnMapActors; i++)
+                    {
+                        actorType = config.listOfOnMapArcs[i];
+                        if (actorType != null)
+                        {
+                            Actor actor = GameManager.i.dataScript.GetActorFromRecruitPool(actorType.arc, actorType.level, side);
+                            if (actor != null)
+                            { ProcessTutorialOnMapActor(actor, i, side, cityName); }
+                            else { Debug.LogErrorFormat("Invalid actor (Null) for actorArc \"{0}\", lvl {1}, side {2}", actorType.arc, actorType.level, side); }
+                        }
+                        else { Debug.LogErrorFormat("Invalid tutorialActorType (Null) for config.listOfOnMapArcs[{0}]", i); }
+                    }
+                    Debug.LogFormat("[Tut] ActorManager.cs -> ConfigureTutorialActors: Custom actor lineUp used for OnMap, config \"{0}\"", config.name);
+                }
+                else
+                {
+                    //if arc list isn't exactly four then invalid and use defaults instead
+                    Debug.LogWarningFormat("Invalid config.listOfOnMapArcs (is {0}, should be {1})", count, maxNumOfOnMapActors);
+                    //default lineup
+                    ProcessTutorialDefaultLineUp(side, cityName);
+                }
+            }
+            else
+            {
+                //use default line up
+                ProcessTutorialDefaultLineUp(side, cityName);
+            }
+            // - - - Reserves
+            if (config.listOfReserveArcs != null)
+            {
+                count = config.listOfReserveArcs.Count;
+                if (count <= maxNumOfReserveActors)
+                {
+                    if (count > 0)
+                    {
+                        for (int i = 0; i < count; i++)
+                        {
+                            actorType = config.listOfReserveArcs[i];
+                            if (actorType != null)
+                            {
+                                Actor actor = GameManager.i.dataScript.GetActorFromRecruitPool(actorType.arc, actorType.level, side);
+                                if (actor != null)
+                                {
+                                    //place in reserves
+                                    ProcessTutorialReserveActor(actor, side);
+                                }
+                                else { Debug.LogErrorFormat("Invalid actor (Null) for actorArc \"{0}\", lvl {1}, side {2}", actorType.arc, actorType.level, side); }
+                            }
+                            else { Debug.LogErrorFormat("Invalid tutorialActorType (Null) for config.listOfReserveArcs[{0}]", i); }
+                        }
+                    }
+                }
+                else { Debug.LogWarningFormat("Invalid config.listOfReserveArcs (is {0}, max allowed {1}) -> ignored, Reserves left empty for config \"{2}\"", count, maxNumOfReserveActors, config.name); }
+            }
+
+        }
+        else
+        {
+            //default lineup
+            ProcessTutorialDefaultLineUp(side, cityName);
+        }
+    }
+
+    /// <summary>
+    /// submethod for ConfigureTutorialActor to use Tutorial.SO default lineup for OnMap actors
+    /// </summary>
+    private void ProcessTutorialDefaultLineUp(GlobalSide side, string cityName)
+    {
+        //use the default lineUp
+        List<ActorArc> listOfDefaultArcs = GameManager.i.tutorialScript.GetListOfDefaultActorArcs();
+        if (listOfDefaultArcs != null)
+        {
+            int count = listOfDefaultArcs.Count;
+            if (count == maxNumOfOnMapActors)
+            {
+                for (int i = 0; i < maxNumOfOnMapActors; i++)
+                {
+                    Actor actor = GameManager.i.dataScript.GetActorFromRecruitPool(listOfDefaultArcs[i], 1, side);
+                    if (actor != null)
+                    { ProcessTutorialOnMapActor(actor, i, side, cityName); }
+                    else { Debug.LogErrorFormat("Invalid actor (Null) for actorArc \"{0}\", lvl 1, side {1}", listOfDefaultArcs[i], side); }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid listOfDefaultArcs (Null)"); }
+        //log
+        Debug.LogFormat("[Tut] ActorManager.cs -> ProcessTutorialDefaultLineUp: Default actor lineUp used as defined in Tutorial.SO");
+    }
+
+    /// <summary>
+    /// submethod for ConfigureTutorialActor to handle necessary admin for an OnMap actor
+    /// </summary>
+    private void ProcessTutorialOnMapActor(Actor actor, int slotID, GlobalSide side, string cityName)
+    {
+        actor.Status = ActorStatus.Active;
+        //add to data collections
+        GameManager.i.dataScript.AddCurrentActor(side, actor, slotID);
+        //Subordinates toggled off
+        if (GameManager.i.optionScript.isSubordinates == false)
+        {
+            //Set to Inactive
+            actor.Status = ActorStatus.Inactive;
+            actor.inactiveStatus = ActorInactive.Dormant;
+            actor.tooltipStatus = ActorTooltip.Dormant;
+            //history
+            actor.AddHistory(new HistoryActor() { text = "Dormant" });
+        }
+        else
+        {
+            //history
+            actor.AddHistory(new HistoryActor() { text = string.Format("{0}Reports for active duty at <b>{1}</b>{2}", colourNeutral, cityName, colourEnd), isHighlight = true });
+            //city stat
+            actor.numOfCities++;
+        }
+    }
+
+    /// <summary>
+    /// subMethod for ConfigureTutorialActor to handle necessary admin for a Reserve actor
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <param name="side"></param>
+    private void ProcessTutorialReserveActor(Actor actor, GlobalSide side)
+    {
+        if (GameManager.i.dataScript.AddActorToReserve(actor.actorID, side) == true)
+        {
+            int unhappyTimer = recruitedReserveTimer;
+            //traits that affect unhappy timer
+            string traitText = "";
+            if (actor.CheckTraitEffect(actorReserveTimerDoubled) == true)
+            {
+                unhappyTimer *= 2; traitText = string.Format(" ({0})", actor.GetTrait().tag);
+                TraitLogMessage(actor, "for their willingness to wait", "to DOUBLE Reserve Unhappy Timer");
+            }
+            else if (actor.CheckTraitEffect(actorReserveTimerHalved) == true)
+            {
+                unhappyTimer /= 2; unhappyTimer = Mathf.Max(1, unhappyTimer); traitText = string.Format(" ({0})", actor.GetTrait().tag);
+                TraitLogMessage(actor, "for their reluctance to wait", "to HALVE Reserve Unhappy Timer");
+            }
+            //change actor's status
+            actor.Status = ActorStatus.Reserve;
+            //remove actor from appropriate pool list
+            GameManager.i.dataScript.RemoveActorFromPool(actor.actorID, actor.level, side);
+            //initiliase unhappy timer
+            actor.unhappyTimer = unhappyTimer;
+            actor.isNewRecruit = true;
+            //stats
+            actor.numOfCities++;
+            //history
+            actor.AddHistory(new HistoryActor() { text = "Recruited (Reserves)" });
+            //log
+            Debug.LogFormat("[Tut] ActorManager.cs -> ProcessTutorialReserveActor: {0}, {1}, ID {2}, lvl {3} added to the Reserves)", actor.actorName, actor.arc.name, actor.actorID, actor.level);
+        }
+    }
+
+    #endregion
+
+
 
     #region InitialiseActors
     /// <summary>

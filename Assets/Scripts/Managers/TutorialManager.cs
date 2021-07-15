@@ -995,6 +995,10 @@ public class TutorialManager : MonoBehaviour
 
     #endregion
 
+    #region Utilities
+    //
+    // - - - Utilities
+    //
     #region GetActorPool
     /// <summary>
     /// ActorManager.cs -> LoadActorPool calls this to access relevant pool
@@ -1002,6 +1006,34 @@ public class TutorialManager : MonoBehaviour
     /// <returns></returns>
     public ActorPoolFinal GetActorPool()
     { return tutorial.pool; }
+    #endregion
+
+    #region GetActorConfiguration
+    /// <summary>
+    /// returns actorConfig.SO for current tutorial set. Null if none present (possible)
+    /// </summary>
+    /// <returns></returns>
+    public TutorialActorConfig GetActorConfiguration()
+    { return set.actorConfig; }
+
+    #region GetTutorialSide
+    /// <summary>
+    /// Tutorial side
+    /// </summary>
+    /// <returns></returns>
+    public GlobalSide GetTutorialSide()
+    { return tutorial.side; }
+    #endregion
+
+    #endregion
+
+    #region GetListOfDefaultActorArcs
+    /// <summary>
+    /// returns list of actor Arcs for the default onMap line up in the absence of a specific tutorialSet.actorConfig
+    /// </summary>
+    /// <returns></returns>
+    public List<ActorArc> GetListOfDefaultActorArcs()
+    { return tutorial.listOfDefaultArcs; }
     #endregion
 
     #region DebugDisplayTutorialData
@@ -1090,6 +1122,8 @@ public class TutorialManager : MonoBehaviour
     #endregion
 
 
+
+    #endregion
 
     //new methods above here
 }

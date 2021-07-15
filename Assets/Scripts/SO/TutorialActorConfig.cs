@@ -15,24 +15,13 @@ public class TutorialActorConfig : ScriptableObject
     [TextArea] public string descriptor;
 
     [Header("OnMap lineUp")]
-    [Tooltip("Leave as 'none' if there is no need for a specific outcome, otherwise choose an actorArc and a level and a match will be drawn from the tutorial actorPool at the start of the TutorialSet")]
-    public TutorialActorType map0;
-    [Tooltip("Leave as 'none' if there is no need for a specific outcome, otherwise choose an actorArc and a level and a match will be drawn from the tutorial actorPool at the start of the TutorialSet")]
-    public TutorialActorType map1;
-    [Tooltip("Leave as 'none' if there is no need for a specific outcome, otherwise choose an actorArc and a level and a match will be drawn from the tutorial actorPool at the start of the TutorialSet")]
-    public TutorialActorType map2;
-    [Tooltip("Leave as 'none' if there is no need for a specific outcome, otherwise choose an actorArc and a level and a match will be drawn from the tutorial actorPool at the start of the TutorialSet")]
-    public TutorialActorType map3;
+    [Tooltip("You need to specify FOUR actorArcs and levels which will constitute the OnMap lineUp. Optional. If left empty (or not exactly four) the default tutorial.SO specified lvl 1 lineUp will be used")]
+    public List<TutorialActorType> listOfOnMapArcs;
+
 
     [Header("Reserves")]
-    [Tooltip("Leave as 'none' if there is no need for a specific outcome, otherwise choose an actorArc and a level and a match will be drawn from the tutorial actorPool at the start of the TutorialSet")]
-    public TutorialActorType reserve0;
-    [Tooltip("Leave as 'none' if there is no need for a specific outcome, otherwise choose an actorArc and a level and a match will be drawn from the tutorial actorPool at the start of the TutorialSet")]
-    public TutorialActorType reserve1;
-    [Tooltip("Leave as 'none' if there is no need for a specific outcome, otherwise choose an actorArc and a level and a match will be drawn from the tutorial actorPool at the start of the TutorialSet")]
-    public TutorialActorType reserve2;
-    [Tooltip("Leave as 'none' if there is no need for a specific outcome, otherwise choose an actorArc and a level and a match will be drawn from the tutorial actorPool at the start of the TutorialSet")]
-    public TutorialActorType reserve3;
+    [Tooltip("You can specify UP TO four actorArcs and levels which will fill up the reserves. Optional. If none specified then the reserves will start empty")]
+    public List<TutorialActorType> listOfReserveArcs;
 
 
 }

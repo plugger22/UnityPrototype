@@ -1816,3 +1816,167 @@ City seed 38760 -> VirtualCity, Eurasia
 
 Dev seed 7927 -> Wednesday, 14 July 2021 5:23 PM
 City seed 18305 -> Londus, Eurasia
+
+Dev seed 54189 -> Thursday, 15 July 2021 10:04 AM
+City seed 13233 -> VirtualCity, Eurasia
+
+Dev seed 52963 -> Thursday, 15 July 2021 11:04 AM
+City seed 14039 -> VirtualCity, Eurasia
+
+Dev seed 19245 -> Thursday, 15 July 2021 11:08 AM
+City seed 47843 -> Londus, Eurasia
+
+Dev seed 25205 -> Thursday, 15 July 2021 11:08 AM
+City seed 37061 -> VirtualCity, Eurasia
+
+Dev seed 58126 -> Thursday, 15 July 2021 11:55 AM
+WARNING [Val] ValidateSO: MISMATCH on TutorialActorConfig, array 1, assets 2 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialActorConfig[]) (at Assets/Scripts/Managers/ValidationManager.cs:2260)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2231)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:936)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:431)
+	City seed 22622 -> VirtualCity, Eurasia
+ERROR Invalid actor (Null) for arrayOfActors[1]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	ActorManager:InitialiseActorContacts(GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:1583)
+	ActorManager:SubInitialiseAllLate() (at Assets/Scripts/Managers/ActorManager.cs:479)
+	ActorManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/ActorManager.cs:289)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:936)
+	GameManager:InitialiseTutorial() (at Assets/Scripts/GameManager.cs:1043)
+	ControlManager:ProcessTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:628)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:95)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:380)
+	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:331)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ERROR Invalid actor (Null) for arrayOfActors[2]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	ActorManager:InitialiseActorContacts(GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:1583)
+	ActorManager:SubInitialiseAllLate() (at Assets/Scripts/Managers/ActorManager.cs:479)
+	ActorManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/ActorManager.cs:289)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:936)
+	GameManager:InitialiseTutorial() (at Assets/Scripts/GameManager.cs:1043)
+	ControlManager:ProcessTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:628)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:95)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:380)
+	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:331)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ERROR Invalid actor (Null) for arrayOfActors[3]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	ActorManager:InitialiseActorContacts(GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:1583)
+	ActorManager:SubInitialiseAllLate() (at Assets/Scripts/Managers/ActorManager.cs:479)
+	ActorManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/ActorManager.cs:289)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:936)
+	GameManager:InitialiseTutorial() (at Assets/Scripts/GameManager.cs:1043)
+	ControlManager:ProcessTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:628)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:95)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:380)
+	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:331)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 36269 -> Thursday, 15 July 2021 11:57 AM
+WARNING [Val] ValidateSO: MISMATCH on TutorialActorConfig, array 1, assets 2 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialActorConfig[]) (at Assets/Scripts/Managers/ValidationManager.cs:2260)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2231)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:936)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:431)
+	City seed 42254 -> VirtualCity, Eurasia
+ERROR Invalid actor (Null) for arrayOfActors[1]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	ActorManager:InitialiseActorContacts(GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:1583)
+	ActorManager:SubInitialiseAllLate() (at Assets/Scripts/Managers/ActorManager.cs:479)
+	ActorManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/ActorManager.cs:289)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:936)
+	GameManager:InitialiseTutorial() (at Assets/Scripts/GameManager.cs:1043)
+	ControlManager:ProcessTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:628)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:95)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:380)
+	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:331)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ERROR Invalid actor (Null) for arrayOfActors[2]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	ActorManager:InitialiseActorContacts(GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:1583)
+	ActorManager:SubInitialiseAllLate() (at Assets/Scripts/Managers/ActorManager.cs:479)
+	ActorManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/ActorManager.cs:289)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:936)
+	GameManager:InitialiseTutorial() (at Assets/Scripts/GameManager.cs:1043)
+	ControlManager:ProcessTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:628)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:95)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:380)
+	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:331)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ERROR Invalid actor (Null) for arrayOfActors[3]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	ActorManager:InitialiseActorContacts(GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:1583)
+	ActorManager:SubInitialiseAllLate() (at Assets/Scripts/Managers/ActorManager.cs:479)
+	ActorManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/ActorManager.cs:289)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:936)
+	GameManager:InitialiseTutorial() (at Assets/Scripts/GameManager.cs:1043)
+	ControlManager:ProcessTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:628)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:95)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:380)
+	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:331)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 8360 -> Thursday, 15 July 2021 11:59 AM
+WARNING [Val] ValidateSO: MISMATCH on TutorialActorConfig, array 1, assets 2 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialActorConfig[]) (at Assets/Scripts/Managers/ValidationManager.cs:2260)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2231)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:936)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:431)
+	City seed 29827 -> VirtualCity, Eurasia
+
+Dev seed 34270 -> Thursday, 15 July 2021 12:33 PM
+WARNING [Val] ValidateSO: MISMATCH on TutorialActorConfig, array 1, assets 2 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialActorConfig[]) (at Assets/Scripts/Managers/ValidationManager.cs:2260)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2231)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:936)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:431)
+	WARNING Invalid config.listOfReserveArcs (is 2, max allowed 4) -> ignored, Reserves left empty for config "tutRESstartSet 4Test"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ActorManager:ConfigureTutorialActors() (at Assets/Scripts/Managers/ActorManager.cs:1103)
+	ActorManager:LoadActorPool() (at Assets/Scripts/Managers/ActorManager.cs:764)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:465)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:254)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:936)
+	GameManager:InitialiseTutorial() (at Assets/Scripts/GameManager.cs:1043)
+	ControlManager:ProcessTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:628)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:95)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:380)
+	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:331)
+	UnityEngine.EventSystems.EventSystem:Update()
+	City seed 44038 -> VirtualCity, Eurasia
+
+Dev seed 60350 -> Thursday, 15 July 2021 12:34 PM
+WARNING [Val] ValidateSO: MISMATCH on TutorialActorConfig, array 1, assets 2 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialActorConfig[]) (at Assets/Scripts/Managers/ValidationManager.cs:2260)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2231)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:936)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:431)
+	WARNING Invalid config.listOfReserveArcs (is 2, max allowed 4) -> ignored, Reserves left empty for config "tutRESstartSet 4Test"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ActorManager:ConfigureTutorialActors() (at Assets/Scripts/Managers/ActorManager.cs:1103)
+	ActorManager:LoadActorPool() (at Assets/Scripts/Managers/ActorManager.cs:764)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:465)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:254)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:936)
+	GameManager:InitialiseTutorial() (at Assets/Scripts/GameManager.cs:1043)
+	ControlManager:ProcessTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:628)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:95)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:380)
+	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:331)
+	UnityEngine.EventSystems.EventSystem:Update()
+	City seed 21528 -> VirtualCity, Eurasia
+
+Dev seed 19168 -> Thursday, 15 July 2021 12:35 PM
+WARNING [Val] ValidateSO: MISMATCH on TutorialActorConfig, array 1, assets 2 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialActorConfig[]) (at Assets/Scripts/Managers/ValidationManager.cs:2260)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2231)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:936)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:431)
+	City seed 53248 -> VirtualCity, Eurasia
