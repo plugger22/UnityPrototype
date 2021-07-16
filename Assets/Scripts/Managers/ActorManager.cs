@@ -725,8 +725,12 @@ public class ActorManager : MonoBehaviour
         switch (GameManager.i.inputScript.GameState)
         {
             case GameState.TutorialOptions:
-                //Tutorial
+                //
+                // - - - Tutorial
+                //
                 pool = GameManager.i.tutorialScript.GetActorPool();
+
+                Debug.LogFormat("[Tst] ActorManager.cs -> LoadActorPool: BEFORE number of HQ Workers {0}", GameManager.i.dataScript.CheckHqWorkers());
 
                 #region Create tutorial actors
                 //Difference from normal -> All actors created and placed into pools 1/2/3 + HQ. OnMap lineup ignored till done (sorted out on a set by set basis)
@@ -764,7 +768,9 @@ public class ActorManager : MonoBehaviour
                 ConfigureTutorialActors();
                 break;
             default:
-                //Campaign
+                //
+                // - - - Campaign
+                //
                 pool = GameManager.i.campaignScript.campaign.actorPool;
 
                 #region Create campaign actors
@@ -873,6 +879,7 @@ public class ActorManager : MonoBehaviour
                 break;
         }
 
+        Debug.LogFormat("[Tst] ActorManager.cs -> LoadActorPool: AFTER number of HQ Workers {0}", GameManager.i.dataScript.CheckHqWorkers());
     }
     #endregion
 
@@ -1236,17 +1243,10 @@ public class ActorManager : MonoBehaviour
         {
             int unhappyTimer = recruitedReserveTimer;
             //traits that affect unhappy timer
-            string traitText = "";
             if (actor.CheckTraitEffect(actorReserveTimerDoubled) == true)
-            {
-                unhappyTimer *= 2; traitText = string.Format(" ({0})", actor.GetTrait().tag);
-                TraitLogMessage(actor, "for their willingness to wait", "to DOUBLE Reserve Unhappy Timer");
-            }
+            { unhappyTimer *= 2; }
             else if (actor.CheckTraitEffect(actorReserveTimerHalved) == true)
-            {
-                unhappyTimer /= 2; unhappyTimer = Mathf.Max(1, unhappyTimer); traitText = string.Format(" ({0})", actor.GetTrait().tag);
-                TraitLogMessage(actor, "for their reluctance to wait", "to HALVE Reserve Unhappy Timer");
-            }
+            { unhappyTimer /= 2; unhappyTimer = Mathf.Max(1, unhappyTimer); }
             //change actor's status
             actor.Status = ActorStatus.Reserve;
             //remove actor from appropriate pool list

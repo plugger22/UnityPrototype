@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ca1bd43497c50743a69aefbf644e8a0, type: 3}
+  m_Name: tutRESstartSet 3Test
+  m_EditorClassIdentifier: 
+  side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
+  descriptor: Starting set of actors, set 3, test purpose
+  listOfOnMapArcs:
+  - {fileID: 11400000, guid: 8b411a0c6f243b9429b096c5a8e70159, type: 2}
+  - {fileID: 11400000, guid: 8957c137f9837f54792576c6cc9a3c9e, type: 2}
+  - {fileID: 11400000, guid: 2446f59e6de75824d8e4eb28f10ee086, type: 2}
+  - {fileID: 11400000, guid: c045978422cf7fd4ca80de7490ae6aea, type: 2}
+  listOfReserveArcs:
+  - {fileID: 11400000, guid: 5479442d4230e2c4ab80652c76806e21, type: 2}

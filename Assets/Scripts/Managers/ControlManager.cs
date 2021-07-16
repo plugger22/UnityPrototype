@@ -626,6 +626,9 @@ public class ControlManager : MonoBehaviour
         }
         //set up first level in campaign
         GameManager.i.InitialiseTutorial();
+
+        //debug
+        Debug.LogFormat("[Tst] ControlManager.cs -> ProcessTutorialOptions:  number of HQ Workers {0}", GameManager.i.dataScript.CheckHqWorkers());
     }
     #endregion
 

@@ -175,6 +175,8 @@ public class TutorialManager : MonoBehaviour
             tutorial = resistanceTutorial;
         }
         Debug.LogFormat("[Tut] TutorialManager.cs -> InitialiseTutorial: tutorial \"{0}\" loaded{1}", tutorial.name, "\n");
+        //set actor pool option (prevents randomly generated hq actors)
+        GameManager.i.optionScript.isActorPool = true;
         //set scenario
         if (tutorial.scenario != null)
         {

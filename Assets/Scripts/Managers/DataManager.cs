@@ -4944,7 +4944,7 @@ public class DataManager : MonoBehaviour
                     {
                         actor = actorCheck;
                         //remove actor from pool
-                        RemoveActorFromPool(actorCheck.actorID, 1, side);
+                        RemoveActorFromPool(actorCheck.actorID, level, side);
                         break;
                     }
                 }
