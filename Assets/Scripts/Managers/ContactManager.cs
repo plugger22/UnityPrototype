@@ -367,6 +367,8 @@ public class ContactManager : MonoBehaviour
                                 {
                                     //reactivate contact
                                     contact.Value.status = ContactStatus.Active;
+                                    Debug.LogFormat("[Cnt] ContactManager.cs -> SetActorContact: EXISTING {0}, {1}, actorID {2}, nodeID {3}, {4} {5}, ID {6}, E {7}, {8}", actor.actorName, actor.arc.name,
+                                        actor.actorID, nodeID, contact.Value.typeName, contact.Value.nameFirst, contact.Value.contactID, contact.Value.effectiveness, "\n");
                                 }
                                 else
                                 {
@@ -772,6 +774,48 @@ public class ContactManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid dictOfContactsByNodeResistance (Null)"); }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Debug method to display dictOfNodeContactsResistance
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayNodeContactsActors()
+    {
+        StringBuilder builder = new StringBuilder();
+        Dictionary<int, List<int>> dictOfNodeContacts = GameManager.i.dataScript.GetDictOfNodeContacts(true);
+        if (dictOfNodeContacts != null)
+        {
+            List<int> listOfActorID = new List<int>();
+            builder.AppendFormat("- Actors with Contacts{0}", "\n");
+            foreach (var record in dictOfNodeContacts)
+            {
+                if (record.Value != null)
+                {
+                    Node node = GameManager.i.dataScript.GetNode(record.Key);
+                    if (node != null)
+                    {
+                        builder.AppendLine();
+                        builder.AppendFormat(" Node {0}, {1}, id {2}{3}", node.nodeName, node.Arc.name, node.nodeID, "\n");
+                        listOfActorID = record.Value;
+                        if (listOfActorID != null)
+                        {
+                            for (int i = 0; i < listOfActorID.Count; i++)
+                            {
+                                Actor actor = GameManager.i.dataScript.GetActor(listOfActorID[i]);
+                                if (actor != null)
+                                { builder.AppendFormat("   {0}, {1}, ID {2}, Lvl {3}{4}", actor.actorName, actor.arc.name, actor.actorID, actor.level, "\n"); }
+                                else { Debug.LogErrorFormat("Invalid actor (Null) for actorId {0} from listOfActorID[{1}]", listOfActorID[i], i); }
+                            }
+                        }
+                        else { builder.AppendFormat(" Invalid listOfActorID (Null){0}", "\n"); }
+                    }
+                }
+                else { builder.AppendFormat(" Invalid record (Null){0}", "\n"); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfNodeContactsResistance (Null)"); }
         return builder.ToString();
     }
 

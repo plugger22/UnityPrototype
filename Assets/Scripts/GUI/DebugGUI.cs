@@ -395,8 +395,9 @@ public class DebugGUI : MonoBehaviour
                 {
                     case 0: debugDisplay = 33; contactToggle = 1; break;
                     case 1: debugDisplay = 46; contactToggle = 2; break;
-                    case 2: debugDisplay = 49; contactToggle = 3; break;
-                    case 3: debugDisplay = 0; contactToggle = 0; break;
+                    case 2: debugDisplay = 116; contactToggle = 3; break;
+                    case 3: debugDisplay = 49; contactToggle = 4; break;
+                    case 4: debugDisplay = 0; contactToggle = 0; break;
                 }
             }
 
@@ -2005,7 +2006,7 @@ public class DebugGUI : MonoBehaviour
                     case 46:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.i.contactScript.DebugDisplayContactsByNode();
-                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 800), analysis, customBackground);
                         break;
                     //Toggle Contact Active / Inactive
                     case 47:
@@ -2486,6 +2487,12 @@ public class DebugGUI : MonoBehaviour
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.i.tutorialScript.DebugDisplayTutorialData();
                         GUI.Box(new Rect(Screen.width - 410, 10, 400, 700), analysis, customBackground);
+                        break;
+                    //Actors with contacts at Nodes data
+                    case 116:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.i.contactScript.DebugDisplayNodeContactsActors();
+                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 800), analysis, customBackground);
                         break;
                 }
             }

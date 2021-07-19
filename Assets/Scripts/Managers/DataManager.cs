@@ -1576,7 +1576,7 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="actorID"></param>
     /// <returns></returns>
-    public bool RemoveContactsActor(int actorID)
+    public bool RemoveContactsActor(int actorID /*, bool isNewTutorialSet = false*/)
     {
         Debug.Assert(actorID > -1, "Invalid actorID (-1)");
         bool successFlag = true;
@@ -1598,13 +1598,26 @@ public class DataManager : MonoBehaviour
                     {
                         nodeID = listOfActorContactNodes[i];
 
-                        if (actor.Status == ActorStatus.Reserve)
+                        if (actor.Status == ActorStatus.Reserve || actor.Status == ActorStatus.RecruitPool)
                         {
                             //Reserves -> retain actor contacts (in case they return) but change status to inactive
                             actor.ChangeContactToInactive(nodeID);
                         }
                         else
                         {
+                            /*
+                             * if (isNewTutorialSet == true)
+                            {
+                                //Tutorial -> retain contacts -> inactive
+                                actor.ChangeContactToInactive(nodeID);
+                            }
+                            else
+                            {
+                                //NOT Tutorial -> Left map for other reasons, remove contacts permanently
+                                actor.RemoveContact(nodeID);
+                            }
+                            */
+
                             //Left map for other reasons, remove contacts permanently
                             actor.RemoveContact(nodeID);
                         }
@@ -1620,7 +1633,7 @@ public class DataManager : MonoBehaviour
                                 { Debug.LogWarningFormat("ActorID failed to be removed from list of NodeID {0}", nodeID); successFlag = false; }
                                 else
                                 {
-                                    /*Debug.LogFormat("[Tst] NodeManager.cs -> RemoveContacts: actorID {0} removed from nodeID {1} list{2}", actorID, nodeID, "\n");*/
+                                    /*Debug.LogFormat("[Tst] NodeManager.cs -> RemoveContacts: {0}, {1}, ID {2}, lvl {3} removed from nodeID {4} list{5}", actor.actorName, actor.arc.name, actorID, actor.level, nodeID, "\n");*/
                                     if (listOfActors.Count == 0)
                                     {
                                         //if no more actors with contacts at node, delete dictionary record
@@ -1659,6 +1672,11 @@ public class DataManager : MonoBehaviour
         if (successFlag == true)
         {
             GameManager.i.contactScript.UpdateNodeContacts();
+            /*
+            if (isNewTutorialSet == false)
+            { CreateNodeContacts(); }
+            else { dictOfContactsByNodeResistance.Clear(); }
+            */
             CreateNodeContacts();
         }
         return successFlag;
@@ -1966,6 +1984,16 @@ public class DataManager : MonoBehaviour
             CreateNodeContacts();
         }
         return isSuccess;
+    }
+
+    /// <summary>
+    /// called every time you change a set. Clears out two dictionaries that contain current OnMap data
+    /// </summary>
+    public void TutorialResetContacts()
+    {
+        Debug.LogFormat("[Cnt] DataManager.cs -> TutorialResetContacts: dictionaries RESET (current OnMap contact data)");
+        dictOfContactsByNodeResistance.Clear();
+        dictOfNodeContactsResistance.Clear();
     }
 
     /// <summary>

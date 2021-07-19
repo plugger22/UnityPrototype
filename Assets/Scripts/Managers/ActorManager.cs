@@ -1081,11 +1081,8 @@ public class ActorManager : MonoBehaviour
                     Actor actor = GameManager.i.dataScript.GetActor(listOfReserves[i]);
                     if (actor != null)
                     {
-                        //contacts -? Do BEFORE Removing actor
-                        GameManager.i.dataScript.RemoveContactsActor(actor.actorID);
                         //remove from reserves and place back into pool
                         ProcessTutorialRemoveFromReserves(actor, side);
-
                     }
                     else { Debug.LogErrorFormat("Invalid actor (Null) for listOfReserves[{0}]", i); }
                 }
@@ -1733,6 +1730,7 @@ public class ActorManager : MonoBehaviour
         else { Debug.LogError("Invalid arrayOfActors (Null)"); }
         if (GameManager.i.inputScript.GameState == GameState.TutorialOptions)
         {
+            /*
             //
             // - - - tutorial (add contacts to everybody (apart from HQ) to speed up admin when changing tutorial sets
             //
@@ -1796,6 +1794,7 @@ public class ActorManager : MonoBehaviour
                 }
             }
             else { Debug.LogError("Invalid listOfLevelThree (Null)"); }
+            */
         }
     }
     #endregion

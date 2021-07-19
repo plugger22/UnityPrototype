@@ -913,6 +913,8 @@ public class TutorialManager : MonoBehaviour
                 if (set != null)
                 {
                     InitialiseTutorialSet(set);
+                    //reset contact dictionaries
+                    GameManager.i.dataScript.TutorialResetContacts();
                     //configure actors
                     GameManager.i.actorScript.ConfigureTutorialActors(true);
                     //activate tutorialUI
@@ -956,6 +958,8 @@ public class TutorialManager : MonoBehaviour
                 if (set != null)
                 {
                     InitialiseTutorialSet(set);
+                    //reset contact dictionaries
+                    GameManager.i.dataScript.TutorialResetContacts();
                     //configure actors
                     GameManager.i.actorScript.ConfigureTutorialActors(true);
                     //activate tutorialUI
