@@ -730,7 +730,7 @@ public class ActorManager : MonoBehaviour
                 //
                 pool = GameManager.i.tutorialScript.GetActorPool();
 
-                Debug.LogFormat("[Tst] ActorManager.cs -> LoadActorPool: BEFORE number of HQ Workers {0}", GameManager.i.dataScript.CheckHqWorkers());
+                /*Debug.LogFormat("[Tst] ActorManager.cs -> LoadActorPool: BEFORE number of HQ Workers {0}", GameManager.i.dataScript.CheckHqWorkers());*/
 
                 #region Create tutorial actors
                 //Difference from normal -> All actors created and placed into pools 1/2/3 + HQ. OnMap lineup ignored till done (sorted out on a set by set basis)
@@ -879,7 +879,7 @@ public class ActorManager : MonoBehaviour
                 break;
         }
 
-        Debug.LogFormat("[Tst] ActorManager.cs -> LoadActorPool: AFTER number of HQ Workers {0}", GameManager.i.dataScript.CheckHqWorkers());
+        /*Debug.LogFormat("[Tst] ActorManager.cs -> LoadActorPool: AFTER number of HQ Workers {0}", GameManager.i.dataScript.CheckHqWorkers());*/
     }
     #endregion
 
@@ -1111,11 +1111,15 @@ public class ActorManager : MonoBehaviour
                             if (actor != null)
                             {
                                 ProcessTutorialOnMapActor(actor, i, side, cityName);
+                                
+                                /* NOTE: Already done in ProcessTutorialOnMapActor
                                 if (isChangeContacts == true)
                                 {
                                     //contacts (already predone at tutorial initialisation so should be quicker)
                                     GameManager.i.contactScript.SetActorContacts(actor);
                                 }
+                                */
+
                             }
                             else { Debug.LogErrorFormat("Invalid actor (Null) for actorArc \"{0}\", lvl {1}, side {2}", actorType.arc, actorType.level, side); }
                         }

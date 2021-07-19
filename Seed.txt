@@ -12283,3 +12283,209 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	TutorialWidgetRight:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Tutorial/TutorialWidgetRight.cs:22)
 	UnityEngine.EventSystems.EventSystem:Update()
 	
+Dev seed 45614 -> Monday, 19 July 2021 5:03 PM
+City seed 14768 -> VirtualCity, Eurasia
+
+Dev seed 38982 -> Monday, 19 July 2021 7:58 PM
+City seed 12397 -> VirtualCity, Eurasia
+WARNING Node not found in dictOfContacts, nodeID 8
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:RemoveContactsActor(Int32) (at Assets/Scripts/Managers/DataManager.cs:1646)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus, Boolean) (at Assets/Scripts/Managers/DataManager.cs:4475)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus, Boolean) (at Assets/Scripts/Managers/DataManager.cs:4441)
+	ActorManager:ConfigureTutorialActors(Boolean) (at Assets/Scripts/Managers/ActorManager.cs:1061)
+	TutorialManager:SetPreviousSet() (at Assets/Scripts/Managers/TutorialManager.cs:919)
+	TutorialManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TutorialManager.cs:150)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:380)
+	TutorialWidgetLeft:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Tutorial/TutorialWidgetLeft.cs:24)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Node not found in dictOfContacts, nodeID 11
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:RemoveContactsActor(Int32) (at Assets/Scripts/Managers/DataManager.cs:1646)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus, Boolean) (at Assets/Scripts/Managers/DataManager.cs:4475)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus, Boolean) (at Assets/Scripts/Managers/DataManager.cs:4441)
+	ActorManager:ConfigureTutorialActors(Boolean) (at Assets/Scripts/Managers/ActorManager.cs:1061)
+	TutorialManager:SetPreviousSet() (at Assets/Scripts/Managers/TutorialManager.cs:919)
+	TutorialManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TutorialManager.cs:150)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:380)
+	TutorialWidgetLeft:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Tutorial/TutorialWidgetLeft.cs:24)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Node not found in dictOfContacts, nodeID 7
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:RemoveContactsActor(Int32) (at Assets/Scripts/Managers/DataManager.cs:1646)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus, Boolean) (at Assets/Scripts/Managers/DataManager.cs:4475)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus, Boolean) (at Assets/Scripts/Managers/DataManager.cs:4441)
+	ActorManager:ConfigureTutorialActors(Boolean) (at Assets/Scripts/Managers/ActorManager.cs:1061)
+	TutorialManager:SetPreviousSet() (at Assets/Scripts/Managers/TutorialManager.cs:919)
+	TutorialManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TutorialManager.cs:150)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:380)
+	TutorialWidgetLeft:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Tutorial/TutorialWidgetLeft.cs:24)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Node not found in dictOfContacts, nodeID 16
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:RemoveContactsActor(Int32) (at Assets/Scripts/Managers/DataManager.cs:1646)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus, Boolean) (at Assets/Scripts/Managers/DataManager.cs:4475)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus, Boolean) (at Assets/Scripts/Managers/DataManager.cs:4441)
+	ActorManager:ConfigureTutorialActors(Boolean) (at Assets/Scripts/Managers/ActorManager.cs:1061)
+	TutorialManager:SetPreviousSet() (at Assets/Scripts/Managers/TutorialManager.cs:919)
+	TutorialManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TutorialManager.cs:150)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:380)
+	TutorialWidgetLeft:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Tutorial/TutorialWidgetLeft.cs:24)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Node not found in dictOfContacts, nodeID 0
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:RemoveContactsActor(Int32) (at Assets/Scripts/Managers/DataManager.cs:1646)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus, Boolean) (at Assets/Scripts/Managers/DataManager.cs:4475)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus, Boolean) (at Assets/Scripts/Managers/DataManager.cs:4441)
+	ActorManager:ConfigureTutorialActors(Boolean) (at Assets/Scripts/Managers/ActorManager.cs:1061)
+	TutorialManager:SetPreviousSet() (at Assets/Scripts/Managers/TutorialManager.cs:919)
+	TutorialManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TutorialManager.cs:150)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:380)
+	TutorialWidgetLeft:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Tutorial/TutorialWidgetLeft.cs:24)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Node not found in dictOfContacts, nodeID 12
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:RemoveContactsActor(Int32) (at Assets/Scripts/Managers/DataManager.cs:1646)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus, Boolean) (at Assets/Scripts/Managers/DataManager.cs:4475)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus, Boolean) (at Assets/Scripts/Managers/DataManager.cs:4441)
+	ActorManager:ConfigureTutorialActors(Boolean) (at Assets/Scripts/Managers/ActorManager.cs:1061)
+	TutorialManager:SetPreviousSet() (at Assets/Scripts/Managers/TutorialManager.cs:919)
+	TutorialManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TutorialManager.cs:150)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:380)
+	TutorialWidgetLeft:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Tutorial/TutorialWidgetLeft.cs:24)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Node not found in dictOfContacts, nodeID 0
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:RemoveContactsActor(Int32) (at Assets/Scripts/Managers/DataManager.cs:1646)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus, Boolean) (at Assets/Scripts/Managers/DataManager.cs:4475)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus, Boolean) (at Assets/Scripts/Managers/DataManager.cs:4441)
+	ActorManager:ConfigureTutorialActors(Boolean) (at Assets/Scripts/Managers/ActorManager.cs:1061)
+	TutorialManager:SetPreviousSet() (at Assets/Scripts/Managers/TutorialManager.cs:919)
+	TutorialManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TutorialManager.cs:150)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:380)
+	TutorialWidgetLeft:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Tutorial/TutorialWidgetLeft.cs:24)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Node not found in dictOfContacts, nodeID 11
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:RemoveContactsActor(Int32) (at Assets/Scripts/Managers/DataManager.cs:1646)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus, Boolean) (at Assets/Scripts/Managers/DataManager.cs:4475)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus, Boolean) (at Assets/Scripts/Managers/DataManager.cs:4441)
+	ActorManager:ConfigureTutorialActors(Boolean) (at Assets/Scripts/Managers/ActorManager.cs:1061)
+	TutorialManager:SetPreviousSet() (at Assets/Scripts/Managers/TutorialManager.cs:919)
+	TutorialManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TutorialManager.cs:150)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:380)
+	TutorialWidgetLeft:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Tutorial/TutorialWidgetLeft.cs:24)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 32700 -> Monday, 19 July 2021 8:09 PM
+City seed 61613 -> VirtualCity, Eurasia
+WARNING Node not found in dictOfContacts, nodeID 5
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:RemoveContactsActor(Int32) (at Assets/Scripts/Managers/DataManager.cs:1646)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus, Boolean) (at Assets/Scripts/Managers/DataManager.cs:4475)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus, Boolean) (at Assets/Scripts/Managers/DataManager.cs:4441)
+	ActorManager:ConfigureTutorialActors(Boolean) (at Assets/Scripts/Managers/ActorManager.cs:1061)
+	TutorialManager:SetPreviousSet() (at Assets/Scripts/Managers/TutorialManager.cs:919)
+	TutorialManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TutorialManager.cs:150)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:380)
+	TutorialWidgetLeft:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Tutorial/TutorialWidgetLeft.cs:24)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Node not found in dictOfContacts, nodeID 15
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:RemoveContactsActor(Int32) (at Assets/Scripts/Managers/DataManager.cs:1646)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus, Boolean) (at Assets/Scripts/Managers/DataManager.cs:4475)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus, Boolean) (at Assets/Scripts/Managers/DataManager.cs:4441)
+	ActorManager:ConfigureTutorialActors(Boolean) (at Assets/Scripts/Managers/ActorManager.cs:1061)
+	TutorialManager:SetPreviousSet() (at Assets/Scripts/Managers/TutorialManager.cs:919)
+	TutorialManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TutorialManager.cs:150)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:380)
+	TutorialWidgetLeft:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Tutorial/TutorialWidgetLeft.cs:24)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Node not found in dictOfContacts, nodeID 18
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:RemoveContactsActor(Int32) (at Assets/Scripts/Managers/DataManager.cs:1646)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus, Boolean) (at Assets/Scripts/Managers/DataManager.cs:4475)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus, Boolean) (at Assets/Scripts/Managers/DataManager.cs:4441)
+	ActorManager:ConfigureTutorialActors(Boolean) (at Assets/Scripts/Managers/ActorManager.cs:1061)
+	TutorialManager:SetPreviousSet() (at Assets/Scripts/Managers/TutorialManager.cs:919)
+	TutorialManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TutorialManager.cs:150)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:380)
+	TutorialWidgetLeft:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Tutorial/TutorialWidgetLeft.cs:24)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Node not found in dictOfContacts, nodeID 0
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:RemoveContactsActor(Int32) (at Assets/Scripts/Managers/DataManager.cs:1646)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus, Boolean) (at Assets/Scripts/Managers/DataManager.cs:4475)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus, Boolean) (at Assets/Scripts/Managers/DataManager.cs:4441)
+	ActorManager:ConfigureTutorialActors(Boolean) (at Assets/Scripts/Managers/ActorManager.cs:1061)
+	TutorialManager:SetPreviousSet() (at Assets/Scripts/Managers/TutorialManager.cs:919)
+	TutorialManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TutorialManager.cs:150)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:380)
+	TutorialWidgetLeft:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Tutorial/TutorialWidgetLeft.cs:24)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Node not found in dictOfContacts, nodeID 16
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:RemoveContactsActor(Int32) (at Assets/Scripts/Managers/DataManager.cs:1646)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus, Boolean) (at Assets/Scripts/Managers/DataManager.cs:4475)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus, Boolean) (at Assets/Scripts/Managers/DataManager.cs:4441)
+	ActorManager:ConfigureTutorialActors(Boolean) (at Assets/Scripts/Managers/ActorManager.cs:1061)
+	TutorialManager:SetPreviousSet() (at Assets/Scripts/Managers/TutorialManager.cs:919)
+	TutorialManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TutorialManager.cs:150)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:380)
+	TutorialWidgetLeft:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Tutorial/TutorialWidgetLeft.cs:24)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Node not found in dictOfContacts, nodeID 9
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:RemoveContactsActor(Int32) (at Assets/Scripts/Managers/DataManager.cs:1646)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus, Boolean) (at Assets/Scripts/Managers/DataManager.cs:4475)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus, Boolean) (at Assets/Scripts/Managers/DataManager.cs:4441)
+	ActorManager:ConfigureTutorialActors(Boolean) (at Assets/Scripts/Managers/ActorManager.cs:1061)
+	TutorialManager:SetPreviousSet() (at Assets/Scripts/Managers/TutorialManager.cs:919)
+	TutorialManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TutorialManager.cs:150)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:380)
+	TutorialWidgetLeft:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Tutorial/TutorialWidgetLeft.cs:24)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Node not found in dictOfContacts, nodeID 6
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:RemoveContactsActor(Int32) (at Assets/Scripts/Managers/DataManager.cs:1646)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus, Boolean) (at Assets/Scripts/Managers/DataManager.cs:4475)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus, Boolean) (at Assets/Scripts/Managers/DataManager.cs:4441)
+	ActorManager:ConfigureTutorialActors(Boolean) (at Assets/Scripts/Managers/ActorManager.cs:1061)
+	TutorialManager:SetPreviousSet() (at Assets/Scripts/Managers/TutorialManager.cs:919)
+	TutorialManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TutorialManager.cs:150)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:380)
+	TutorialWidgetLeft:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Tutorial/TutorialWidgetLeft.cs:24)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Node not found in dictOfContacts, nodeID 2
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:RemoveContactsActor(Int32) (at Assets/Scripts/Managers/DataManager.cs:1646)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus, Boolean) (at Assets/Scripts/Managers/DataManager.cs:4475)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus, Boolean) (at Assets/Scripts/Managers/DataManager.cs:4441)
+	ActorManager:ConfigureTutorialActors(Boolean) (at Assets/Scripts/Managers/ActorManager.cs:1061)
+	TutorialManager:SetPreviousSet() (at Assets/Scripts/Managers/TutorialManager.cs:919)
+	TutorialManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TutorialManager.cs:150)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:380)
+	TutorialWidgetLeft:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Tutorial/TutorialWidgetLeft.cs:24)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 31722 -> Monday, 19 July 2021 8:12 PM
+City seed 60197 -> VirtualCity, Eurasia
+
+Dev seed 65270 -> Monday, 19 July 2021 8:12 PM
+City seed 4488 -> VirtualCity, Eurasia
+
+Dev seed 11358 -> Monday, 19 July 2021 8:17 PM
+City seed 7259 -> VirtualCity, Eurasia
+
+Dev seed 49160 -> Monday, 19 July 2021 8:19 PM
+City seed 4237 -> Londus, Eurasia
+
+Dev seed 61841 -> Monday, 19 July 2021 8:24 PM
+City seed 58722 -> VirtualCity, Eurasia
+City seed 52122 -> Londus, Eurasia
+City seed 32273 -> VirtualCity, Eurasia
+ASSERT MissingReferenceException: The object of type 'GameObject' has been destroyed but you are still trying to access it.
+Your script should either check if it is null or you should not destroy the object.
+Node+<FlashSignage>c__Iterator1.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:1999)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	

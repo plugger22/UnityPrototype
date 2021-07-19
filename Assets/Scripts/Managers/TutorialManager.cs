@@ -905,7 +905,7 @@ public class TutorialManager : MonoBehaviour
         if (GameManager.i.inputScript.ModalState == ModalState.Normal)
         {
 
-            Debug.LogFormat("[Tst] TutorialManager.cs -> SetPreviousSet: Go BACK one TutorialSet{0}", "\n");
+            Debug.LogFormat("[Tut] TutorialManager.cs -> SetPreviousSet: Go BACK one TutorialSet{0}", "\n");
             if (index > 0)
             {
                 index--;
@@ -950,7 +950,7 @@ public class TutorialManager : MonoBehaviour
         Input.ResetInputAxes();
         if (GameManager.i.inputScript.ModalState == ModalState.Normal)
         {
-            Debug.LogFormat("[Tst] TutorialManager.cs -> SetNextSet: Go FORWARD one TutorialSet{0}", "\n");
+            Debug.LogFormat("[Tut] TutorialManager.cs -> SetNextSet: Go FORWARD one TutorialSet{0}", "\n");
             index++;
             if (index < tutorial.listOfSets.Count)
             {

@@ -4471,7 +4471,7 @@ public class DataManager : MonoBehaviour
         actor.Status = status;
         actor.slotID = -1;   //added Feb 5 '20
         //update node contacts
-        if (actor.CheckNumOfContacts() > 0)
+        if (actor.CheckNumOfContacts() > 0 && GameManager.i.inputScript.GameState != GameState.Tutorial)
         { RemoveContactsActor(actor.actorID); }
         //handle special cases
         switch (status)
