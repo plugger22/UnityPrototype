@@ -191,7 +191,7 @@ public class ControlManager : MonoBehaviour
         GameManager.i.inputScript.GameState = GameState.NewInitialisation;
         //create new game -> DEBUG: resets campaign so assumes brand new campaign
         GameManager.i.campaignScript.Reset();
-        //set up first level in campaign
+        //set up a level in campaign
         GameManager.i.InitialiseNewSession();
         //campaign history
         GameManager.i.dataScript.SetCampaignHistoryStart();

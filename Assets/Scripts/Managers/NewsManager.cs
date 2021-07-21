@@ -247,6 +247,7 @@ public class NewsManager : MonoBehaviour
     public List<string> GetListOfCurrentAdverts()
     { return listOfCurrentAdverts; }
 
+    #region CheckNewsText
     /// <summary>
     /// Replaces text tags on NON-TOPIC News texts. Different to CheckTopicText but uses identical tags. Pass parameters in via a data package. No colour formatting involved. Returns null if a problem
     /// </summary>
@@ -394,6 +395,7 @@ public class NewsManager : MonoBehaviour
         else { Debug.LogError("Invalid data (Null)"); }
         return checkedText;
     }
+    #endregion
 
     //
     // - - - Debug - - -

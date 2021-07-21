@@ -474,16 +474,21 @@ public class MainInfoUI : MonoBehaviour
         /*startFlareLocalPosition = flare_SW.transform.localPosition;*/
         //Ticker
         tickerRectTransform = tickerText.GetComponent<RectTransform>();
-        cloneTickerText = Instantiate(tickerText) as TextMeshProUGUI;
-        cloneRectTransform = cloneTickerText.GetComponent<RectTransform>();
+        if (cloneTickerText == null)
+        {
+            //avoid repeat instantiate if already initialised (user may start a new game within a session)
+            cloneTickerText = Instantiate(tickerText) as TextMeshProUGUI;
+            cloneRectTransform = cloneTickerText.GetComponent<RectTransform>();
+            cloneRectTransform.position = new Vector3(tickerRectTransform.position.x, tickerRectTransform.position.y, tickerRectTransform.position.z);
+            cloneRectTransform.SetParent(tickerRectTransform);
+            cloneRectTransform.anchorMin = new Vector2(1, 0.5f);
+            cloneRectTransform.anchorMax = new Vector2(1, 0.5f);
+            cloneRectTransform.localScale = new Vector3(1, 1, 1);
+        }
         Debug.Assert(tickerRectTransform != null, "Invalid tickerRectTransform (Null)");
         Debug.Assert(cloneTickerText != null, "Invalid cloneTextTickerObject (Null)");
         Debug.Assert(cloneRectTransform != null, "Invalid cloneRectTransform (Null)");
-        cloneRectTransform.SetParent(tickerRectTransform);
-        cloneRectTransform.anchorMin = new Vector2(1, 0.5f);
-        cloneRectTransform.anchorMax = new Vector2(1, 0.5f);
-        cloneRectTransform.localScale = new Vector3(1, 1, 1);
-        cloneRectTransform.position = new Vector3(tickerRectTransform.position.x, tickerRectTransform.position.y, tickerRectTransform.position.z);
+        //ticker active
         tickerObject.SetActive(true);
         cloneTickerText.gameObject.SetActive(true);
         //initiliase Active tabs
@@ -527,29 +532,9 @@ public class MainInfoUI : MonoBehaviour
                             break;
                         case "icon": arrayItemIcon[index] = child; break;
                         case "border": arrayItemBorder[index] = child; break;
-                        case "checkmark": arrayCheckMark[index] = child;  break;
+                        case "checkmark": arrayCheckMark[index] = child; break;
                         default: Debug.LogWarningFormat("Unrecognised child.name \"{0}\"", child.name); break;
                     }
-                    /*
-                    if (child.name.Equals("background", StringComparison.Ordinal) == true)
-                    {
-                        arrayItemBackground[index] = child;
-                        //attached interaction script
-                        ItemInteractionUI itemScript = child.GetComponent<ItemInteractionUI>();
-                        if (itemScript != null)
-                        {
-                            itemScript.SetItemIndex(index, numOfItemsTotal);
-                            itemScript.SetUIType(MajorUI.MainInfoApp);
-                        }
-                        else { Debug.LogWarningFormat("Invalid ItemInteractionUI component (Null) for mainItemArray[{0}]", index); }
-                    }
-                    else if (child.name.Equals("icon", StringComparison.Ordinal) == true)
-                    { arrayItemIcon[index] = child; }
-                    else if (child.name.Equals("border", StringComparison.Ordinal) == true)
-                    { arrayItemBorder[index] = child; }
-                    else if (child.name.Equals("checkmark", StringComparison.Ordinal) == true)
-                    { arrayCheckMark[index] = child; }
-                    */
                 }
                 //child components -> Text
                 var childrenText = itemObject.GetComponentsInChildren<TextMeshProUGUI>();
@@ -619,7 +604,7 @@ public class MainInfoUI : MonoBehaviour
 
     #endregion
 
-
+    #region InitialiseItems
     private void InitialiseItems()
     {
         for (int index = 0; index < numOfItemsTotal; index++)
@@ -634,7 +619,9 @@ public class MainInfoUI : MonoBehaviour
             arrayCheckMark[index].gameObject.SetActive(false);
         }
     }
+    #endregion
 
+    #region InitialiseCanvases
     /// <summary>
     /// set subsidiary canvases to active at start as they may have been accidentally left off
     /// </summary>
@@ -644,7 +631,9 @@ public class MainInfoUI : MonoBehaviour
         canvasFlasher.gameObject.SetActive(true);
         canvasScroll.gameObject.SetActive(true);
     }
+    #endregion
 
+    #region InitialiseTooltips
     private void InitialiseTooltips()
     {
         //guiManager.cs provides a standard ShowMe tooltip implementation
@@ -660,7 +649,9 @@ public class MainInfoUI : MonoBehaviour
         { infoHelpTop.SetHelpTooltip(listOfHelp, 400, 50); }
         else { Debug.LogWarning("Invalid listOfHelp (Null)"); }
     }
+    #endregion
 
+    #region OnEvent
     /// <summary>
     /// Event handler
     /// </summary>
@@ -735,7 +726,9 @@ public class MainInfoUI : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
+    #region SetColours
     /// <summary>
     /// Set colour palette for tooltip
     /// </summary>
@@ -759,8 +752,9 @@ public class MainInfoUI : MonoBehaviour
         colourCancel = GameManager.i.colourScript.GetColour(ColourType.moccasinText);
         colourEnd = GameManager.i.colourScript.GetEndTag();
     }
+    #endregion
 
-
+    #region SetMainInfo
     /// <summary>
     /// Open Main Info display at start of turn
     /// </summary>
@@ -808,7 +802,7 @@ public class MainInfoUI : MonoBehaviour
                     if (data.listOfAdverts.Count > i)
                     {
                         if (builder.Length > 0) { builder.AppendLine(); builder.AppendLine(); }
-                        builder.Append(string.Format("<font=\"Bangers SDF\" material=\"Bangers SDF - Outline\"><size=115%><cspace=1em>{0}{1}{2}</cspace></size></font>", 
+                        builder.Append(string.Format("<font=\"Bangers SDF\" material=\"Bangers SDF - Outline\"><size=115%><cspace=1em>{0}{1}{2}</cspace></size></font>",
                             colourNeutral, data.listOfAdverts[i], colourEnd));
                     }
                     else
@@ -836,8 +830,9 @@ public class MainInfoUI : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid MainInfoData package (Null)"); }
     }
+    #endregion
 
-
+    #region UpdateData
     /// <summary>
     /// Updates cached data in dictionary
     /// NOTE: data checked for null by the calling procedure
@@ -851,7 +846,9 @@ public class MainInfoUI : MonoBehaviour
             arrayOfItemData[i].AddRange(data.arrayOfItemData[i]);
         }
     }
+    #endregion
 
+    #region tabFlashers...
     /// <summary>
     /// switch flashers on/off depending on contents of respective tabs (Request & Meeting, ON for both if items present)
     /// </summary>
@@ -920,7 +917,9 @@ public class MainInfoUI : MonoBehaviour
             }
         }
     }
+    #endregion
 
+    #region Flares... archived
     /*/// <summary>
     /// Start flares moving inwards towards app in a continuous loop while ever app is open
     /// </summary>
@@ -976,7 +975,9 @@ public class MainInfoUI : MonoBehaviour
             yield return null;
         }
     }*/
+    #endregion
 
+    #region DisplayItemPage
     /// <summary>
     /// sub Method to display a particular page drawing from cached data in dictOfItemData
     /// </summary>
@@ -1060,7 +1061,9 @@ public class MainInfoUI : MonoBehaviour
             scrollRect.verticalScrollbar = scrollBar;
         }
     }
+    #endregion
 
+    #region SetPageHeader
     /// <summary>
     /// handles formatting of page header string in a constant format
     /// </summary>
@@ -1077,7 +1080,9 @@ public class MainInfoUI : MonoBehaviour
         { text = string.Format("{0}Day {1}, 2033, there are 0 items{2}", colourDay, viewTurnNumber, colourEnd); }
         page_header.text = text;
     }
+    #endregion
 
+    #region CloseMainInfo
     /// <summary>
     /// close Main Info display
     /// </summary>
@@ -1104,8 +1109,10 @@ public class MainInfoUI : MonoBehaviour
         //start background animations
         GameManager.i.animateScript.StartAnimations();
     }
+    #endregion
 
 
+    #region OpenTab
     /// <summary>
     /// Open the designated tab and close whatever is open
     /// </summary>
@@ -1140,7 +1147,9 @@ public class MainInfoUI : MonoBehaviour
         highlightIndex = -1;
         currentTabIndex = tabIndex;
     }
+    #endregion
 
+    #region ShowItemDetails
     /// <summary>
     /// ItemData details
     /// </summary>
@@ -1228,7 +1237,9 @@ public class MainInfoUI : MonoBehaviour
             currentItemConnID = -1;
         }
     }
+    #endregion
 
+    #region GetItemHelpList
     /// <summary>
     /// Assembles a list of HelpData for the item to pass onto the help components. Returns empty if none.
     /// </summary>
@@ -1254,6 +1265,7 @@ public class MainInfoUI : MonoBehaviour
         }
         return GameManager.i.helpScript.GetHelpData(tag0, tag1, tag2, tag3);
     }
+    #endregion
 
 
     /*/// <summary>
@@ -1264,6 +1276,7 @@ public class MainInfoUI : MonoBehaviour
         //TO DO
     }*/
 
+    #region GetTabHelp
     /// <summary>
     /// provides pre-formatted help text for RHS detail panel when tabs are first opened
     /// </summary>
@@ -1329,7 +1342,9 @@ public class MainInfoUI : MonoBehaviour
         textBottom = builder.ToString();
         return new Tuple<string, string>(textTop, textBottom);
     }
+    #endregion
 
+    #region OpenMainInfoBetweenTurns
     /// <summary>
     /// Open MainInfoApp between turns 
     /// </summary>
@@ -1355,7 +1370,9 @@ public class MainInfoUI : MonoBehaviour
             }
         }
     }
+    #endregion
 
+    #region ExecuteButtonHome
     /// <summary>
     /// press Home button -> jump to current turn
     /// </summary>
@@ -1381,7 +1398,9 @@ public class MainInfoUI : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid data (Null)"); }
     }
+    #endregion
 
+    #region ExecuteButtonEnd
     /// <summary>
     /// press End shortcut key -> jump to first turn
     /// </summary>
@@ -1407,7 +1426,9 @@ public class MainInfoUI : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid data (Null)"); }
     }
+    #endregion
 
+    #region ExecuteButtonBack
     /// <summary>
     /// press Back button -> go back one turn (until start)
     /// </summary>
@@ -1434,7 +1455,9 @@ public class MainInfoUI : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid data (Null)"); }
     }
+    #endregion
 
+    #region ExecuteButtonForward
     /// <summary>
     /// press Forward button -> go forward one turn (until current)
     /// </summary>
@@ -1461,7 +1484,9 @@ public class MainInfoUI : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid data (Null)"); }
     }
+    #endregion
 
+    #region ExecuteDownArrow
     /// <summary>
     /// Down arrow (down next item on page)
     /// </summary>
@@ -1487,7 +1512,9 @@ public class MainInfoUI : MonoBehaviour
             ShowItemDetails(0);
         }
     }
+    #endregion
 
+    #region ExecuteUpArrow
     /// <summary>
     /// Up arrow (up next item on page)
     /// </summary>
@@ -1513,7 +1540,9 @@ public class MainInfoUI : MonoBehaviour
             }
         }
     }
+    #endregion
 
+    #region ExecuteLeftArrow
     /// <summary>
     /// Left arrow (left to next tab)
     /// </summary>
@@ -1529,7 +1558,9 @@ public class MainInfoUI : MonoBehaviour
             }
         }
     }
+    #endregion
 
+    #region ExecuteRightArrow
     /// <summary>
     /// Right arrow (right to next tab)
     /// </summary>
@@ -1544,7 +1575,9 @@ public class MainInfoUI : MonoBehaviour
             }
         }
     }
+    #endregion
 
+    #region ExecuteShowMe
     /// <summary>
     /// 'Show Me' a node or connection in an item, switch off infoApp and highlight onmap
     /// </summary>
@@ -1563,7 +1596,9 @@ public class MainInfoUI : MonoBehaviour
             GameManager.i.guiScript.SetShowMe(data);
         }
     }
+    #endregion
 
+    #region ExecuteRestore
     /// <summary>
     /// Restore InfoApp after a 'ShowMe'
     /// </summary>
@@ -1579,7 +1614,9 @@ public class MainInfoUI : MonoBehaviour
         //turn infoApp back on
         mainInfoCanvas.gameObject.SetActive(true);
     }
+    #endregion
 
+    #region ExecuteTickerFaster
     /// <summary>
     /// Increase speed of MainInfo Ticker
     /// </summary>
@@ -1590,7 +1627,9 @@ public class MainInfoUI : MonoBehaviour
         //feedback to player
         GameManager.i.alertScript.SetAlertUI(string.Format("{0}<b>News Ticker Speed increased to {1}</b>{2}", colourNeutral, tickerSpeed, colourEnd));
     }
+    #endregion
 
+    #region ExecuteTickerSlower
     /// <summary>
     /// Decrease speed of MainInfo Ticker
     /// </summary>
@@ -1601,7 +1640,9 @@ public class MainInfoUI : MonoBehaviour
         //feedback to player
         GameManager.i.alertScript.SetAlertUI(string.Format("</b>News Ticker Speed decreased to {0}</b>", tickerSpeed));
     }
+    #endregion
 
+    #region UpdateNavigationStatus
     /// <summary>
     /// subMethod to update status of three navigation buttons. Contains all necessary logic to auto set buttons
     /// </summary>
@@ -1623,8 +1664,9 @@ public class MainInfoUI : MonoBehaviour
         { buttonForward.gameObject.SetActive(true); }
         else { buttonForward.gameObject.SetActive(false); }
     }
+    #endregion
 
-
+    #region ChangeSides
     /// <summary>
     /// Set background image and cancel button for the appropriate side
     /// </summary>
@@ -1642,7 +1684,9 @@ public class MainInfoUI : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
+    #region SetTicker
     /// <summary>
     /// start ticker tape each turn provided there is news to display
     /// </summary>
@@ -1661,8 +1705,9 @@ public class MainInfoUI : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid ticker text (Null or Empty)"); }
     }
+    #endregion
 
-
+    #region TickerTape
     /// <summary>
     /// Run ticker tape across the top of the info App
     /// </summary>
@@ -1681,6 +1726,7 @@ public class MainInfoUI : MonoBehaviour
             yield return null;
         }
     }
+    #endregion
 
 
 

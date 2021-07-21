@@ -12489,3 +12489,82 @@ Your script should either check if it is null or you should not destroy the obje
 Node+<FlashSignage>c__Iterator1.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:1999)
 	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
 	
+Dev seed 41816 -> Tuesday, 20 July 2021 10:32 AM
+City seed 2571 -> Londus, Eurasia
+City seed 4899 -> VirtualCity, Eurasia
+City seed 31665 -> Londus, Eurasia
+
+Dev seed 48627 -> Tuesday, 20 July 2021 10:40 AM
+City seed 18167 -> Londus, Eurasia
+City seed 47382 -> VirtualCity, Eurasia
+City seed 9838 -> Londus, Eurasia
+WARNING Node City Centre, GOVERNMENT, id 12 NOT assigned target City Target 4 (Node already has target)
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TargetManager:SetTargetDetails(Target, Node, TargetProfile) (at Assets/Scripts/Managers/TargetManager.cs:876)
+	TargetManager:AssignCityTargets(Mission) (at Assets/Scripts/Managers/TargetManager.cs:507)
+	TargetManager:AssignTargets(Mission) (at Assets/Scripts/Managers/TargetManager.cs:439)
+	MissionManager:SubInitialiseAll() (at Assets/Scripts/Managers/MissionManager.cs:82)
+	MissionManager:Initialise() (at Assets/Scripts/Managers/MissionManager.cs:45)
+	CampaignManager:SubInitialiseAllLate() (at Assets/Scripts/Managers/CampaignManager.cs:149)
+	CampaignManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/CampaignManager.cs:78)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:936)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:995)
+	ControlManager:ProcessCloseNewGameOptions() (at Assets/Scripts/Managers/ControlManager.cs:195)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:86)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:380)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:340)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:474)
+	
+Dev seed 59562 -> Tuesday, 20 July 2021 11:06 AM
+City seed 5245 -> Londus, Eurasia
+City seed 41719 -> VirtualCity, Eurasia
+City seed 15083 -> Londus, Eurasia
+
+Dev seed 33332 -> Tuesday, 20 July 2021 11:17 AM
+City seed 47480 -> Londus, Eurasia
+
+Dev seed 39877 -> Tuesday, 20 July 2021 11:21 AM
+City seed 29411 -> VirtualCity, Eurasia
+
+Dev seed 23987 -> Tuesday, 20 July 2021 11:22 AM
+City seed 24919 -> Londus, Eurasia
+City seed 62165 -> VirtualCity, Eurasia
+City seed 13532 -> Londus, Eurasia
+
+Dev seed 28889 -> Wednesday, 21 July 2021 10:58 AM
+City seed 56866 -> Londus, Eurasia
+City seed 54681 -> VirtualCity, Eurasia
+City seed 46799 -> Londus, Eurasia
+ASSERT StackOverflowException: The requested operation caused a stack overflow.
+UnityEngine.Object.ToString () (at C:/buildslave/unity/build/Runtime/Export/UnityEngineObject.bindings.cs:398)
+	MainInfoUI.SubInitialiseSessionStart () (at Assets/Scripts/GUI/InfoDisplays/MainInfoUI.cs:483)
+	MainInfoUI.Initialise (gameAPI.GameState state) (at Assets/Scripts/GUI/InfoDisplays/MainInfoUI.cs:238)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:936)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:996)
+	ControlManager.ProcessCloseNewGameOptions () (at Assets/Scripts/Managers/ControlManager.cs:195)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:86)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:380)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:340)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:474)
+	
+Dev seed 42047 -> Wednesday, 21 July 2021 11:24 AM
+City seed 17214 -> Londus, Eurasia
+City seed 40527 -> VirtualCity, Eurasia
+City seed 24308 -> Londus, Eurasia
+
+Dev seed 47469 -> Wednesday, 21 July 2021 11:34 AM
+City seed 64582 -> Londus, Eurasia
+City seed 61074 -> VirtualCity, Eurasia
+City seed 43691 -> Londus, Eurasia
+
+Dev seed 36750 -> Wednesday, 21 July 2021 12:22 PM
+City seed 55648 -> VirtualCity, Eurasia
+City seed 29483 -> Londus, Eurasia
+
+Dev seed 46021 -> Wednesday, 21 July 2021 12:28 PM
+
+Dev seed 10779 -> Wednesday, 21 July 2021 12:30 PM
+City seed 23299 -> Londus, Eurasia
+
+Dev seed 53710 -> Wednesday, 21 July 2021 12:34 PM
+City seed 19923 -> Londus, Eurasia
