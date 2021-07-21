@@ -146,7 +146,7 @@ public class NewsManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns single newsFeed string (splices together selected newsItems). Sequence is NewsItem + Advert repeated (1 of each)
+    /// returns single newsFeed string (splices together selected newsItems). Sequence is NewsItem + Advert EDIT: Adverts are handled separately to news items
     /// </summary>
     /// <returns></returns>
     public string GetNews()

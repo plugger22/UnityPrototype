@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// Handles explanatory help tooltips, text only. Attached to Panel Manager. Operates in Modal 1 state if required (due to position in Hierarchy).
@@ -26,6 +27,8 @@ public class TooltipHelp : MonoBehaviour
     public TextMeshProUGUI textTopic_2;
     public TextMeshProUGUI textTopic_3;
 
+    public Image newsfeedImage;                                     //displayed on for newsfeeds
+
     private static TooltipHelp tooltipHelp;
     private RectTransform rectTransform;
     private int offset;
@@ -35,7 +38,7 @@ public class TooltipHelp : MonoBehaviour
     private TextMeshProUGUI[] arrayOfHeaders;
     private TextMeshProUGUI[] arrayOfTexts;
 
-
+    #region Start
     /// <summary>
     /// initialisation
     /// </summary>
@@ -59,6 +62,7 @@ public class TooltipHelp : MonoBehaviour
         Debug.Assert(textTopic_1 != null, "Invalid textTopic_1 (Null)");
         Debug.Assert(textTopic_2 != null, "Invalid textTopic_2 (Null)");
         Debug.Assert(textTopic_3 != null, "Invalid textTopic_3 (Null)");
+        Debug.Assert(newsfeedImage != null, "Invalid newsfeedImage (Null)");
         //arrrays
         arrayOfObjects = new GameObject[numOfTopics];
         arrayOfHeaders = new TextMeshProUGUI[numOfTopics];
@@ -77,6 +81,7 @@ public class TooltipHelp : MonoBehaviour
         arrayOfTexts[2] = textTopic_2;
         arrayOfTexts[3] = textTopic_3;
     }
+    #endregion
 
     /// <summary>
     /// provide a static reference to the Generic Tooltip that can be accessed from any script
@@ -97,8 +102,9 @@ public class TooltipHelp : MonoBehaviour
     /// <summary>
     /// Initialise Help Tool tip. General Purpose. Can take one to four text topics and auto divides them as necessary. Topics are displayed in their list order
     /// Colours are set by the calling method
+    /// 'isNewsfeed' shows newsfeedImage if true, ignore otherwise
     /// </summary>
-    public void SetTooltip(List<HelpData> listOfHelpData, Vector3 screenPos)
+    public void SetTooltip(List<HelpData> listOfHelpData, Vector3 screenPos, bool isNewsfeed = false)
     {
         //exit any node tooltip that might be open
         GameManager.i.tooltipNodeScript.CloseTooltip("TooltipHelp.cs -> SetTooltip");
@@ -122,7 +128,12 @@ public class TooltipHelp : MonoBehaviour
                     arrayOfObjects[index].SetActive(true);
                     //populate header and text
                     arrayOfHeaders[index].text = listOfHelpData[index].header;
-                    arrayOfTexts[index].text = listOfHelpData[index].text;
+                    if (isNewsfeed == true)
+                    {
+                        //larger text and line height for the news
+                        arrayOfTexts[index].text = string.Format("<size=190%>{0}</size>", listOfHelpData[index].text);
+                    }
+                    else { arrayOfTexts[index].text = listOfHelpData[index].text; }
                 }
                 else
                 {
@@ -160,6 +171,11 @@ public class TooltipHelp : MonoBehaviour
             //set new position
             tooltipHelpObject.transform.position = screenPos;
             Debug.LogFormat("[UI] TooltipHelp.cs -> SetTooltip{0}", "\n");
+
+            //newsfeed
+            if (isNewsfeed == true)
+            { newsfeedImage.gameObject.SetActive(true); }
+            else { newsfeedImage.gameObject.SetActive(false); }
         }
         else { Debug.LogWarning("Invalid listOfHelpData (Empty)"); }
     }

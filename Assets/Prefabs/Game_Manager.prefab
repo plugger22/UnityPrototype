@@ -7114,7 +7114,7 @@ MonoBehaviour:
   gameHelpScript: {fileID: 0}
   newTurnScript: {fileID: 0}
   seedDev: 0
-  autoRunTurns: 0
+  autoRunTurns: 20
   scenarioStartLevel: 0
   tutorialStartLevel: -1
   isPerformanceLog: 1

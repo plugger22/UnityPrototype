@@ -817,7 +817,7 @@ public class MainInfoUI : MonoBehaviour
             else { Debug.LogWarning("Invalid data.listOfNews (Null)"); }
 
             //combine news and adverts (news always first, advert always second)
-            tickerTextHelp.SetHelpTooltip(listOfHelpData, -50, 250);
+            tickerTextHelp.SetHelpTooltip(listOfHelpData, -50, 250, true);
             //set modal status
             GameManager.i.guiScript.SetIsBlocked(true);
             //set game state

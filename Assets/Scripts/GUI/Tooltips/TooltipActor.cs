@@ -126,6 +126,8 @@ public class TooltipActor : MonoBehaviour
         rectTransform = tooltipActorObject.GetComponent<RectTransform>();
         fadeInTime = GameManager.i.guiScript.tooltipFade;
         offset = GameManager.i.guiScript.tooltipOffset;
+        //set tooltipActorObject false at start
+        tooltipActorObject.SetActive(false);
         //fast access
         gracePeriod = GameManager.i.gearScript.actorGearGracePeriod;
         Debug.Assert(gracePeriod > -1, "Invalid gracePeriod (-1)");

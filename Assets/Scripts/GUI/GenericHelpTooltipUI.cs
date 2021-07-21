@@ -17,6 +17,7 @@ public class GenericHelpTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
     private int x_offset = 0;
     private int y_offset = 0;
     private List<HelpData> listOfHelp = new List<HelpData>();
+    private bool isNewsfeedDisplayed;
 
     public void Start()
     {
@@ -29,9 +30,12 @@ public class GenericHelpTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
     /// <param name="listOfHelpData"></param>
     /// <param name="x_offset"></param>
     /// <param name="y_offset"></param>
-    public void SetHelpTooltip(List<HelpData> listOfHelpData, int x_offset = 150, int y_offset = 0)
+    public void SetHelpTooltip(List<HelpData> listOfHelpData, int x_offset = 150, int y_offset = 0, bool isNewsfeed = false)
     {
         listOfHelp.Clear();
+        //newsfeed on/off
+        isNewsfeedDisplayed = isNewsfeed;
+        //help data
         if (listOfHelpData != null && listOfHelpData.Count > 0)
         { listOfHelp.AddRange(listOfHelpData); }
         else
@@ -107,7 +111,7 @@ public class GenericHelpTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
                     screenPos.y += y_offset;
                     while (GameManager.i.tooltipHelpScript.CheckTooltipActive() == false/* && GameManager.i.guiScript.CheckIsBlocked(2) == false*/)
                     {
-                        GameManager.i.tooltipHelpScript.SetTooltip(listOfHelp, screenPos);
+                        GameManager.i.tooltipHelpScript.SetTooltip(listOfHelp, screenPos, isNewsfeedDisplayed);
                         yield return null;
                     }
                 }
