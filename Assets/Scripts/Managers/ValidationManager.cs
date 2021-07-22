@@ -505,6 +505,8 @@ public class ValidationManager : MonoBehaviour
     // - - - Validation checks (Session start, Static data)
     //
 
+    #region Validation Checks
+
     #region ValidateTargets
     /// <summary>
     /// Checks targets
@@ -1269,7 +1271,7 @@ public class ValidationManager : MonoBehaviour
                 if (option.tutorial != null)
                 { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Tutorial option \"{0}\" has an Invalid option.tutorial \"{1}\" (should be Null){2}", option.name, option.tutorial.name, "\n"); }
             }
-        }        
+        }
         #endregion
 
         #region Topic Pools
@@ -1369,59 +1371,59 @@ public class ValidationManager : MonoBehaviour
                     if (campaign != null)
                     {
                         //Authority Team Pool
-                        if (campaign.teamPool != null)
-                        { CheckCampaignPool(campaign, campaign.teamPool, authorityTeamSubType); }
+                        if (campaign.topicPool.teamPool != null)
+                        { CheckCampaignPool(campaign, campaign.topicPool.teamPool, authorityTeamSubType); }
                         //HQ Pool
-                        if (campaign.hqPool != null)
-                        { CheckCampaignPool(campaign, campaign.hqPool, hqSubType); }
+                        if (campaign.topicPool.hqPool != null)
+                        { CheckCampaignPool(campaign, campaign.topicPool.hqPool, hqSubType); }
                         //Capture Pool
-                        if (campaign.capturePool != null)
-                        { CheckCampaignPool(campaign, campaign.capturePool, captureSubType); }
+                        if (campaign.topicPool.capturePool != null)
+                        { CheckCampaignPool(campaign, campaign.topicPool.capturePool, captureSubType); }
                         //Actor Contact Pool
-                        if (campaign.actorContactPool != null)
-                        { CheckCampaignPool(campaign, campaign.actorContactPool, actorContactSubType); }
+                        if (campaign.topicPool.actorContactPool != null)
+                        { CheckCampaignPool(campaign, campaign.topicPool.actorContactPool, actorContactSubType); }
                         //Actor District Pool
-                        if (campaign.actorDistrictPool != null)
-                        { CheckCampaignPool(campaign, campaign.actorDistrictPool, actorDistrictSubType); }
+                        if (campaign.topicPool.actorDistrictPool != null)
+                        { CheckCampaignPool(campaign, campaign.topicPool.actorDistrictPool, actorDistrictSubType); }
                         //Actor Gear Pool
-                        if (campaign.actorGearPool != null)
-                        { CheckCampaignPool(campaign, campaign.actorGearPool, actorGearSubType); }
+                        if (campaign.topicPool.actorGearPool != null)
+                        { CheckCampaignPool(campaign, campaign.topicPool.actorGearPool, actorGearSubType); }
                         //Actor Match Pool
-                        if (campaign.actorMatchPool != null)
-                        { CheckCampaignPool(campaign, campaign.actorMatchPool, actorMatchSubType); }
+                        if (campaign.topicPool.actorMatchPool != null)
+                        { CheckCampaignPool(campaign, campaign.topicPool.actorMatchPool, actorMatchSubType); }
                         //Actor Politic Pool
-                        if (campaign.actorPoliticPool != null)
-                        { CheckCampaignPool(campaign, campaign.actorPoliticPool, actorPoliticSubType); }
+                        if (campaign.topicPool.actorPoliticPool != null)
+                        { CheckCampaignPool(campaign, campaign.topicPool.actorPoliticPool, actorPoliticSubType); }
                         //Player District Pool
-                        if (campaign.playerDistrictPool != null)
-                        { CheckCampaignPool(campaign, campaign.playerDistrictPool, playerDistrictSubType); }
+                        if (campaign.topicPool.playerDistrictPool != null)
+                        { CheckCampaignPool(campaign, campaign.topicPool.playerDistrictPool, playerDistrictSubType); }
                         //Player General Pool
-                        if (campaign.playerGeneralPool != null)
-                        { CheckCampaignPool(campaign, campaign.playerGeneralPool, playerGeneralSubType); }
+                        if (campaign.topicPool.playerGeneralPool != null)
+                        { CheckCampaignPool(campaign, campaign.topicPool.playerGeneralPool, playerGeneralSubType); }
                         //Player Stats Pool
-                        if (campaign.playerStatsPool != null)
-                        { CheckCampaignPool(campaign, campaign.playerStatsPool, playerStatsSubType); }
+                        if (campaign.topicPool.playerStatsPool != null)
+                        { CheckCampaignPool(campaign, campaign.topicPool.playerStatsPool, playerStatsSubType); }
                         //Player Gear Pool
-                        if (campaign.playerGearPool != null)
-                        { CheckCampaignPool(campaign, campaign.playerGearPool, playerGearSubType); }
+                        if (campaign.topicPool.playerGearPool != null)
+                        { CheckCampaignPool(campaign, campaign.topicPool.playerGearPool, playerGearSubType); }
                         //Player Conditions Pool
-                        if (campaign.playerConditionsPool != null)
-                        { CheckCampaignPool(campaign, campaign.playerConditionsPool, playerConditionsSubType); }
+                        if (campaign.topicPool.playerConditionsPool != null)
+                        { CheckCampaignPool(campaign, campaign.topicPool.playerConditionsPool, playerConditionsSubType); }
                         //OrgCure Pool
-                        if (campaign.orgCurePool != null)
-                        { CheckCampaignPool(campaign, campaign.orgCurePool, orgCureSubType); }
+                        if (campaign.topicPool.orgCurePool != null)
+                        { CheckCampaignPool(campaign, campaign.topicPool.orgCurePool, orgCureSubType); }
                         //OrgContract Pool
-                        if (campaign.orgContractPool != null)
-                        { CheckCampaignPool(campaign, campaign.orgContractPool, orgContractSubType); }
+                        if (campaign.topicPool.orgContractPool != null)
+                        { CheckCampaignPool(campaign, campaign.topicPool.orgContractPool, orgContractSubType); }
                         //OrgHQ Pool
-                        if (campaign.orgHQPool != null)
-                        { CheckCampaignPool(campaign, campaign.orgHQPool, orgHQSubType); }
+                        if (campaign.topicPool.orgHQPool != null)
+                        { CheckCampaignPool(campaign, campaign.topicPool.orgHQPool, orgHQSubType); }
                         //OrgEmergency Pool
-                        if (campaign.orgEmergencyPool != null)
-                        { CheckCampaignPool(campaign, campaign.orgEmergencyPool, orgEmergencySubType); }
+                        if (campaign.topicPool.orgEmergencyPool != null)
+                        { CheckCampaignPool(campaign, campaign.topicPool.orgEmergencyPool, orgEmergencySubType); }
                         //OrgInfo Pool
-                        if (campaign.orgInfoPool != null)
-                        { CheckCampaignPool(campaign, campaign.orgInfoPool, orgInfoSubType); }
+                        if (campaign.topicPool.orgInfoPool != null)
+                        { CheckCampaignPool(campaign, campaign.topicPool.orgInfoPool, orgInfoSubType); }
                         //
                         // - - - Scenario side and City pools (topics in pool correct side check only)
                         //
@@ -1650,41 +1652,53 @@ public class ValidationManager : MonoBehaviour
     //runs checks on campaigns
     private void ValidateCampaigns()
     {
+        string tag = "[Val] ValidationManager.cs -> ValidateCampaigns:";
         Campaign[] arrayOfCampaigns = GameManager.i.loadScript.arrayOfCampaigns;
         if (arrayOfCampaigns != null)
         {
-            //Check organisations are the correct type
             foreach (Campaign campaign in arrayOfCampaigns)
-            {
+            {     
+                //
+                // - - - CampaignPools
+                //
+                if (campaign.topicPool != null)
+                {
+                    if (campaign.topicPool.campaign.name.Equals(campaign.name, StringComparison.Ordinal) == false)
+                    { Debug.LogFormat("{0} TopicPool \"{1}\" has an invalid campaign (\"{2}\", different) for campaign \"{3}\"{4}", tag, campaign.topicPool.name, campaign.topicPool.campaign.name, campaign.name, "\n"); }
+                }
+                else { Debug.LogFormat("{0} Invalid topicPool (Null) for campaign \"{1}\"{2}", tag, campaign.name, "\n"); }
+                //
+                // - - - Organisations (correct type)
+                //
                 //cure
                 if (campaign.orgCure != null)
                 {
                     if (campaign.orgCure.orgType.name.Equals("Cure", StringComparison.Ordinal) == false)
-                    { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateCampaigns: campaign \"{0}\", orgCure is the wrong type (\"{1}\"){2}", campaign.name, campaign.orgCure.orgType.name, "\n"); }
+                    { Debug.LogFormat("{0} campaign \"{1}\", orgCure is the wrong type (\"{2}\"){3}", tag, campaign.name, campaign.orgCure.orgType.name, "\n"); }
                 }
                 //contract
                 if (campaign.orgContract != null)
                 {
                     if (campaign.orgContract.orgType.name.Equals("Contract", StringComparison.Ordinal) == false)
-                    { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateCampaigns: campaign \"{0}\", orgContract is the wrong type (\"{1}\"){2}", campaign.name, campaign.orgContract.orgType.name, "\n"); }
+                    { Debug.LogFormat("{0} campaign \"{1}\", orgContract is the wrong type (\"{2}\"){3}", tag, campaign.name, campaign.orgContract.orgType.name, "\n"); }
                 }
                 //Emergency
                 if (campaign.orgEmergency != null)
                 {
                     if (campaign.orgEmergency.orgType.name.Equals("Emergency", StringComparison.Ordinal) == false)
-                    { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateCampaigns: campaign \"{0}\", orgEmergency is the wrong type (\"{1}\"){2}", campaign.name, campaign.orgEmergency.orgType.name, "\n"); }
+                    { Debug.LogFormat("{0} campaign \"{1}\", orgEmergency is the wrong type (\"{2}\"){3}", tag, campaign.name, campaign.orgEmergency.orgType.name, "\n"); }
                 }
                 //HQ
                 if (campaign.orgHQ != null)
                 {
                     if (campaign.orgHQ.orgType.name.Equals("HQ", StringComparison.Ordinal) == false)
-                    { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateCampaigns: campaign \"{0}\", orgHQ is the wrong type (\"{1}\"){2}", campaign.name, campaign.orgHQ.orgType.name, "\n"); }
+                    { Debug.LogFormat("{0} campaign \"{1}\", orgHQ is the wrong type (\"{2}\"){3}", tag, campaign.name, campaign.orgHQ.orgType.name, "\n"); }
                 }
                 //Info
                 if (campaign.orgInfo != null)
                 {
                     if (campaign.orgInfo.orgType.name.Equals("Info", StringComparison.Ordinal) == false)
-                    { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateCampaigns: campaign \"{0}\", orgInfo is the wrong type (\"{1}\"){2}", campaign.name, campaign.orgInfo.orgType.name, "\n"); }
+                    { Debug.LogFormat("{0} campaign \"{1}\", orgInfo is the wrong type (\"{2}\"){3}", tag, campaign.name, campaign.orgInfo.orgType.name, "\n"); }
                 }
             }
         }
@@ -1851,6 +1865,8 @@ public class ValidationManager : MonoBehaviour
     {
         int count;
         bool isSpecialCase;
+        int maxActors = GameManager.i.actorScript.maxNumOfOnMapActors;
+        int maxReserveActors = GameManager.i.actorScript.maxNumOfReserveActors;
         int maxTutorialItems = GameManager.i.tutorialScript.maxNumOfItems;
         int maxTutorialOptions = GameManager.i.topicScript.maxOptions;
         int minTutorialOptions = GameManager.i.tutorialScript.minNumOfOptions;
@@ -1859,11 +1875,19 @@ public class ValidationManager : MonoBehaviour
         Tutorial[] arrayOfTutorials = GameManager.i.loadScript.arrayOfTutorials;
         if (arrayOfTutorials != null)
         {
+            #region Tutorials and Sets
+            //
+            // - - - Tutorials
+            //
             for (int i = 0; i < arrayOfTutorials.Length; i++)
             {
                 Tutorial tutorial = arrayOfTutorials[i];
                 if (tutorial != null)
                 {
+                    //
+                    // - - - TutorialSets
+                    //
+
                     //check listOfSets > 0
                     if (tutorial.listOfSets.Count > 0)
                     {
@@ -1875,8 +1899,7 @@ public class ValidationManager : MonoBehaviour
                                 //check set is associated with tutorial
                                 if (set.tutorial != tutorial)
                                 {
-                                    Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: Set \"{0}\" is associated with a different tutorial (is \"{1}\", should be \"{2}\"){3}",
-                                      set.name, set.tutorial.name, tutorial.name, "\n");
+                                    Debug.LogFormat("{0} Set \"{1}\" is associated with a different tutorial (is \"{2}\", should be \"{3}\"){4}", tag, set.name, set.tutorial.name, tutorial.name, "\n");
                                 }
                                 else
                                 {
@@ -1884,8 +1907,7 @@ public class ValidationManager : MonoBehaviour
                                     //check set index corresponds to list index
                                     if (set.index != j)
                                     {
-                                        Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: Set \"{0}\", for tutorial \"{1}\", has an invalid index (is \"{2}\", should be \"{3}\"){4}",
-                                            set.name, set.tutorial.name, set.index, j, "\n");
+                                        Debug.LogFormat("{0} Set \"{1}\", for tutorial \"{2}\", has an invalid index (is \"{3}\", should be \"{4}\"){5}", tag, set.name, set.tutorial.name, set.index, j, "\n");
                                     }
                                     //check set -> features lists for null
                                     if (CheckList(set.listOfFeaturesOff, "listOfFeaturesOff", tag) == true)
@@ -1910,17 +1932,25 @@ public class ValidationManager : MonoBehaviour
                                         //Max of 10 tutorial items per set
                                         if (set.listOfTutorialItems.Count > maxTutorialItems)
                                         {
-                                            Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: Set \"{0}\", invalid count in listOfTutorialItems (has {1}, max allowed is {2}){3}",
-                                                set.tutorial.name, set.listOfTutorialItems.Count, maxTutorialItems, "\n");
+                                            Debug.LogFormat("{0} Set \"{1}\", invalid count in listOfTutorialItems (has {2}, max allowed is {3}){4}", tag, set.name, set.listOfTutorialItems.Count, maxTutorialItems, "\n");
                                         }
                                     }
-                                    //loop tutorialItems
+                                    //check actor configs
+                                    if (set.actorConfig != null)
+                                    {
+                                        //check same side
+                                        if (set.actorConfig.side.level != set.tutorial.side.level)
+                                        { Debug.LogFormat("{0} Set \"{1}\", invalid actorConfig (wrong side), \"{2}\"{3}", tag, set.name, set.actorConfig.name, "\n"); }
+                                    }
+                                    //
+                                    // - - - Tutorial Items
+                                    //
                                     for (int k = 0; k < set.listOfTutorialItems.Count; k++)
                                     {
                                         //Item set should match parent set
                                         TutorialItem item = set.listOfTutorialItems[k];
                                         if (item.set.name.Equals(set.name, StringComparison.Ordinal) == false)
-                                        { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: TutorialItem \"{0}\" mismatch with set (is {1}, should be {2}){3}", item.name, item.set.name, set.name, "\n"); }
+                                        { Debug.LogFormat("{0} TutorialItem \"{1}\" mismatch with set (is {2}, should be {3}){4}", tag, item.name, item.set.name, set.name, "\n"); }
                                         //Query item
                                         switch (item.tutorialType.name)
                                         {
@@ -1930,23 +1960,20 @@ public class ValidationManager : MonoBehaviour
                                                 //check mininum number Of options
                                                 if (count < minTutorialOptions)
                                                 {
-                                                    Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: TutorialItem \"{0}\", QUESTION, invalid listOfOptions (is {1}, Min {2}){3}",
-                                                      item.name, count, minTutorialOptions, "\n");
+                                                    Debug.LogFormat("{0} TutorialItem \"{1}\", QUESTION, invalid listOfOptions (is {2}, Min {3}){4}", tag, item.name, count, minTutorialOptions, "\n");
                                                 }
                                                 //random -> any number, not random, check max number of Options
                                                 if (item.query.isRandomOptions == false)
                                                 {
                                                     if (count > maxTutorialOptions)
                                                     {
-                                                        Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: TutorialItem \"{0}\", QUESTION, invalid listOfOptions (is {1}, Max {2}){3}",
-                                                          item.name, count, maxTutorialOptions, "\n");
+                                                        Debug.LogFormat("{0} TutorialItem \"{1}\", QUESTION, invalid listOfOptions (is {2}, Max {3}){4}", tag, item.name, count, maxTutorialOptions, "\n");
                                                     }
                                                 }
                                                 //tutorialQuery.item should match parent
                                                 if (item.name.Equals(item.query.item.name, StringComparison.Ordinal) == false)
                                                 {
-                                                    Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: TutorialQuery \"{0}\", item \"{2}\" doesn't match parent item \"{3}\"{4}",
-                                                      item.query.name, item.query.item.name, item.name, "\n");
+                                                    Debug.LogFormat("{0} TutorialQuery \"{1}\", item \"{2}\" doesn't match parent item \"{3}\"{4}", tag, item.query.name, item.query.item.name, item.name, "\n");
                                                 }
                                                 isSpecialCase = false;
                                                 if (item.query.queryType.name.Equals("Secret", StringComparison.Ordinal) == true)
@@ -1956,24 +1983,22 @@ public class ValidationManager : MonoBehaviour
                                                 {
                                                     TutorialOption optionTutorial = item.query.listOfOptions[m];
                                                     //option tutorialItem should match parent
-                                                    if (optionTutorial.query!= null)
+                                                    if (optionTutorial.query != null)
                                                     {
                                                         if (optionTutorial.query != item)
                                                         {
-                                                            Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: TutorialOption \"{0}\" mismatch with Item (is {1}, should be {2}){3}",
-                                                                optionTutorial.name, optionTutorial.query.name, item.name, "\n");
+                                                            Debug.LogFormat("{0} TutorialOption \"{1}\" mismatch with Item (is {2}, should be {3}){4}", tag, optionTutorial.name, optionTutorial.query.name, item.name, "\n");
                                                         }
 
                                                     }
-                                                    else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: TutorialOption \"{0}\" Invalid tutorialItem (Null){1}",  optionTutorial.name, "\n"); }
+                                                    else { Debug.LogFormat("{0} TutorialOption \"{1}\" Invalid tutorialItem (Null){2}", tag, optionTutorial.name, "\n"); }
                                                     //special case -> Secret Query
                                                     if (isSpecialCase == true)
                                                     {
                                                         //tutorial option.tag should be found in dictOfSecrets
                                                         if (GameManager.i.dataScript.GetSecret(optionTutorial.tag) == null)
                                                         {
-                                                            Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: Secret Query tutorialOption \"{0}\" has an invalid tag \"{1}\" (not found in dictOfSecrets){2}",
-                                                              optionTutorial.name, optionTutorial.tag, "\n");
+                                                            Debug.LogFormat("{0} Secret Query tutorialOption \"{1}\" has an invalid tag \"{2}\" (not found in dictOfSecrets){3}", tag, optionTutorial.name, optionTutorial.tag, "\n");
                                                         }
                                                     }
                                                 }
@@ -1986,13 +2011,12 @@ public class ValidationManager : MonoBehaviour
                                                     {
                                                         if (optionTutorial.query != item)
                                                         {
-                                                            Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: IGNORE TutorialOption \"{0}\" mismatch with Item (is {1}, should be {2}){3}",
-                                                                optionTutorial.name, optionTutorial.query.name, item.name, "\n");
+                                                            Debug.LogFormat("{0} IGNORE TutorialOption \"{1}\" mismatch with Item (is {2}, should be {3}){4}", tag, optionTutorial.name, optionTutorial.query.name, item.name, "\n");
                                                         }
                                                     }
-                                                    else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: IGNORE TopicOption \"{0}\" Invalid tutorialItem (Null){1}", optionTutorial.name, "\n"); }
+                                                    else { Debug.LogFormat("{0} IGNORE TopicOption \"{1}\" Invalid tutorialItem (Null){2}", tag, optionTutorial.name, "\n"); }
                                                 }
-                                                
+
 
                                                 break;
                                             case "Information":
@@ -2005,8 +2029,7 @@ public class ValidationManager : MonoBehaviour
                                                 //tutorialDialogue.item should match parent
                                                 if (item.name.Equals(item.dialogue.item.name, StringComparison.Ordinal) == false)
                                                 {
-                                                    Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: TutorialDialogue \"{0}\", item \"{2}\" doesn't match parent item \"{3}\"{4}",
-                                                      item.dialogue.name, item.dialogue.item.name, item.name, "\n");
+                                                    Debug.LogFormat("{0} TutorialDialogue \"{1}\", item \"{2}\" doesn't match parent item \"{3}\"{4}", tag, item.dialogue.name, item.dialogue.item.name, item.name, "\n");
                                                 }
                                                 break;
                                             default: Debug.LogWarningFormat("Unrecognised item.tutorialType \"{0}\"", item.tutorialType.name); break;
@@ -2014,25 +2037,80 @@ public class ValidationManager : MonoBehaviour
                                     }
                                 }
                             }
-                            else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: Invalid set (Null) for tutorial \"{0}\" , listOfSets[{1}]{2}", tutorial.name, j, "\n"); }
+                            else { Debug.LogFormat("{0} Invalid set (Null) for tutorial \"{1}\" , listOfSets[{2}]{3}", tag, tutorial.name, j, "\n"); }
                         }
                     }
-                    else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: tutorial \"{0}\" has no sets (ListOfSets.Count is Zero){1}", tutorial.name, "\n"); }
+                    else { Debug.LogFormat("{0} tutorial \"{1}\" has no sets (ListOfSets.Count is Zero){2}", tag, tutorial.name, "\n"); }
                 }
                 else { Debug.LogErrorFormat("Invalid tutorial (Null) in arrayOfTutorials[{0}]", i); }
             }
+            #endregion
+
+            #region TutorialActorConfigs
+            //
+            // - - - TutorialActorConfigs
+            //
+            TutorialActorConfig[] arrayOfConfigs = GameManager.i.loadScript.arrayOfTutorialActorConfigs;
+            if (arrayOfConfigs != null)
+            {
+
+                for (int i = 0; i < arrayOfConfigs.Length; i++)
+                {
+                    TutorialActorConfig config = arrayOfConfigs[i];
+                    if (config != null)
+                    {
+                        //should be set number of onMap actors (zero is O.K)
+                        count = config.listOfOnMapArcs.Count;
+                        if (count > 0)
+                        {
+                            if (count != maxActors)
+                            { Debug.LogFormat("{0} actorConfig \"{1}\", Incorrect number of actor Arcs in listOfOnMapArcs (is {2}, should be {3}){4}", tag, config.name, count, maxActors, "\n"); }
+                            //check for nulls
+                            if (CheckList(config.listOfOnMapArcs, string.Format("{0}.{1}", config.name, "listOfOnMapArcs"), tag) == true)
+                            {
+                                //check OnMap for dupes
+                                List<string> onMapList = config.listOfOnMapArcs.Select(x => x.arc.name).ToList();
+                                CheckListForDuplicates(onMapList, "actorConfig", config.name, "listOfOnMapArcs");
+                            }
+                        }
+                        //don't exceed reserve max
+                        count = config.listOfReserveArcs.Count;
+                        if (count > 0)
+                        {
+                            if (count > maxReserveActors)
+                            { Debug.LogFormat("{0} actorConfig \"{1}\", Too many Reserve actors (is {2}, max allowed {3}){4}", tag, config.name, count, maxReserveActors, "\n"); }
+                            //check for nulls
+                            if (CheckList(config.listOfReserveArcs, string.Format("{0}.{1}", config.name, "listOfReserveArcs"), tag) == true)
+                            {
+                                //check Reserve list for dupes
+                                List<string> reserveList = config.listOfReserveArcs.Select(x => x.arc.name).ToList();
+                                CheckListForDuplicates(reserveList, "actorConfig", config.name, "listOfOnReserveArcs");
+                                //check Reserves don't duplicate OnMap arcs
+                                reserveList.AddRange(config.listOfOnMapArcs.Select(x => x.arc.name).ToList());
+                                if (CheckList(reserveList, string.Format("{0}.{1}", config.name, "<Combined>listOfArcs"), tag) == true)
+                                { CheckListForDuplicates(reserveList, "actorConfig", config.name, "Combined dupe check OnMap/Reserves"); }
+                            }
+                        }
+
+                    }
+                    else { Debug.LogErrorFormat("Invalid TutorialActorConfig (Null) in arrayOfConfigs[{0}]", i); }
+                }
+            }
+            else { Debug.LogError("Invalid arrayOfTutorialActorConfigs (Null)"); }
+            #endregion
+
         }
         else { Debug.LogError("Invalid arrayOfTutorials (Null)"); }
     }
     #endregion
 
+    #endregion
 
-
-
-#if (UNITY_EDITOR)
     //
     // - - - SO Checks
     //
+
+#if (UNITY_EDITOR)
 
     #region ValidateSO
     /// <summary>
@@ -2233,6 +2311,8 @@ public class ValidationManager : MonoBehaviour
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfLayouts);
         //GameHelp
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfGameHelp);
+        //CampaignPools
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfCampaignPools);
 
     }
     #endregion
@@ -2283,10 +2363,11 @@ public class ValidationManager : MonoBehaviour
 
 #endif
 
-    #region Data Integrity Checks
     //
     // - - - Integrity Check (Dynamic Data) - - -
     //
+
+    #region Data Integrity Checks
 
     #region ExecuteIntegrityCheck
     /// <summary>
@@ -4150,10 +4231,12 @@ public class ValidationManager : MonoBehaviour
 
     #endregion
 
-    #region Utilities
+
     //
     // - - - Utilities - - - 
     //
+
+    #region Utilities
 
     #region CheckListForDuplicates
     /// <summary>

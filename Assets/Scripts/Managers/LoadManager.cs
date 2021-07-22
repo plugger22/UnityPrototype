@@ -46,6 +46,7 @@ public class LoadManager : MonoBehaviour
     public CaptureTool[] arrayOfCaptureTools;
     public Layout[] arrayOfLayouts;
     public GameHelp[] arrayOfGameHelp;
+    public CampaignPool[] arrayOfCampaignPools;
 
 
     [Header("ActorDrafts -> ToolManager Duplicates")]
@@ -215,6 +216,7 @@ public class LoadManager : MonoBehaviour
     public Mission[] arrayOfMissions;
     public Scenario[] arrayOfScenarios;
     public Campaign[] arrayOfCampaigns;
+
 
 
 
@@ -1199,6 +1201,13 @@ public class LoadManager : MonoBehaviour
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfLayouts has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No Layouts present"); }
         //
+        // - - - CampaignPools (not stored in a collection)
+        //
+        numArray = arrayOfCampaignPools.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfCampaignPools has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No CampaignPools present"); }
+        //
         // - - - GameHelp - - -
         //
         Dictionary<string, GameHelp> dictOfGameHelp = GameManager.i.dataScript.GetDictOfGameHelp();
@@ -1225,6 +1234,7 @@ public class LoadManager : MonoBehaviour
             Debug.Assert(numArray == numDict, string.Format("Mismatch on GameHelp count, array {0}, dict {1}", numArray, numDict));
         }
         else { Debug.LogError("Invalid dictOfGameHelp (Null) -> Import failed"); }
+
     }
     #endregion
 

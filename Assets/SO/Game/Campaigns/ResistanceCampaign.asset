@@ -22,25 +22,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0b04472666f8fc648833265a5027da36, type: 2}
   actorPool: {fileID: 11400000, guid: a47ecb4b2ca870b41a8317ca997f7799, type: 2}
   story: {fileID: 11400000, guid: 47b8784802e99f3418be87e7e59e34a2, type: 2}
-  teamPool: {fileID: 0}
-  actorContactPool: {fileID: 11400000, guid: e24ffdebe88f92f4bbfe09116f0f0502, type: 2}
-  actorDistrictPool: {fileID: 11400000, guid: 694dd75b495d9b34f820f1979dd93266, type: 2}
-  actorGearPool: {fileID: 11400000, guid: 3184e6a6b4316f3439fe0e8b10fda612, type: 2}
-  actorMatchPool: {fileID: 11400000, guid: 0e0366074a1d4c9479eed6cd79ef75c2, type: 2}
-  actorPoliticPool: {fileID: 11400000, guid: 2cacc8eee82bc0b4fad6705b3c6e6054, type: 2}
-  playerDistrictPool: {fileID: 11400000, guid: 34965ba51d609b940a15a66396e85d92, type: 2}
-  playerGeneralPool: {fileID: 11400000, guid: 34044eb3938bac54f9fba0c4b9e73aa4, type: 2}
-  playerStatsPool: {fileID: 11400000, guid: 92301aebd41bda442a4e088837006bcb, type: 2}
-  playerGearPool: {fileID: 11400000, guid: bfe8fb45f7d8ca14598b2baf7a440aee, type: 2}
-  playerConditionsPool: {fileID: 11400000, guid: c0d4c73d54ec2484cb06430e00084ce2,
-    type: 2}
-  hqPool: {fileID: 11400000, guid: 4cba5038018744a4f83ed80beeb223c4, type: 2}
-  capturePool: {fileID: 11400000, guid: f5af3e9430322d74a91e30d1fa2b65d9, type: 2}
-  orgCurePool: {fileID: 11400000, guid: 8576fbf5564b74f40997ee1a242c5749, type: 2}
-  orgContractPool: {fileID: 11400000, guid: e01be89429dd3c5429cc0bc6bf9871cd, type: 2}
-  orgHQPool: {fileID: 11400000, guid: a5a93a3518eeade4d9de318ffa99e51f, type: 2}
-  orgEmergencyPool: {fileID: 11400000, guid: d694479667eb36f4589cdc7dc8ecf47b, type: 2}
-  orgInfoPool: {fileID: 11400000, guid: c8ba3fea2d979644b8792f1c413d88a5, type: 2}
+  topicPool: {fileID: 11400000, guid: b998088c69e26db45b040c5ea9eccbe1, type: 2}
   orgCure: {fileID: 11400000, guid: 8b81229763d9cde4e810f0b34a0d8aee, type: 2}
   orgContract: {fileID: 11400000, guid: ffa63976c9457294ea81081cd9907865, type: 2}
   orgHQ: {fileID: 11400000, guid: 6b6344ba25eaa58459fd133e36ec28a2, type: 2}

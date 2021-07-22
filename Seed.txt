@@ -12642,3 +12642,49 @@ City seed 24395 -> Londus, Eurasia
 
 Dev seed 44396 -> Wednesday, 21 July 2021 4:28 PM
 City seed 24366 -> Londus, Eurasia
+
+Dev seed 30114 -> Wednesday, 21 July 2021 7:54 PM
+City seed 63175 -> Londus, Eurasia
+
+Dev seed 7523 -> Thursday, 22 July 2021 10:46 AM
+City seed 42885 -> Londus, Eurasia
+
+Dev seed 7476 -> Thursday, 22 July 2021 10:49 AM
+City seed 14558 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ValidationManager.<ValidateTutorialData>m__1D (TutorialActorType x) (at Assets/Scripts/Managers/ValidationManager.cs:2075)
+	System.Linq.Enumerable+SelectListIterator`2[TSource,TResult].ToList () (at <839a3cb835c04d14aeb58d83bb7bc4bd>:0)
+	System.Linq.Enumerable.ToList[TSource] (System.Collections.Generic.IEnumerable`1[T] source) (at <839a3cb835c04d14aeb58d83bb7bc4bd>:0)
+	ValidationManager.ValidateTutorialData () (at Assets/Scripts/Managers/ValidationManager.cs:2075)
+	ValidationManager.Initialise (gameAPI.GameState state) (at Assets/Scripts/Managers/ValidationManager.cs:178)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:936)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:997)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:440)
+	
+Dev seed 42882 -> Thursday, 22 July 2021 10:54 AM
+City seed 57071 -> Londus, Eurasia
+
+Dev seed 28055 -> Thursday, 22 July 2021 10:58 AM
+City seed 20606 -> Londus, Eurasia
+
+Dev seed 49382 -> Thursday, 22 July 2021 11:00 AM
+City seed 56420 -> Londus, Eurasia
+
+Dev seed 27690 -> Thursday, 22 July 2021 11:13 AM
+City seed 259 -> Londus, Eurasia
+
+Dev seed 61584 -> Thursday, 22 July 2021 12:05 PM
+WARNING [Val] ValidateSO: MISMATCH on CampaignPool, array 1, assets 0 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(CampaignPool[]) (at Assets/Scripts/Managers/ValidationManager.cs:2340)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2315)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:936)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:431)
+	City seed 23699 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ValidationManager.ValidateTopics () (at Assets/Scripts/Managers/ValidationManager.cs:1374)
+	ValidationManager.Initialise (gameAPI.GameState state) (at Assets/Scripts/Managers/ValidationManager.cs:173)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:936)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:997)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:440)
+	

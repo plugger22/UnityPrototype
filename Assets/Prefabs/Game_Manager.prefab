@@ -1617,6 +1617,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 77ec93847121dc542a7a4fabebcb9487, type: 2}
   - {fileID: 11400000, guid: 564543bbaaeeb7541b861970caea63e7, type: 2}
   - {fileID: 11400000, guid: cf32935db69b78d42ad55ad5687bc9a4, type: 2}
+  arrayOfCampaignPools:
+  - {fileID: 11400000, guid: b998088c69e26db45b040c5ea9eccbe1, type: 2}
   arrayOfActorDraftSex:
   - {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
   - {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}
