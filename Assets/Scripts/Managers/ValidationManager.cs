@@ -993,8 +993,10 @@ public class ValidationManager : MonoBehaviour
 
                             switch (topic.subType.name)
                             {
-                                /*
+                               
                                 //DEBUG -> Temporarily switched off as no data yet for these
+
+                                /*
                                 case "StoryAlpha":
                                     //Comms Decision topics
                                     if (topic.comms != null)
@@ -1018,11 +1020,12 @@ public class ValidationManager : MonoBehaviour
                                     { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Invalid Comms (Should be none) for topic \"{0}\"{1}", topicName, "\n"); }
                                     break;
                                     */
-
+                                    
+                                
                                 case "StoryAlpha":  //debug temp while code above disabled
                                 case "StoryBravo":  //debug temp while code above disabled
                                     break;
-
+                                
 
                                 default:
                                     //Normal Decision Topics
