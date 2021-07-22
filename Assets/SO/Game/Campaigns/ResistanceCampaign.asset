@@ -22,7 +22,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0b04472666f8fc648833265a5027da36, type: 2}
   actorPool: {fileID: 11400000, guid: a47ecb4b2ca870b41a8317ca997f7799, type: 2}
   story: {fileID: 11400000, guid: 47b8784802e99f3418be87e7e59e34a2, type: 2}
-  topicPool: {fileID: 11400000, guid: b998088c69e26db45b040c5ea9eccbe1, type: 2}
+  campaignPool: {fileID: 11400000, guid: 1d50eb7cd7332da42bfb10e6fda177d4, type: 2}
   orgCure: {fileID: 11400000, guid: 8b81229763d9cde4e810f0b34a0d8aee, type: 2}
   orgContract: {fileID: 11400000, guid: ffa63976c9457294ea81081cd9907865, type: 2}
   orgHQ: {fileID: 11400000, guid: 6b6344ba25eaa58459fd133e36ec28a2, type: 2}

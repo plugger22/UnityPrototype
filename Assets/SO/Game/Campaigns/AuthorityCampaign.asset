@@ -13,31 +13,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Authority Campaign
   descriptor: Round up the Radish
+  isIgnoreValidation: 1
   side: {fileID: 11400000, guid: bb86b913ff5927e499a6ca498217210c, type: 2}
   listOfScenarios:
   - {fileID: 11400000, guid: 71ffe16d688661a43a72b62226decd39, type: 2}
   - {fileID: 11400000, guid: 4e990c332081c87469650a4e21a916e4, type: 2}
   - {fileID: 11400000, guid: b7e132339626e434abe5fa17b83d647f, type: 2}
   - {fileID: 11400000, guid: 1075c32dcef44be49b4c3493a8875d3e, type: 2}
+  actorPool: {fileID: 0}
   story: {fileID: 11400000, guid: 4a3d16d5f29b52a48b74192c0bbd80d2, type: 2}
-  teamPool: {fileID: 11400000, guid: f50e89292be7d9a468ea3ebfb5663e40, type: 2}
-  actorContactPool: {fileID: 0}
-  actorDistrictPool: {fileID: 11400000, guid: 203de2836f359ee45935cc9028ce1237, type: 2}
-  actorGearPool: {fileID: 0}
-  actorMatchPool: {fileID: 11400000, guid: 66cd518c39713114a8eea05d555cfdf6, type: 2}
-  actorPoliticPool: {fileID: 11400000, guid: 3cafa210b53bc8a4cb37b8d88e3a6a62, type: 2}
-  playerDistrictPool: {fileID: 0}
-  playerGeneralPool: {fileID: 0}
-  playerStatsPool: {fileID: 0}
-  playerGearPool: {fileID: 0}
-  playerConditionsPool: {fileID: 0}
-  hqPool: {fileID: 0}
-  capturePool: {fileID: 0}
-  orgCurePool: {fileID: 0}
-  orgContractPool: {fileID: 0}
-  orgHQPool: {fileID: 0}
-  orgEmergencyPool: {fileID: 0}
-  orgInfoPool: {fileID: 0}
+  campaignPool: {fileID: 0}
   orgCure: {fileID: 0}
   orgContract: {fileID: 0}
   orgHQ: {fileID: 0}

@@ -1370,144 +1370,147 @@ public class ValidationManager : MonoBehaviour
                     Campaign campaign = arrayOfCampaigns[i];
                     if (campaign != null)
                     {
-                        //Authority Team Pool
-                        if (campaign.topicPool.teamPool != null)
-                        { CheckCampaignPool(campaign, campaign.topicPool.teamPool, authorityTeamSubType); }
-                        //HQ Pool
-                        if (campaign.topicPool.hqPool != null)
-                        { CheckCampaignPool(campaign, campaign.topicPool.hqPool, hqSubType); }
-                        //Capture Pool
-                        if (campaign.topicPool.capturePool != null)
-                        { CheckCampaignPool(campaign, campaign.topicPool.capturePool, captureSubType); }
-                        //Actor Contact Pool
-                        if (campaign.topicPool.actorContactPool != null)
-                        { CheckCampaignPool(campaign, campaign.topicPool.actorContactPool, actorContactSubType); }
-                        //Actor District Pool
-                        if (campaign.topicPool.actorDistrictPool != null)
-                        { CheckCampaignPool(campaign, campaign.topicPool.actorDistrictPool, actorDistrictSubType); }
-                        //Actor Gear Pool
-                        if (campaign.topicPool.actorGearPool != null)
-                        { CheckCampaignPool(campaign, campaign.topicPool.actorGearPool, actorGearSubType); }
-                        //Actor Match Pool
-                        if (campaign.topicPool.actorMatchPool != null)
-                        { CheckCampaignPool(campaign, campaign.topicPool.actorMatchPool, actorMatchSubType); }
-                        //Actor Politic Pool
-                        if (campaign.topicPool.actorPoliticPool != null)
-                        { CheckCampaignPool(campaign, campaign.topicPool.actorPoliticPool, actorPoliticSubType); }
-                        //Player District Pool
-                        if (campaign.topicPool.playerDistrictPool != null)
-                        { CheckCampaignPool(campaign, campaign.topicPool.playerDistrictPool, playerDistrictSubType); }
-                        //Player General Pool
-                        if (campaign.topicPool.playerGeneralPool != null)
-                        { CheckCampaignPool(campaign, campaign.topicPool.playerGeneralPool, playerGeneralSubType); }
-                        //Player Stats Pool
-                        if (campaign.topicPool.playerStatsPool != null)
-                        { CheckCampaignPool(campaign, campaign.topicPool.playerStatsPool, playerStatsSubType); }
-                        //Player Gear Pool
-                        if (campaign.topicPool.playerGearPool != null)
-                        { CheckCampaignPool(campaign, campaign.topicPool.playerGearPool, playerGearSubType); }
-                        //Player Conditions Pool
-                        if (campaign.topicPool.playerConditionsPool != null)
-                        { CheckCampaignPool(campaign, campaign.topicPool.playerConditionsPool, playerConditionsSubType); }
-                        //OrgCure Pool
-                        if (campaign.topicPool.orgCurePool != null)
-                        { CheckCampaignPool(campaign, campaign.topicPool.orgCurePool, orgCureSubType); }
-                        //OrgContract Pool
-                        if (campaign.topicPool.orgContractPool != null)
-                        { CheckCampaignPool(campaign, campaign.topicPool.orgContractPool, orgContractSubType); }
-                        //OrgHQ Pool
-                        if (campaign.topicPool.orgHQPool != null)
-                        { CheckCampaignPool(campaign, campaign.topicPool.orgHQPool, orgHQSubType); }
-                        //OrgEmergency Pool
-                        if (campaign.topicPool.orgEmergencyPool != null)
-                        { CheckCampaignPool(campaign, campaign.topicPool.orgEmergencyPool, orgEmergencySubType); }
-                        //OrgInfo Pool
-                        if (campaign.topicPool.orgInfoPool != null)
-                        { CheckCampaignPool(campaign, campaign.topicPool.orgInfoPool, orgInfoSubType); }
-                        //
-                        // - - - Scenario side and City pools (topics in pool correct side check only)
-                        //
-                        //need to do here as only way to get access, via scenario, as cities can be in multiple campaigns)
-                        if (campaign.listOfScenarios != null)
+                        if (campaign.campaignPool != null)
                         {
-                            int countScenarios = campaign.listOfScenarios.Count;
-                            if (countScenarios > 0)
+                            //Authority Team Pool
+                            if (campaign.campaignPool.teamPool != null)
+                            { CheckCampaignPool(campaign, campaign.campaignPool.teamPool, authorityTeamSubType); }
+                            //HQ Pool
+                            if (campaign.campaignPool.hqPool != null)
+                            { CheckCampaignPool(campaign, campaign.campaignPool.hqPool, hqSubType); }
+                            //Capture Pool
+                            if (campaign.campaignPool.capturePool != null)
+                            { CheckCampaignPool(campaign, campaign.campaignPool.capturePool, captureSubType); }
+                            //Actor Contact Pool
+                            if (campaign.campaignPool.actorContactPool != null)
+                            { CheckCampaignPool(campaign, campaign.campaignPool.actorContactPool, actorContactSubType); }
+                            //Actor District Pool
+                            if (campaign.campaignPool.actorDistrictPool != null)
+                            { CheckCampaignPool(campaign, campaign.campaignPool.actorDistrictPool, actorDistrictSubType); }
+                            //Actor Gear Pool
+                            if (campaign.campaignPool.actorGearPool != null)
+                            { CheckCampaignPool(campaign, campaign.campaignPool.actorGearPool, actorGearSubType); }
+                            //Actor Match Pool
+                            if (campaign.campaignPool.actorMatchPool != null)
+                            { CheckCampaignPool(campaign, campaign.campaignPool.actorMatchPool, actorMatchSubType); }
+                            //Actor Politic Pool
+                            if (campaign.campaignPool.actorPoliticPool != null)
+                            { CheckCampaignPool(campaign, campaign.campaignPool.actorPoliticPool, actorPoliticSubType); }
+                            //Player District Pool
+                            if (campaign.campaignPool.playerDistrictPool != null)
+                            { CheckCampaignPool(campaign, campaign.campaignPool.playerDistrictPool, playerDistrictSubType); }
+                            //Player General Pool
+                            if (campaign.campaignPool.playerGeneralPool != null)
+                            { CheckCampaignPool(campaign, campaign.campaignPool.playerGeneralPool, playerGeneralSubType); }
+                            //Player Stats Pool
+                            if (campaign.campaignPool.playerStatsPool != null)
+                            { CheckCampaignPool(campaign, campaign.campaignPool.playerStatsPool, playerStatsSubType); }
+                            //Player Gear Pool
+                            if (campaign.campaignPool.playerGearPool != null)
+                            { CheckCampaignPool(campaign, campaign.campaignPool.playerGearPool, playerGearSubType); }
+                            //Player Conditions Pool
+                            if (campaign.campaignPool.playerConditionsPool != null)
+                            { CheckCampaignPool(campaign, campaign.campaignPool.playerConditionsPool, playerConditionsSubType); }
+                            //OrgCure Pool
+                            if (campaign.campaignPool.orgCurePool != null)
+                            { CheckCampaignPool(campaign, campaign.campaignPool.orgCurePool, orgCureSubType); }
+                            //OrgContract Pool
+                            if (campaign.campaignPool.orgContractPool != null)
+                            { CheckCampaignPool(campaign, campaign.campaignPool.orgContractPool, orgContractSubType); }
+                            //OrgHQ Pool
+                            if (campaign.campaignPool.orgHQPool != null)
+                            { CheckCampaignPool(campaign, campaign.campaignPool.orgHQPool, orgHQSubType); }
+                            //OrgEmergency Pool
+                            if (campaign.campaignPool.orgEmergencyPool != null)
+                            { CheckCampaignPool(campaign, campaign.campaignPool.orgEmergencyPool, orgEmergencySubType); }
+                            //OrgInfo Pool
+                            if (campaign.campaignPool.orgInfoPool != null)
+                            { CheckCampaignPool(campaign, campaign.campaignPool.orgInfoPool, orgInfoSubType); }
+                            //
+                            // - - - Scenario side and City pools (topics in pool correct side check only)
+                            //
+                            //need to do here as only way to get access, via scenario, as cities can be in multiple campaigns)
+                            if (campaign.listOfScenarios != null)
                             {
-                                //loop scenarios
-                                for (int j = 0; j < countScenarios; j++)
+                                int countScenarios = campaign.listOfScenarios.Count;
+                                if (countScenarios > 0)
                                 {
-                                    Scenario scenario = campaign.listOfScenarios[j];
-                                    if (scenario != null)
+                                    //loop scenarios
+                                    for (int j = 0; j < countScenarios; j++)
                                     {
-                                        //check scenario the same side as campaign
-                                        if (scenario.side.level != campaign.side.level)
+                                        Scenario scenario = campaign.listOfScenarios[j];
+                                        if (scenario != null)
                                         {
-                                            Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", scenario \"{1}\" has invalid SIDE (is {2}, should be {3}){4}",
-                                                campaign.name, scenario.name, scenario.side.name, campaign.side.name, "\n");
-                                        }
-                                        //get city
-                                        if (scenario.city != null)
-                                        {
-                                            TopicPool pool = null;
-                                            //get city topic pool
-                                            switch (campaign.side.level)
+                                            //check scenario the same side as campaign
+                                            if (scenario.side.level != campaign.side.level)
                                             {
-                                                case 1: pool = scenario.city.cityPoolAuthority; break;
-                                                case 2: pool = scenario.city.cityPoolResistance; break;
-                                                default: Debug.LogWarningFormat("Unrecognised campaign.side \"{0}\"", campaign.side.name); break;
+                                                Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", scenario \"{1}\" has invalid SIDE (is {2}, should be {3}){4}",
+                                                    campaign.name, scenario.name, scenario.side.name, campaign.side.name, "\n");
                                             }
-                                            if (pool != null)
+                                            //get city
+                                            if (scenario.city != null)
                                             {
-                                                if (pool.listOfTopics != null)
+                                                TopicPool pool = null;
+                                                //get city topic pool
+                                                switch (campaign.side.level)
                                                 {
-                                                    if (pool.listOfTopics.Count > 0)
+                                                    case 1: pool = scenario.city.cityPoolAuthority; break;
+                                                    case 2: pool = scenario.city.cityPoolResistance; break;
+                                                    default: Debug.LogWarningFormat("Unrecognised campaign.side \"{0}\"", campaign.side.name); break;
+                                                }
+                                                if (pool != null)
+                                                {
+                                                    if (pool.listOfTopics != null)
                                                     {
-                                                        //loop topics in pool
-                                                        for (int k = 0; k < pool.listOfTopics.Count; k++)
+                                                        if (pool.listOfTopics.Count > 0)
                                                         {
-                                                            Topic topic = pool.listOfTopics[k];
-                                                            if (topic != null)
+                                                            //loop topics in pool
+                                                            for (int k = 0; k < pool.listOfTopics.Count; k++)
                                                             {
-                                                                //check topic side same as campaign side
-                                                                if (topic.side.level != campaign.side.level)
+                                                                Topic topic = pool.listOfTopics[k];
+                                                                if (topic != null)
                                                                 {
-                                                                    Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", scenario \"{1}\", city \"{2}\", pool \"{3}\", topic \"{4}\", Invalid side (is {5}, should be {6}){7}",
-                                                                        campaign.name, scenario.name, scenario.city.name, pool.name, topic.name, topic.side.name, campaign.side.name, "\n");
+                                                                    //check topic side same as campaign side
+                                                                    if (topic.side.level != campaign.side.level)
+                                                                    {
+                                                                        Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", scenario \"{1}\", city \"{2}\", pool \"{3}\", topic \"{4}\", Invalid side (is {5}, should be {6}){7}",
+                                                                            campaign.name, scenario.name, scenario.city.name, pool.name, topic.name, topic.side.name, campaign.side.name, "\n");
+                                                                    }
+                                                                }
+                                                                else
+                                                                {
+                                                                    Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", scenario \"{1}\", city \"{2}\", pool \"{3}\", listOfTopics[{4}], Invalid (Null){5}",
+                                                                 campaign.name, scenario.name, scenario.city.name, pool.name, k, "\n");
                                                                 }
                                                             }
-                                                            else
-                                                            {
-                                                                Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", scenario \"{1}\", city \"{2}\", pool \"{3}\", listOfTopics[{4}], Invalid (Null){5}",
-                                                             campaign.name, scenario.name, scenario.city.name, pool.name, k, "\n");
-                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", scenario \"{1}\", Invalid city Pool (Empty){2}",
+                                                         campaign.name, scenario.name, "\n");
                                                         }
                                                     }
                                                     else
                                                     {
-                                                        Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", scenario \"{1}\", Invalid city Pool (Empty){2}",
-                                                     campaign.name, scenario.name, "\n");
+                                                        Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", scenario \"{1}\", city \"{2}\", pool \"{3}\", Invalid (Null){4}",
+                                                     campaign.name, scenario.name, scenario.city.name, pool.name, "\n");
                                                     }
                                                 }
                                                 else
                                                 {
-                                                    Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", scenario \"{1}\", city \"{2}\", pool \"{3}\", Invalid (Null){4}",
-                                                 campaign.name, scenario.name, scenario.city.name, pool.name, "\n");
+                                                    Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", scenario \"{1}\", city \"{2}\", Invalid pool (Null){3}",
+                                                 campaign.name, scenario.name, scenario.city.name, "\n");
                                                 }
                                             }
-                                            else
-                                            {
-                                                Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", scenario \"{1}\", city \"{2}\", Invalid pool (Null){3}",
-                                             campaign.name, scenario.name, scenario.city.name, "\n");
-                                            }
+                                            else { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", scenario \"{1}\", Invalid city (Null){2}", campaign.name, scenario.name, "\n"); }
                                         }
-                                        else { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", scenario \"{1}\", Invalid city (Null){2}", campaign.name, scenario.name, "\n"); }
+                                        else { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\" listOfScenarios[{1}] Invalid (Null){2}", campaign.name, j, "\n"); }
                                     }
-                                    else { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\" listOfScenarios[{1}] Invalid (Null){2}", campaign.name, j, "\n"); }
                                 }
+                                else { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\" Invalid listOfScenarios (Empty){1}", campaign.name, "\n"); }
                             }
-                            else { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\" Invalid listOfScenarios (Empty){1}", campaign.name, "\n"); }
+                            else { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\" listOfScenarios Invalid (Null){1}", campaign.name, "\n"); }
                         }
-                        else { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\" listOfScenarios Invalid (Null){1}", campaign.name, "\n"); }
                     }
                     else { Debug.LogErrorFormat("Invalid campaign in arrayOfCampaigns[{0}]", i); }
                 }
@@ -1657,49 +1660,53 @@ public class ValidationManager : MonoBehaviour
         if (arrayOfCampaigns != null)
         {
             foreach (Campaign campaign in arrayOfCampaigns)
-            {     
-                //
-                // - - - CampaignPools
-                //
-                if (campaign.topicPool != null)
+            {
+                if (campaign.isIgnoreValidation == false)
                 {
-                    if (campaign.topicPool.campaign.name.Equals(campaign.name, StringComparison.Ordinal) == false)
-                    { Debug.LogFormat("{0} TopicPool \"{1}\" has an invalid campaign (\"{2}\", different) for campaign \"{3}\"{4}", tag, campaign.topicPool.name, campaign.topicPool.campaign.name, campaign.name, "\n"); }
+                    //
+                    // - - - CampaignPools
+                    //
+                    if (campaign.campaignPool != null)
+                    {
+                        if (campaign.campaignPool.campaign.name.Equals(campaign.name, StringComparison.Ordinal) == false)
+                        { Debug.LogFormat("{0} TopicPool \"{1}\" has an invalid campaign (\"{2}\", different) for campaign \"{3}\"{4}", tag, campaign.campaignPool.name, campaign.campaignPool.campaign.name, campaign.name, "\n"); }
+                    }
+                    else { Debug.LogFormat("{0} Invalid campaignPool (Null) for campaign \"{1}\"{2}", tag, campaign.name, "\n"); }
+                    //
+                    // - - - Organisations (correct type)
+                    //
+                    //cure
+                    if (campaign.orgCure != null)
+                    {
+                        if (campaign.orgCure.orgType.name.Equals("Cure", StringComparison.Ordinal) == false)
+                        { Debug.LogFormat("{0} campaign \"{1}\", orgCure is the wrong type (\"{2}\"){3}", tag, campaign.name, campaign.orgCure.orgType.name, "\n"); }
+                    }
+                    //contract
+                    if (campaign.orgContract != null)
+                    {
+                        if (campaign.orgContract.orgType.name.Equals("Contract", StringComparison.Ordinal) == false)
+                        { Debug.LogFormat("{0} campaign \"{1}\", orgContract is the wrong type (\"{2}\"){3}", tag, campaign.name, campaign.orgContract.orgType.name, "\n"); }
+                    }
+                    //Emergency
+                    if (campaign.orgEmergency != null)
+                    {
+                        if (campaign.orgEmergency.orgType.name.Equals("Emergency", StringComparison.Ordinal) == false)
+                        { Debug.LogFormat("{0} campaign \"{1}\", orgEmergency is the wrong type (\"{2}\"){3}", tag, campaign.name, campaign.orgEmergency.orgType.name, "\n"); }
+                    }
+                    //HQ
+                    if (campaign.orgHQ != null)
+                    {
+                        if (campaign.orgHQ.orgType.name.Equals("HQ", StringComparison.Ordinal) == false)
+                        { Debug.LogFormat("{0} campaign \"{1}\", orgHQ is the wrong type (\"{2}\"){3}", tag, campaign.name, campaign.orgHQ.orgType.name, "\n"); }
+                    }
+                    //Info
+                    if (campaign.orgInfo != null)
+                    {
+                        if (campaign.orgInfo.orgType.name.Equals("Info", StringComparison.Ordinal) == false)
+                        { Debug.LogFormat("{0} campaign \"{1}\", orgInfo is the wrong type (\"{2}\"){3}", tag, campaign.name, campaign.orgInfo.orgType.name, "\n"); }
+                    }
                 }
-                else { Debug.LogFormat("{0} Invalid topicPool (Null) for campaign \"{1}\"{2}", tag, campaign.name, "\n"); }
-                //
-                // - - - Organisations (correct type)
-                //
-                //cure
-                if (campaign.orgCure != null)
-                {
-                    if (campaign.orgCure.orgType.name.Equals("Cure", StringComparison.Ordinal) == false)
-                    { Debug.LogFormat("{0} campaign \"{1}\", orgCure is the wrong type (\"{2}\"){3}", tag, campaign.name, campaign.orgCure.orgType.name, "\n"); }
-                }
-                //contract
-                if (campaign.orgContract != null)
-                {
-                    if (campaign.orgContract.orgType.name.Equals("Contract", StringComparison.Ordinal) == false)
-                    { Debug.LogFormat("{0} campaign \"{1}\", orgContract is the wrong type (\"{2}\"){3}", tag, campaign.name, campaign.orgContract.orgType.name, "\n"); }
-                }
-                //Emergency
-                if (campaign.orgEmergency != null)
-                {
-                    if (campaign.orgEmergency.orgType.name.Equals("Emergency", StringComparison.Ordinal) == false)
-                    { Debug.LogFormat("{0} campaign \"{1}\", orgEmergency is the wrong type (\"{2}\"){3}", tag, campaign.name, campaign.orgEmergency.orgType.name, "\n"); }
-                }
-                //HQ
-                if (campaign.orgHQ != null)
-                {
-                    if (campaign.orgHQ.orgType.name.Equals("HQ", StringComparison.Ordinal) == false)
-                    { Debug.LogFormat("{0} campaign \"{1}\", orgHQ is the wrong type (\"{2}\"){3}", tag, campaign.name, campaign.orgHQ.orgType.name, "\n"); }
-                }
-                //Info
-                if (campaign.orgInfo != null)
-                {
-                    if (campaign.orgInfo.orgType.name.Equals("Info", StringComparison.Ordinal) == false)
-                    { Debug.LogFormat("{0} campaign \"{1}\", orgInfo is the wrong type (\"{2}\"){3}", tag, campaign.name, campaign.orgInfo.orgType.name, "\n"); }
-                }
+                else { Debug.LogFormat("{0} campaign \"{1}\" is excluded from all Validation checks{2}", tag, campaign.name, "\n"); }
             }
         }
         else { Debug.LogError("Invalid arrayOfCampaigns (Null)"); }

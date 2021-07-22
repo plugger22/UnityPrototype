@@ -14,6 +14,10 @@ public class Campaign : ScriptableObject
     [Tooltip("Description of campaign used in-game")]
     public string descriptor;
 
+    [Header("Validation")]
+    [Tooltip("If checked this will exclude the campaign from all validation checks")]
+    public bool isIgnoreValidation;
+
     [Header("Side")]
     [Tooltip("Player side for this Campaign")]
     public GlobalSide side;
@@ -32,7 +36,7 @@ public class Campaign : ScriptableObject
 
     [Header("Topic Pools")]
     [Tooltip("Master collection of all relevant topic pools for this campaign")]
-    public CampaignPool topicPool;
+    public CampaignPool campaignPool;
 
     [Header("Organisations")]
     [Tooltip("Org that provides Cures for any condition that needs them")]
@@ -80,7 +84,7 @@ public class Campaign : ScriptableObject
         if (side.level == 2)
         {
             Debug.Assert(actorPool != null, "Invalid actorPool (Null)");
-            Debug.Assert(topicPool != null, "Invalid CampaignPool (Null)");
+            Debug.Assert(campaignPool != null, "Invalid CampaignPool (Null)");
 
             Debug.Assert(orgCure != null, "Invalid orgCure (Null)");
             Debug.Assert(orgContract != null, "Invalid orgContract (Null)");
