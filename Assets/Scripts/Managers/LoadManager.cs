@@ -28,6 +28,7 @@ public class LoadManager : MonoBehaviour
     public TargetType[] arrayOfTargetTypes;
     public TargetTrigger[] arrayOfTargetTriggers;
     public TargetProfile[] arrayOfTargetProfiles;
+    public TextListType[] arrayOfTextListTypes;
     public Quality[] arrayOfQualities;
     public Colour[] arrayOfColours;
     public CitySize[] arrayOfCitySize;
@@ -70,6 +71,7 @@ public class LoadManager : MonoBehaviour
     public TextList[] arrayOfAdvertTextLists;
     public TextList[] arrayOfCrisisTextLists;
     public TextList[] arrayOfTutorialTextLists;
+    public TextList[] arrayOfNewsTextLists;
 
     [Header("NameSets -> ToolManager Duplicates")]
     public NameSet[] arrayOfNameSets;
@@ -556,6 +558,13 @@ public class LoadManager : MonoBehaviour
         arrayOfTargets = listOfTargets.ToArray();
         Debug.LogFormat("[Loa] InitialiseEarly: arrayOfTargets has {0} entries{1}", arrayOfTargets.Length, "\n");
         //
+        // - - - TextListTypes (not stored in a collection)
+        //
+        numArray = arrayOfTextListTypes.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTextListTypes has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No TextListTypes present"); }
+        //
         // - - - Text Lists Contacts (not stored in a collection)
         //
         numArray = arrayOfContactTextLists.Length;
@@ -612,6 +621,13 @@ public class LoadManager : MonoBehaviour
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTutorialTextLists has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No TutorialTextLists present"); }
         //
+        // - - - Text Lists News (not stored in a collection)
+        //
+        numArray = arrayOfNewsTextLists.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfNewsTextLists has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No NewsTextLists present"); }
+        //
         // - - - Text Lists -> Consolidate into master array
         //
         List<TextList> listOfTextLists = new List<TextList>();
@@ -624,6 +640,7 @@ public class LoadManager : MonoBehaviour
         listOfTextLists.AddRange(arrayOfAdvertTextLists);
         listOfTextLists.AddRange(arrayOfCrisisTextLists);
         listOfTextLists.AddRange(arrayOfTutorialTextLists);
+        listOfTextLists.AddRange(arrayOfNewsTextLists);
         arrayOfTextLists = listOfTextLists.ToArray();
         //check master array
         numArray = arrayOfTextLists.Length;

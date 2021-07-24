@@ -12806,3 +12806,29 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:384)
 	GameManager:Update() (at Assets/Scripts/GameManager.cs:474)
 	
+Dev seed 16840 -> Saturday, 24 July 2021 4:33 PM
+City seed 64198 -> Londus, Eurasia
+
+Dev seed 20432 -> Saturday, 24 July 2021 5:00 PM
+City seed 52203 -> Londus, Eurasia
+
+Dev seed 48314 -> Saturday, 24 July 2021 5:09 PM
+City seed 60356 -> Londus, Eurasia
+ASSERT FormatException: Index (zero based) must be greater than or equal to zero and less than the size of the argument list.
+System.Text.StringBuilder.AppendFormatHelper (System.IFormatProvider provider, System.String format, System.ParamsArray args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.String.FormatHelper (System.IFormatProvider provider, System.String format, System.ParamsArray args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.String.Format (System.String format, System.Object[] args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	UnityEngine.DebugLogHandler.LogFormat (UnityEngine.LogType logType, UnityEngine.Object context, System.String format, System.Object[] args) (at C:/buildslave/unity/build/Runtime/Export/Logger/DebugLogHandler.cs:9)
+	UnityEngine.Logger.LogFormat (UnityEngine.LogType logType, System.String format, System.Object[] args) (at C:/buildslave/unity/build/Runtime/Export/Logger/Logger.cs:113)
+	UnityEngine.Debug.LogFormat (System.String format, System.Object[] args) (at C:/buildslave/unity/build/Runtime/Export/Debug.bindings.cs:108)
+	ValidationManager.ValidateCampaigns () (at Assets/Scripts/Managers/ValidationManager.cs:1692)
+	ValidationManager.Initialise (gameAPI.GameState state) (at Assets/Scripts/Managers/ValidationManager.cs:175)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:936)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:997)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:440)
+	
+Dev seed 19571 -> Saturday, 24 July 2021 5:09 PM
+City seed 4453 -> Londus, Eurasia
+
+Dev seed 39904 -> Saturday, 24 July 2021 5:12 PM
+City seed 59504 -> Londus, Eurasia

@@ -1658,6 +1658,7 @@ public class ValidationManager : MonoBehaviour
     //runs checks on campaigns
     private void ValidateCampaigns()
     {
+        int count;
         string tag = "[Val] ValidationManager.cs -> ValidateCampaigns:";
         Campaign[] arrayOfCampaigns = GameManager.i.loadScript.arrayOfCampaigns;
         if (arrayOfCampaigns != null)
@@ -1675,6 +1676,25 @@ public class ValidationManager : MonoBehaviour
                         { Debug.LogFormat("{0} TopicPool \"{1}\" has an invalid campaign (\"{2}\", different) for campaign \"{3}\"{4}", tag, campaign.campaignPool.name, campaign.campaignPool.campaign.name, campaign.name, "\n"); }
                     }
                     else { Debug.LogFormat("{0} Invalid campaignPool (Null) for campaign \"{1}\"{2}", tag, campaign.name, "\n"); }
+                    //
+                    // - - - Newspool
+                    //
+                    if (campaign.newsPool != null)
+                    {
+                        count = campaign.newsPool.Count;
+                        if (count > 0)
+                        {
+                            for (int i = 0; i < count; i++)
+                            {
+                                //check each textList in newsPool is off type news
+                                if (campaign.newsPool[i].category.name.Equals("News", StringComparison.Ordinal) == false)
+                                {
+                                    Debug.LogFormat("{0} textList in \"{1}\".newsPool \"{2}\", invalid type (\"{3}\" should be 'News'){4}", tag, campaign.name, campaign.newsPool[i].name,
+                                      campaign.newsPool[i].category.name, "\n");
+                                }
+                            }
+                        }
+                    }
                     //
                     // - - - Organisations (correct type)
                     //
@@ -2323,6 +2343,8 @@ public class ValidationManager : MonoBehaviour
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfGameHelp);
         //CampaignPools
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfCampaignPools);
+        //TextListTypes
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfTextListTypes);
 
     }
     #endregion

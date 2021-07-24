@@ -70,6 +70,7 @@ public class NewsManager : MonoBehaviour
     {
         //set up adverts for ticker text
         GameManager.i.dataScript.InitialiseAdvertList();
+        GameManager.i.dataScript.InitialiseCampaignNews();
     }
     #endregion
 

@@ -197,8 +197,9 @@ public class DataManager : MonoBehaviour
     private List<TopicType> listOfTopicTypes = new List<TopicType>();                                           //All topic Types
     private List<TopicType> listOfTopicTypesLevel = new List<TopicType>();                                      //Topic types available for the current level
 
-    //NewsFeed
+    //News
     private List<NewsItem> listOfNewsItems = new List<NewsItem>();
+    private List<string> listOfCampaignNews = new List<string>();
 
     //Adverts
     private List<string> listOfAdverts = new List<string>();
@@ -8616,13 +8617,8 @@ public class DataManager : MonoBehaviour
     { return dictOfStatisticsCampaign; }
 
 
-    /*//
-    // - - - Scenarios - - -
-    //
 
-    public Dictionary<int, Scenario> GetDictOfScenarios()
-    { return dictOfScenarios; }*/
-
+    #region Campaigns...
     //
     // - - - Campaigns - - -
     //
@@ -8642,7 +8638,9 @@ public class DataManager : MonoBehaviour
         { campaign = dictOfCampaigns[campaignName]; }
         return campaign;
     }
+    #endregion
 
+    #region Sprites...
     //
     // - - - Sprites - - -
     //
@@ -8666,9 +8664,9 @@ public class DataManager : MonoBehaviour
         else { Debug.LogErrorFormat("Invalid spriteName (Null or Empty) for \"{0}\"", spriteName); }
         return sprite;
     }
+    #endregion
 
-
-    #region SO Enum Dictionary methods
+    #region SO Enum Dictionary methods...
     //
     // - - - SO Enum dictionaries
     //
@@ -8776,7 +8774,7 @@ public class DataManager : MonoBehaviour
 
     #endregion
 
-    #region Personality
+    #region Personality...
     //
     // - - - Personality - - -
     //
@@ -8860,7 +8858,7 @@ public class DataManager : MonoBehaviour
     }
     #endregion
 
-    #region Topics
+    #region Topics...
 
     public Dictionary<string, TopicTypeData> GetDictOfTopicTypeData()
     { return dictOfTopicTypeData; }
@@ -9107,12 +9105,16 @@ public class DataManager : MonoBehaviour
 
     #endregion
 
+    #region News...
     //
     // - - - News Feed - - -
     //
 
     public List<NewsItem> GetListOfNewsItems()
     { return listOfNewsItems; }
+
+    public List<string> GetListOfCampaignNews()
+    { return listOfCampaignNews; }
 
     /// <summary>
     /// Add news item
@@ -9139,6 +9141,41 @@ public class DataManager : MonoBehaviour
         else { Debug.LogError("Invalid listOfNews (Null)"); }
     }
 
+    /// <summary>
+    /// Initialise any campaign scope news into a single list at the start of a campaign
+    /// </summary>
+    public void InitialiseCampaignNews()
+    {
+        List<TextList> listOfTextLists = GameManager.i.campaignScript.campaign.newsPool;
+        if (listOfTextLists != null)
+        {
+            //clear campaign news first
+            listOfCampaignNews.Clear();
+            //merge all text lists into a single list
+            List<string> tempList;
+            int count = listOfTextLists.Count;
+            if (count > 0)
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    tempList = listOfTextLists[i].randomList;
+                    if (tempList != null)
+                    {
+                        //add to list
+                        listOfCampaignNews.AddRange(tempList);
+                    }
+                    else { Debug.LogErrorFormat("Invalid randomList (Null) from campaign.newsPool[{0}]", i); }
+                }
+                count = listOfCampaignNews.Count;
+                Debug.LogFormat("[Cam] DataManager.cs -> InitialiseCampaignNews: listOfCampaignNews has {0} record{1}{2}", count, count != 1 ? "s" : "", "\n");
+            }
+        }
+        else { Debug.LogError("Invalid listOfTextLists (Null)"); }
+    }
+
+    #endregion
+
+    #region Adverts...
     //
     // - - - Adverts
     //
@@ -9183,7 +9220,9 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfAdverts (Null)"); }
     }
+    #endregion
 
+    #region Billboards...
     //
     // - - - Billboards
     //
@@ -9305,14 +9344,18 @@ public class DataManager : MonoBehaviour
         { listOfBillboardsSeen.Add(billboardName); }
         else { Debug.LogError("Invalid billboardName (Null or Empty)"); }
     }
+    #endregion
 
+    #region TextLists...
     //
     // - - - Text Lists
     //
 
     public Dictionary<string, TextList> GetDictOfTextList()
     { return dictOfTextLists; }
+    #endregion
 
+    #region Development only...
     //
     // - - - Development only
     //
@@ -9360,6 +9403,7 @@ public class DataManager : MonoBehaviour
         { builder.AppendFormat("{0}{1}", "\n", tag); }
         return builder.ToString();
     }
+    #endregion
 
     #region Actor Relations...
     //

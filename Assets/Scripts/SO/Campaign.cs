@@ -34,6 +34,10 @@ public class Campaign : ScriptableObject
     [Tooltip("Module that holds all possible stories for the campaign and all related data")]
     public StoryModule story;
 
+    [Header("Global Newspool")]
+    [Tooltip("Add all relevant news TextLists (from zero to any number) that will be used to generate news across the campaign")]
+    public List<TextList> newsPool;
+
     [Header("Topic Pools")]
     [Tooltip("Master collection of all relevant topic pools for this campaign")]
     public CampaignPool campaignPool;
