@@ -63,27 +63,27 @@ public class OrganisationManager : MonoBehaviour
         if (listOfOrgs != null)
         {
             //cure
-            Organisation org = GameManager.i.campaignScript.campaign.orgCure;
+            Organisation org = GameManager.i.campaignScript.campaign.details.orgCure;
             if (org != null)
             { listOfOrgs.Add(org); }
             else { Debug.LogWarningFormat("Invalid campaign.orgCure (Null)"); }
             //contract
-            org = GameManager.i.campaignScript.campaign.orgContract;
+            org = GameManager.i.campaignScript.campaign.details.orgContract;
             if (org != null)
             { listOfOrgs.Add(org); }
             else { Debug.LogWarningFormat("Invalid campaign.orgContract (Null)"); }
             //HQ
-            org = GameManager.i.campaignScript.campaign.orgHQ;
+            org = GameManager.i.campaignScript.campaign.details.orgHQ;
             if (org != null)
             { listOfOrgs.Add(org); }
             else { Debug.LogWarningFormat("Invalid campaign.orgHQ (Null)"); }
             //Emergency
-            org = GameManager.i.campaignScript.campaign.orgEmergency;
+            org = GameManager.i.campaignScript.campaign.details.orgEmergency;
             if (org != null)
             { listOfOrgs.Add(org); }
             else { Debug.LogWarningFormat("Invalid campaign.orgEmergency (Null)"); }
             //Info
-            org = GameManager.i.campaignScript.campaign.orgInfo;
+            org = GameManager.i.campaignScript.campaign.details.orgInfo;
             if (org != null)
             { listOfOrgs.Add(org); }
             else { Debug.LogWarningFormat("Invalid campaign.orgInfo (Null)"); }
@@ -327,7 +327,7 @@ public class OrganisationManager : MonoBehaviour
         //reset array to false (Not tracking anything)
         GameManager.i.dataScript.SetOrgInfoType(orgInfoType, false);
         //reset timer
-        Organisation org = GameManager.i.campaignScript.campaign.orgInfo;
+        Organisation org = GameManager.i.campaignScript.campaign.details.orgInfo;
         if (org != null)
         { org.timer = 0; }
         else { Debug.LogError("Invalid orgInfo (Null)"); }

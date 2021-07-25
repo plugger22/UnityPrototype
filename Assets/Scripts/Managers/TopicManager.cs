@@ -2775,7 +2775,7 @@ public class TopicManager : MonoBehaviour
         GroupType group = GroupType.Neutral;
         List<Topic> listOfTopics = new List<Topic>();
 
-        Organisation org = GameManager.i.campaignScript.campaign.orgEmergency;
+        Organisation org = GameManager.i.campaignScript.campaign.details.orgEmergency;
         if (org != null)
         {
             tagOrgName = org.name;
@@ -2808,7 +2808,7 @@ public class TopicManager : MonoBehaviour
         GroupType group = GroupType.Neutral;
         List<Topic> listOfTopics = new List<Topic>();
 
-        Organisation org = GameManager.i.campaignScript.campaign.orgCure;
+        Organisation org = GameManager.i.campaignScript.campaign.details.orgCure;
         if (org != null)
         {
             tagOrgName = org.name;
@@ -2848,7 +2848,7 @@ public class TopicManager : MonoBehaviour
         GroupType group = GroupType.Neutral;
         List<Topic> listOfTopics = new List<Topic>();
 
-        Organisation org = GameManager.i.campaignScript.campaign.orgContract;
+        Organisation org = GameManager.i.campaignScript.campaign.details.orgContract;
         if (org != null)
         {
 
@@ -2906,7 +2906,7 @@ public class TopicManager : MonoBehaviour
         GroupType group = GroupType.Neutral;
         List<Topic> listOfTopics = new List<Topic>();
 
-        Organisation org = GameManager.i.campaignScript.campaign.orgHQ;
+        Organisation org = GameManager.i.campaignScript.campaign.details.orgHQ;
         if (org != null)
         {
             tagOrgName = org.name;
@@ -2944,7 +2944,7 @@ public class TopicManager : MonoBehaviour
         GroupType group = GroupType.Neutral;
         List<Topic> listOfTopics = new List<Topic>();
 
-        Organisation org = GameManager.i.campaignScript.campaign.orgEmergency;
+        Organisation org = GameManager.i.campaignScript.campaign.details.orgEmergency;
         if (org != null)
         {
             tagOrgName = org.name;
@@ -2982,7 +2982,7 @@ public class TopicManager : MonoBehaviour
         GroupType group = GroupType.Neutral;
         List<Topic> listOfTopics = new List<Topic>();
 
-        Organisation org = GameManager.i.campaignScript.campaign.orgInfo;
+        Organisation org = GameManager.i.campaignScript.campaign.details.orgInfo;
         if (org != null)
         {
             tagOrgName = org.name;
@@ -4397,11 +4397,11 @@ public class TopicManager : MonoBehaviour
                     //Organisation subTypes, need an name for EffectManager.cs -> CheckCriteria
                     switch (topic.subType.name)
                     {
-                        case "OrgCure": tagOrgName = GameManager.i.campaignScript.campaign.orgCure.name; break;
-                        case "OrgContract": tagOrgName = GameManager.i.campaignScript.campaign.orgContract.name; break;
-                        case "OrgHQ": tagOrgName = GameManager.i.campaignScript.campaign.orgHQ.name; break;
-                        case "OrgEmergency": tagOrgName = GameManager.i.campaignScript.campaign.orgEmergency.name; break;
-                        case "OrgInfo": tagOrgName = GameManager.i.campaignScript.campaign.orgInfo.name; break;
+                        case "OrgCure": tagOrgName = GameManager.i.campaignScript.campaign.details.orgCure.name; break;
+                        case "OrgContract": tagOrgName = GameManager.i.campaignScript.campaign.details.orgContract.name; break;
+                        case "OrgHQ": tagOrgName = GameManager.i.campaignScript.campaign.details.orgHQ.name; break;
+                        case "OrgEmergency": tagOrgName = GameManager.i.campaignScript.campaign.details.orgEmergency.name; break;
+                        case "OrgInfo": tagOrgName = GameManager.i.campaignScript.campaign.details.orgInfo.name; break;
                         default: Debug.LogWarningFormat("Unrecognised subType.name \"{0}\"", topic.subType.name); break;
                     }
                     break;
@@ -4554,11 +4554,11 @@ public class TopicManager : MonoBehaviour
             {
                 switch (subType.name)
                 {
-                    case "OrgCure": tagOrgName = GameManager.i.campaignScript.campaign.orgCure.name; break;
-                    case "OrgContract": tagOrgName = GameManager.i.campaignScript.campaign.orgContract.name; break;
-                    case "OrgHQ": tagOrgName = GameManager.i.campaignScript.campaign.orgHQ.name; break;
-                    case "OrgEmergency": tagOrgName = GameManager.i.campaignScript.campaign.orgEmergency.name; break;
-                    case "OrgInfo": tagOrgName = GameManager.i.campaignScript.campaign.orgInfo.name; break;
+                    case "OrgCure": tagOrgName = GameManager.i.campaignScript.campaign.details.orgCure.name; break;
+                    case "OrgContract": tagOrgName = GameManager.i.campaignScript.campaign.details.orgContract.name; break;
+                    case "OrgHQ": tagOrgName = GameManager.i.campaignScript.campaign.details.orgHQ.name; break;
+                    case "OrgEmergency": tagOrgName = GameManager.i.campaignScript.campaign.details.orgEmergency.name; break;
+                    case "OrgInfo": tagOrgName = GameManager.i.campaignScript.campaign.details.orgInfo.name; break;
                     default: Debug.LogWarningFormat("Unrecognised subType.name \"{0}\"", subType.name); break;
                 }
             }
@@ -7256,11 +7256,11 @@ public class TopicManager : MonoBehaviour
                     Organisation org = null;
                     switch (turnTopicSubType.name)
                     {
-                        case "OrgCure": org = GameManager.i.campaignScript.campaign.orgCure; break;
-                        case "OrgContract": org = GameManager.i.campaignScript.campaign.orgContract; break;
-                        case "OrgHQ": org = GameManager.i.campaignScript.campaign.orgHQ; break;
-                        case "OrgEmergency": org = GameManager.i.campaignScript.campaign.orgEmergency; break;
-                        case "OrgInfo": org = GameManager.i.campaignScript.campaign.orgInfo; break;
+                        case "OrgCure": org = GameManager.i.campaignScript.campaign.details.orgCure; break;
+                        case "OrgContract": org = GameManager.i.campaignScript.campaign.details.orgContract; break;
+                        case "OrgHQ": org = GameManager.i.campaignScript.campaign.details.orgHQ; break;
+                        case "OrgEmergency": org = GameManager.i.campaignScript.campaign.details.orgEmergency; break;
+                        case "OrgInfo": org = GameManager.i.campaignScript.campaign.details.orgInfo; break;
                         default: Debug.LogWarningFormat("Unrecognised turnTopicSubType.name \"{0}\"", turnTopicSubType.name); break;
                     }
                     if (org != null)
@@ -7761,7 +7761,7 @@ public class TopicManager : MonoBehaviour
                 if (listOfTopics != null)
                 {
                     int maxNodeID = GameManager.i.nodeScript.maxNodeValue;
-                    tagOrgTag = GameManager.i.campaignScript.campaign.orgInfo.tag;
+                    tagOrgTag = GameManager.i.campaignScript.campaign.details.orgInfo.tag;
                     if (Random.Range(0, 100) < 50) { tagRecruit = GameManager.i.cityScript.GetCity().nameSet.firstFemaleNames.GetRandomRecord(); }
                     else { tagRecruit = GameManager.i.cityScript.GetCity().nameSet.firstMaleNames.GetRandomRecord(); }
                     tagRecruit += " " + GameManager.i.cityScript.GetCity().nameSet.lastNames.GetRandomRecord();

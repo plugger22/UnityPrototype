@@ -177,7 +177,7 @@ public class MissionManager : MonoBehaviour
                         Node node = mission.npc.currentNode;
                         if (node != null)
                         {
-                            string text = string.Format("{0} tracks {1} at {2}, {3}, ID {4}", GameManager.i.campaignScript.campaign.orgInfo.tag, mission.npc.tag, node.nodeName, node.Arc.name,
+                            string text = string.Format("{0} tracks {1} at {2}, {3}, ID {4}", GameManager.i.campaignScript.campaign.details.orgInfo.tag, mission.npc.tag, node.nodeName, node.Arc.name,
                                 node.nodeID);
                             GameManager.i.messageScript.OrganisationNpc(text, node, mission.npc);
                         }
@@ -700,7 +700,7 @@ public class MissionManager : MonoBehaviour
         GameManager.i.nodeScript.nodeNpc = -1;
         Debug.LogFormat("[Npc] MissionManager.cs -> ProcessNpcDepart: Npc \"{0}\" Departed{1}", npc.tag, "\n");
         //infoOrg reset
-        if (GameManager.i.campaignScript.campaign.orgInfo != null)
+        if (GameManager.i.campaignScript.campaign.details.orgInfo != null)
         { GameManager.i.orgScript.CancelOrgInfoTracking(OrgInfoType.Npc); }
     }
 

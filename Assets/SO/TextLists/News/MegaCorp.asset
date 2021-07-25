@@ -9,14 +9,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
-  m_Name: Space
+  m_Name: MegaCorp
   m_EditorClassIdentifier: 
-  descriptor: 'Global news items (applies across a campaign) for the topic of Space.
+  descriptor: 'Global news items (applies across a campaign) for the topic of MegaCorps.
 
     NewsManager.cs text tags can be used'
   category: {fileID: 11400000, guid: cc52e86dfb7f79e4aa745f9ed4b1c80b, type: 2}
   isTestForDuplicates: 1
   isTestForTextTags: 1
   randomList:
-  - Space news test
+  - MegaCorp news test  [city]
   index: 0

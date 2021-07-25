@@ -4770,7 +4770,7 @@ public class MessageManager : MonoBehaviour
         if (string.IsNullOrEmpty(text) == false)
         {
             //get org info
-            Organisation org = GameManager.i.campaignScript.campaign.orgInfo;
+            Organisation org = GameManager.i.campaignScript.campaign.details.orgInfo;
             if (org != null)
             {
                 Message message = new Message();
@@ -4821,7 +4821,7 @@ public class MessageManager : MonoBehaviour
         if (string.IsNullOrEmpty(text) == false)
         {
             //get org info
-            Organisation org = GameManager.i.campaignScript.campaign.orgInfo;
+            Organisation org = GameManager.i.campaignScript.campaign.details.orgInfo;
             if (org != null)
             {
                 Message message = new Message();
@@ -4866,7 +4866,7 @@ public class MessageManager : MonoBehaviour
         if (string.IsNullOrEmpty(text) == false)
         {
             //get org info
-            Organisation org = GameManager.i.campaignScript.campaign.orgInfo;
+            Organisation org = GameManager.i.campaignScript.campaign.details.orgInfo;
             if (org != null)
             {
                 bool isStealthMode = false;

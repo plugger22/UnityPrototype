@@ -18,5 +18,5 @@ MonoBehaviour:
   isTestForDuplicates: 1
   isTestForTextTags: 1
   randomList:
-  - Climate news test
+  - Climate news test [city]
   index: 0

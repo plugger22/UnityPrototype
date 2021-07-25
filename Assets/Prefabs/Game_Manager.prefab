@@ -1501,6 +1501,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2126e2104dc710c43a4656461c55aeb2, type: 2}
   - {fileID: 11400000, guid: 3cac112efe0822249b012aabfba261d5, type: 2}
   - {fileID: 11400000, guid: 15a61a57750900343b859ddd2314ee88, type: 2}
+  arrayOfTextListTypes:
+  - {fileID: 11400000, guid: c8fc3b650132cb646b80a21d2eded36c, type: 2}
+  - {fileID: 11400000, guid: bbd40e5a7e48ffa49a4904bb8db8ed17, type: 2}
+  - {fileID: 11400000, guid: 152af5ed149af164ebf94c55d5e1a273, type: 2}
+  - {fileID: 11400000, guid: 8c3d71e162950234e9ea67442945c204, type: 2}
+  - {fileID: 11400000, guid: fef2ecbea1e30dd45a7b334a46f48515, type: 2}
+  - {fileID: 11400000, guid: 0b65e91319c84cb4faa1878553d83b32, type: 2}
+  - {fileID: 11400000, guid: 6825b2997be0191448f1e386a06ee602, type: 2}
+  - {fileID: 11400000, guid: e652d0417dbe7ed4b8aec62ea50a2d8e, type: 2}
+  - {fileID: 11400000, guid: cc52e86dfb7f79e4aa745f9ed4b1c80b, type: 2}
   arrayOfQualities:
   - {fileID: 11400000, guid: 5ad75c9a57dd5974ca71471b002beb6a, type: 2}
   - {fileID: 11400000, guid: 9410d882baed50b4b9c5129422340952, type: 2}
@@ -1618,7 +1628,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 564543bbaaeeb7541b861970caea63e7, type: 2}
   - {fileID: 11400000, guid: cf32935db69b78d42ad55ad5687bc9a4, type: 2}
   arrayOfCampaignPools:
-  - {fileID: 11400000, guid: b998088c69e26db45b040c5ea9eccbe1, type: 2}
+  - {fileID: 0}
+  arrayOfCampaignDetails:
+  - {fileID: 11400000, guid: 40e9aad61e73f1c47867ea7c46f5cc8e, type: 2}
+  - {fileID: 11400000, guid: 0ec05877a9da9d74d933fde67554884f, type: 2}
   arrayOfActorDraftSex:
   - {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
   - {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}
@@ -1811,6 +1824,13 @@ MonoBehaviour:
   arrayOfTutorialTextLists:
   - {fileID: 11400000, guid: 77da817c0d61f5d4cb968b30ce6512c1, type: 2}
   - {fileID: 11400000, guid: bb07f8636828f564faa134abdbad837a, type: 2}
+  arrayOfNewsTextLists:
+  - {fileID: 11400000, guid: 358320b2421f39c43973431844b407d3, type: 2}
+  - {fileID: 11400000, guid: 5baf0c1121a8e3047b1eb50482d929ed, type: 2}
+  - {fileID: 11400000, guid: 74ce19fa99c2af44b8ff644122813db9, type: 2}
+  - {fileID: 11400000, guid: ea930f20bad5c624a9b9e7d04c4d642b, type: 2}
+  - {fileID: 11400000, guid: d337ee286201c004782a1c8901e1fdb4, type: 2}
+  - {fileID: 11400000, guid: aabac27af6b2c7847bdb7550b00fa262, type: 2}
   arrayOfNameSets:
   - {fileID: 11400000, guid: 195743710f6a69f47acd502168cd250c, type: 2}
   - {fileID: 11400000, guid: 56b7e91ac8e6f3d449828205cc0d2f2a, type: 2}
@@ -6539,6 +6559,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timerMaxItemTurns: 2
   numOfNewsItems: 1
+  chanceOfCampaignNews: 0
 --- !u!114 &114656477723242970
 MonoBehaviour:
   m_ObjectHideFlags: 1

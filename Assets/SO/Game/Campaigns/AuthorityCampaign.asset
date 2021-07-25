@@ -22,7 +22,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1075c32dcef44be49b4c3493a8875d3e, type: 2}
   actorPool: {fileID: 0}
   story: {fileID: 11400000, guid: 4a3d16d5f29b52a48b74192c0bbd80d2, type: 2}
+  newsPool: []
   campaignPool: {fileID: 0}
+  details: {fileID: 11400000, guid: 40e9aad61e73f1c47867ea7c46f5cc8e, type: 2}
   orgCure: {fileID: 0}
   orgContract: {fileID: 0}
   orgHQ: {fileID: 0}

@@ -480,10 +480,10 @@ public class CampaignManager : MonoBehaviour
         Gear gear = null;
         switch (actorHQ)
         {
-            case ActorHQ.Boss: gear = campaign.specialBossGear; break;
-            case ActorHQ.SubBoss1: gear = campaign.specialSubBoss1Gear; break;
-            case ActorHQ.SubBoss2: gear = campaign.specialSubBoss2Gear; break;
-            case ActorHQ.SubBoss3: gear = campaign.specialSubBoss3Gear; break;
+            case ActorHQ.Boss: gear = campaign.details.specialBossGear; break;
+            case ActorHQ.SubBoss1: gear = campaign.details.specialSubBoss1Gear; break;
+            case ActorHQ.SubBoss2: gear = campaign.details.specialSubBoss2Gear; break;
+            case ActorHQ.SubBoss3: gear = campaign.details.specialSubBoss3Gear; break;
             default: Debug.LogWarningFormat("Unrecognised actorHQ \"{0}\"", actorHQ); break;
         }
         return gear;
@@ -529,19 +529,19 @@ public class CampaignManager : MonoBehaviour
         builder.AppendFormat(" Campaign WinReason: {0}{1}", GameManager.i.turnScript.winReasonCampaign, "\n");
         //organisations
         builder.AppendFormat("{0} Organisations{1}", "\n", "\n");
-        Organisation org = campaign.orgCure;
+        Organisation org = campaign.details.orgCure;
         if (org != null)
         { builder.AppendFormat(" orgCure: {0}, rep {1}, free {2}, isContact {3}{4}", org.tag, org.GetReputation(), org.GetFreedom(), org.isContact, "\n"); }
-        org = campaign.orgContract;
+        org = campaign.details.orgContract;
         if (org != null)
         { builder.AppendFormat(" orgContract: {0}, rep {1}, free {2}, isContact {3}{4}", org.tag, org.GetReputation(), org.GetFreedom(), org.isContact, "\n"); }
-        org = campaign.orgHQ;
+        org = campaign.details.orgHQ;
         if (org != null)
         { builder.AppendFormat(" orgHQ: {0}, rep {1}, free {2}, isContact {3}{4}", org.tag, org.GetReputation(), org.GetFreedom(), org.isContact, "\n"); }
-        org = campaign.orgEmergency;
+        org = campaign.details.orgEmergency;
         if (org != null)
         { builder.AppendFormat(" orgEmergency: {0}, rep {1}, free {2}, isContact {3}{4}", org.tag, org.GetReputation(), org.GetFreedom(), org.isContact, "\n"); }
-        org = campaign.orgInfo;
+        org = campaign.details.orgInfo;
         if (org != null)
         { builder.AppendFormat(" orgInfo: {0}, rep {1}, free {2}, isContact {3}{4}", org.tag, org.GetReputation(), org.GetFreedom(), org.isContact, "\n"); }
         return builder.ToString();

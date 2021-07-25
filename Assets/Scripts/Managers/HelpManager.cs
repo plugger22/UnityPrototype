@@ -1535,7 +1535,7 @@ public class HelpManager : MonoBehaviour
         //Overview
         data = new HelpData();
         data.tag = "orgInfo_0";
-        Organisation org = GameManager.i.campaignScript.campaign.orgInfo;
+        Organisation org = GameManager.i.campaignScript.campaign.details.orgInfo;
         if (org != null)
         {
             data.header = org.tag;

@@ -132,7 +132,6 @@ public class DataManager : MonoBehaviour
     private List<ActorArc> resistanceActorArcs = new List<ActorArc>();
     private List<Trait> listOfAllTraits = new List<Trait>();
 
-
     //manage actor choices
     private List<ManageAction> listOfActorHandle = new List<ManageAction>();
     private List<ManageAction> listOfActorReserve = new List<ManageAction>();
@@ -4312,6 +4311,7 @@ public class DataManager : MonoBehaviour
         else { Debug.LogError("Invalid listOfHqEvents (Null)"); }
     }
 
+    #region Actors...
     //
     // - - - Actors - - -
     //
@@ -5840,10 +5840,11 @@ public class DataManager : MonoBehaviour
         return builder.ToString();
     }
 
+#endregion
 
-
+    #region Actor Nodes and Qualities
     //
-    // - - - Actor Nodes & Qualities - - -
+    // - - - Actor Qualities - - -
     //
 
     /// <summary>
@@ -5916,7 +5917,9 @@ public class DataManager : MonoBehaviour
 
     public string[,] GetArrayOfStatTags()
     { return arrayOfStatTags; }
+#endregion
 
+    #region Secrets...
     //
     // - - - Secrets - - -
     //
@@ -6094,6 +6097,9 @@ public class DataManager : MonoBehaviour
         return builder.ToString();
     }
 
+#endregion
+
+    #region Investigations...
     //
     // - - - Investigations - - -
     //
@@ -6125,8 +6131,9 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfInvestigations (Null)"); }
     }
+#endregion
 
-
+    #region Gear...
     //
     // - - - Gear - - -
     //
@@ -6687,6 +6694,9 @@ public class DataManager : MonoBehaviour
         return builder.ToString();
     }
 
+#endregion
+
+    #region Messages...
     //
     // - - - Messages - - -
     //
@@ -7108,6 +7118,9 @@ public class DataManager : MonoBehaviour
         return builderOverall.ToString();
     }
 
+#endregion
+
+    #region Effects...
     //
     // - - - Effects - - - 
     //
@@ -7127,7 +7140,9 @@ public class DataManager : MonoBehaviour
         else { Debug.LogError("Invalid stringName parameter (Null or Empty)"); }
         return effect;
     }
+#endregion
 
+    #region Ongoing Effects...
     //
     // - - - Ongoing Effects - - - 
     //
@@ -7265,6 +7280,9 @@ public class DataManager : MonoBehaviour
     /*public Dictionary<string, Effect> GetDictOfEffects()
     { return dictOfEffects; }*/
 
+#endregion
+
+    #region AI...
     //
     // - - - AI - - -
     //
@@ -7353,7 +7371,9 @@ public class DataManager : MonoBehaviour
         else { Debug.LogError("Invalid decisionName (Null)"); }
         return null;
     }
+#endregion
 
+    #region ManageActors...
     //
     // - - - Manage - - -
     //
@@ -7441,9 +7461,9 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid tempList (Null)"); }
     }
+#endregion
 
-
-
+    #region Cures
     //
     // - - - Cures - - -
     //
@@ -7503,7 +7523,9 @@ public class DataManager : MonoBehaviour
             else { Debug.LogWarning("Invalid cure (Null) in dictOfCures"); }
         }
     }
+#endregion
 
+    #region ManageActions...
     //
     // - - - ManageActions - - -
     //
@@ -7529,8 +7551,9 @@ public class DataManager : MonoBehaviour
     public Dictionary<string, ManageAction> GetDictOfManageActions()
     { return dictOfManageActions; }
 
+#endregion
 
-
+    #region Cities...
     //
     // - - - Cities - - -
     //
@@ -7560,6 +7583,9 @@ public class DataManager : MonoBehaviour
     public Dictionary<string, City> GetDictOfCities()
     { return dictOfCities; }
 
+#endregion
+
+    #region Level Analysis...
     //
     // - - - Level Analysis
     //
@@ -7626,7 +7652,9 @@ public class DataManager : MonoBehaviour
         }
         return searchResult;
     }
+#endregion
 
+    #region Objectives...
     //
     // - - - Objectives - - -
     //
@@ -7672,6 +7700,10 @@ public class DataManager : MonoBehaviour
 
     public Dictionary<string, Objective> GetDictOfObjectives()
     { return dictOfObjectives; }
+
+#endregion
+
+    #region Organisations...
 
     //
     // - - - Organisations - - -
@@ -7840,7 +7872,7 @@ public class DataManager : MonoBehaviour
     {
         if (orgInfoType != OrgInfoType.Count)
         {
-            Organisation org = GameManager.i.campaignScript.campaign.orgInfo;
+            Organisation org = GameManager.i.campaignScript.campaign.details.orgInfo;
             if (org != null)
             {
                 arrayOfOrgInfo[(int)orgInfoType] = value;
@@ -7982,8 +8014,9 @@ public class DataManager : MonoBehaviour
         else { builder.AppendFormat("-NULL FILE for {0}", orgType); }
         return builder.ToString();
     }
+#endregion
 
-
+    #region Mayors...
     //
     // - - - Mayors - - -
     //
@@ -8013,6 +8046,9 @@ public class DataManager : MonoBehaviour
         return mayor;
     }
 
+#endregion
+
+    #region Action Adjustments...
     //
     // - - - Adjustments - - -
     //
@@ -8158,7 +8194,9 @@ public class DataManager : MonoBehaviour
         }
         return builder.ToString();
     }
+#endregion
 
+    #region ActorPanelUI...
     //
     // - - - Actor Panel UI - - -
     //
@@ -8168,8 +8206,9 @@ public class DataManager : MonoBehaviour
 
     public List<Image> GetListOfActorPortraits()
     { return listOfActorPortraits; }
+    #endregion
 
-
+    #region Help...
     //
     // - - - Help  - - -
     //
@@ -8189,9 +8228,11 @@ public class DataManager : MonoBehaviour
         else { Debug.LogWarningFormat("Not found, tag \"{0}\", in dictOfHelpData {1}", tag, "\n"); }
         return null;
     }
+#endregion
 
+    #region History...
     //
-    // - - - Tracker Data - - -
+    // - - - History Tracker Data - - -
     //
 
 
@@ -8322,6 +8363,9 @@ public class DataManager : MonoBehaviour
     public List<string> GetListOfHistoryAutoRun()
     { return listOfHistoryAutoRun; }
 
+#endregion
+
+    #region Debug...
 
     /// <summary>
     /// Debug display of Resistance player moves
@@ -8526,6 +8570,9 @@ public class DataManager : MonoBehaviour
         return builder.ToString();
     }
 
+#endregion
+
+    #region Statistics...
     //
     // - - - Statistics - - -
     //
@@ -8616,7 +8663,7 @@ public class DataManager : MonoBehaviour
     public Dictionary<StatType, int> GetDictOfStatisticsCampaign()
     { return dictOfStatisticsCampaign; }
 
-
+#endregion
 
     #region Campaigns...
     //
@@ -9173,7 +9220,40 @@ public class DataManager : MonoBehaviour
         else { Debug.LogError("Invalid listOfTextLists (Null)"); }
     }
 
-    #endregion
+    /// <summary>
+    /// Returns a random news string from listOfCampaignNews and deletes news from list (to prevent dupes). Returns Null if a problem, or empty string if no more available
+    /// </summary>
+    /// <returns></returns>
+    public string GetRandomCampaignNews()
+    {
+        string newsSnippet = null;
+        int count = listOfCampaignNews.Count;
+        if (count > 0)
+        {
+            int index = Random.Range(0, count);
+            newsSnippet = listOfCampaignNews[index];
+            //delete record to prevent dupes
+            listOfCampaignNews.RemoveAt(index);
+        }
+        else { newsSnippet = ""; }
+        return newsSnippet;
+    }
+
+    /// <summary>
+    /// Clear out and then refill listOfCampaignNews with loaded save game data
+    /// </summary>
+    /// <param name="listOfNews"></param>
+    public void SetListOfCampaignNews(List<string> listOfNews)
+    {
+        if (listOfNews != null)
+        {
+            listOfCampaignNews.Clear();
+            listOfCampaignNews.AddRange(listOfNews);
+        }
+        else { Debug.LogError("Invalid listOfNews (Null)"); }
+    }
+
+#endregion
 
     #region Adverts...
     //
@@ -9220,6 +9300,7 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfAdverts (Null)"); }
     }
+
     #endregion
 
     #region Billboards...
@@ -10229,11 +10310,11 @@ public class DataManager : MonoBehaviour
         {
             switch (megaCorp)
             {
-                case MegaCorpType.MegaCorpOne: megaName = GameManager.i.campaignScript.campaign.megaCorpOne.tag; break;
-                case MegaCorpType.MegaCorpTwo: megaName = GameManager.i.campaignScript.campaign.megaCorpTwo.tag; break;
-                case MegaCorpType.MegaCorpThree: megaName = GameManager.i.campaignScript.campaign.megaCorpThree.tag; break;
-                case MegaCorpType.MegaCorpFour: megaName = GameManager.i.campaignScript.campaign.megaCorpFour.tag; break;
-                case MegaCorpType.MegaCorpFive: megaName = GameManager.i.campaignScript.campaign.megaCorpFive.tag; break;
+                case MegaCorpType.MegaCorpOne: megaName = GameManager.i.campaignScript.campaign.details.megaCorpOne.tag; break;
+                case MegaCorpType.MegaCorpTwo: megaName = GameManager.i.campaignScript.campaign.details.megaCorpTwo.tag; break;
+                case MegaCorpType.MegaCorpThree: megaName = GameManager.i.campaignScript.campaign.details.megaCorpThree.tag; break;
+                case MegaCorpType.MegaCorpFour: megaName = GameManager.i.campaignScript.campaign.details.megaCorpFour.tag; break;
+                case MegaCorpType.MegaCorpFive: megaName = GameManager.i.campaignScript.campaign.details.megaCorpFive.tag; break;
                 default: Debug.LogWarningFormat("Unrecognised megaCorp \"{0}\"", megaCorp); break;
             }
         }

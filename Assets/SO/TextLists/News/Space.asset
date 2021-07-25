@@ -18,5 +18,5 @@ MonoBehaviour:
   isTestForDuplicates: 1
   isTestForTextTags: 1
   randomList:
-  - Space news test
+  - Space news test  [city]
   index: 0

@@ -1047,12 +1047,12 @@ public class ModalTabbedUI : MonoBehaviour
         arrayOfCorps[5] = tab9Corp4;
         //cached list of MegaCorps (in order 0 -> 4)
         //NOTE list[0] is a duplicate entry as it represent enum.MegaCorpType.None as is there to pad out the list
-        listOfMegaCorps.Add(GameManager.i.campaignScript.campaign.megaCorpOne);
-        listOfMegaCorps.Add(GameManager.i.campaignScript.campaign.megaCorpOne);
-        listOfMegaCorps.Add(GameManager.i.campaignScript.campaign.megaCorpTwo);
-        listOfMegaCorps.Add(GameManager.i.campaignScript.campaign.megaCorpThree);
-        listOfMegaCorps.Add(GameManager.i.campaignScript.campaign.megaCorpFour);
-        listOfMegaCorps.Add(GameManager.i.campaignScript.campaign.megaCorpFive);
+        listOfMegaCorps.Add(GameManager.i.campaignScript.campaign.details.megaCorpOne);
+        listOfMegaCorps.Add(GameManager.i.campaignScript.campaign.details.megaCorpOne);
+        listOfMegaCorps.Add(GameManager.i.campaignScript.campaign.details.megaCorpTwo);
+        listOfMegaCorps.Add(GameManager.i.campaignScript.campaign.details.megaCorpThree);
+        listOfMegaCorps.Add(GameManager.i.campaignScript.campaign.details.megaCorpFour);
+        listOfMegaCorps.Add(GameManager.i.campaignScript.campaign.details.megaCorpFive);
         //error check
         for (int i = 0; i < listOfMegaCorps.Count; i++)
         {

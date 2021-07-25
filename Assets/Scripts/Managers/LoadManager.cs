@@ -48,6 +48,7 @@ public class LoadManager : MonoBehaviour
     public Layout[] arrayOfLayouts;
     public GameHelp[] arrayOfGameHelp;
     public CampaignPool[] arrayOfCampaignPools;
+    public CampaignDetails[] arrayOfCampaignDetails;
 
 
     [Header("ActorDrafts -> ToolManager Duplicates")]
@@ -1224,6 +1225,13 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfCampaignPools has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No CampaignPools present"); }
+        //
+        // - - - CampaignDetails (not stored in a collection)
+        //
+        numArray = arrayOfCampaignDetails.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfCampaignDetailss has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No CampaignDetails present"); }
         //
         // - - - GameHelp - - -
         //

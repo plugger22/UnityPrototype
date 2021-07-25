@@ -15,12 +15,17 @@ public class NewsManager : MonoBehaviour
     [Range(1, 10)] public int timerMaxItemTurns = 2;
     [Tooltip("How many newsItems will be selected (if available) per turn. Also gives identical number of Adverts")]
     [Range(0, 3)] public int numOfNewsItems = 1;
+    [Tooltip("% chance of normal news being overriden by Campaign News (assumes that there are normal news items present)")]
+    [Range(0, 100)] public int chanceOfCampaignNews = 0;
     /*[Tooltip("How many adverts will be selected (if available) per turn")]
     [Range(0, 3)] public int numOfAdverts = 1;*/
+
+    private string splicer = " ... Updating ... ";
 
     private List<string> listOfCurrentNews = new List<string>();                       //news feed cut up into individual News snippets with the last record always being an advert (excludes Adverts)
     private List<string> listOfCurrentAdverts = new List<string>();                    //news feed cut up into individual Advert snippets with the last record always being an advert (excludes News)
 
+    #region Initialise
     /// <summary>
     /// Initialisation
     /// </summary>
@@ -53,6 +58,7 @@ public class NewsManager : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
     #region Initialisation SubMethods
 
@@ -96,7 +102,7 @@ public class NewsManager : MonoBehaviour
 
     #endregion
 
-
+    #region OnEvent
     /// <summary>
     /// Event handler
     /// </summary>
@@ -116,7 +122,9 @@ public class NewsManager : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
+    #region UpdateNewsItems
     /// <summary>
     /// late turn check that checks listOfNewsItems, decrements timers and deletes any expired items
     /// </summary>
@@ -145,7 +153,9 @@ public class NewsManager : MonoBehaviour
             else { Debug.LogError("Invalid listOfNewsItems (Null)"); }
         }
     }
+    #endregion
 
+    #region GetNews
     /// <summary>
     /// returns single newsFeed string (splices together selected newsItems). Sequence is NewsItem + Advert EDIT: Adverts are handled separately to news items
     /// </summary>
@@ -154,7 +164,6 @@ public class NewsManager : MonoBehaviour
     {
         int indexNews, countNews, limit;
         string newsSnippet;
-        string splicer = " ... Updating ... ";
         listOfCurrentNews.Clear();
         listOfCurrentAdverts.Clear();
         StringBuilder builder = new StringBuilder();
@@ -169,35 +178,50 @@ public class NewsManager : MonoBehaviour
             countNews = listOfNewsItems.Count;
             if (countNews > 0)
             {
-                //get num required per turn, capped by number available
-                limit = Mathf.Min(countNews, numOfNewsItems);
-                for (int i = 0; i < limit; i++)
+                //chance of Campaign news
+                if (Random.Range(0, 100) < chanceOfCampaignNews)
                 {
-                    //randomly select item from list
-                    indexNews = Random.Range(0, listOfNewsItems.Count);
-                    newsSnippet = listOfNewsItems[indexNews].text;
+                    //  - - - Campaign News
+                    newsSnippet = GetCampaignNews();
                     listOfCurrentNews.Add(newsSnippet);
-                    if (string.IsNullOrEmpty(newsSnippet) == false)
+                    builder.AppendFormat("{0}{1}", splicer, newsSnippet);
+                }
+                else
+                {
+                    // - - - Normal News
+
+                    //get num required per turn, capped by number available
+                    limit = Mathf.Min(countNews, numOfNewsItems);
+                    for (int i = 0; i < limit; i++)
                     {
-                        if (builder.Length > 0) { builder.Append(splicer); }
-                        builder.Append(newsSnippet);
+                        //randomly select item from list
+                        indexNews = Random.Range(0, listOfNewsItems.Count);
+                        newsSnippet = listOfNewsItems[indexNews].text;
+                        listOfCurrentNews.Add(newsSnippet);
+                        if (string.IsNullOrEmpty(newsSnippet) == false)
+                        {
+                            if (builder.Length > 0) { builder.Append(splicer); }
+                            builder.Append(newsSnippet);
 
-                        /*//get Advert              NOTE: adverts now show on billboards, if you want to rejig you'll need to add the string variable 'advert'
-                        advert = GetAdvert();
-                        //add to news
-                        if (builder.Length > 0) { builder.Append(splicer); }
-                        builder.Append(advert);*/
+                            /*//get Advert              NOTE: adverts now show on billboards, if you want to rejig you'll need to add the string variable 'advert'
+                            advert = GetAdvert();
+                            //add to news
+                            if (builder.Length > 0) { builder.Append(splicer); }
+                            builder.Append(advert);*/
 
+                        }
+                        else { Debug.LogWarningFormat("Invalid newsItem newsSnippet (Null or Empty) for listOfNewsItem[{0}]", indexNews); }
+                        //delete newsItem from list to prevent dupes
+                        listOfNewsItems.RemoveAt(indexNews);
                     }
-                    else { Debug.LogWarningFormat("Invalid newsItem newsSnippet (Null or Empty) for listOfNewsItem[{0}]", indexNews); }
-                    //delete newsItem from list to prevent dupes
-                    listOfNewsItems.RemoveAt(indexNews);
                 }
             }
             else
             {
-                builder.AppendFormat("{0}City News Blackout in force. Strikes at the Server Farm", splicer);
-                listOfCurrentNews.Add("City News Blackout in force. Strikes at the Server Farm");
+                // - - - Campaign news
+                newsSnippet = GetCampaignNews();
+                listOfCurrentNews.Add(newsSnippet);
+                builder.AppendFormat("{0}{1}", splicer, newsSnippet);
             }
         }
         else { Debug.LogError("Invalid listOfNewsItems (Null)"); }
@@ -205,7 +229,36 @@ public class NewsManager : MonoBehaviour
         if (builder.Length == 0) { builder.Append("News BlackOut in place"); }
         return builder.ToString();
     }
+    #endregion
 
+    #region GetCampaignNews
+    /// <summary>
+    /// subMethod for GetNews to obtain a random CampaignNews item from DataManager.cs and replace any news text tags
+    /// </summary>
+    /// <returns></returns>
+    private string GetCampaignNews()
+    {
+        string newsText = GameManager.i.dataScript.GetRandomCampaignNews();
+        if (newsText != null)
+        {
+            //process any tags
+            CheckTextData data = new CheckTextData() { text = newsText, objectName = "CampaignNews" };
+            newsText = CheckNewsText(data);
+
+            //only a problem if null, if empty then campaign news pool is empty
+            if (newsText == null)
+            { Debug.LogWarningFormat("Invalid campaignNews (Null)"); }
+            if (newsText == null || newsText.Length == 0)
+            {
+                //default text when nothing available
+                newsText = "City News Blackout in force. Strikes at the Server Farm";
+            }
+        }
+        return newsText;
+    }
+    #endregion
+
+    #region GetAdvert
     /// <summary>
     /// Returns a random advertisement, deletes from list, reinitialises list if empty
     /// </summary>
@@ -240,13 +293,15 @@ public class NewsManager : MonoBehaviour
         else { Debug.LogError("Invalid listOfAdverts (Null)"); }
         return advert;
     }
+    #endregion
 
-
+    #region Stub Methods...
     public List<string> GetListOfCurrentNews()
     { return listOfCurrentNews; }
 
     public List<string> GetListOfCurrentAdverts()
     { return listOfCurrentAdverts; }
+    #endregion
 
     #region CheckNewsText
     /// <summary>
@@ -398,6 +453,7 @@ public class NewsManager : MonoBehaviour
     }
     #endregion
 
+    #region Debug
     //
     // - - - Debug - - -
     //
@@ -493,6 +549,7 @@ public class NewsManager : MonoBehaviour
         else { Debug.LogWarning("Invalid listOfBillboardSeen (Null)"); }
         return builder.ToString();
     }
+    #endregion
 
     //new methods above here
 }

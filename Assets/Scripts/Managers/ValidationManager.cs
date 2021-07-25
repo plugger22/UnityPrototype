@@ -993,7 +993,7 @@ public class ValidationManager : MonoBehaviour
 
                             switch (topic.subType.name)
                             {
-                               
+
                                 //DEBUG -> Temporarily switched off as no data yet for these
 
                                 /*
@@ -1020,12 +1020,12 @@ public class ValidationManager : MonoBehaviour
                                     { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Invalid Comms (Should be none) for topic \"{0}\"{1}", topicName, "\n"); }
                                     break;
                                     */
-                                    
-                                
+
+
                                 case "StoryAlpha":  //debug temp while code above disabled
                                 case "StoryBravo":  //debug temp while code above disabled
                                     break;
-                                
+
 
                                 default:
                                     //Normal Decision Topics
@@ -1696,38 +1696,52 @@ public class ValidationManager : MonoBehaviour
                         }
                     }
                     //
-                    // - - - Organisations (correct type)
+                    // - - - Campaign details
                     //
-                    //cure
-                    if (campaign.orgCure != null)
+                    if (campaign.details != null)
                     {
-                        if (campaign.orgCure.orgType.name.Equals("Cure", StringComparison.Ordinal) == false)
-                        { Debug.LogFormat("{0} campaign \"{1}\", orgCure is the wrong type (\"{2}\"){3}", tag, campaign.name, campaign.orgCure.orgType.name, "\n"); }
+                        //check side
+                        if (campaign.details.side.level != campaign.side.level)
+                        {
+                            //not 'Both'
+                            if (campaign.details.side.level != 3)
+                            { Debug.LogFormat("{0} campaign \"{1}\", wrong side (is {2}, should be {3}){4}", tag, campaign.name, campaign.details.side.name, campaign.side.name, "\n"); }
+                        }
+                        //
+                        // - - - Organisations (correct type)
+                        //
+                        //cure
+                        if (campaign.details.orgCure != null)
+                        {
+                            if (campaign.details.orgCure.orgType.name.Equals("Cure", StringComparison.Ordinal) == false)
+                            { Debug.LogFormat("{0} campaign \"{1}\", orgCure is the wrong type (\"{2}\"){3}", tag, campaign.name, campaign.details.orgCure.orgType.name, "\n"); }
+                        }
+                        //contract
+                        if (campaign.details.orgContract != null)
+                        {
+                            if (campaign.details.orgContract.orgType.name.Equals("Contract", StringComparison.Ordinal) == false)
+                            { Debug.LogFormat("{0} campaign \"{1}\", orgContract is the wrong type (\"{2}\"){3}", tag, campaign.name, campaign.details.orgContract.orgType.name, "\n"); }
+                        }
+                        //Emergency
+                        if (campaign.details.orgEmergency != null)
+                        {
+                            if (campaign.details.orgEmergency.orgType.name.Equals("Emergency", StringComparison.Ordinal) == false)
+                            { Debug.LogFormat("{0} campaign \"{1}\", orgEmergency is the wrong type (\"{2}\"){3}", tag, campaign.name, campaign.details.orgEmergency.orgType.name, "\n"); }
+                        }
+                        //HQ
+                        if (campaign.details.orgHQ != null)
+                        {
+                            if (campaign.details.orgHQ.orgType.name.Equals("HQ", StringComparison.Ordinal) == false)
+                            { Debug.LogFormat("{0} campaign \"{1}\", orgHQ is the wrong type (\"{2}\"){3}", tag, campaign.name, campaign.details.orgHQ.orgType.name, "\n"); }
+                        }
+                        //Info
+                        if (campaign.details.orgInfo != null)
+                        {
+                            if (campaign.details.orgInfo.orgType.name.Equals("Info", StringComparison.Ordinal) == false)
+                            { Debug.LogFormat("{0} campaign \"{1}\", orgInfo is the wrong type (\"{2}\"){3}", tag, campaign.name, campaign.details.orgInfo.orgType.name, "\n"); }
+                        }
                     }
-                    //contract
-                    if (campaign.orgContract != null)
-                    {
-                        if (campaign.orgContract.orgType.name.Equals("Contract", StringComparison.Ordinal) == false)
-                        { Debug.LogFormat("{0} campaign \"{1}\", orgContract is the wrong type (\"{2}\"){3}", tag, campaign.name, campaign.orgContract.orgType.name, "\n"); }
-                    }
-                    //Emergency
-                    if (campaign.orgEmergency != null)
-                    {
-                        if (campaign.orgEmergency.orgType.name.Equals("Emergency", StringComparison.Ordinal) == false)
-                        { Debug.LogFormat("{0} campaign \"{1}\", orgEmergency is the wrong type (\"{2}\"){3}", tag, campaign.name, campaign.orgEmergency.orgType.name, "\n"); }
-                    }
-                    //HQ
-                    if (campaign.orgHQ != null)
-                    {
-                        if (campaign.orgHQ.orgType.name.Equals("HQ", StringComparison.Ordinal) == false)
-                        { Debug.LogFormat("{0} campaign \"{1}\", orgHQ is the wrong type (\"{2}\"){3}", tag, campaign.name, campaign.orgHQ.orgType.name, "\n"); }
-                    }
-                    //Info
-                    if (campaign.orgInfo != null)
-                    {
-                        if (campaign.orgInfo.orgType.name.Equals("Info", StringComparison.Ordinal) == false)
-                        { Debug.LogFormat("{0} campaign \"{1}\", orgInfo is the wrong type (\"{2}\"){3}", tag, campaign.name, campaign.orgInfo.orgType.name, "\n"); }
-                    }
+                    else { Debug.LogFormat("Invalid campaignDetails (Null) for campaign \"{0}\"", campaign.name); }
                 }
                 else { Debug.LogFormat("{0} campaign \"{1}\" is excluded from all Validation checks{2}", tag, campaign.name, "\n"); }
             }
@@ -2343,6 +2357,8 @@ public class ValidationManager : MonoBehaviour
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfGameHelp);
         //CampaignPools
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfCampaignPools);
+        //CampaignDetails
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfCampaignDetails);
         //TextListTypes
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfTextListTypes);
 

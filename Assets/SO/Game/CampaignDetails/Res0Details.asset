@@ -8,30 +8,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d30e33851b546764f82fb52a4bb2b10f, type: 3}
-  m_Name: ResistanceCampaign
+  m_Script: {fileID: 11500000, guid: 371f3c862cfbd714b8cb840424e143ef, type: 3}
+  m_Name: Res0Details
   m_EditorClassIdentifier: 
-  tag: Resistance Campaign
-  descriptor: The French Connection
-  isIgnoreValidation: 0
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
-  listOfScenarios:
-  - {fileID: 11400000, guid: e0617009e84443c4588d0f3c417393e9, type: 2}
-  - {fileID: 11400000, guid: 931e19efb2302b247b658b59ca91b4cf, type: 2}
-  - {fileID: 11400000, guid: 3f5fc5ab3d43a6444b3047cac10f3402, type: 2}
-  - {fileID: 11400000, guid: f722b44b783a5b94a967ea8ed048b9de, type: 2}
-  - {fileID: 11400000, guid: 0b04472666f8fc648833265a5027da36, type: 2}
-  actorPool: {fileID: 11400000, guid: a47ecb4b2ca870b41a8317ca997f7799, type: 2}
-  story: {fileID: 11400000, guid: 47b8784802e99f3418be87e7e59e34a2, type: 2}
-  newsPool:
-  - {fileID: 11400000, guid: 358320b2421f39c43973431844b407d3, type: 2}
-  - {fileID: 11400000, guid: 5baf0c1121a8e3047b1eb50482d929ed, type: 2}
-  - {fileID: 11400000, guid: 74ce19fa99c2af44b8ff644122813db9, type: 2}
-  - {fileID: 11400000, guid: ea930f20bad5c624a9b9e7d04c4d642b, type: 2}
-  - {fileID: 11400000, guid: d337ee286201c004782a1c8901e1fdb4, type: 2}
-  - {fileID: 11400000, guid: aabac27af6b2c7847bdb7550b00fa262, type: 2}
-  campaignPool: {fileID: 11400000, guid: 1d50eb7cd7332da42bfb10e6fda177d4, type: 2}
-  details: {fileID: 11400000, guid: 0ec05877a9da9d74d933fde67554884f, type: 2}
   orgCure: {fileID: 11400000, guid: 8b81229763d9cde4e810f0b34a0d8aee, type: 2}
   orgContract: {fileID: 11400000, guid: ffa63976c9457294ea81081cd9907865, type: 2}
   orgHQ: {fileID: 11400000, guid: 6b6344ba25eaa58459fd133e36ec28a2, type: 2}

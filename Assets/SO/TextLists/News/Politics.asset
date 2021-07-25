@@ -18,5 +18,5 @@ MonoBehaviour:
   isTestForDuplicates: 1
   isTestForTextTags: 1
   randomList:
-  - Politics news test
+  - Politics news test [city]
   index: 0

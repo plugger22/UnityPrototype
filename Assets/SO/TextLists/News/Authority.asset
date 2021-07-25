@@ -19,5 +19,5 @@ MonoBehaviour:
   isTestForDuplicates: 1
   isTestForTextTags: 1
   randomList:
-  - Authority news test
+  - Authority news test [city]
   index: 0

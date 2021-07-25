@@ -1134,7 +1134,7 @@ public class NemesisManager : MonoBehaviour
                 ProcessPlayerDamage();
                 hasActed = true;
                 //orgInfo reset?
-                if (GameManager.i.campaignScript.campaign.orgInfo != null)
+                if (GameManager.i.campaignScript.campaign.details.orgInfo != null)
                 { GameManager.i.orgScript.CancelOrgInfoTracking(OrgInfoType.Nemesis); }
                 //Nemesis has done their job, new nemesis arrives?
                 if (isFirstNemesis == true)

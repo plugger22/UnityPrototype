@@ -1720,7 +1720,7 @@ public class PlayerManager : MonoBehaviour
             GameManager.i.dataScript.StatisticIncrement(StatType.InvestigationsCompleted);
             GameManager.i.dataScript.StatisticIncrement(StatType.OrgHQDropped);
             //msg
-            string text = string.Format("{0} investigation Dropped due to intervention by {1}{2}", invest.tag, GameManager.i.campaignScript.campaign.orgHQ.tag, "\n");
+            string text = string.Format("{0} investigation Dropped due to intervention by {1}{2}", invest.tag, GameManager.i.campaignScript.campaign.details.orgHQ.tag, "\n");
             GameManager.i.messageScript.InvestigationDropped(text, invest);
             //remove from player
             RemoveInvestigation(invest.reference);
