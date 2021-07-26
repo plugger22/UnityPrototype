@@ -222,6 +222,7 @@ public class SaveDataData
     public List<NewsItem> listOfNewsItems = new List<NewsItem>();
     public List<string> listOfAdverts = new List<string>();
     public List<string> listOfCampaignNews = new List<string>();
+    public List<string> listOfScenarioNews = new List<string>();
     //TestLists
     public List<string> listOfTextListNames = new List<string>();
     public List<int> listOfTextListIndexes = new List<int>();

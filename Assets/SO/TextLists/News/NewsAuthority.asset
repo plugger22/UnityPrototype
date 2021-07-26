@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
+  m_Name: NewsAuthority
+  m_EditorClassIdentifier: 
+  descriptor: 'Global news items (applies across a campaign) for the topic of the
+    Authority.
+
+    NewsManager.cs text tags can be used'
+  category: {fileID: 11400000, guid: cc52e86dfb7f79e4aa745f9ed4b1c80b, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 1
+  randomList:
+  - It's those micro drones that I can't tolerate, says [npc], [job], of [city]. They
+    buzz through my bathroom window and watch me undress. A decent, god faring, drone
+    wouldn't do that
+  - Why do we have to put up with being watched all the time? asks [npc], [job], of
+    [city]. Don't they get sick of looking at us? I mean who would want to see the
+    footage anyway?
+  - If you paint your nose black the surveillance can't track you, insists [npc],
+    [job], of [city]. A black nose on a black face they can figure out but a black
+    nose on a different face has got them beat
+  - Why does the Authority want to see me naked? asks [npc], [job], of [city]. I don't
+    look good naked. I know 'cause I get frightened everytime I see myself in the
+    mirror. It's not pretty
+  - It's hard to have a real conversation these days, says [npc], [job], of [city],
+    when you know that there are Authority soundBots sneaking around buildings like
+    so many creepy crawlies
+  - I squashed one of those tiny Authority bugs the other day, insists [npc], [job],
+    of [city]. I trod on it by accident. I hope that they don't bill me for it
+  - They say that the skies are full of surveillance drones that can stay up there
+    forever and track your every movement, says [npc], [job], of [city]. I'm skeptical
+    about it. Even a bird has to land sometime and how are they going to follow me
+    on the hyperloop?
+  - Everytime I see a mirror I smile. There's cameras behind them all, you know, says
+    [npc], [job] of [city]. They report you if you aren't happy. You don't want to
+    a visit from the Happy Police, no sir
+  - I don't mind being watched continuously, says [npc], [job], of [city]. I'm a special
+    person and they could learn things from me. Perhaps make a training video of me
+    and show it to others. Improve the world
+  - An EMP blast from the sun is what we need, says [npc], [job], of [city]. Roast
+    the tiny brains of all the Authorities surveillance bots. Cook 'em till they fry.
+    Hey, this off the record, right?
+  index: 1

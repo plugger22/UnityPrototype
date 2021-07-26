@@ -1831,6 +1831,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ea930f20bad5c624a9b9e7d04c4d642b, type: 2}
   - {fileID: 11400000, guid: d337ee286201c004782a1c8901e1fdb4, type: 2}
   - {fileID: 11400000, guid: aabac27af6b2c7847bdb7550b00fa262, type: 2}
+  - {fileID: 11400000, guid: 48959fed19857a8498ef7fbb8dff8207, type: 2}
+  - {fileID: 11400000, guid: d7265f7f39fa3db44a5a97eba89f9cc6, type: 2}
   arrayOfNameSets:
   - {fileID: 11400000, guid: 195743710f6a69f47acd502168cd250c, type: 2}
   - {fileID: 11400000, guid: 56b7e91ac8e6f3d449828205cc0d2f2a, type: 2}
@@ -6653,12 +6655,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxNumOfSO: 5
-  listOfTextLists:
-  - {fileID: 11400000, guid: ed33c09a4eb20ef4a8a91d1e239647dd, type: 2}
-  - {fileID: 11400000, guid: de3a80cc18834ab4cac4dc1d230938de, type: 2}
-  - {fileID: 11400000, guid: 6759e496b6815344f82ded96f44177c4, type: 2}
-  - {fileID: 11400000, guid: d28de6de70cc2224c8202a50c398daa4, type: 2}
-  - {fileID: 11400000, guid: 1fb3d39a39d1f7e498ca3956d68fccab, type: 2}
+  listOfTextLists: []
 --- !u!114 &114680662969460860
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7137,7 +7134,7 @@ MonoBehaviour:
   gameHelpScript: {fileID: 0}
   newTurnScript: {fileID: 0}
   seedDev: 0
-  autoRunTurns: 20
+  autoRunTurns: 0
   scenarioStartLevel: 0
   tutorialStartLevel: -1
   isPerformanceLog: 1

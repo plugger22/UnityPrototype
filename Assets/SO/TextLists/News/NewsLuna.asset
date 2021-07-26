@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
+  m_Name: NewsLuna
+  m_EditorClassIdentifier: 
+  descriptor: 'Global news items (applies across a campaign) for the topic of Space.
+
+    NewsManager.cs text tags can be used'
+  category: {fileID: 11400000, guid: cc52e86dfb7f79e4aa745f9ed4b1c80b, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 1
+  randomList:
+  - I hear that there are a lot of jobs going on Luna, says [npc], [job], of [city].
+    I'm thinking of applying
+  - My [who] has worked on Luna and they tell me that you have to do what your told,
+    just like down here, says [npc], [job], of [city]
+  - I hear that the parties are great on Luna. You work hard and play hard. That appeals
+    to me, says [npc], [job], of [city]
+  - who would be silly enough to want to work on the Hub? Luna is bad enough but floating
+    around in Luna orbit all day? Crazy stuff, says [npc], [job], of [city]
+  - I plan on getting married on Luna, says [npc], [job], of [city]. First I'll have
+    to find a partner but there are over twenty thousand people up there already.
+    I bet that they're lonely
+  - Two years on Luna and that's it, you can't come home, says [npc], [job], of [city].
+    It's the G's they say. Not enough up there. Your bones turn to mush. Who wants
+    flaky pastry bones?
+  - One good thing I've heard about living on Luna is that they don't run surveillance
+    on you, says [npc], [job], of [city]. You're allowed to be yourself as long as
+    you do your job right
+  - My [who] got mangled on Luna. Their legs don't work anymore, says [npc], [job],
+    of [city]. They can barely get out of their servoPod. Lots of accidents, apparently,
+    up there
+  - So if I move to Luna do I get to eat real food or is it still the half warmed
+    up grey fungus mush of here? asks [npc], [job], of [city]
+  - They are doing good things up on Luna, says [npc], [job], of [city]. Helping mankind
+    push further into the Frontier. Building ships that one day will fly all the way
+    out to Pluto. That's exciting!
+  index: 0

@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
+  m_Name: NewsUnrest
+  m_EditorClassIdentifier: 
+  descriptor: 'Global news items (applies across a campaign) for the topic of Unrest.
+
+    NewsManager.cs text tags can be used'
+  category: {fileID: 11400000, guid: cc52e86dfb7f79e4aa745f9ed4b1c80b, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 1
+  randomList:
+  - Rebels in Brazil were hunted down and eliminated by drones after they attacked
+    a nearby police station
+  - Dissent protest groups in Eurasia have been issued with a warning that if they
+    persist they will be rounded up and forcibly sterilized
+  - He was a bad man and deserved to die, says [npc], [job], referring to the man
+    known as the Pig who was finally cornered and killed by security on the streets
+    of Lille yesterday. The Pig was responsible for multiple bombings in Northern
+    France
+  - China News today reported mass protests over food shortages in their Western provinces.
+    Security forces are enroute
+  - Vietnam is persisting with it's effort to revitalise their once abundant rice
+    crop. It's the husk rot, says Huei Liang. Nobody can tell me how to get rid of
+    it
+  - Riots in the Congo have reached a crescendo. It's the end of the rainy season,
+    says [npc]. The humidity brings them out of the jungle. Wait for a week or two
+    and half of them will die from starvation
+  - The Keep Humans on Earth protest movement continues to pout. Hacked electronic
+    billboards in major cities across Americon briefly displayed their twisted motto
+    before security intervened
+  - Three villages had to be eradicated in Southern Sudan yesterday when trouble broke
+    out after securityBots were sent into the area to arrest a prominent dissident.
+    Nobody is left, says a shocked [npc]
+  - Authorities today razed the tent city on the southern outskirts of Salzburg. A
+    few of us made it out alive, says [npc]. Where will we go now?
+  - Gunboats in the Med claimed a record score of over a thousand reffo's in a day.
+    Their ring of steel bristles and protects us, observes [npc], [job] of [city]
+  index: 7

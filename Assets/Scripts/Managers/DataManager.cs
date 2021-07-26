@@ -68,6 +68,7 @@ public class DataManager : MonoBehaviour
     private List<NodeCrisis> listOfCrisisSecurity = new List<NodeCrisis>();                     //pick lists set up at start of session
     private List<NodeCrisis> listOfCrisisSupport = new List<NodeCrisis>();
     private List<NodeCrisis> listOfCrisisStability = new List<NodeCrisis>();
+    private List<ContactType> listOfContactTypes = new List<ContactType>();
 
     //Connections
     private List<Connection> listOfConnections = new List<Connection>();                       //main list of connections used for iteration (rather than dictOfConnections)
@@ -199,6 +200,7 @@ public class DataManager : MonoBehaviour
     //News
     private List<NewsItem> listOfNewsItems = new List<NewsItem>();
     private List<string> listOfCampaignNews = new List<string>();
+    private List<string> listOfScenarioNews = new List<string>();
 
     //Adverts
     private List<string> listOfAdverts = new List<string>();
@@ -294,6 +296,7 @@ public class DataManager : MonoBehaviour
 
     #endregion
 
+    #region Initialisation...
     //
     // - - - Initialisation - - -
     //
@@ -347,7 +350,7 @@ public class DataManager : MonoBehaviour
                 break;
         }
     }
-
+    #endregion
 
     #region Initialisation SubMethods
 
@@ -369,6 +372,8 @@ public class DataManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid arrayOfTextLists (Null)"); }
+        //Contact Types
+        listOfContactTypes = GameManager.i.loadScript.arrayOfContactTypes.ToList();
         //arrayOfOrgType
         arrayOfOrgInfo = new bool[(int)OrgInfoType.Count];
 
@@ -493,6 +498,7 @@ public class DataManager : MonoBehaviour
 
     #endregion
 
+    #region Load/Restore/FollowOn Level...
     //
     // - - - Load / Restore / FollowOn Level - - - 
     //
@@ -645,6 +651,9 @@ public class DataManager : MonoBehaviour
     }
     #endregion
 
+    #endregion
+
+    #region Info Flow (Notifications)...
     //
     // - - - Info Flow (Notifications)- - - 
     //
@@ -789,11 +798,12 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfDelayed (Null)"); }
     }
+#endregion
 
+    #region NodeArcs...
     //
     // - - - NodeArcs - - -
     //
-
 
     /// <summary>
     /// returns a list of Default Node Arcs based on number of node connections (1 to 5). Null if a problem.
@@ -892,8 +902,9 @@ public class DataManager : MonoBehaviour
         { tempArray[i] = arrayOfNodeArcTotals[0, i]; }
         return tempArray;
     }
+#endregion
 
-
+    #region Action Related...
     //
     // - - - Action Related - - -
     //
@@ -917,7 +928,9 @@ public class DataManager : MonoBehaviour
 
     public Dictionary<string, Action> GetDictOfActions()
     { return dictOfActions; }
+#endregion
 
+    #region Actor Arcs...
     //
     // - - - Actor Arcs - - - 
     //
@@ -998,7 +1011,9 @@ public class DataManager : MonoBehaviour
 
     public List<ActorArc> GetListOfResistanceActorArcs()
     { return resistanceActorArcs; }
+#endregion
 
+    #region Actor Breakdowns...
     //
     // - - -  Actor Breakdowns
     //
@@ -1022,7 +1037,9 @@ public class DataManager : MonoBehaviour
         else { Debug.LogError("Invalid conflictName (Null or Empty)"); }
         return null;
     }
+#endregion
 
+    #region Traits...
     //
     // - - - Traits - - -
     //
@@ -1163,7 +1180,9 @@ public class DataManager : MonoBehaviour
         }
         return null;
     }
+#endregion
 
+    #region Contacts...
     //
     // - - - Contacts - - - 
     //
@@ -2321,7 +2340,9 @@ public class DataManager : MonoBehaviour
         }
         return "Unknown";
     }
+#endregion
 
+    #region Nodes...
     //
     // - - - Nodes - - -
     //
@@ -3049,7 +3070,9 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid listOfNodes (Null)"); }
     }
+#endregion
 
+    #region Connections...
     //
     // - - - Connections - - - 
     //
@@ -3102,8 +3125,9 @@ public class DataManager : MonoBehaviour
     {
         return listOfConnections[Random.Range(0, listOfConnections.Count)];
     }
+#endregion
 
-
+    #region Tiles...
     //
     // - - - Tiles
     //
@@ -3140,7 +3164,9 @@ public class DataManager : MonoBehaviour
     public List<Tile> GetListOfTiles()
     { return listOfTiles; }
 
+#endregion
 
+    #region Targets...
     //
     // - - - Targets - -  -
     //
@@ -3642,7 +3668,9 @@ public class DataManager : MonoBehaviour
         }
         else { return "Targets have been disabled"; }
     }
+#endregion
 
+    #region Teams...
     //
     // - - - Teams & TeamArcs & TeamPools - - -
     //
@@ -4008,7 +4036,9 @@ public class DataManager : MonoBehaviour
         }
         return tempList;
     }
+#endregion
 
+    #region HQs...
     //
     // - - - HQs - - - 
     //
@@ -4038,8 +4068,9 @@ public class DataManager : MonoBehaviour
 
     public Dictionary<string, Hq> GetDictOfHQs()
     { return dictOfHQs; }
+#endregion
 
-
+    #region HQ Actors...
     //
     // - - - HQ Actors - - -
     //
@@ -4310,6 +4341,7 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfHqEvents (Null)"); }
     }
+#endregion
 
     #region Actors...
     //
@@ -9163,6 +9195,9 @@ public class DataManager : MonoBehaviour
     public List<string> GetListOfCampaignNews()
     { return listOfCampaignNews; }
 
+    public List<string> GetListOfScenarioNews()
+    { return listOfScenarioNews; }
+
     /// <summary>
     /// Add news item
     /// </summary>
@@ -9253,7 +9288,122 @@ public class DataManager : MonoBehaviour
         else { Debug.LogError("Invalid listOfNews (Null)"); }
     }
 
-#endregion
+    /// <summary>
+    /// Initialise any scenario news that may be present into a single list at the start of a scenario
+    /// </summary>
+    public void InitialiseScenarioNews()
+    {
+        List<TextList> listOfTextLists = GameManager.i.campaignScript.GetCurrentScenario().newsPool;
+        if (listOfTextLists != null)
+        {
+            //clear scenario news first
+            listOfScenarioNews.Clear();
+            //merge all text lists into a single list
+            List<string> tempList;
+            int count = listOfTextLists.Count;
+            if (count > 0)
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    tempList = listOfTextLists[i].randomList;
+                    if (tempList != null)
+                    {
+                        //add to list
+                        listOfScenarioNews.AddRange(tempList);
+                    }
+                    else { Debug.LogErrorFormat("Invalid randomList (Null) from scenario.newsPool[{0}]", i); }
+                }
+                count = listOfScenarioNews.Count;
+                Debug.LogFormat("[Cam] DataManager.cs -> InitialiseScenarioNews: listOfScenarioNews has {0} record{1}{2}", count, count != 1 ? "s" : "", "\n");
+            }
+        }
+        else { Debug.LogWarning("Invalid Scenario newsPool (Null) -> Information only"); }
+    }
+
+    /// <summary>
+    /// Clear out and then refill listOfScenarioNews with loaded save game data
+    /// </summary>
+    /// <param name="listOfNews"></param>
+    public void SetListOfScenarioNews(List<string> listOfNews)
+    {
+        if (listOfNews != null)
+        {
+            listOfScenarioNews.Clear();
+            listOfScenarioNews.AddRange(listOfNews);
+        }
+        else { Debug.LogError("Invalid listOfNews (Null)"); }
+    }
+
+    /// <summary>
+    /// Returns a random news string from listOfScenarioNews and deletes news from list (to prevent dupes). Returns Null if a problem, or empty string if no more available
+    /// </summary>
+    /// <returns></returns>
+    public string GetRandomScenarioNews()
+    {
+        string newsSnippet = null;
+        int count = listOfScenarioNews.Count;
+        if (count > 0)
+        {
+            int index = Random.Range(0, count);
+            newsSnippet = listOfScenarioNews[index];
+            //delete record to prevent dupes
+            listOfScenarioNews.RemoveAt(index);
+        }
+        else { newsSnippet = ""; }
+        return newsSnippet;
+    }
+
+    /// <summary>
+    /// returns true if Campaign news still available
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckIfCampaignNews()
+    { return listOfCampaignNews.Count > 0 ? true : false; }
+
+    /// <summary>
+    /// returns true if Scenario news still available
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckIfScenarioNews()
+    { return listOfScenarioNews.Count > 0 ? true : false; }
+
+    /// <summary>
+    /// Display listOfCampaignNews
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayCampaignNews()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("- DataManager.cs -> listOfCampaignNews{0}", "\n");
+        int count = listOfCampaignNews.Count;
+        if (count > 0)
+        {
+            for (int i = 0; i < count; i++)
+            { builder.AppendFormat("{0}{1}", listOfCampaignNews[i], "\n"); }
+        }
+        else { builder.AppendFormat(" No records"); }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Display listOfScenarioNews
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayScenarioNews()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("- DataManager.cs -> listOfScenarioNews{0}", "\n");
+        int count = listOfScenarioNews.Count;
+        if (count > 0)
+        {
+            for (int i = 0; i < count; i++)
+            { builder.AppendFormat("{0}{1}", listOfScenarioNews[i], "\n"); }
+        }
+        else { builder.AppendFormat(" No records"); }
+        return builder.ToString();
+    }
+
+    #endregion
 
     #region Adverts...
     //
@@ -10559,6 +10709,15 @@ public class DataManager : MonoBehaviour
         return null;
     }
 
+    #endregion
+
+    #region ContactTypes
+    /// <summary>
+    /// returns random contact type from all possibilities. Used by NewsManager.cs -> CheckNewsText to get contact details when no node is specified
+    /// </summary>
+    /// <returns></returns>
+    public ContactType GetRandomContactType()
+    { return listOfContactTypes[Random.Range(0, listOfContactTypes.Count)]; }
     #endregion
 
     //new methods above here

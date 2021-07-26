@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
+  m_Name: NewsMegaCorp
+  m_EditorClassIdentifier: 
+  descriptor: 'Global news items (applies across a campaign) for the topic of MegaCorps.
+
+    NewsManager.cs text tags can be used'
+  category: {fileID: 11400000, guid: cc52e86dfb7f79e4aa745f9ed4b1c80b, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 1
+  randomList:
+  - My [who] works for Crypticon. Says that they are the future. God like, says [npc],
+    [job], of [city]. Visionaries. I hope that I'm smart enough to get a job with
+    them
+  - I heard that Crypticon are going to shove it to AntCorp one day, says [npc], [job],
+    of [city]. Not that I care what happens to either of them. All I get are the bird
+    droppings. It's hard to life on bird poop
+  - Crypticon? Aren't they the MegaCorp that bribes everybody? Like all the time?
+    I'm pretty sure that's them, says [npc], [job], of [city]. Nobody has ever bribed
+    me. Is there some App where you can register?
+  - Aren't Crypticon that evil MegaCorp that makes those tiny surveillanceBots that
+    sneak up and watch me when I'm sleeping? Man is that creepy or what? says a disgusted
+    [npc], [job], of [city]
+  - My [who] was murdered because they spoke out against the founder of Crypticon,
+    says [npc], [job], of [city]. It's not right. Sure, nobody has free speech anymore
+    but why should the head of a MegaCorp care about what the little people say about
+    them?
+  - Crypticon is what has messed up this planet, insists [npc], [job], of [city].
+    Their armies of teenie tiny surveillanceBots need to be flushed down the toilet
+    along with the long haired nerd that runs the company
+  - Crypticon? Aren't they a religion? Some weird surveillance worshipping cult? asks
+    [npc], [job], of [city]. They sure don't act like your typical MegaCorp, do they?
+    All secrets and rituals. Wacko's the lot 'em, if you ask me
+  - Crypticon have those Quantum thingo farms on Luna, don't they? asks [npc], [job],
+    of [city]. Where they feed chopped up people down a shute at one end and out comes
+    quantum hokey pokey at the other. You won't see me with a ticket to the moon,
+    no sir
+  - My [who] was on Luna. Said that Crypticon had whole farms of quantum computers
+    up there. Figuring out stuff. Like how to get better pictures of me on the toilet,
+    says [npc], [job], of [city]
+  - Is it right that Cryticon can bribe their way to the top when I can't even buy
+    my way out of a jay walking infringement? asks [npc], [job], of [city]. Is that
+    fair? Why is there one set of rules for MegaCorps and another for the little people?
+  index: 7

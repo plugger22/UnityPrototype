@@ -1384,6 +1384,11 @@ public class FileManager : MonoBehaviour
         if (listOfCampaignNews != null)
         { write.dataData.listOfCampaignNews.AddRange(listOfCampaignNews); }
         else { Debug.LogError("Invalid listOfCampaignNews (Null)"); }
+        //scenario news
+        List<string> listOfScenarioNews = GameManager.i.dataScript.GetListOfScenarioNews();
+        if (listOfScenarioNews != null)
+        { write.dataData.listOfScenarioNews.AddRange(listOfScenarioNews); }
+        else { Debug.LogError("Invalid listOfScenarioNews (Null)"); }
         #endregion
 
         #region textLists
@@ -3450,6 +3455,7 @@ public class FileManager : MonoBehaviour
         GameManager.i.dataScript.SetListOfNewsItems(read.dataData.listOfNewsItems);
         GameManager.i.dataScript.SetListOfAdverts(read.dataData.listOfAdverts);
         GameManager.i.dataScript.SetListOfCampaignNews(read.dataData.listOfCampaignNews);
+        GameManager.i.dataScript.SetListOfScenarioNews(read.dataData.listOfScenarioNews);
         #endregion
 
         #region Billboards

@@ -31,3 +31,5 @@ MonoBehaviour:
   challengeResistance: {fileID: 11400000, guid: 2716f7a6e92cbf8488ce0f415769dd75,
     type: 2}
   timer: 70
+  newsPool:
+  - {fileID: 11400000, guid: d7265f7f39fa3db44a5a97eba89f9cc6, type: 2}

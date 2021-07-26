@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
+  m_Name: NewsClimate
+  m_EditorClassIdentifier: 
+  descriptor: 'Global news items (applies across a campaign) for the topic of Climate.
+
+    NewsManager.cs text tags can be used'
+  category: {fileID: 11400000, guid: cc52e86dfb7f79e4aa745f9ed4b1c80b, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 1
+  randomList:
+  - Hundreds of people died yesterday in Mexico when temperatures soared above 50
+    deg Celcius for the second day running
+  - A mysterious disease is killing the dogs of Manchuria. Scientists are baffled
+    why so many dogs are simply flopping down exhausted and dying
+  - An privately sponsored expedition has been launched from Australia in an effort
+    to locate the last surviving colony of penguins in Antarctica
+  - The Foresty Department expects it will be at least 5 years before significant
+    regrowth is seen after last years devestating bushfires in the Southern Rockies
+  - A category 10 hurricane, 'Thelma' is being blamed for the loss of two mega container
+    ships in the North Atlantic last week. Expect supply chain disruptions
+  - Communities in far north Russia are complaining of increasing levels of pollution
+    being washed ashore as ever more shipping transits the Arctic passage. Can't they
+    stop throwing their trash overboard? asks ]npc]?
+  - Feral camel populations in outback Australia are dying off as the twenty year
+    drought continues. Where will we be without camels? asks [npc] of Alice Springs
+  - The great insect die off continues unabated with an estimated 10 species being
+    lost every week. I miss mosquitoes, I really do, insists [npc] of Mali
+  - The World Wildlife Fund has started their Adopt a Tree annual fund raising drive.
+    A shortage of trees means that donors will have to be willing to share. A WWF
+    spokesman indicated that they didn't expect problems
+  - Nobody can remember ever seeing an Elephant, says [npc] of the Koleberg Game Reserve.
+    They were all eaten. A months food supply on legs is hard to resist, right man?
+  index: 3

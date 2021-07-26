@@ -15,12 +15,16 @@ public class NewsManager : MonoBehaviour
     [Range(1, 10)] public int timerMaxItemTurns = 2;
     [Tooltip("How many newsItems will be selected (if available) per turn. Also gives identical number of Adverts")]
     [Range(0, 3)] public int numOfNewsItems = 1;
-    [Tooltip("% chance of normal news being overriden by Campaign News (assumes that there are normal news items present)")]
-    [Range(0, 100)] public int chanceOfCampaignNews = 0;
+    [Tooltip("% chance of normal news being overriden by Campaign/Scenario news (assumes that there are normal news items present)")]
+    [Range(0, 100)] public int chanceOfGlobalNews = 0;
+    [Tooltip("If global news % chance of Scenario news (tested first), if roll fails then Campaign news is used (default news if neither available)")]
+    [Range(0, 100)] public int chanceOfScenarioNews = 75;
+
     /*[Tooltip("How many adverts will be selected (if available) per turn")]
     [Range(0, 3)] public int numOfAdverts = 1;*/
 
     private string splicer = " ... Updating ... ";
+    private string defaultNews = "City News Blackout in force. Strikes at the Server Farm";
 
     private List<string> listOfCurrentNews = new List<string>();                       //news feed cut up into individual News snippets with the last record always being an advert (excludes Adverts)
     private List<string> listOfCurrentAdverts = new List<string>();                    //news feed cut up into individual Advert snippets with the last record always being an advert (excludes News)
@@ -83,6 +87,8 @@ public class NewsManager : MonoBehaviour
     #region SubInitialiseLevelStart
     private void SubInitialiseLevelStart()
     {
+        //scenario newsPool
+        GameManager.i.dataScript.InitialiseScenarioNews();
     }
     #endregion
 
@@ -178,11 +184,11 @@ public class NewsManager : MonoBehaviour
             countNews = listOfNewsItems.Count;
             if (countNews > 0)
             {
-                //chance of Campaign news
-                if (Random.Range(0, 100) < chanceOfCampaignNews)
+                //chance of Campaign/Scenario news
+                if (Random.Range(0, 100) < chanceOfGlobalNews)
                 {
-                    //  - - - Campaign News
-                    newsSnippet = GetCampaignNews();
+                    //  - - - Campaign/Scenario News
+                    newsSnippet = GetGlobalNews();
                     listOfCurrentNews.Add(newsSnippet);
                     builder.AppendFormat("{0}{1}", splicer, newsSnippet);
                 }
@@ -218,8 +224,8 @@ public class NewsManager : MonoBehaviour
             }
             else
             {
-                // - - - Campaign news
-                newsSnippet = GetCampaignNews();
+                // - - - Campaign/Scenario news
+                newsSnippet = GetGlobalNews();
                 listOfCurrentNews.Add(newsSnippet);
                 builder.AppendFormat("{0}{1}", splicer, newsSnippet);
             }
@@ -228,6 +234,42 @@ public class NewsManager : MonoBehaviour
         //fail safe
         if (builder.Length == 0) { builder.Append("News BlackOut in place"); }
         return builder.ToString();
+    }
+    #endregion
+
+    #region Global News...
+
+    #region GetGlobalNews
+    /// <summary>
+    /// Gets a string of global news -> either campaign or scenario news
+    /// </summary>
+    /// <returns></returns>
+    private string GetGlobalNews()
+    {
+        string newsText = defaultNews;
+        if (GameManager.i.dataScript.CheckIfCampaignNews() == true)
+        {
+            if (GameManager.i.dataScript.CheckIfScenarioNews() == true)
+            {
+                //both present -> decide which to use (Scenario news has first priority)
+                if (Random.Range(0, 100) < chanceOfScenarioNews)
+                { newsText = GetScenarioNews(); }
+                else { newsText = GetCampaignNews(); }
+            }
+            else
+            {
+                //campaign news only
+                newsText = GetCampaignNews();
+            }
+        }
+        else
+        {
+            //Scenario news only -> use scenario if present otherwise go with default
+            if (GameManager.i.dataScript.CheckIfScenarioNews() == true)
+            { newsText = GetScenarioNews(); }
+        }
+
+        return newsText;
     }
     #endregion
 
@@ -251,11 +293,40 @@ public class NewsManager : MonoBehaviour
             if (newsText == null || newsText.Length == 0)
             {
                 //default text when nothing available
-                newsText = "City News Blackout in force. Strikes at the Server Farm";
+                newsText = defaultNews;
             }
         }
         return newsText;
     }
+    #endregion
+
+    #region GetScenarioNews
+    /// <summary>
+    /// subMethod for GetNews to obtain a random ScenarioNews item from DataManager.cs and replace any news text tags
+    /// </summary>
+    /// <returns></returns>
+    private string GetScenarioNews()
+    {
+        string newsText = GameManager.i.dataScript.GetRandomScenarioNews();
+        if (newsText != null)
+        {
+            //process any tags
+            CheckTextData data = new CheckTextData() { text = newsText, objectName = "ScenarioNews" };
+            newsText = CheckNewsText(data);
+
+            //only a problem if null, if empty then scenario news pool is empty
+            if (newsText == null)
+            { Debug.LogWarningFormat("Invalid scenarioNews (Null)"); }
+            if (newsText == null || newsText.Length == 0)
+            {
+                //default text when nothing available
+                newsText = defaultNews;
+            }
+        }
+        return newsText;
+    }
+    #endregion
+
     #endregion
 
     #region GetAdvert
@@ -385,19 +456,30 @@ public class NewsManager : MonoBehaviour
                             { replaceText = GameManager.i.topicScript.textListHandicap.GetRandomRecord(); }
                             break;
                         case "job":
-                            //Random job name appropriate to node arc
+                            //Random job name appropriate to node arc (or from pool of all contactTypes if no node specified)
                             if (data.isValidate == false)
                             {
                                 string job = "Unknown";
                                 if (data.node != null)
                                 {
+                                    //node based
                                     ContactType contactType = data.node.Arc.GetRandomContactType();
                                     if (contactType != null)
                                     { job = contactType.pickList.GetRandomRecord(); }
                                     else
-                                    { Debug.LogWarningFormat("Invalid contactType (Null) for node {0}, {1}, {2} for object {3}", data.node.nodeName, data.node.Arc.name, data.node.nodeID, data.objectName); }
+                                    { Debug.LogWarningFormat("Invalid Node contactType (Null) for node {0}, {1}, {2} for object {3}", data.node.nodeName, data.node.Arc.name, data.node.nodeID, data.objectName); }
                                 }
-                                else { Debug.LogWarningFormat("Invalid node (Null) for [job] tag for object \"{0}\"", data.objectName); }
+                                else
+                                {
+                                    //No node specified so choose a random contact type
+                                    ContactType contactType = GameManager.i.dataScript.GetRandomContactType();
+                                    if (contactType != null)
+                                    { job = contactType.pickList.GetRandomRecord(); }
+                                    else
+                                    { Debug.LogWarningFormat("Invalid Random contactType (Null) for object {0}", data.objectName); }
+
+                                    /*Debug.LogWarningFormat("Invalid node (Null) for [job] tag for object \"{0}\"", data.objectName);*/
+                                }
                                 replaceText = job;
                             }
                             break;

@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
+  m_Name: NewsEurasia
+  m_EditorClassIdentifier: 
+  descriptor: 'Global news items (applies across a campaign) for the topic of Politics.
+
+    NewsManager.cs text tags can be used'
+  category: {fileID: 11400000, guid: cc52e86dfb7f79e4aa745f9ed4b1c80b, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 1
+  randomList:
+  - The problem with Eurasia is that they are all Old, says [npc], [job], of [city].
+    Nobody has kids anymore and can you blame them? Who wants to raise a sprog in
+    this mixed up world?
+  - When I look around me on the street I see the whole world. Everybody is here in
+    Eurasia. But is there room for everybody? That's what I want to know, asks [npc],
+    [job], of [city]
+  - Who decided to make Berlin the capital of Eurasia? asks [npc], [job], of [city].
+    What a crazy decision that was? I would have gone for Reykjavik myself. Site it
+    right next to an active volcano
+  - Who is in charge of Eurasia, that's what I'd like to know, says [npc], [job],
+    of [city]. Is Berlin full of gnomes who beaver away all day or is it just a black
+    box and a smart AI that does all the heavy lifting?
+  - I'm proud of living in Eurasia, says [npc], [job], of [city]. It's got great spys.
+    Really top notch espionage. We know how to shaft everybody else and we know how
+    to do it covertly
+  - How many languages are there in Eurasia? Too many, if you ask me, says [npc],
+    [job], of [city]. Why don't we standardise on just one and leave it at that? It'd
+    cut out a lot of the crap
+  - Eurasia without Russia wouldn't be Eurasia would it? says [npc], [job], of [city].
+    It's Russia that puts the Asia into Eurasia. Their oil and gas doesn't hurt either.
+  - People get upset about the gunboats in the Med shooting up all those africans
+    but what else can you do? asks [npc], [job], of [city]. There's a limit to how
+    many people can live here.
+  - The sooner that Eurasia shuts down all those little ethnic shops around the place
+    and outlaws everything foreign the sooner we'll become a super power, [npc], [job],
+    of [city]
+  - Jeez, Eurasia sure stuffed up their colony on Mars, didn't they? says [npc], [job],
+    of [city]. What a mess
+  index: 0

@@ -55,6 +55,10 @@ public class Scenario : ScriptableObject
     [Header("Number of Turns")]
     [Range(20, 100)] public int timer = 100;
 
+    [Header("Newspool")]
+    [Tooltip("Add all relevant news TextLists (from zero to any number) that will be used to generate news within the scenario")]
+    public List<TextList> newsPool;
+
 
     public void OnEnable()
     {

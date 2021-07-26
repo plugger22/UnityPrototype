@@ -508,7 +508,10 @@ public class DebugGUI : MonoBehaviour
                     case 0: debugDisplay = 72; newsToggle = 1; break;
                     case 1: debugDisplay = 73; newsToggle = 2; break;
                     case 2: debugDisplay = 114; newsToggle = 3; break;
-                    case 3: debugDisplay = 0; newsToggle = 0; break;
+                    case 3: debugDisplay = 117; newsToggle = 4; break;
+                    case 4: debugDisplay = 118; newsToggle = 5; break;
+                    case 5: debugDisplay = 0; newsToggle = 0; break;
+                        
                 }
             }
 
@@ -2189,7 +2192,7 @@ public class DebugGUI : MonoBehaviour
                     case 73:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.i.newsScript.DebugDisplayAdverts();
-                        GUI.Box(new Rect(Screen.width - 410, 10, 400, 800), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 1010, 10, 1000, 800), analysis, customBackground);
                         break;
                     //HQ dictionary
                     case 74:
@@ -2493,6 +2496,18 @@ public class DebugGUI : MonoBehaviour
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.i.contactScript.DebugDisplayNodeContactsActors();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 800), analysis, customBackground);
+                        break;
+                    //Campaign news
+                    case 117:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.i.dataScript.DebugDisplayCampaignNews();
+                        GUI.Box(new Rect(Screen.width - 1210, 10, 1200, 900), analysis, customBackground);
+                        break;
+                    //Scenario news
+                    case 118:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.i.dataScript.DebugDisplayScenarioNews();
+                        GUI.Box(new Rect(Screen.width - 1210, 10, 1200, 900), analysis, customBackground);
                         break;
                 }
             }

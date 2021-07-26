@@ -220,7 +220,7 @@ public class HelpManager : MonoBehaviour
         builder = new StringBuilder();
         builder.AppendFormat("The news ticker at the bottom of the App gives daily highlights of events in the city. ", colourAlert, colourEnd);
         builder.AppendFormat("You can adjust the {0}text scroll speed{1} using the '+' and '-' keys. ", colourAlert, colourEnd);
-        builder.AppendFormat("{0}Mouse Over{1} for a news summary", colourAlert, colourEnd);
+        builder.AppendFormat("{0}MOUSE OVER{1} for a News Summary", colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
         //Keys
