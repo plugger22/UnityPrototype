@@ -16,5 +16,29 @@ MonoBehaviour:
   isTestForDuplicates: 1
   isTestForTextTags: 1
   randomList:
-  - Tutorial News for [city]
-  index: 7
+  - Do you remember [npc], the [job] from [city]? They were inserted after training
+    and within three days the Authority had rounded them up and performed an experimental
+    lobotomy. Nasty
+  - They're strict with their training but they have to be. The survival rate for
+    new graduates is a secret but I've heard said that nobody expects you to grow
+    old once you're released out into the wild
+  - See that blood smear over there? That belongs to [npc]. They used to be a [job]
+    before they signed up. Didn't make it through basic training. Squashed flat by
+    an autoTruck on the friz
+  - You've got questions? Hasn't everybody. We haven't got time to sit down and answer
+    them all. You're going to have to take some things on faith
+  - Who needs training? asks [npc], [job], of [city]. I know what I'm doing. What
+    am I going to learn from this bunch of deadbeats?
+  - I've heard that if you fail your training they dispose of you out back, says [npc],
+    [job], of [city]. It's for security
+  - They sure try and put the frighteners in you here, don't they? says [npc], [job],
+    of [city]. Is the Authority really that bad?
+  - Have you tried the food here yet? asks [npc], [job], of [city]. Filthy fungus
+    burgers are all you get. Nobody told me that I'd have to eat like an animal when
+    I signed up to help
+  - Nobody has asked me about my feelings yet, says [npc], [job], of [city]. I'd expect
+    that somebody would want to know how I feel about having to risk my life. Apparently
+    not
+  - What did you do before this? I was a [job], says [npc] of [city]. There's not
+    much use for that now, though, is there? The world has changed
+  index: 0

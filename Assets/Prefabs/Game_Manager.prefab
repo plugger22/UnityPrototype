@@ -6561,7 +6561,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timerMaxItemTurns: 2
   numOfNewsItems: 1
-  chanceOfCampaignNews: 0
+  chanceOfGlobalNews: 0
+  chanceOfScenarioNews: 75
 --- !u!114 &114656477723242970
 MonoBehaviour:
   m_ObjectHideFlags: 1

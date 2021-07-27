@@ -29,6 +29,9 @@ public class TutorialUI : MonoBehaviour
     public Button button8;
     public Button button9;
 
+    [Header("Progress")]
+    public TextMeshProUGUI progressText;
+
     [Header("Tutorial Control Widget")]
     public Image widget;
     public TextMeshProUGUI widgetLeft;
@@ -52,6 +55,7 @@ public class TutorialUI : MonoBehaviour
     //assorted
     private int numOfItems;                                                         //number of active items/buttons for this set
     private TutorialItem currentItem;                                               //currently selected tutorial item
+    private GenericTooltipUI progressTooltip;
 
     //collections
     private List<Button> listOfButtons = new List<Button>();
@@ -149,6 +153,7 @@ public class TutorialUI : MonoBehaviour
         Debug.Assert(button7 != null, "Invalid button7 (Null)");
         Debug.Assert(button8 != null, "Invalid button8 (Null)");
         Debug.Assert(button9 != null, "Invalid button9 (Null)");
+        Debug.Assert(progressText != null, "Invalid progressText (Null)");
         Debug.Assert(widget != null, "Invalid widget (Null)");
         Debug.Assert(widgetLeft != null, "Invalid widgetLeft (Null)");
         Debug.Assert(widgetRight != null, "Invalid widgetRight (Null)");
@@ -170,6 +175,7 @@ public class TutorialUI : MonoBehaviour
         interact7 = button7.GetComponent<TutorialButtonInteraction>();
         interact8 = button8.GetComponent<TutorialButtonInteraction>();
         interact9 = button9.GetComponent<TutorialButtonInteraction>();
+        progressTooltip = progressText.GetComponent<GenericTooltipUI>();
         //asserts
         Debug.Assert(interact0 != null, "Invalid interact0 (Null)");
         Debug.Assert(interact1 != null, "Invalid interact1 (Null)");
@@ -181,6 +187,7 @@ public class TutorialUI : MonoBehaviour
         Debug.Assert(interact7 != null, "Invalid interact7 (Null)");
         Debug.Assert(interact8 != null, "Invalid interact8 (Null)");
         Debug.Assert(interact9 != null, "Invalid interact9 (Null)");
+        Debug.Assert(progressTooltip != null, "Invalid progressTooltip (Null)");
     }
     #endregion
 
@@ -237,7 +244,6 @@ public class TutorialUI : MonoBehaviour
     #endregion
 
     #endregion
-
 
 
     #region OnEvent
@@ -341,6 +347,11 @@ public class TutorialUI : MonoBehaviour
                         }
                         else { Debug.LogWarningFormat("Invalid listOfItems[{0}] (Null) for set \"{1}\"", i, set.name); }
                     }
+                    //progress indicator
+                    progressText.text = string.Format("{0} of {1}", GameManager.i.tutorialScript.index + 1, GameManager.i.tutorialScript.GetNumberOfSets());
+                    progressText.gameObject.SetActive(true);
+                    progressTooltip.tooltipHeader = string.Format("<size=120%><b>{0}</b></size>", GameManager.Formatt("Progress", ColourType.salmonText));
+                    progressTooltip.tooltipMain = string.Format("Indicates where you are in the {0}", GameManager.Formatt("Tutorial", ColourType.neutralText));
                     //activate canvas
                     tutorialCanvas.gameObject.SetActive(true);
                     //activate first button

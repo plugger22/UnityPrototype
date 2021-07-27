@@ -1131,6 +1131,15 @@ public class TutorialManager : MonoBehaviour
     }
     #endregion
 
+    #region GetNumberOfSets
+    /// <summary>
+    /// returns total number of sets within current tutorial
+    /// </summary>
+    /// <returns></returns>
+    public int GetNumberOfSets()
+    { return tutorial.listOfSets.Count; }
+    #endregion
+
 
 
     #endregion
