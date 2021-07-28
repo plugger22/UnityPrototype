@@ -10,7 +10,6 @@ using UnityEngine.UI;
 /// </summary>
 public class MasterHelpInteraction : MonoBehaviour
 {
-
     public Image panel;
     public TextMeshProUGUI text;
 }

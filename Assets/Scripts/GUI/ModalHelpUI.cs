@@ -157,6 +157,8 @@ public class ModalHelpUI : MonoBehaviour
                     if (interact != null)
                     {
                         listOfInteractions.Add(interact);
+                        //add name
+                        listOfInteractions[i].text.text = listOfHelp[i].name;
                     }
                     else { Debug.LogErrorFormat("Invalid masterHelpInteraction (Null) for listOfHelp[{0}]", i); }
                 }
