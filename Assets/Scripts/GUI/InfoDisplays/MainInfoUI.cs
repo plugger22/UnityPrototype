@@ -208,9 +208,9 @@ public class MainInfoUI : MonoBehaviour
     string colourCancel;
     string colourEnd;
 
+    #region static...
     //static reference
     private static MainInfoUI mainInfoUI;
-
 
     /// <summary>
     /// provide a static reference to MainInfoUI that can be accessed from any script
@@ -226,8 +226,9 @@ public class MainInfoUI : MonoBehaviour
         }
         return mainInfoUI;
     }
+    #endregion
 
-
+    #region Initialise
     public void Initialise(GameState state)
     {
         switch (state)
@@ -251,6 +252,7 @@ public class MainInfoUI : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
     #region Initialise SubMethods
 
