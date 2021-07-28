@@ -97,6 +97,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public ModalGenericPicker genericPickerScript;    //Modal Generic Picker window
     [HideInInspector] public ModalInventoryUI inventoryScript;          //Modal InventoryUI window
     [HideInInspector] public ModalReviewUI reviewScript;                //Modal ReviewUI window
+    [HideInInspector] public ModalHelpUI masterHelpScript;              //Modal Help UI
     /*[HideInInspector] public ModalDiceUI diceScript;                  //Modal Dice UI window*/
     [HideInInspector] public ModalGUI modalGUIScript;                   //Modal GUI 
     [HideInInspector] public AlertUI alertScript;                       //Alert UI text display
@@ -282,6 +283,7 @@ public class GameManager : MonoBehaviour
         genericPickerScript = ModalGenericPicker.Instance();
         inventoryScript = ModalInventoryUI.Instance();
         reviewScript = ModalReviewUI.Instance();
+        masterHelpScript = ModalHelpUI.Instance();
         /*diceScript = ModalDiceUI.Instance();*/
         modalGUIScript = ModalGUI.Instance();
         widgetTopScript = WidgetTopUI.Instance();
@@ -398,6 +400,7 @@ public class GameManager : MonoBehaviour
         Debug.Assert(tutorialUIScript != null, "Invalid tutorialUIScript (Null)");
         Debug.Assert(gameHelpScript != null, "Invalid gameHelpScript (Null)");
         Debug.Assert(newTurnScript != null, "Invalid newTurnScript (Null)");
+        Debug.Assert(masterHelpScript != null, "Invalid masterHelpScript (Null)");
         //set up list of delegates
         InitialiseStartSequence();
         //sets this to not be destroyed when reloading a scene
@@ -867,6 +870,10 @@ public class GameManager : MonoBehaviour
         //NewTurnUI
         startMethod.handler = newTurnScript.Initialise;
         startMethod.className = "NewTurnUI";
+        listOfUIMethods.Add(startMethod);
+        //MasterHelpUI
+        startMethod.handler = masterHelpScript.Initialise;
+        startMethod.className = "ModalHelpUI";
         listOfUIMethods.Add(startMethod);
         #endregion
 
