@@ -628,7 +628,7 @@ public class ControlManager : MonoBehaviour
         GameManager.i.InitialiseTutorial();
 
         //debug
-        Debug.LogFormat("[Tst] ControlManager.cs -> ProcessTutorialOptions:  number of HQ Workers {0}", GameManager.i.dataScript.CheckHqWorkers());
+        /*Debug.LogFormat("[Tst] ControlManager.cs -> ProcessTutorialOptions:  number of HQ Workers {0}", GameManager.i.dataScript.CheckHqWorkers());*/
     }
     #endregion
 

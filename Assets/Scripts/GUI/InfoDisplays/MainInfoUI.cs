@@ -1092,7 +1092,9 @@ public class MainInfoUI : MonoBehaviour
     {
         GameManager.i.tooltipGenericScript.CloseTooltip("MainInfoUI.cs -> CloseMainInfo");
         GameManager.i.tooltipHelpScript.CloseTooltip("MainInfoUI.cs -> CloseMainInfo");
+        //toggle off mainInfo UI
         mainInfoCanvas.gameObject.SetActive(false);
+        //toggle off modal block
         GameManager.i.guiScript.SetIsBlocked(false);
         //switch off coroutines
         if (myCoroutineRequest != null)

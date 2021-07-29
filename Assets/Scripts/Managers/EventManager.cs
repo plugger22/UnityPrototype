@@ -216,6 +216,11 @@ public enum EventType
     MainInfoRestore,
     MainInfoTickerFaster,
     MainInfoTickerSlower,
+    //Master Help
+    MasterHelpUpArrow,
+    MasterHelpDownArrow,
+    MasterHelpOpen,
+    MasterHelpClose,
     //GameHelpUI
     GameHelpOpen,
     GameHelpClose,

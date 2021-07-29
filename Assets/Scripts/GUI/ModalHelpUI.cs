@@ -1,4 +1,5 @@
 ﻿using gameAPI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -35,15 +36,23 @@ public class ModalHelpUI : MonoBehaviour
 
 
     //item tracking
-    private int highlightIndex = -1;                                 //item index of currently highlighted item
+    private int highlightIndex = -1;                                //item index of currently highlighted item
+    private int recentIndex = -1;                                   //most recent index (used to remove highlight)
+    private int numOfItemsTotal = -1;                               //hardwired Max number of items -> 30
+    /*
     private int maxHighlightIndex = -1;
-    private int numOfItemsTotal = 30;                                //hardwired Max number of items -> 30
     private int numOfVisibleItems = 10;                              //hardwired visible items in main page -> 10
     private int numOfItemsCurrent = -1;                              //count of items in current list / page
     private int numOfItemsPrevious = -1;                             //count of items in previous list / page
+    */
 
     private List<GameHelp> listOfHelp = new List<GameHelp>();
     private List<MasterHelpInteraction> listOfInteractions = new List<MasterHelpInteraction>();             //index linked with listOfHelp
+
+    //fast access
+    private Color colorInactive;                                     //help item text color in list
+    private Color colorActive;
+
 
     #region static Instance...
     private static ModalHelpUI modalHelpUI;
@@ -74,6 +83,7 @@ public class ModalHelpUI : MonoBehaviour
             case GameState.NewInitialisation:
             case GameState.LoadAtStart:
                 SubInitialiseAsserts();
+                SubInitialiseFastAccess();
                 SubInitialiseSessionStart();
                 SubInitialiseEvents();
                 break;
@@ -111,6 +121,14 @@ public class ModalHelpUI : MonoBehaviour
     }
     #endregion
 
+    #region SubInitialiseFastAccess
+    private void SubInitialiseFastAccess()
+    {
+        colorInactive = GameManager.i.uiScript.MasterHelpInactive;
+        colorActive = GameManager.i.uiScript.MasterHelpActive;
+    }
+    #endregion
+
     #region SubInitialiseSessionStart
     /// <summary>
     /// Session Start
@@ -136,35 +154,8 @@ public class ModalHelpUI : MonoBehaviour
         scrollBar = scrollBarObject.GetComponent<Scrollbar>();
         Debug.Assert(scrollRect != null, "Invalid scrollRect (Null)");
         Debug.Assert(scrollBar != null, "Invalid scrollBar (Null)");
-        //initialise array
-        listOfHelp = GameManager.i.loadScript.arrayOfGameHelp.ToList();
-        if (listOfHelp != null)
-        {
-            numOfItemsTotal = listOfHelp.Count;
-            if (numOfItemsTotal == 0)
-            { Debug.LogError("Invalid listOfHelp (Empty)"); }
-            else
-            {
-                //add prefabs for each gameHelp item in list
-                for (int i = 0; i < numOfItemsTotal; i++)
-                {
-                    //create node from prefab
-                    instanceOption = Instantiate(optionPrefab) as GameObject;
-                    instanceOption.transform.SetParent(scrollContent);
-                    instanceOption.SetActive(true);
-                    //add to listOfInteractions
-                    MasterHelpInteraction interact = instanceOption.GetComponent<MasterHelpInteraction>();
-                    if (interact != null)
-                    {
-                        listOfInteractions.Add(interact);
-                        //add name
-                        listOfInteractions[i].text.text = listOfHelp[i].name;
-                    }
-                    else { Debug.LogErrorFormat("Invalid masterHelpInteraction (Null) for listOfHelp[{0}]", i); }
-                }
-            }
-        }
-        else { Debug.LogError("Invalid listOfHelp (Null)"); }
+        //Initialise options from prefabs and set up lists
+        InitialiseHelpOptions();
     }
     #endregion
 
@@ -174,10 +165,91 @@ public class ModalHelpUI : MonoBehaviour
     /// </summary>
     private void SubInitialiseEvents()
     {
-
+        //register listener
+        EventManager.i.AddListener(EventType.MasterHelpOpen, OnEvent, "ModalHelpUI");
+        EventManager.i.AddListener(EventType.MasterHelpClose, OnEvent, "ModalHelpUI");
+        EventManager.i.AddListener(EventType.MasterHelpUpArrow, OnEvent, "ModalHelpUI");
+        EventManager.i.AddListener(EventType.MasterHelpDownArrow, OnEvent, "ModalHelpUI");
     }
     #endregion
 
+    #endregion
+
+    #region InitialiseHelpOptions
+    //Sets up lists and Initialise Option
+    private void InitialiseHelpOptions()
+    {
+        string helpName;
+        //clear out help list
+        listOfHelp.Clear();
+        //get list of names
+        List<string> tempListOfStrings = GameManager.i.loadScript.arrayOfGameHelp.Select(x => x.name).ToList();
+        numOfItemsTotal = tempListOfStrings.Count;
+        if (tempListOfStrings != null)
+        {
+            if (numOfItemsTotal > 0)
+            {
+                //sort list alphabetically in ascending order
+                tempListOfStrings.Sort();
+                //temporary List of GameHelp by value (will be deleting)
+                List<GameHelp> tempListOfGameHelp = new List<GameHelp>(GameManager.i.loadScript.arrayOfGameHelp);
+                Debug.AssertFormat(tempListOfGameHelp.Count == numOfItemsTotal, "Mismatch in count. tempListOfGameHelp has {0} items, numOfItemsTotal is {1} (should be the same)", tempListOfGameHelp.Count, numOfItemsTotal);
+                //Set up lists using sort order
+                for (int i = 0; i < numOfItemsTotal; i++)
+                {
+                    helpName = tempListOfStrings[i];
+                    if (string.IsNullOrEmpty(helpName) == false)
+                    {
+                        //find name (reverse loop 'cause we will delete once found
+                        for (int j = tempListOfGameHelp.Count - 1; j >= 0; j--)
+                        {
+                            if (tempListOfGameHelp[j].name.Equals(helpName, StringComparison.Ordinal) == true)
+                            {
+                                //match
+                                listOfHelp.Add(tempListOfGameHelp[j]);
+                                //remove to prevent dupes
+                                tempListOfGameHelp.RemoveAt(j);
+                                //job done exit loop
+                                break;
+                            }
+                        }
+                    }
+                    else { Debug.LogErrorFormat("Invalid HelpName (Null or Empty) for tempListOfStrings[{0}]", i); }
+                }
+                //check correct number of GameHelp in list
+                if (listOfHelp.Count == numOfItemsTotal)
+                {
+                    //clear out interactions list
+                    listOfInteractions.Clear();
+                    //initialise prefabs
+                    for (int i = 0; i < listOfHelp.Count; i++)
+                    {
+                        //create help option from prefab
+                        instanceOption = Instantiate(optionPrefab) as GameObject;
+                        instanceOption.transform.SetParent(scrollContent);
+                        instanceOption.SetActive(true);
+                        //add interaction
+                        MasterHelpInteraction interact = instanceOption.GetComponent<MasterHelpInteraction>();
+                        if (interact != null)
+                        {
+                            listOfInteractions.Add(interact);
+                            //add name
+                            listOfInteractions[i].text.text = listOfHelp[i].name;
+                        }
+                        else { Debug.LogErrorFormat("Invalid masterHelpInteraction (Null) for listOfHelp[{0}]", i); }
+                    }
+                    //indexes
+                    highlightIndex = 0;
+                    recentIndex = 0;
+                    //display first item
+                    ShowHelpItem();
+                }
+                else { Debug.LogErrorFormat("Mismatch on count, listOfHelp has {0} items, numOfItemsTotal is {1} (should be the same)", listOfHelp.Count, numOfItemsTotal); }
+            }
+            else { Debug.LogError("Invalid tempList (Empty)"); }
+        }
+        else { Debug.LogError("Invalid tempList (Null)"); }
+    }
     #endregion
 
     #region OnEvent
@@ -192,7 +264,18 @@ public class ModalHelpUI : MonoBehaviour
         //select event type
         switch (eventType)
         {
-
+            case EventType.MasterHelpOpen:
+                SetHelp();
+                break;
+            case EventType.MasterHelpClose:
+                CloseHelp();
+                break;
+            case EventType.MasterHelpUpArrow:
+                ExecuteUpArrow();
+                break;
+            case EventType.MasterHelpDownArrow:
+                ExecuteDownArrow();
+                break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
@@ -207,17 +290,92 @@ public class ModalHelpUI : MonoBehaviour
     /// </summary>
     public void SetHelp()
     {
+        //close any Alert Message
+        GameManager.i.alertScript.CloseAlertUI(true);
+        //stop tooltips
+        GameManager.i.guiScript.SetTooltipsOff();
+        //stop background animations
+        GameManager.i.animateScript.StopAnimations();
+        //toggle on
         masterCanvas.gameObject.SetActive(true);
+        //set modal status
+        GameManager.i.guiScript.SetIsBlocked(true);
+        //set game state
+        ModalStateData package = new ModalStateData();
+        package.mainState = ModalSubState.InfoDisplay;
+        package.infoState = ModalInfoSubState.MasterHelp;
+        GameManager.i.inputScript.SetModalState(package);
+        Debug.LogFormat("[UI] ModalHelpUI.cs -> SetHelp{0}", "\n");
     }
     #endregion
 
+    #region CloseHelp
     /// <summary>
     /// Close Master Help UI
     /// </summary>
     public void CloseHelp()
     {
         masterCanvas.gameObject.SetActive(false);
+        //set modal status
+        GameManager.i.guiScript.SetIsBlocked(false);
+        //set game state
+        GameManager.i.inputScript.ResetStates();
+        Debug.LogFormat("[UI] ModalHelpUI.cs -> CloseHelp{0}", "\n");
+        //start background animations
+        GameManager.i.animateScript.StartAnimations();
     }
+    #endregion
+
+    #region ExecuteUpArrow
+    /// <summary>
+    /// Up arrow
+    /// </summary>
+    private void ExecuteUpArrow()
+    {
+        if (highlightIndex > 0)
+        {
+            highlightIndex--;
+            ShowHelpItem();
+            recentIndex = highlightIndex;
+        }
+    }
+    #endregion
+
+    #region ExecuteDownArrow
+    /// <summary>
+    /// Down arrow
+    /// </summary>
+    private void ExecuteDownArrow()
+    {
+        if (highlightIndex < (numOfItemsTotal - 1))
+        {
+            highlightIndex++;
+            ShowHelpItem();
+            recentIndex = highlightIndex;
+        }
+    }
+    #endregion
+
+    #region ShowHelpItem
+    /// <summary>
+    /// Displays help (sprite) for current highlightIndex
+    /// </summary>
+    private void ShowHelpItem()
+    {
+        if (highlightIndex > -1 && highlightIndex < numOfItemsTotal)
+        {
+            helpImage.sprite = listOfHelp[highlightIndex].sprite0;
+            displayHeader.text = listOfHelp[highlightIndex].name;
+            //return colour to normal for most recent text
+            listOfInteractions[recentIndex].text.color = colorInactive;
+            //change colour of selected text
+            listOfInteractions[highlightIndex].text.color = colorActive;
+            listOfInteractions[highlightIndex].text.text = listOfHelp[highlightIndex].name;
+
+        }
+        else { Debug.LogErrorFormat("Invalid highlightIndex \"{0}\"", highlightIndex); }
+    }
+    #endregion
 
 
     //new methods above here

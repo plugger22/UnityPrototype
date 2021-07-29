@@ -142,4 +142,10 @@ public class UIManager : MonoBehaviour
     [Tooltip("History Option Inactive color -> 50% (126) alpha)")]
     public Color TabbedOptionInactive;
 
+    [Header("Master Help UI")]
+    [Tooltip("Text colour (list of help item names) Inactive colour -> All (should be 100% alpha) ")]
+    public Color MasterHelpInactive;
+    [Tooltip("Text colour (list of help item names) Actve colour -> All (should be 100% alpha)")]
+    public Color MasterHelpActive;
+
 }

@@ -273,8 +273,7 @@ public class InputManager : MonoBehaviour
         else if (Input.GetButtonDown("Test") == true)
         {
             //runs a test condition (whatever you want)
-            GameManager.i.masterHelpScript.SetHelp();
-
+            EventManager.i.PostNotification(EventType.MasterHelpOpen, this, null, string.Format("InputManager.cs -> ProcessKeyInput Test"));
         }
         else
         {
@@ -711,18 +710,25 @@ public class InputManager : MonoBehaviour
                                 case 1:
                                     switch (_modalInfoState)
                                     {
+                                        #region CityInfo
                                         case ModalInfoSubState.CityInfo:
                                             if (Input.GetButtonDown("Cancel") == true)
                                             {
                                                 EventManager.i.PostNotification(EventType.CityInfoClose, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
                                             }
                                             break;
+                                        #endregion
+
+                                        #region AIInfo
                                         case ModalInfoSubState.AIInfo:
                                             if (Input.GetButtonDown("Cancel") == true)
                                             {
                                                 EventManager.i.PostNotification(EventType.AIDisplayClose, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
                                             }
                                             break;
+                                        #endregion
+
+                                        #region MainInfo...
                                         case ModalInfoSubState.MainInfo:
                                             if (Input.GetButtonDown("Cancel") == true)
                                             {
@@ -730,23 +736,23 @@ public class InputManager : MonoBehaviour
                                             }
                                             else if (Input.GetButtonDown("OpenMainInfo") == true)
                                             {
-                                                EventManager.i.PostNotification(EventType.MainInfoClose, this, null, "InputManager.cs -> ProcessKeyInput OpenMainInfo");
+                                                EventManager.i.PostNotification(EventType.MainInfoOpen, this, null, "InputManager.cs -> ProcessKeyInput OpenMainInfo");
                                             }
                                             else if (Input.GetButtonDown("Vertical"))
                                             {
                                                 y_axis = Input.GetAxisRaw("Vertical");
                                                 if (y_axis > 0)
-                                                { EventManager.i.PostNotification(EventType.MainInfoUpArrow, this, null, "InputManager.cs -> ProcessKeyInput Vertical"); }
+                                                { EventManager.i.PostNotification(EventType.MainInfoUpArrow, this, null, "InputManager.cs -> ProcessKeyInput Vertical Up"); }
                                                 else if (y_axis < 0)
-                                                { EventManager.i.PostNotification(EventType.MainInfoDownArrow, this, null, "InputManager.cs -> ProcessKeyInput Vertical"); }
+                                                { EventManager.i.PostNotification(EventType.MainInfoDownArrow, this, null, "InputManager.cs -> ProcessKeyInput Vertical Down"); }
                                             }
                                             else if (Input.GetButtonDown("Horizontal"))
                                             {
                                                 x_axis = Input.GetAxisRaw("Horizontal");
                                                 if (x_axis > 0)
-                                                { EventManager.i.PostNotification(EventType.MainInfoRightArrow, this, null, "InputManager.cs -> ProcessKeyInput Horizontal"); }
+                                                { EventManager.i.PostNotification(EventType.MainInfoRightArrow, this, null, "InputManager.cs -> ProcessKeyInput Horizontal Right"); }
                                                 else if (x_axis < 0)
-                                                { EventManager.i.PostNotification(EventType.MainInfoLeftArrow, this, null, "InputManager.cs -> ProcessKeyInput Horizontal"); }
+                                                { EventManager.i.PostNotification(EventType.MainInfoLeftArrow, this, null, "InputManager.cs -> ProcessKeyInput Horizontal Left"); }
                                             }
                                             else if (Input.GetButtonDown("Multipurpose") == true)
                                             {
@@ -785,6 +791,30 @@ public class InputManager : MonoBehaviour
                                                 EventManager.i.PostNotification(EventType.MainInfoTickerSlower, this, null, string.Format("InputManager.cs -> ProcessKeyInput Minus \"{0}\"", Input.inputString.ToUpper()));
                                             }
                                             break;
+                                        #endregion
+
+                                        #region MasterHelp...
+                                        case ModalInfoSubState.MasterHelp:
+                                            if (Input.GetButtonDown("Cancel") == true)
+                                            {
+                                                EventManager.i.PostNotification(EventType.MasterHelpClose, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
+                                            }
+                                            else if (Input.GetButtonDown("OpenHelp") == true)
+                                            {
+                                                EventManager.i.PostNotification(EventType.MasterHelpOpen, this, null, "InputManager.cs -> ProcessKeyInput OpenMasterHelp");
+                                            }
+                                            else if (Input.GetButtonDown("Vertical"))
+                                            {
+                                                y_axis = Input.GetAxisRaw("Vertical");
+                                                if (y_axis > 0)
+                                                { EventManager.i.PostNotification(EventType.MasterHelpUpArrow, this, null, "InputManager.cs -> ProcessKeyInput Vertical Up"); }
+                                                else if (y_axis < 0)
+                                                { EventManager.i.PostNotification(EventType.MasterHelpDownArrow, this, null, "InputManager.cs -> ProcessKeyInput Vertical Down"); }
+                                            }
+                                            break;
+                                        #endregion
+
+                                        #region TabbedUI...
                                         case ModalInfoSubState.TabbedUI:
                                             if (Input.GetButtonDown("Cancel") == true)
                                             {
@@ -794,17 +824,17 @@ public class InputManager : MonoBehaviour
                                             {
                                                 y_axis = Input.GetAxisRaw("Vertical");
                                                 if (y_axis > 0)
-                                                { EventManager.i.PostNotification(EventType.TabbedUpArrow, this, null, "InputManager.cs -> ProcessKeyInput Vertical"); }
+                                                { EventManager.i.PostNotification(EventType.TabbedUpArrow, this, null, "InputManager.cs -> ProcessKeyInput Vertical Up"); }
                                                 else if (y_axis < 0)
-                                                { EventManager.i.PostNotification(EventType.TabbedDownArrow, this, null, "InputManager.cs -> ProcessKeyInput Vertical"); }
+                                                { EventManager.i.PostNotification(EventType.TabbedDownArrow, this, null, "InputManager.cs -> ProcessKeyInput Vertical Down"); }
                                             }
                                             else if (Input.GetButtonDown("Horizontal"))
                                             {
                                                 x_axis = Input.GetAxisRaw("Horizontal");
                                                 if (x_axis > 0)
-                                                { EventManager.i.PostNotification(EventType.TabbedRightArrow, this, null, "InputManager.cs -> ProcessKeyInput Horizontal"); }
+                                                { EventManager.i.PostNotification(EventType.TabbedRightArrow, this, null, "InputManager.cs -> ProcessKeyInput Horizontal Right"); }
                                                 else if (x_axis < 0)
-                                                { EventManager.i.PostNotification(EventType.TabbedLeftArrow, this, null, "InputManager.cs -> ProcessKeyInput Horizontal"); }
+                                                { EventManager.i.PostNotification(EventType.TabbedLeftArrow, this, null, "InputManager.cs -> ProcessKeyInput Horizontal Left"); }
                                             }
                                             else if (Input.GetButtonDown("PageUp") == true)
                                             {
@@ -815,12 +845,15 @@ public class InputManager : MonoBehaviour
                                                 EventManager.i.PostNotification(EventType.TabbedPageDown, this, null, string.Format("InputManager.cs -> ProcessKeyInput DayBehind (PageDown) \"{0}\"", Input.inputString.ToUpper()));
                                             }
                                             break;
+                                            #endregion
                                     }
                                     break;
                                 case 2:
                                     switch (_modalInfoState)
                                     {
                                         //Only for UI elements that can be in ModalLevel 2
+
+                                        #region TabbedUI...
                                         case ModalInfoSubState.TabbedUI:
                                             if (Input.GetButtonDown("Cancel") == true)
                                             {
@@ -851,6 +884,7 @@ public class InputManager : MonoBehaviour
                                                 EventManager.i.PostNotification(EventType.TabbedPageDown, this, null, string.Format("InputManager.cs -> ProcessKeyInput DayBehind (PageDown) \"{0}\"", Input.inputString.ToUpper()));
                                             }
                                             break;
+                                            #endregion
                                     }
                                     break;
                             }
