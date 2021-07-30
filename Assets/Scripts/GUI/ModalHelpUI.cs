@@ -11,22 +11,34 @@ using UnityEngine.UI;
 /// </summary>
 public class ModalHelpUI : MonoBehaviour
 {
+    //main
     public Canvas masterCanvas;
     public GameObject masterObject;
     public Image mainPanel;
     public Image mainHeaderPanel;
     public TextMeshProUGUI mainHeader;
-
+    //display
     public Image displayPanel;
     public Image displayHeaderPanel;
     public Image helpImage;
     public TextMeshProUGUI displayHeader;
-
+    //scrolling
     public GameObject scrollBarObject;
     public GameObject scrollBackground;                             //needed to get scrollRect component in order to manually disable scrolling when not needed
     public RectTransform scrollContent;                             //instantiated prefab options parented to this
-
+    //prefab
     public GameObject optionPrefab;                                 //reference prefab for game help options (list/scroll)
+    //buttons
+    public Button closeButton;
+    public Button forwardButton;
+    public Button homeButton;
+    public Button backButton;
+
+    //button Interactoins
+    private ButtonInteraction closeInteraction;
+    private ButtonInteraction forwardInteraction;
+    private ButtonInteraction homeInteraction;
+    private ButtonInteraction backInteraction;
 
     //scroll bar LHS
     private ScrollRect scrollRect;                                  //needed to manually disable scrolling when not needed
@@ -34,20 +46,17 @@ public class ModalHelpUI : MonoBehaviour
 
     private GameObject instanceOption;                              //used for instantiating gameHelp option prefabs
 
-
     //item tracking
     private int highlightIndex = -1;                                //item index of currently highlighted item
-    private int recentIndex = -1;                                   //most recent index (used to remove highlight)
+    private int recentIndex = -1;                                   //most recent index (used to remove highlight) -> Update AFTER a call to ShowHelpItem
     private int numOfItemsTotal = -1;                               //hardwired Max number of items -> 30
-    /*
-    private int maxHighlightIndex = -1;
-    private int numOfVisibleItems = 10;                              //hardwired visible items in main page -> 10
-    private int numOfItemsCurrent = -1;                              //count of items in current list / page
-    private int numOfItemsPrevious = -1;                             //count of items in previous list / page
-    */
+    private int historyIndex = -1;
+    private int numOfHistoryTotal = -1;
 
+    //collections
     private List<GameHelp> listOfHelp = new List<GameHelp>();
     private List<MasterHelpInteraction> listOfInteractions = new List<MasterHelpInteraction>();             //index linked with listOfHelp
+    private List<int> listOfHistory = new List<int>();                                                      //tracks page indexes of all browsing history in any given open up session
 
     //fast access
     private Color colorInactive;                                     //help item text color in list
@@ -118,6 +127,10 @@ public class ModalHelpUI : MonoBehaviour
         Debug.Assert(scrollBarObject != null, "Invalid scrollBarObject (Null)");
         Debug.Assert(scrollContent != null, "Invalid scrollContent (Null)");
         Debug.Assert(optionPrefab != null, "Invalid optionPrefab (Null)");
+        Debug.Assert(closeButton != null, "Invalid closeButton (Null)");
+        Debug.Assert(forwardButton != null, "Invalid forwardButton (Null)");
+        Debug.Assert(homeButton != null, "Invalid homeButton (Null)");
+        Debug.Assert(backButton != null, "Invalid backButton (Null)");
     }
     #endregion
 
@@ -154,6 +167,20 @@ public class ModalHelpUI : MonoBehaviour
         scrollBar = scrollBarObject.GetComponent<Scrollbar>();
         Debug.Assert(scrollRect != null, "Invalid scrollRect (Null)");
         Debug.Assert(scrollBar != null, "Invalid scrollBar (Null)");
+        //button interactions
+        closeInteraction = closeButton.GetComponent<ButtonInteraction>();
+        forwardInteraction = forwardButton.GetComponent<ButtonInteraction>();
+        homeInteraction = homeButton.GetComponent<ButtonInteraction>();
+        backInteraction = backButton.GetComponent<ButtonInteraction>();
+        Debug.Assert(closeInteraction != null, "Invalid closeInteraction (Null)");
+        Debug.Assert(forwardInteraction != null, "Invalid forwardInteraction (Null)");
+        Debug.Assert(homeInteraction != null, "Invalid homeInteraction (Null)");
+        Debug.Assert(backInteraction != null, "Invalid backInteraction (Null)");
+        //Assign button events
+        closeInteraction.SetButton(EventType.MasterHelpClose);
+        forwardInteraction.SetButton(EventType.MasterHelpForward);
+        homeInteraction.SetButton(EventType.MasterHelpHome);
+        backInteraction.SetButton(EventType.MasterHelpBack);
         //Initialise options from prefabs and set up lists
         InitialiseHelpOptions();
     }
@@ -170,6 +197,10 @@ public class ModalHelpUI : MonoBehaviour
         EventManager.i.AddListener(EventType.MasterHelpClose, OnEvent, "ModalHelpUI");
         EventManager.i.AddListener(EventType.MasterHelpUpArrow, OnEvent, "ModalHelpUI");
         EventManager.i.AddListener(EventType.MasterHelpDownArrow, OnEvent, "ModalHelpUI");
+        EventManager.i.AddListener(EventType.MasterHelpSelect, OnEvent, "ModalHelpUI");
+        EventManager.i.AddListener(EventType.MasterHelpForward, OnEvent, "ModalHelpUI");
+        EventManager.i.AddListener(EventType.MasterHelpHome, OnEvent, "ModalHelpUI");
+        EventManager.i.AddListener(EventType.MasterHelpBack, OnEvent, "ModalHelpUI");
     }
     #endregion
 
@@ -277,6 +308,18 @@ public class ModalHelpUI : MonoBehaviour
             case EventType.MasterHelpDownArrow:
                 ExecuteDownArrow();
                 break;
+            case EventType.MasterHelpSelect:
+                SelectHelp((int)Param);
+                break;
+            case EventType.MasterHelpForward:
+                ExecuteForward();
+                break;
+            case EventType.MasterHelpHome:
+                ExecuteHome();
+                break;
+            case EventType.MasterHelpBack:
+                ExecuteBack();
+                break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
@@ -306,6 +349,15 @@ public class ModalHelpUI : MonoBehaviour
         package.mainState = ModalSubState.InfoDisplay;
         package.infoState = ModalInfoSubState.MasterHelp;
         GameManager.i.inputScript.SetModalState(package);
+        //default to home page
+        highlightIndex = 0;
+        ShowHelpItem();
+        recentIndex = 0;
+        //clear history
+        listOfHistory.Clear();
+        //add home page as first history index
+        AddHistory();
+        //log
         Debug.LogFormat("[UI] ModalHelpUI.cs -> SetHelp{0}", "\n");
     }
     #endregion
@@ -329,7 +381,7 @@ public class ModalHelpUI : MonoBehaviour
 
     #region ExecuteUpArrow
     /// <summary>
-    /// Up arrow
+    /// Up arrow. Adds to browsing history
     /// </summary>
     private void ExecuteUpArrow()
     {
@@ -338,13 +390,14 @@ public class ModalHelpUI : MonoBehaviour
             highlightIndex--;
             ShowHelpItem();
             recentIndex = highlightIndex;
+            AddHistory();
         }
     }
     #endregion
 
     #region ExecuteDownArrow
     /// <summary>
-    /// Down arrow
+    /// Down arrow. Adds to browsing history
     /// </summary>
     private void ExecuteDownArrow()
     {
@@ -353,9 +406,87 @@ public class ModalHelpUI : MonoBehaviour
             highlightIndex++;
             ShowHelpItem();
             recentIndex = highlightIndex;
+            AddHistory();
         }
     }
     #endregion
+
+    #region ExecuteForward
+    /// <summary>
+    /// Forward button pressed
+    /// </summary>
+    private void ExecuteForward()
+    {
+        if (historyIndex > -1)
+        {
+            if (historyIndex < numOfHistoryTotal - 1)
+            {
+                historyIndex++;
+                highlightIndex = listOfHistory[historyIndex];
+                ShowHelpItem();
+                recentIndex = highlightIndex;
+            }
+        }
+    }
+    #endregion
+
+    #region ExecuteHome
+    /// <summary>
+    /// Home button pressed
+    /// </summary>
+    private void ExecuteHome()
+    {
+        if (historyIndex > -1)
+        {
+            if (highlightIndex > 0)
+            {
+                highlightIndex = 0;
+                ShowHelpItem();
+                recentIndex = 0;
+                //reset history index
+                historyIndex = 0;
+            }
+        }
+    }
+    #endregion
+
+    #region ExecuteBack
+    /// <summary>
+    /// Back button pressed
+    /// </summary>
+    private void ExecuteBack()
+    {
+        if (historyIndex > -1)
+        {
+            if (historyIndex > 0)
+            {
+                historyIndex--;
+                highlightIndex = listOfHistory[historyIndex];
+                ShowHelpItem();
+                recentIndex = highlightIndex;
+            }
+        }
+    }
+    #endregion
+
+    #region SelectHelp
+    /// <summary>
+    /// User has clicked on an option. Select that one. Adds to browsing history
+    /// </summary>
+    /// <param name="index"></param>
+    private void SelectHelp(int index)
+    {
+        if (index > -1 && index < numOfItemsTotal)
+        {
+            highlightIndex = index;
+            ShowHelpItem();
+            recentIndex = index;
+            AddHistory();
+        }
+        else { Debug.LogWarningFormat("Invalid index \"{0}\"", index); }
+    }
+    #endregion
+
 
     #region ShowHelpItem
     /// <summary>
@@ -372,9 +503,21 @@ public class ModalHelpUI : MonoBehaviour
             //change colour of selected text
             listOfInteractions[highlightIndex].text.color = colorActive;
             listOfInteractions[highlightIndex].text.text = listOfHelp[highlightIndex].descriptor;
-
         }
         else { Debug.LogErrorFormat("Invalid highlightIndex \"{0}\"", highlightIndex); }
+    }
+    #endregion
+
+    #region AddHistory
+    /// <summary>
+    /// Add to listOfHistory (only if Up / Down / Select, NOT if using Fwd / Home / Back)
+    /// </summary>
+    private void AddHistory()
+    {
+        listOfHistory.Add(highlightIndex);
+        //reset index each time a new record added
+        numOfHistoryTotal = listOfHistory.Count;
+        historyIndex = numOfHistoryTotal - 1;
     }
     #endregion
 

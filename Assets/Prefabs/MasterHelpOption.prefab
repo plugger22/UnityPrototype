@@ -101,6 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   panel: {fileID: 114092749728967662}
   text: {fileID: 114648562123265778}
+  index: 0
 --- !u!114 &114648562123265778
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -130,7 +131,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4292272874
-  m_fontColor: {r: 0.91764706, g: 0.8862745, b: 0.8392157, a: 1}
+  m_fontColor: {r: 0.8509804, g: 0.7921569, b: 0.7019608, a: 1}
   m_enableVertexGradient: 0
   m_fontColorGradient:
     topLeft: {r: 1, g: 1, b: 1, a: 1}

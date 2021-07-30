@@ -13221,3 +13221,47 @@ City seed 39149 -> Londus, Eurasia
 
 Dev seed 23753 -> Friday, 30 July 2021 12:34 PM
 City seed 8205 -> Londus, Eurasia
+
+Dev seed 17009 -> Friday, 30 July 2021 1:08 PM
+City seed 567 -> VirtualCity, Eurasia
+
+Dev seed 2685 -> Friday, 30 July 2021 3:26 PM
+City seed 35320 -> Londus, Eurasia
+
+Dev seed 51027 -> Friday, 30 July 2021 4:01 PM
+
+Dev seed 5032 -> Friday, 30 July 2021 4:02 PM
+City seed 12391 -> Londus, Eurasia
+
+Dev seed 57534 -> Friday, 30 July 2021 4:09 PM
+City seed 57980 -> VirtualCity, Eurasia
+
+Dev seed 8831 -> Friday, 30 July 2021 4:11 PM
+City seed 39387 -> VirtualCity, Eurasia
+
+Dev seed 61028 -> Friday, 30 July 2021 4:13 PM
+City seed 50934 -> Londus, Eurasia
+
+Dev seed 55736 -> Friday, 30 July 2021 4:17 PM
+City seed 18681 -> VirtualCity, Eurasia
+
+Dev seed 59169 -> Friday, 30 July 2021 4:34 PM
+City seed 20944 -> VirtualCity, Eurasia
+
+Dev seed 54723 -> Friday, 30 July 2021 4:37 PM
+City seed 53280 -> VirtualCity, Eurasia
+
+Dev seed 63652 -> Friday, 30 July 2021 4:39 PM
+City seed 1677 -> Londus, Eurasia
+
+Dev seed 56443 -> Friday, 30 July 2021 4:41 PM
+City seed 32231 -> VirtualCity, Eurasia
+
+Dev seed 4634 -> Friday, 30 July 2021 4:45 PM
+City seed 38995 -> Londus, Eurasia
+
+Dev seed 22803 -> Friday, 30 July 2021 4:55 PM
+City seed 4799 -> Londus, Eurasia
+
+Dev seed 58049 -> Friday, 30 July 2021 4:58 PM
+City seed 40888 -> Londus, Eurasia
