@@ -182,8 +182,8 @@ public class ModalHelpUI : MonoBehaviour
         string helpName;
         //clear out help list
         listOfHelp.Clear();
-        //get list of names
-        List<string> tempListOfStrings = GameManager.i.loadScript.arrayOfGameHelp.Select(x => x.name).ToList();
+        //get list of descriptors
+        List<string> tempListOfStrings = GameManager.i.loadScript.arrayOfGameHelp.Select(x => x.descriptor).ToList();
         numOfItemsTotal = tempListOfStrings.Count;
         if (tempListOfStrings != null)
         {
@@ -203,7 +203,7 @@ public class ModalHelpUI : MonoBehaviour
                         //find name (reverse loop 'cause we will delete once found
                         for (int j = tempListOfGameHelp.Count - 1; j >= 0; j--)
                         {
-                            if (tempListOfGameHelp[j].name.Equals(helpName, StringComparison.Ordinal) == true)
+                            if (tempListOfGameHelp[j].descriptor.Equals(helpName, StringComparison.Ordinal) == true)
                             {
                                 //match
                                 listOfHelp.Add(tempListOfGameHelp[j]);
@@ -234,7 +234,8 @@ public class ModalHelpUI : MonoBehaviour
                         {
                             listOfInteractions.Add(interact);
                             //add name
-                            listOfInteractions[i].text.text = listOfHelp[i].name;
+                            listOfInteractions[i].text.text = listOfHelp[i].descriptor;
+                            listOfInteractions[i].index = i;
                         }
                         else { Debug.LogErrorFormat("Invalid masterHelpInteraction (Null) for listOfHelp[{0}]", i); }
                     }
@@ -365,12 +366,12 @@ public class ModalHelpUI : MonoBehaviour
         if (highlightIndex > -1 && highlightIndex < numOfItemsTotal)
         {
             helpImage.sprite = listOfHelp[highlightIndex].sprite0;
-            displayHeader.text = listOfHelp[highlightIndex].name;
+            displayHeader.text = listOfHelp[highlightIndex].header;
             //return colour to normal for most recent text
             listOfInteractions[recentIndex].text.color = colorInactive;
             //change colour of selected text
             listOfInteractions[highlightIndex].text.color = colorActive;
-            listOfInteractions[highlightIndex].text.text = listOfHelp[highlightIndex].name;
+            listOfInteractions[highlightIndex].text.text = listOfHelp[highlightIndex].descriptor;
 
         }
         else { Debug.LogErrorFormat("Invalid highlightIndex \"{0}\"", highlightIndex); }

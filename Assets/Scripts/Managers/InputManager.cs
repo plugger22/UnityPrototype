@@ -262,6 +262,8 @@ public class InputManager : MonoBehaviour
     public void ProcessKeyInput()
     {
         float x_axis, y_axis;
+
+        #region Global options...
         //
         // - - - Global options -> Apply modal or non-modal
         //
@@ -275,6 +277,8 @@ public class InputManager : MonoBehaviour
             //runs a test condition (whatever you want)
             EventManager.i.PostNotification(EventType.MasterHelpOpen, this, null, string.Format("InputManager.cs -> ProcessKeyInput Test"));
         }
+        #endregion
+
         else
         {
             //
@@ -509,6 +513,10 @@ public class InputManager : MonoBehaviour
                             { EventManager.i.PostNotification(EventType.MainInfoOpenInterim, this, null, string.Format("InputManager.cs -> ProcessKeyInput OpenMainInfo \"{0}\"", Input.inputString.ToUpper())); }
                         }
                     }
+                    else if (Input.GetButtonDown("OpenHelp") == true)
+                    {
+                        EventManager.i.PostNotification(EventType.MasterHelpOpen, this, null, "InputManager.cs -> ProcessKeyInput OpenMasterHelp");
+                    }
                     break;
                 #endregion
 
@@ -734,10 +742,6 @@ public class InputManager : MonoBehaviour
                                             {
                                                 EventManager.i.PostNotification(EventType.MainInfoClose, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
                                             }
-                                            else if (Input.GetButtonDown("OpenMainInfo") == true)
-                                            {
-                                                EventManager.i.PostNotification(EventType.MainInfoOpen, this, null, "InputManager.cs -> ProcessKeyInput OpenMainInfo");
-                                            }
                                             else if (Input.GetButtonDown("Vertical"))
                                             {
                                                 y_axis = Input.GetAxisRaw("Vertical");
@@ -798,10 +802,6 @@ public class InputManager : MonoBehaviour
                                             if (Input.GetButtonDown("Cancel") == true)
                                             {
                                                 EventManager.i.PostNotification(EventType.MasterHelpClose, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
-                                            }
-                                            else if (Input.GetButtonDown("OpenHelp") == true)
-                                            {
-                                                EventManager.i.PostNotification(EventType.MasterHelpOpen, this, null, "InputManager.cs -> ProcessKeyInput OpenMasterHelp");
                                             }
                                             else if (Input.GetButtonDown("Vertical"))
                                             {
@@ -1051,15 +1051,21 @@ public class InputManager : MonoBehaviour
                                     break;
                                 case ModalInfoSubState.MainInfo:
                                     if (change > 0)
-                                    { EventManager.i.PostNotification(EventType.MainInfoUpArrow, this, null, "InputManager.cs -> ProcessMouseWheelInput"); }
+                                    { EventManager.i.PostNotification(EventType.MainInfoUpArrow, this, null, "InputManager.cs -> ProcessMouseWheelInput Up"); }
                                     else if (change < 0)
-                                    { EventManager.i.PostNotification(EventType.MainInfoDownArrow, this, null, "InputManager.cs -> ProcessMouseWheelInput"); }
+                                    { EventManager.i.PostNotification(EventType.MainInfoDownArrow, this, null, "InputManager.cs -> ProcessMouseWheelInput Down"); }
                                     break;
                                 case ModalInfoSubState.TabbedUI:
                                     if (change > 0)
-                                    { EventManager.i.PostNotification(EventType.TabbedScrollUp, this, null, "InputManager.cs -> ProcessMouseWheelInput"); }
+                                    { EventManager.i.PostNotification(EventType.TabbedScrollUp, this, null, "InputManager.cs -> ProcessMouseWheelInput Up"); }
                                     else if (change < 0)
-                                    { EventManager.i.PostNotification(EventType.TabbedScrollDown, this, null, "InputManager.cs -> ProcessMouseWheelInput"); }
+                                    { EventManager.i.PostNotification(EventType.TabbedScrollDown, this, null, "InputManager.cs -> ProcessMouseWheelInput Down"); }
+                                    break;
+                                case ModalInfoSubState.MasterHelp:
+                                    if (change > 0)
+                                    { EventManager.i.PostNotification(EventType.MasterHelpUpArrow, this, null, "InputManager.cs -> ProcessMouseWheelInput Up"); }
+                                    else if (change < 0)
+                                    { EventManager.i.PostNotification(EventType.MasterHelpDownArrow, this, null, "InputManager.cs -> ProcessMouseWheelInput Down"); }
                                     break;
                             }
                         }
@@ -1072,9 +1078,9 @@ public class InputManager : MonoBehaviour
                             {
                                 case ModalMetaSubState.PlayerOptions:
                                     if (change > 0)
-                                    { EventManager.i.PostNotification(EventType.MetaGameUpArrow, this, null, "InputManager.cs -> ProcessMouseWheelInput"); }
+                                    { EventManager.i.PostNotification(EventType.MetaGameUpArrow, this, null, "InputManager.cs -> ProcessMouseWheelInput Up"); }
                                     else if (change < 0)
-                                    { EventManager.i.PostNotification(EventType.MetaGameDownArrow, this, null, "InputManager.cs -> ProcessMouseWheelInput"); }
+                                    { EventManager.i.PostNotification(EventType.MetaGameDownArrow, this, null, "InputManager.cs -> ProcessMouseWheelInput Down"); }
                                     break;
                             }
                         }

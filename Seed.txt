@@ -13188,3 +13188,36 @@ System.ThrowHelper.ThrowArgumentOutOfRangeException (System.ExceptionArgument ar
 	
 Dev seed 19562 -> Thursday, 29 July 2021 4:59 PM
 City seed 21246 -> Londus, Eurasia
+
+Dev seed 53685 -> Friday, 30 July 2021 11:59 AM
+City seed 1865 -> VirtualCity, Eurasia
+
+Dev seed 60075 -> Friday, 30 July 2021 12:10 PM
+City seed 64408 -> Londus, Eurasia
+
+Dev seed 56351 -> Friday, 30 July 2021 12:12 PM
+City seed 51774 -> VirtualCity, Eurasia
+ERROR Mismatch on count, listOfHelp has 2 items, numOfItemsTotal is 8 (should be the same)
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	ModalHelpUI:InitialiseHelpOptions() (at Assets/Scripts/GUI/ModalHelpUI.cs:247)
+	ModalHelpUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ModalHelpUI.cs:158)
+	ModalHelpUI:Initialise(GameState) (at Assets/Scripts/GUI/ModalHelpUI.cs:87)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:943)
+	GameManager:InitialiseTutorial() (at Assets/Scripts/GameManager.cs:1051)
+	ControlManager:ProcessTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:628)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:95)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:385)
+	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:331)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 30960 -> Friday, 30 July 2021 12:13 PM
+City seed 63629 -> VirtualCity, Eurasia
+
+Dev seed 55676 -> Friday, 30 July 2021 12:21 PM
+City seed 32107 -> Londus, Eurasia
+
+Dev seed 61667 -> Friday, 30 July 2021 12:28 PM
+City seed 39149 -> Londus, Eurasia
+
+Dev seed 23753 -> Friday, 30 July 2021 12:34 PM
+City seed 8205 -> Londus, Eurasia

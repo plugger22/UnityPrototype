@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a96cf628e828134da5d0c4d79195566, type: 3}
   m_Name: ConnSecurity
   m_EditorClassIdentifier: 
-  header: Security
+  descriptor: Hyperlloops - Security
+  header: Hyperloop Security
   layout: {fileID: 11400000, guid: f86e231ef3f7d1b40a9c086b0d0da6bd, type: 2}
   sprite0: {fileID: 21300000, guid: dd52783f0a36499498f5cd8c68bf8f98, type: 3}

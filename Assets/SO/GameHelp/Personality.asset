@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a96cf628e828134da5d0c4d79195566, type: 3}
   m_Name: Personality
   m_EditorClassIdentifier: 
-  header: Personality
+  descriptor: Personalities
+  header: Personalities
   layout: {fileID: 11400000, guid: f86e231ef3f7d1b40a9c086b0d0da6bd, type: 2}
   sprite0: {fileID: 21300000, guid: 1b45ff990b175fd4cad893158c406717, type: 3}

@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a96cf628e828134da5d0c4d79195566, type: 3}
   m_Name: Crisis
   m_EditorClassIdentifier: 
-  header: District Crisis
+  descriptor: Districts - Crisis
+  header: Districts Crisis
   layout: {fileID: 11400000, guid: f86e231ef3f7d1b40a9c086b0d0da6bd, type: 2}
   sprite0: {fileID: 21300000, guid: 49f810071fc553146b4e33bfd4c85093, type: 3}

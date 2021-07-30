@@ -186,7 +186,7 @@ InputManager:
     descriptiveName: Toggle highlight all nodes of this arc type
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: f1
+    positiveButton: f2
     altNegativeButton: 
     altPositiveButton: 
     gravity: 0
@@ -202,7 +202,7 @@ InputManager:
     descriptiveName: Toggle highlight all nodes of this arc type
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: f2
+    positiveButton: f3
     altNegativeButton: 
     altPositiveButton: 
     gravity: 0
@@ -218,7 +218,7 @@ InputManager:
     descriptiveName: Toggle highlight all nodes of this arc type
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: f3
+    positiveButton: f4
     altNegativeButton: 
     altPositiveButton: 
     gravity: 0
@@ -234,7 +234,7 @@ InputManager:
     descriptiveName: Toggle highlight all nodes of this arc type
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: f4
+    positiveButton: f5
     altNegativeButton: 
     altPositiveButton: 
     gravity: 0
@@ -250,7 +250,7 @@ InputManager:
     descriptiveName: Toggle highlight all nodes of this arc type
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: f5
+    positiveButton: f6
     altNegativeButton: 
     altPositiveButton: 
     gravity: 0
@@ -266,7 +266,7 @@ InputManager:
     descriptiveName: Toggle highlight all nodes of this arc type
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: f6
+    positiveButton: f7
     altNegativeButton: 
     altPositiveButton: 
     gravity: 0
@@ -282,7 +282,7 @@ InputManager:
     descriptiveName: Toggle highlight all nodes of this arc type
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: f7
+    positiveButton: f8
     altNegativeButton: 
     altPositiveButton: 
     gravity: 0
@@ -394,7 +394,7 @@ InputManager:
     descriptiveName: Display Rebel Activity by most recent turns ago
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: f9
+    positiveButton: f11
     altNegativeButton: 
     altPositiveButton: 
     gravity: 0
@@ -410,7 +410,7 @@ InputManager:
     descriptiveName: Display a tally of rebel activity
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: f10
+    positiveButton: f12
     altNegativeButton: 
     altPositiveButton: 
     gravity: 0
@@ -602,7 +602,7 @@ InputManager:
     descriptiveName: Toggle highlight all nodes where Player known
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: f8
+    positiveButton: f10
     altNegativeButton: 
     altPositiveButton: 
     gravity: 0
@@ -650,7 +650,7 @@ InputManager:
     descriptiveName: Open Master Help
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: h
+    positiveButton: f1
     altNegativeButton: 
     altPositiveButton: 
     gravity: 0
