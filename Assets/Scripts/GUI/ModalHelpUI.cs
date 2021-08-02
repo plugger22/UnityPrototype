@@ -54,6 +54,10 @@ public class ModalHelpUI : MonoBehaviour
     private int historyIndex = -1;
     private int numOfHistoryTotal = -1;
 
+    //home page 
+    private GameHelp homePage;                                      //contains quick access buttons to pre-configured sets of gamehelp
+
+
     //collections
     private List<GameHelp> listOfHelp = new List<GameHelp>();
     private List<MasterHelpInteraction> listOfInteractions = new List<MasterHelpInteraction>();             //index linked with listOfHelp
@@ -214,8 +218,20 @@ public class ModalHelpUI : MonoBehaviour
         string helpName;
         //clear out help list
         listOfHelp.Clear();
+        //home page
+        List<GameHelp> tempListOfHomeHelp = GameManager.i.loadScript.arrayOfGameHelp.Where(x => x.isHomePage == true).ToList();
+        if (tempListOfHomeHelp != null)
+        {
+            if (tempListOfHomeHelp.Count == 1)
+            {
+                //take first, ignore the rest (should only be one)
+                homePage = tempListOfHomeHelp[0];
+            }
+            else { Debug.LogWarningFormat("Invalid number of home pages in arrayOfGameHelp (is {0}, should be {1})", tempListOfHomeHelp.Count, 1); }
+        }
+        else { Debug.LogError("Invalid home page (Not found in arrayOfGameHelp.isHomePage == true)"); }
         //get list of descriptors
-        List<string> tempListOfStrings = GameManager.i.loadScript.arrayOfGameHelp.Select(x => x.descriptor).ToList();
+        List<string> tempListOfStrings = GameManager.i.loadScript.arrayOfGameHelp.Where(x => x.isHomePage == false).Select(x => x.descriptor).ToList();
         numOfItemsTotal = tempListOfStrings.Count;
         if (tempListOfStrings != null)
         {
@@ -224,7 +240,7 @@ public class ModalHelpUI : MonoBehaviour
                 //sort list alphabetically in ascending order
                 tempListOfStrings.Sort();
                 //temporary List of GameHelp by value (will be deleting)
-                List<GameHelp> tempListOfGameHelp = new List<GameHelp>(GameManager.i.loadScript.arrayOfGameHelp);
+                List<GameHelp> tempListOfGameHelp = new List<GameHelp>(GameManager.i.loadScript.arrayOfGameHelp.Where(x => x.isHomePage == false));
                 Debug.AssertFormat(tempListOfGameHelp.Count == numOfItemsTotal, "Mismatch in count. tempListOfGameHelp has {0} items, numOfItemsTotal is {1} (should be the same)", tempListOfGameHelp.Count, numOfItemsTotal);
                 //Set up lists using sort order
                 for (int i = 0; i < numOfItemsTotal; i++)
@@ -272,7 +288,7 @@ public class ModalHelpUI : MonoBehaviour
                         else { Debug.LogErrorFormat("Invalid masterHelpInteraction (Null) for listOfHelp[{0}]", i); }
                     }
                     //indexes
-                    highlightIndex = 0;
+                    highlightIndex = -1;
                     recentIndex = 0;
                     //display first item
                     ShowHelpItem();
@@ -355,9 +371,9 @@ public class ModalHelpUI : MonoBehaviour
                 package.infoState = ModalInfoSubState.MasterHelp;
                 GameManager.i.inputScript.SetModalState(package);
                 //default to home page
-                highlightIndex = 0;
+                highlightIndex = -1;
                 ShowHelpItem();
-                recentIndex = 0;
+                recentIndex = -1;
                 //clear history
                 listOfHistory.Clear();
                 //add home page as first history index
@@ -448,11 +464,14 @@ public class ModalHelpUI : MonoBehaviour
     {
         if (historyIndex > -1)
         {
-            if (highlightIndex > 0)
+            if (highlightIndex > -1)
             {
-                highlightIndex = 0;
+                //return colour to normal for most recent text
+                listOfInteractions[recentIndex].text.color = colorInactive;
+                //update
+                highlightIndex = -1;
                 ShowHelpItem();
-                recentIndex = 0;
+                recentIndex = -1;
                 //reset history index
                 historyIndex = 0;
             }
@@ -508,11 +527,20 @@ public class ModalHelpUI : MonoBehaviour
         {
             helpImage.sprite = listOfHelp[highlightIndex].sprite0;
             displayHeader.text = listOfHelp[highlightIndex].header;
-            //return colour to normal for most recent text
-            listOfInteractions[recentIndex].text.color = colorInactive;
+            if (recentIndex > -1)
+            {
+                //return colour to normal for most recent text
+                listOfInteractions[recentIndex].text.color = colorInactive;
+            }
             //change colour of selected text
             listOfInteractions[highlightIndex].text.color = colorActive;
             listOfInteractions[highlightIndex].text.text = listOfHelp[highlightIndex].descriptor;
+        }
+        else if (highlightIndex == -1)
+        {
+            //home page
+            helpImage.sprite = homePage.sprite0;
+            displayHeader.text = homePage.header;
         }
         else { Debug.LogErrorFormat("Invalid highlightIndex \"{0}\"", highlightIndex); }
     }
@@ -524,10 +552,13 @@ public class ModalHelpUI : MonoBehaviour
     /// </summary>
     private void AddHistory()
     {
-        listOfHistory.Add(highlightIndex);
-        //reset index each time a new record added
-        numOfHistoryTotal = listOfHistory.Count;
-        historyIndex = numOfHistoryTotal - 1;
+        if (highlightIndex > -1)
+        {
+            listOfHistory.Add(highlightIndex);
+            //reset index each time a new record added
+            numOfHistoryTotal = listOfHistory.Count;
+            historyIndex = numOfHistoryTotal - 1;
+        }
     }
     #endregion
 

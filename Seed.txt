@@ -13401,3 +13401,90 @@ City seed 11476 -> Londus, Eurasia
 
 Dev seed 44245 -> Monday, 2 August 2021 2:45 PM
 City seed 40429 -> Londus, Eurasia
+
+Dev seed 19789 -> Monday, 2 August 2021 2:52 PM
+City seed 26064 -> VirtualCity, Eurasia
+
+Dev seed 42284 -> Monday, 2 August 2021 3:32 PM
+City seed 21981 -> Londus, Eurasia
+
+Dev seed 41231 -> Monday, 2 August 2021 3:36 PM
+City seed 48353 -> Londus, Eurasia
+
+Dev seed 59513 -> Monday, 2 August 2021 3:58 PM
+City seed 56420 -> Londus, Eurasia
+WARNING Invalid number of home pages in arrayOfGameHelp (is 1, should be 1)
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalHelpUI:InitialiseHelpOptions() (at Assets/Scripts/GUI/ModalHelpUI.cs:230)
+	ModalHelpUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ModalHelpUI.cs:190)
+	ModalHelpUI:Initialise(GameState) (at Assets/Scripts/GUI/ModalHelpUI.cs:101)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:943)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:1003)
+	ControlManager:ProcessCloseNewGameOptions() (at Assets/Scripts/Managers/ControlManager.cs:195)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:86)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:389)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:344)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:477)
+	
+Dev seed 6411 -> Monday, 2 August 2021 4:01 PM
+City seed 50317 -> VirtualCity, Eurasia
+
+Dev seed 1926 -> Monday, 2 August 2021 4:02 PM
+City seed 8674 -> Londus, Eurasia
+
+Dev seed 37123 -> Monday, 2 August 2021 4:04 PM
+City seed 3168 -> Londus, Eurasia
+
+Dev seed 27147 -> Monday, 2 August 2021 4:07 PM
+City seed 25484 -> Londus, Eurasia
+ASSERT ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+System.ThrowHelper.ThrowArgumentOutOfRangeException (System.ExceptionArgument argument, System.ExceptionResource resource) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.ThrowHelper.ThrowArgumentOutOfRangeException () (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Collections.Generic.List`1[T].get_Item (System.Int32 index) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	ModalHelpUI.ShowHelpItem () (at Assets/Scripts/GUI/ModalHelpUI.cs:531)
+	ModalHelpUI.SelectHelp (System.Int32 index) (at Assets/Scripts/GUI/ModalHelpUI.cs:511)
+	ModalHelpUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalHelpUI.cs:329)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:389)
+	MasterHelpInteraction.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/MasterHelpInteraction.cs:27)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 10330 -> Monday, 2 August 2021 4:08 PM
+City seed 21018 -> Londus, Eurasia
+
+Dev seed 52358 -> Monday, 2 August 2021 4:20 PM
+
+Dev seed 54552 -> Monday, 2 August 2021 4:21 PM
+
+Dev seed 21056 -> Monday, 2 August 2021 4:22 PM
+
+Dev seed 42330 -> Monday, 2 August 2021 4:23 PM
+
+Dev seed 49038 -> Monday, 2 August 2021 4:24 PM
+
+Dev seed 39651 -> Monday, 2 August 2021 4:25 PM
+
+Dev seed 13564 -> Monday, 2 August 2021 4:26 PM
+
+Dev seed 50862 -> Monday, 2 August 2021 4:26 PM
+
+Dev seed 28175 -> Monday, 2 August 2021 4:28 PM
+
+Dev seed 32577 -> Monday, 2 August 2021 4:30 PM
+
+Dev seed 24681 -> Monday, 2 August 2021 4:31 PM
+
+Dev seed 60727 -> Monday, 2 August 2021 4:31 PM
+
+Dev seed 22878 -> Monday, 2 August 2021 4:32 PM
+
+Dev seed 26720 -> Monday, 2 August 2021 4:33 PM
+City seed 16611 -> Londus, Eurasia
+
+Dev seed 37378 -> Monday, 2 August 2021 4:44 PM
+City seed 49247 -> Londus, Eurasia
+
+Dev seed 39772 -> Monday, 2 August 2021 4:45 PM
+City seed 7439 -> Londus, Eurasia

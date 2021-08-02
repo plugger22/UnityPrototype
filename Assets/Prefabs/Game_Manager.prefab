@@ -1627,6 +1627,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 77ec93847121dc542a7a4fabebcb9487, type: 2}
   - {fileID: 11400000, guid: 564543bbaaeeb7541b861970caea63e7, type: 2}
   - {fileID: 11400000, guid: cf32935db69b78d42ad55ad5687bc9a4, type: 2}
+  - {fileID: 11400000, guid: b1712b6e8b33e8a4e881b8412e944168, type: 2}
   arrayOfCampaignPools:
   - {fileID: 0}
   arrayOfCampaignDetails:
