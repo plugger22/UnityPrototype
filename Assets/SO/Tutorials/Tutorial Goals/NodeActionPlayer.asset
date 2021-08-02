@@ -19,6 +19,7 @@ MonoBehaviour:
   finishTopText: Score one for the Resistance!
   finishBottomText: Notice that your <b>Power</b> has gone up by one<br><br>Your <b>Invisibility</b>
     has also dropped by one<br><br>The Authority now have an idea where you are
+  tooltipText: Left Click on your district to see your District Action options
   goal0: {fileID: 11400000, guid: d4a26b5bdf1c4ce4ba8a2645f57ff6ab, type: 2}
   tracker0Notes: Player node actions
   target0: 1

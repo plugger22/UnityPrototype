@@ -21,6 +21,7 @@ MonoBehaviour:
   finishBottomText: It's about time you met your team<br><br>You'll have subordinates.
     Leadership. Responsibility. Are you up for it?<br><br>Move to the next session
     and say hello
+  tooltipText: Use a hyperloop with SECURITY (not grey)
   goal0: {fileID: 11400000, guid: f27c634cef5cfff42972926acb1a4400, type: 2}
   tracker0Notes: Player burns invisibility
   target0: 2

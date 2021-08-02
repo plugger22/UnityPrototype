@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     [Tooltip("Palette of colours from which all other colours derive (all UI elements must use a colour in the palette to ensure a consistent look)")]
     public List<Color> listOfColours;
 
+    #region Outcome Panel...
     [Header("Outcome Panel")]
     [Tooltip("Panel Special background (should be 100% alpha)")]
     public Color outcomeSpecial;
@@ -19,7 +20,9 @@ public class UIManager : MonoBehaviour
     public Color outcomeGood;
     [Tooltip("Outcome special highlight colour -> Bad outcomes, alpha at 75% (191)")]
     public Color outcomeBad;
+    #endregion
 
+    #region PowerBlocTexts
     [Header("Power Bloc Texts")]
     [Tooltip("Americon")]
     public Color Bloc1;
@@ -27,7 +30,9 @@ public class UIManager : MonoBehaviour
     public Color Bloc2;
     [Tooltip("Chinock")]
     public Color Bloc3;
+    #endregion
 
+    #region Tutorial Buttons...
     [Header("Tutorial Button Colours")]
     [Tooltip("Dialogue button colour (should be 100% alpha)")]
     public Color tutDialogue;
@@ -35,27 +40,37 @@ public class UIManager : MonoBehaviour
     public Color tutInfo;
     [Tooltip("Question button colour (should be 100% alpha)")]
     public Color tutQuestion;
-    [Tooltip("Goal button colour (should be 100 % alpha)")]
+    [Tooltip("Goal button colour (should be 100% alpha)")]
     public Color tutGoal;
+    [Tooltip("Goal button colour once goal Activated (should be 100% alpha)")]
+    public Color tutActiveGoal;
     [Tooltip("Tutorial button completed (should be 100% alpha)")]
     public Color tutCompleted;
+    #endregion
 
+    #region TopicUI...
     [Header("Topic UI")]
     [Tooltip("Topic UI, main background, for all normal topics")]
     public Color TopicNormal;
     [Tooltip("Topic UI, main background, for Capture topics")]
     public Color TopicCapture;
+    #endregion
 
+    #region MainInfoAppUI...
     [Header("MainInfoApp UI")]
     [Tooltip("Main Background")]
     public Color MainBackground;
     [Tooltip("Main Info UI left and right inner backgrounds as well as colour of Active LHS tab")]
     public Color InnerBackground;
+    #endregion
 
+    #region MetaGameUI...
     [Header("MetaGame UI")]
     [Tooltip("MetaGame main background colours")]
     public Color MetaBackground;
+    #endregion
 
+    #region TopBarUI...
     [Header("Top Bar UI")]
     [Tooltip("Top Bar background")]
     public Color TopBarBackground;
@@ -65,13 +80,17 @@ public class UIManager : MonoBehaviour
     public Color IconActiveGood;
     [Tooltip("Top Bar Icon Active Bad colour")]
     public Color IconActiveBad;
+    #endregion
 
+    #region TopWidgetUI...
     [Header("Top Widget UI")]
     [Tooltip("Top Widget sprite colour")]
     public Color TopWidget;
     [Tooltip("Top Widget bar backgrounds colour")]
     public Color TopWidgetBarBacks;
+    #endregion
 
+    #region TransitionUI...
     [Header("Transition UI")]
     [Tooltip("Transition background colour")]
     public Color TransitionBackground;
@@ -79,7 +98,9 @@ public class UIManager : MonoBehaviour
     public Color TransitionHeader;
     [Tooltip("Transition background Text (that sits ontop of colourTransitionBackground")]
     public Color TransitionText;
+    #endregion
 
+    #region TabbedUI...
     [Header("Tabbed UI")]
     [Tooltip("Active side tab colour")]
     public Color TabbedSideTabActive;
@@ -141,11 +162,14 @@ public class UIManager : MonoBehaviour
     public Color TabbedOptionDark;
     [Tooltip("History Option Inactive color -> 50% (126) alpha)")]
     public Color TabbedOptionInactive;
+    #endregion
 
+    #region MasterHelpUI...
     [Header("Master Help UI")]
     [Tooltip("Text colour (list of help item names) Inactive colour -> All (should be 100% alpha) ")]
     public Color MasterHelpInactive;
     [Tooltip("Text colour (list of help item names) Actve colour -> All (should be 100% alpha)")]
     public Color MasterHelpActive;
+    #endregion
 
 }

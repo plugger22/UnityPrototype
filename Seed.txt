@@ -13265,3 +13265,139 @@ City seed 4799 -> Londus, Eurasia
 
 Dev seed 58049 -> Friday, 30 July 2021 4:58 PM
 City seed 40888 -> Londus, Eurasia
+
+Dev seed 4000 -> Monday, 2 August 2021 8:23 AM
+City seed 31038 -> Londus, Eurasia
+
+Dev seed 3201 -> Monday, 2 August 2021 9:02 AM
+City seed 61503 -> Londus, Eurasia
+
+Dev seed 49237 -> Monday, 2 August 2021 9:08 AM
+City seed 2610 -> Londus, Eurasia
+
+Dev seed 52404 -> Monday, 2 August 2021 9:26 AM
+City seed 12602 -> Londus, Eurasia
+
+Dev seed 43575 -> Monday, 2 August 2021 9:27 AM
+City seed 27097 -> VirtualCity, Eurasia
+WARNING Invalid car (Null) for listOfCarsTraffic[1]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	AnimationManager:ResetTraffic() (at Assets/Scripts/Managers/AnimationManager.cs:504)
+	AnimationManager:StopAnimations() (at Assets/Scripts/Managers/AnimationManager.cs:239)
+	ModalHelpUI:SetHelp() (at Assets/Scripts/GUI/ModalHelpUI.cs:347)
+	ModalHelpUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalHelpUI.cs:301)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:389)
+	TutorialWidgetQuestion:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Tutorial/TutorialWidgetQuestion.cs:22)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING TutorialManager.cs -> UpdateGoal: Can't add goal "MovementBasic",  as already present in listOfGoals
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TutorialManager:UpdateGoal(TutorialGoal) (at Assets/Scripts/Managers/TutorialManager.cs:493)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:427)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:269)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:389)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 7870 -> Monday, 2 August 2021 9:59 AM
+City seed 39004 -> VirtualCity, Eurasia
+
+Dev seed 42143 -> Monday, 2 August 2021 10:08 AM
+City seed 14475 -> VirtualCity, Eurasia
+
+Dev seed 8181 -> Monday, 2 August 2021 10:17 AM
+City seed 51661 -> VirtualCity, Eurasia
+WARNING TutorialManager.cs -> UpdateGoal: Can't add goal "MovementBasic",  as already present in listOfGoals
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TutorialManager:UpdateGoal(TutorialGoal) (at Assets/Scripts/Managers/TutorialManager.cs:493)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:427)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:269)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:389)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 12177 -> Monday, 2 August 2021 10:20 AM
+City seed 52486 -> VirtualCity, Eurasia
+WARNING TutorialManager.cs -> UpdateGoal: Can't add goal "MovementBasic",  as already present in listOfGoals
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TutorialManager:UpdateGoal(TutorialGoal) (at Assets/Scripts/Managers/TutorialManager.cs:493)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:427)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:269)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:389)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 28655 -> Monday, 2 August 2021 10:21 AM
+City seed 51283 -> VirtualCity, Eurasia
+WARNING TutorialManager.cs -> UpdateGoal: Can't add goal "MovementBasic",  as already present in listOfGoals
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TutorialManager:UpdateGoal(TutorialGoal) (at Assets/Scripts/Managers/TutorialManager.cs:493)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:427)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:269)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:389)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 1395 -> Monday, 2 August 2021 11:04 AM
+
+Dev seed 23373 -> Monday, 2 August 2021 11:07 AM
+City seed 62722 -> VirtualCity, Eurasia
+
+Dev seed 48126 -> Monday, 2 August 2021 11:08 AM
+
+Dev seed 64969 -> Monday, 2 August 2021 11:09 AM
+City seed 52551 -> VirtualCity, Eurasia
+
+Dev seed 57184 -> Monday, 2 August 2021 11:44 AM
+City seed 17641 -> Londus, Eurasia
+
+Dev seed 61728 -> Monday, 2 August 2021 11:50 AM
+City seed 40477 -> Londus, Eurasia
+
+Dev seed 47503 -> Monday, 2 August 2021 11:57 AM
+City seed 46877 -> Londus, Eurasia
+
+Dev seed 28521 -> Monday, 2 August 2021 11:58 AM
+City seed 19824 -> Londus, Eurasia
+
+Dev seed 45201 -> Monday, 2 August 2021 12:03 PM
+City seed 14385 -> Londus, Eurasia
+
+Dev seed 36971 -> Monday, 2 August 2021 12:09 PM
+City seed 55308 -> Londus, Eurasia
+
+Dev seed 47321 -> Monday, 2 August 2021 12:18 PM
+City seed 42168 -> Londus, Eurasia
+
+Dev seed 11101 -> Monday, 2 August 2021 12:19 PM
+City seed 38287 -> Londus, Eurasia
+
+Dev seed 1418 -> Monday, 2 August 2021 12:22 PM
+City seed 10640 -> Londus, Eurasia
+
+Dev seed 54958 -> Monday, 2 August 2021 12:28 PM
+City seed 33894 -> Londus, Eurasia
+
+Dev seed 18045 -> Monday, 2 August 2021 12:31 PM
+City seed 2705 -> Londus, Eurasia
+
+Dev seed 54167 -> Monday, 2 August 2021 12:37 PM
+City seed 18558 -> Londus, Eurasia
+
+Dev seed 46666 -> Monday, 2 August 2021 12:40 PM
+City seed 9775 -> Londus, Eurasia
+
+Dev seed 58553 -> Monday, 2 August 2021 12:44 PM
+City seed 53971 -> Londus, Eurasia
+
+Dev seed 44869 -> Monday, 2 August 2021 2:36 PM
+City seed 8792 -> Londus, Eurasia
+
+Dev seed 44105 -> Monday, 2 August 2021 2:44 PM
+City seed 11476 -> Londus, Eurasia
+
+Dev seed 44245 -> Monday, 2 August 2021 2:45 PM
+City seed 40429 -> Londus, Eurasia

@@ -801,6 +801,12 @@ public class InputManager : MonoBehaviour
                                         case ModalInfoSubState.MasterHelp:
                                             if (Input.GetButtonDown("Cancel") == true)
                                             {
+                                                //close on ESC
+                                                EventManager.i.PostNotification(EventType.MasterHelpClose, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
+                                            }
+                                            else if (Input.GetButton("OpenHelp") == true)
+                                            {
+                                                //close on F1 (toggles open/shut)
                                                 EventManager.i.PostNotification(EventType.MasterHelpClose, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
                                             }
                                             else if (Input.GetButtonDown("Vertical"))
@@ -1116,6 +1122,7 @@ public class InputManager : MonoBehaviour
         builder.AppendFormat(" ModalInventory -> {0}{1}", ModalInventoryState, "\n");
         builder.AppendFormat(" isBlocked -> {0}{1}", GameManager.i.guiScript.CheckIsBlocked(modalLevel), "\n");
         builder.AppendFormat(" NodeShowFlag -> {0}{1}", GameManager.i.nodeScript.NodeShowFlag, "\n");
+        builder.AppendFormat(" ResetConnections -> {0}{1}", GameManager.i.connScript.resetConnections, "\n");
         builder.AppendFormat(" isHaltExecution -> {0}{1}", GameManager.i.turnScript.haltExecution, "\n");
         builder.AppendFormat(" Dev seed -> {0}{1}", GameManager.i.seedDev, "\n");
         builder.AppendFormat(" Level seed -> {0}{1}{2}", GameManager.i.levelScript.seed, "\n", "\n");

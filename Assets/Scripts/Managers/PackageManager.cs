@@ -1472,6 +1472,7 @@ namespace packageAPI
         public string finishTop;                    //message (top text) given to player upon goal completion
         public string finishBottom;                 //message (bottom text) given to player upon goal completion
         public string goalName;                     //tutorialGoal.name (reference only)
+        public int index;                           //tutorialUI.cs index (needed for passing back when goal complete)
         //primary goal
         public GoalType goal0;                      //type of goal associated with data0 and target0
         public int data0;                           //current value of first data point to be tracked, default -1

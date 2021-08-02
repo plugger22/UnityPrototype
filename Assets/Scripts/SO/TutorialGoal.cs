@@ -19,6 +19,8 @@ public class TutorialGoal : ScriptableObject
     [Tooltip("Used in game. Message shown to player at completion of the goal")]
     [TextArea(1,2)] public string finishTopText;
     [TextArea] public string finishBottomText;
+    [Tooltip("Tooltip text displayed once goal activated. Keep short and self contained. Explain what is required to achieve goal")]
+    [TextArea(1, 2)] public string tooltipText;
 
     [Header("Primary Goal")]
     [Tooltip("enum.SO that is used in code to look up the primary, tracker0 goal. Required")]
@@ -44,6 +46,7 @@ public class TutorialGoal : ScriptableObject
         Debug.AssertFormat(string.IsNullOrEmpty(startBottomText) == false, "Invalid startBottomText (Null or Empty) for {0}", name);
         Debug.AssertFormat(string.IsNullOrEmpty(finishTopText) == false, "Invalid finishTopText (Null or Empty) for {0}", name);
         Debug.AssertFormat(string.IsNullOrEmpty(finishBottomText) == false, "Invalid finishBottomText (Null or Empty) for {0}", name);
+        Debug.AssertFormat(string.IsNullOrEmpty(tooltipText) == false, "Invalid tooltipText (Null or Empty) for {0}", name);
         Debug.AssertFormat(target0 > -1, "Invalid target0 for {0}", name);
     }
 }

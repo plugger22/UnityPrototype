@@ -44,6 +44,7 @@ public class ModalHelpUI : MonoBehaviour
     private ScrollRect scrollRect;                                  //needed to manually disable scrolling when not needed
     private Scrollbar scrollBar;
 
+    private bool isOpen;
     private GameObject instanceOption;                              //used for instantiating gameHelp option prefabs
 
     //item tracking
@@ -334,31 +335,39 @@ public class ModalHelpUI : MonoBehaviour
     /// </summary>
     public void SetHelp()
     {
-        //close any Alert Message
-        GameManager.i.alertScript.CloseAlertUI(true);
-        //stop tooltips
-        GameManager.i.guiScript.SetTooltipsOff();
-        //stop background animations
-        GameManager.i.animateScript.StopAnimations();
-        //toggle on
-        masterCanvas.gameObject.SetActive(true);
-        //set modal status
-        GameManager.i.guiScript.SetIsBlocked(true);
-        //set game state
-        ModalStateData package = new ModalStateData();
-        package.mainState = ModalSubState.InfoDisplay;
-        package.infoState = ModalInfoSubState.MasterHelp;
-        GameManager.i.inputScript.SetModalState(package);
-        //default to home page
-        highlightIndex = 0;
-        ShowHelpItem();
-        recentIndex = 0;
-        //clear history
-        listOfHistory.Clear();
-        //add home page as first history index
-        AddHistory();
-        //log
-        Debug.LogFormat("[UI] ModalHelpUI.cs -> SetHelp{0}", "\n");
+        if (isOpen == false)
+        {
+            if (GameManager.i.inputScript.ModalState == ModalState.Normal)
+            {
+                //close any Alert Message
+                GameManager.i.alertScript.CloseAlertUI(true);
+                //stop tooltips
+                GameManager.i.guiScript.SetTooltipsOff();
+                //stop background animations
+                GameManager.i.animateScript.StopAnimations();
+                //toggle on
+                masterCanvas.gameObject.SetActive(true);
+                //set modal status
+                GameManager.i.guiScript.SetIsBlocked(true);
+                //set game state
+                ModalStateData package = new ModalStateData();
+                package.mainState = ModalSubState.InfoDisplay;
+                package.infoState = ModalInfoSubState.MasterHelp;
+                GameManager.i.inputScript.SetModalState(package);
+                //default to home page
+                highlightIndex = 0;
+                ShowHelpItem();
+                recentIndex = 0;
+                //clear history
+                listOfHistory.Clear();
+                //add home page as first history index
+                AddHistory();
+                //flag as open
+                isOpen = true;
+                //log
+                Debug.LogFormat("[UI] ModalHelpUI.cs -> SetHelp{0}", "\n");
+            }
+        }
     }
     #endregion
 
@@ -369,6 +378,7 @@ public class ModalHelpUI : MonoBehaviour
     public void CloseHelp()
     {
         masterCanvas.gameObject.SetActive(false);
+        isOpen = false;
         //set modal status
         GameManager.i.guiScript.SetIsBlocked(false);
         //set game state
@@ -519,6 +529,17 @@ public class ModalHelpUI : MonoBehaviour
         numOfHistoryTotal = listOfHistory.Count;
         historyIndex = numOfHistoryTotal - 1;
     }
+    #endregion
+
+    #region Utilities...
+
+    /// <summary>
+    /// Returns true if UI already open, false otherwise
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckIsOpen()
+    { return isOpen; }
+
     #endregion
 
 

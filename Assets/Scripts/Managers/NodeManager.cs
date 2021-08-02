@@ -405,7 +405,11 @@ public class NodeManager : MonoBehaviour
                             if (GameManager.i.optionScript.noNodes == false)
                             { ResetAll(); }
                             else
-                            { SetDistrictFaceText(NodeText.None, false); }
+                            {
+                                SetDistrictFaceText(NodeText.None, false);
+                                GameManager.i.connScript.RestoreConnections();
+                                GameManager.i.alertScript.CloseAlertUI(true);
+                            }
                         }
                         else { ShowActivity(activityUI); }
                         break;
@@ -1836,7 +1840,7 @@ public class NodeManager : MonoBehaviour
         }
         //active AlertUI
         if (string.IsNullOrEmpty(displayText) == false)
-        { GameManager.i.alertScript.SetAlertUI(displayText); }
+        { GameManager.i.alertScript.SetAlertUI(displayText, 999); }
         //redraw only if standard node representation
         if (GameManager.i.optionScript.noNodes == false)
         { NodeRedraw = true; }

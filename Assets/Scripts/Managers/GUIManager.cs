@@ -349,6 +349,7 @@ public class GUIManager : MonoBehaviour
 
     #endregion
 
+    #region OnEvent
     /// <summary>
     /// handles events
     /// </summary>
@@ -371,7 +372,9 @@ public class GUIManager : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
+    #region SetColours
     /// <summary>
     /// set colour palette for Generic Tool tip
     /// </summary>
@@ -388,6 +391,7 @@ public class GUIManager : MonoBehaviour
         colourAlert = GameManager.i.colourScript.GetColour(ColourType.salmonText);
         colourEnd = GameManager.i.colourScript.GetEndTag();
     }
+    #endregion
 
     #region GUI...
     //
@@ -453,7 +457,7 @@ public class GUIManager : MonoBehaviour
         details.side = GameManager.i.sideScript.PlayerSide;
         CreateAlertMessage(type, details, data);
     }
-    #endregion
+    
 
     #region CreateAlertMessage
     /// <summary>
@@ -491,7 +495,8 @@ public class GUIManager : MonoBehaviour
                 case AlertType.TutorialGoal:
                     //Player clicked on tutorial goal when goal is already in progress
                     details.textTop = string.Format("{0}Goal Active{1}", colourBad, colourEnd);
-                    details.textBottom = string.Format("You are already attempting this goal<br><br>You can {0}<size=115%>do it again</size>{1} once you've completed it, if you wish", colourAlert, colourEnd);
+                    details.textBottom = string.Format("You are already attempting this goal<br><br>You can {0}<size=115%>do it again</size>{1} once you've completed it, " +
+                        "if you wish<br><br>{2}MOUSE OVER{3} for<br>{4}<size=115%>Goal Requirements</size>{5}", colourAlert, colourEnd, colourAlert, colourEnd, colourNeutral, colourEnd);
                     break;
                 case AlertType.TutorialMenuUnavailable:
                     //GUI menu is temporarily unavailable for this part of the tutorial
@@ -617,6 +622,8 @@ public class GUIManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid ModalOutcomeDetails (Null)"); }
     }
+    #endregion
+
     #endregion
 
     #region Show Me...

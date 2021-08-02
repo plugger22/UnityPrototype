@@ -21,6 +21,7 @@ MonoBehaviour:
     it?
   finishBottomText: Moving isn't actually <b>THAT</b> easy but we'll get to that.
     Here, have a Fungus burger, you've earned it
+  tooltipText: Move to a district TWO connections away
   goal0: {fileID: 11400000, guid: 5237bc6f2db221e4cbec1efa3fbd5e9a, type: 2}
   tracker0Notes: Nodes to move
   target0: 2

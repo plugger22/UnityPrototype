@@ -19,7 +19,7 @@ public class TutorialWidgetQuestion : MonoBehaviour, IPointerClickHandler
         {
             case PointerEventData.InputButton.Left:
             case PointerEventData.InputButton.Right:
-                EventManager.i.PostNotification(EventType.TutorialMasterHelp, this, null, "TutorialWidgetQuestion.cs -> OnPointerClick");
+                EventManager.i.PostNotification(EventType.MasterHelpOpen, this, null, "TutorialWidgetQuestion.cs -> OnPointerClick");
                 break;
             default:
                 Debug.LogError("Unknown InputButton");

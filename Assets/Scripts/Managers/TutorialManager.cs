@@ -127,7 +127,6 @@ public class TutorialManager : MonoBehaviour
         //register listener
         EventManager.i.AddListener(EventType.TutorialPreviousSet, OnEvent, "TutorialManager.cs");
         EventManager.i.AddListener(EventType.TutorialNextSet, OnEvent, "TutorialManager.cs");
-        EventManager.i.AddListener(EventType.TutorialMasterHelp, OnEvent, "TutorialManager.cs");
 
     }
     #endregion
@@ -151,9 +150,6 @@ public class TutorialManager : MonoBehaviour
                 break;
             case EventType.TutorialNextSet:
                 SetNextSet();
-                break;
-            case EventType.TutorialMasterHelp:
-                SetMasterHelp();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -481,7 +477,7 @@ public class TutorialManager : MonoBehaviour
     /// <summary>
     /// Convert and Load a player selected goal (they've clicked on a tutorial goal button, RHS) from the current TutorialSet into DM -> listOfCurrentGoals
     /// </summary>
-    public void UpdateGoal(TutorialGoal goal)
+    public void UpdateGoal(TutorialGoal goal, int index)
     {
         if (goal != null)
         {
@@ -511,6 +507,7 @@ public class TutorialManager : MonoBehaviour
                             startBottom = goal.startBottomText,
                             finishTop = goal.finishTopText,
                             finishBottom = goal.finishBottomText,
+                            index = index,
                             goalName = goal.name,
                             goal0 = goalPrimary,
                             goal1 = goalSecondary,
@@ -603,6 +600,8 @@ public class TutorialManager : MonoBehaviour
                                 isSpecialGood = true
                             };
                             EventManager.i.PostNotification(EventType.OutcomeOpen, this, details);
+                            //update tutorial item on RHS
+                            GameManager.i.tutorialUIScript.SetGoalDone(tracker.index);
                             //remove goal
                             Debug.LogFormat("[Tut] DataManager.cs -> RemoveCurrentGoal: goal \"{0}\" REMOVED from listOfCurrentGoals{1}", tracker.goalName, "\n");
                             listOfGoals.RemoveAt(i);
@@ -983,22 +982,6 @@ public class TutorialManager : MonoBehaviour
                 };
                 EventManager.i.PostNotification(EventType.OutcomeOpen, this, details);
             }
-        }
-    }
-    #endregion
-
-    #region SetMasterHelp
-    /// <summary>
-    /// Open Master Help (question on tutorial Widget pressed)
-    /// </summary>
-    private void SetMasterHelp()
-    {
-        //flush input buffer
-        Input.ResetInputAxes();
-        if (GameManager.i.inputScript.ModalState == ModalState.Normal)
-        {
-
-            Debug.LogFormat("[Tst] TutorialManager.cs -> SetMasterHelp: OPEN Master Helps{0}", "\n");
         }
     }
     #endregion

@@ -69,6 +69,7 @@ public class TutorialUI : MonoBehaviour
     private Color colourInfo;
     private Color colourQuestion;
     private Color colourGoal;
+    private Color colourActiveGoal;
     private Color colourCompleted;
     #endregion
 
@@ -133,6 +134,7 @@ public class TutorialUI : MonoBehaviour
         colourInfo = GameManager.i.uiScript.tutInfo;
         colourQuestion = GameManager.i.uiScript.tutQuestion;
         colourGoal = GameManager.i.uiScript.tutGoal;
+        colourActiveGoal = GameManager.i.uiScript.tutActiveGoal;
         colourCompleted = GameManager.i.uiScript.tutCompleted;
     }
     #endregion
@@ -327,7 +329,7 @@ public class TutorialUI : MonoBehaviour
                                     listOfInteractions[i].buttonText.text = "G";
                                     buttonColours.normalColor = colourGoal;
                                     listOfInteractions[i].buttonText.text = string.Format("{0}", GameManager.i.guiScript.tutGoal);
-                                    listOfInteractions[i].tooltip.tooltipDetails = "A specific training goal that you need to achieve <b>in order to progress</b>";
+                                    listOfInteractions[i].tooltip.tooltipDetails = "A specific training goal. Doing is believing";
                                     break;
                                 case "Information":
                                     listOfInteractions[i].buttonText.text = "I";
@@ -424,11 +426,14 @@ public class TutorialUI : MonoBehaviour
                                 EventManager.i.PostNotification(EventType.OutcomeOpen, this, details);
                                 break;
                             case "Goal":
-                                GameManager.i.tutorialScript.UpdateGoal(currentItem.goal);
-                                //change colour to completed (indicates that you're currently doing, or have done, the goal)
+                                GameManager.i.tutorialScript.UpdateGoal(currentItem.goal, index);
+                                //change colour to completed (indicates that you're currently doing the goal)
                                 ColorBlock goalColours = listOfButtons[index].colors;
-                                goalColours.normalColor = colourCompleted;
+                                goalColours.normalColor = colourActiveGoal;
                                 listOfButtons[index].colors = goalColours;
+                                //update goal tooltip to reflect an active goal (let's player see what their goal is if they forget)
+                                string mainText = GameManager.Formatt(currentItem.goal.tooltipText, ColourType.neutralText);
+                                UpdateGoalTooltip(index, "Active Goal", mainText);
                                 break;
                             case "Information":
                                 EventManager.i.PostNotification(EventType.GameHelpOpen, this, currentItem.gameHelp);
@@ -668,5 +673,57 @@ public class TutorialUI : MonoBehaviour
     #endregion
 
 
+    #region UpdateGoalTooltip
+    /// <summary>
+    /// Updates a goal tooltip to show different text based on state
+    /// </summary>
+    /// <param name="index"></param>
+    /// <param name="mainText"></param>
+    private void UpdateGoalTooltip(int index, string headerText, string mainText)
+    {
+        if (index > -1)
+        {
+            //get tutorialItem
+            if (index < listOfSetItems.Count)
+            {
+                listOfInteractions[index].tooltip.tooltipHeader = string.Format("<size=120%><b>{0}</b></size>", GameManager.Formatt(headerText, ColourType.salmonText));
+                listOfInteractions[index].tooltip.tooltipMain = mainText;
+            }
+            else { Debug.LogErrorFormat("Invalid index (is {0}, max allowed {1})", index, listOfSetItems.Count); }
+        }
+        else { Debug.LogError("Invalid index (less than Zero)"); }
+    }
+    #endregion
+
+    #region SetGoalDone
+    /// <summary>
+    /// Called when goal complete. Changes colour of tutorial item and text of tooltip
+    /// </summary>
+    /// <param name="index"></param>
+    public void SetGoalDone(int index = -1)
+    {
+        if (index > -1)
+        {
+            //get tutorialItem
+            if (index < listOfSetItems.Count)
+            {
+                currentItem = listOfSetItems[index];
+                if (currentItem != null)
+                {
+                    //change colour to completed (indicates that you have done the goal)
+                    ColorBlock goalColours = listOfButtons[index].colors;
+                    goalColours.normalColor = colourCompleted;
+                    listOfButtons[index].colors = goalColours;
+                    //update tooltip
+                    UpdateGoalTooltip(index, "Goal Completed", GameManager.Formatt("It's done, man, move on", ColourType.neutralText));
+                }
+                else { Debug.LogWarningFormat("Invalid currentItem (tutorial) (Null)"); }
+            }
+            else { Debug.LogWarningFormat("Invalid index (is {0}, listOfSetItems.Count is {1})", index, listOfSetItems.Count); }
+        }
+        else { Debug.LogWarning("Invalid index (-1)"); }
+    }
+
+    #endregion
 
 }

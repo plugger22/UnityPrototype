@@ -21,6 +21,8 @@ MonoBehaviour:
   finishBottomText: Your subordinate gains the <b>Power</b> benefit but, like you
     did, loses <b>Invisibility</b><br><br>The Authority?<br><br>They now think that
     you're <b>OVER THERE</b>
+  tooltipText: Left Click on a district where one of your Subordinates has a contact
+    and have them do a District Action
   goal0: {fileID: 11400000, guid: ba62225d5bff00f47aa57cf97a9cca20, type: 2}
   tracker0Notes: Subordinate node actions
   target0: 1
