@@ -34,6 +34,23 @@ public class ModalHelpUI : MonoBehaviour
     public Button homeButton;
     public Button backButton;
 
+    [Header("Quick Access")]
+    public Button quickButton0;
+    public Button quickButton1;
+    public Button quickButton2;
+    public Button quickButton3;
+    public Button quickButton4;
+    public Button quickButton5;
+    public Button quickButton6;
+    public Button quickButton7;
+    public Button quickButton8;
+    public Button quickButton9;
+    public Button quickButton10;
+    public Button quickButton11;
+    public Button quickButton12;
+    public Button quickButton13;
+    public Button quickButton14;
+
     //button Interactoins
     private ButtonInteraction closeInteraction;
     private ButtonInteraction forwardInteraction;
@@ -136,6 +153,21 @@ public class ModalHelpUI : MonoBehaviour
         Debug.Assert(forwardButton != null, "Invalid forwardButton (Null)");
         Debug.Assert(homeButton != null, "Invalid homeButton (Null)");
         Debug.Assert(backButton != null, "Invalid backButton (Null)");
+        Debug.Assert(quickButton0 != null, "Invalid quickButton0 (Null)");
+        Debug.Assert(quickButton1 != null, "Invalid quickButton1 (Null)");
+        Debug.Assert(quickButton2 != null, "Invalid quickButton2 (Null)");
+        Debug.Assert(quickButton3 != null, "Invalid quickButton3 (Null)");
+        Debug.Assert(quickButton4 != null, "Invalid quickButton4 (Null)");
+        Debug.Assert(quickButton5 != null, "Invalid quickButton5 (Null)");
+        Debug.Assert(quickButton6 != null, "Invalid quickButton6 (Null)");
+        Debug.Assert(quickButton7 != null, "Invalid quickButton7 (Null)");
+        Debug.Assert(quickButton8 != null, "Invalid quickButton8 (Null)");
+        Debug.Assert(quickButton9 != null, "Invalid quickButton9 (Null)");
+        Debug.Assert(quickButton10 != null, "Invalid quickButton10 (Null)");
+        Debug.Assert(quickButton11 != null, "Invalid quickButton11 (Null)");
+        Debug.Assert(quickButton12 != null, "Invalid quickButton12 (Null)");
+        Debug.Assert(quickButton13 != null, "Invalid quickButton13 (Null)");
+        Debug.Assert(quickButton14 != null, "Invalid quickButton14 (Null)");
     }
     #endregion
 
