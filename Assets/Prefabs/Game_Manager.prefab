@@ -1628,6 +1628,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 564543bbaaeeb7541b861970caea63e7, type: 2}
   - {fileID: 11400000, guid: cf32935db69b78d42ad55ad5687bc9a4, type: 2}
   - {fileID: 11400000, guid: b1712b6e8b33e8a4e881b8412e944168, type: 2}
+  arrayOfGameHelpSets:
+  - {fileID: 11400000, guid: 39c0e7dc2b2c56a4c9f353e781ea9a41, type: 2}
+  - {fileID: 11400000, guid: 347b0e256661a6044adc8c5620a2bcae, type: 2}
+  - {fileID: 11400000, guid: 7f672ebedbf599940beb1abf513b9263, type: 2}
+  - {fileID: 11400000, guid: ef57bce5325d08545891fc018f784f47, type: 2}
   arrayOfCampaignPools:
   - {fileID: 0}
   arrayOfCampaignDetails:

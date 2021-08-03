@@ -47,6 +47,7 @@ public class LoadManager : MonoBehaviour
     public CaptureTool[] arrayOfCaptureTools;
     public Layout[] arrayOfLayouts;
     public GameHelp[] arrayOfGameHelp;
+    public GameHelpSet[] arrayOfGameHelpSets;
     public CampaignPool[] arrayOfCampaignPools;
     public CampaignDetails[] arrayOfCampaignDetails;
 
@@ -1230,7 +1231,7 @@ public class LoadManager : MonoBehaviour
         //
         numArray = arrayOfCampaignDetails.Length;
         if (numArray > 0)
-        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfCampaignDetailss has {0} entries{1}", numArray, "\n"); }
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfCampaignDetails has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No CampaignDetails present"); }
         //
         // - - - GameHelp - - -
@@ -1259,6 +1260,13 @@ public class LoadManager : MonoBehaviour
             Debug.Assert(numArray == numDict, string.Format("Mismatch on GameHelp count, array {0}, dict {1}", numArray, numDict));
         }
         else { Debug.LogError("Invalid dictOfGameHelp (Null) -> Import failed"); }
+        //
+        // - - - GameHelpSets (not stored in a collection)
+        //
+        numArray = arrayOfGameHelpSets.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfGameHelpSets has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No GameHelpSets present"); }
 
     }
     #endregion

@@ -35,6 +35,7 @@ public class ModalHelpUI : MonoBehaviour
     public Button backButton;
 
     [Header("Quick Access")]
+    public Image quickPanel;
     public Button quickButton0;
     public Button quickButton1;
     public Button quickButton2;
@@ -51,7 +52,7 @@ public class ModalHelpUI : MonoBehaviour
     public Button quickButton13;
     public Button quickButton14;
 
-    //button Interactoins
+    //UI button Interactoins
     private ButtonInteraction closeInteraction;
     private ButtonInteraction forwardInteraction;
     private ButtonInteraction homeInteraction;
@@ -71,6 +72,10 @@ public class ModalHelpUI : MonoBehaviour
     private int historyIndex = -1;
     private int numOfHistoryTotal = -1;
 
+    //quick access buttons on Home page
+    private int maxQuickOptions = -1;
+    private int numQuickOptions = -1;
+
     //home page 
     private GameHelp homePage;                                      //contains quick access buttons to pre-configured sets of gamehelp
 
@@ -78,6 +83,10 @@ public class ModalHelpUI : MonoBehaviour
     //collections
     private List<GameHelp> listOfHelp = new List<GameHelp>();
     private List<MasterHelpInteraction> listOfInteractions = new List<MasterHelpInteraction>();             //index linked with listOfHelp
+    private List<Button> listOfQuickButtons = new List<Button>();                                           //quick access buttons
+    private List<ButtonInteraction> listOfQuickInteractions = new List<ButtonInteraction>();                //quick access interactions -> indexed linked with listOfQuickButtons
+    private List<TextMeshProUGUI> listOfQuickTexts = new List<TextMeshProUGUI>();                           //quick access button texts -> indexed linked with listOfQuickButtons
+    private List<GameHelpSet> listOfSets = new List<GameHelpSet>();                                         //quick access help sets -> indexed linked with listOfQuickButtons
     private List<int> listOfHistory = new List<int>();                                                      //tracks page indexes of all browsing history in any given open up session
 
     //fast access
@@ -153,6 +162,7 @@ public class ModalHelpUI : MonoBehaviour
         Debug.Assert(forwardButton != null, "Invalid forwardButton (Null)");
         Debug.Assert(homeButton != null, "Invalid homeButton (Null)");
         Debug.Assert(backButton != null, "Invalid backButton (Null)");
+        Debug.Assert(quickPanel != null, "Invalid quickPanel (Null)");
         Debug.Assert(quickButton0 != null, "Invalid quickButton0 (Null)");
         Debug.Assert(quickButton1 != null, "Invalid quickButton1 (Null)");
         Debug.Assert(quickButton2 != null, "Invalid quickButton2 (Null)");
@@ -220,6 +230,7 @@ public class ModalHelpUI : MonoBehaviour
         backInteraction.SetButton(EventType.MasterHelpBack);
         //Initialise options from prefabs and set up lists
         InitialiseHelpOptions();
+        InitialiseQuickOptions();
     }
     #endregion
 
@@ -238,6 +249,7 @@ public class ModalHelpUI : MonoBehaviour
         EventManager.i.AddListener(EventType.MasterHelpForward, OnEvent, "ModalHelpUI");
         EventManager.i.AddListener(EventType.MasterHelpHome, OnEvent, "ModalHelpUI");
         EventManager.i.AddListener(EventType.MasterHelpBack, OnEvent, "ModalHelpUI");
+        EventManager.i.AddListener(EventType.MasterHelpSet, OnEvent, "ModalHelpUI");
     }
     #endregion
 
@@ -333,6 +345,81 @@ public class ModalHelpUI : MonoBehaviour
     }
     #endregion
 
+    #region InitialiseQuickOptions
+    /// <summary>
+    /// Sets up quick access lists for buttons on home page
+    /// </summary>
+    private void InitialiseQuickOptions()
+    {
+        //populate button list
+        listOfQuickButtons.Add(quickButton0);
+        listOfQuickButtons.Add(quickButton1);
+        listOfQuickButtons.Add(quickButton2);
+        listOfQuickButtons.Add(quickButton3);
+        listOfQuickButtons.Add(quickButton4);
+        listOfQuickButtons.Add(quickButton5);
+        listOfQuickButtons.Add(quickButton6);
+        listOfQuickButtons.Add(quickButton7);
+        listOfQuickButtons.Add(quickButton8);
+        listOfQuickButtons.Add(quickButton9);
+        listOfQuickButtons.Add(quickButton10);
+        listOfQuickButtons.Add(quickButton11);
+        listOfQuickButtons.Add(quickButton12);
+        listOfQuickButtons.Add(quickButton13);
+        listOfQuickButtons.Add(quickButton14);
+        //max limit
+        maxQuickOptions = listOfQuickButtons.Count;
+        //populate button component lists
+        for (int i = 0; i < maxQuickOptions; i++)
+        {
+            if (listOfQuickButtons[i] != null)
+            {
+                //buttonInteractions
+                ButtonInteraction interaction = listOfQuickButtons[i].GetComponent<ButtonInteraction>();
+                if (interaction != null)
+                {
+                    //assign index
+                    interaction.SetButton(EventType.MasterHelpSet, i);
+                    //add to list
+                    listOfQuickInteractions.Add(interaction);
+                }
+                else { Debug.LogErrorFormat("Invalid buttonInteraction (Null) for listOfQuickButtons[{0}]", i); }
+                //button texts
+                TextMeshProUGUI text = listOfQuickButtons[i].GetComponent<TextMeshProUGUI>();
+                if (text != null)
+                { listOfQuickTexts.Add(text); }
+                else { Debug.LogErrorFormat("Invalid text (Null) for listOfQuickButtons[{0}]", i); }
+            }
+            else { Debug.LogErrorFormat("Invalid button (Null) for listOfQuickButtons[{0}]", i); }
+        }
+        //GameHelpSets
+        listOfSets = GameManager.i.loadScript.arrayOfGameHelpSets.ToList();
+        if (listOfSets != null)
+        {
+            numQuickOptions = listOfSets.Count;
+            //can't exceed number of available buttons
+            numQuickOptions = Mathf.Min(numQuickOptions, maxQuickOptions);
+            //assign sets to buttons
+            for (int i = 0; i < maxQuickOptions; i++)
+            {
+                //activate button if set available
+                if (i < numQuickOptions)
+                {
+                    if (listOfSets[i] != null)
+                    {
+                        listOfQuickButtons[i].gameObject.SetActive(true);
+                        //assign button name
+                        listOfQuickTexts[i].text = listOfSets[i].descriptor;
+                    }
+                    else { Debug.LogErrorFormat("Invalid GameHelpSet (Null) in listOfSets[{0}]", i); }
+                }
+                else { listOfQuickButtons[i].gameObject.SetActive(false); }
+            }
+        }
+        else { Debug.LogError("Invalid listOfSets (Null)"); }
+    }
+    #endregion
+
     #region OnEvent
     /// <summary>
     /// Event Handler
@@ -368,6 +455,9 @@ public class ModalHelpUI : MonoBehaviour
                 break;
             case EventType.MasterHelpBack:
                 ExecuteBack();
+                break;
+            case EventType.MasterHelpSet:
+                ExecuteSet((int)Param);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -530,6 +620,17 @@ public class ModalHelpUI : MonoBehaviour
     }
     #endregion
 
+    #region ExecuteSet
+    /// <summary>
+    /// Quick access button pressed on home page, change set of GameHelp options (LHS)
+    /// </summary>
+    /// <param name="index"></param>
+    private void ExecuteSet(int index)
+    {
+
+    }
+    #endregion
+
     #region SelectHelp
     /// <summary>
     /// User has clicked on an option. Select that one. Adds to browsing history
@@ -549,6 +650,7 @@ public class ModalHelpUI : MonoBehaviour
     #endregion
 
 
+
     #region ShowHelpItem
     /// <summary>
     /// Displays help (sprite) for current highlightIndex
@@ -557,6 +659,10 @@ public class ModalHelpUI : MonoBehaviour
     {
         if (highlightIndex > -1 && highlightIndex < numOfItemsTotal)
         {
+            //hide home page buttons
+            if (recentIndex == -1)
+            { quickPanel.gameObject.SetActive(false); }
+            //display help
             helpImage.sprite = listOfHelp[highlightIndex].sprite0;
             displayHeader.text = listOfHelp[highlightIndex].header;
             if (recentIndex > -1)
@@ -573,6 +679,8 @@ public class ModalHelpUI : MonoBehaviour
             //home page
             helpImage.sprite = homePage.sprite0;
             displayHeader.text = homePage.header;
+            //display buttons
+            quickPanel.gameObject.SetActive(true);
         }
         else { Debug.LogErrorFormat("Invalid highlightIndex \"{0}\"", highlightIndex); }
     }

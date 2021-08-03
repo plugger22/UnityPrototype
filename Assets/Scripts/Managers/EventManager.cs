@@ -225,6 +225,7 @@ public enum EventType
     MasterHelpForward,
     MasterHelpBack,
     MasterHelpHome,
+    MasterHelpSet,
     //GameHelpUI
     GameHelpOpen,
     GameHelpClose,
