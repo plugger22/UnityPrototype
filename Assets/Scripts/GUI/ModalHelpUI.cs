@@ -668,8 +668,6 @@ public class ModalHelpUI : MonoBehaviour
             //
             // - - - Tidy up first
             //
-
-            //index
             recentIndex = 0;
             //destroy LHS options -> reverse loop
             for (int i = listOfOptions.Count - 1; i >= 0; i--)
@@ -743,7 +741,7 @@ public class ModalHelpUI : MonoBehaviour
         if (highlightIndex > -1 && highlightIndex < numOfItemsTotal)
         {
             //hide home page buttons
-            if (recentIndex == -1)
+            if (recentIndex <= 0)
             { DisplayHomePageButtons(false); }
             //display help
             helpImage.sprite = listOfHelp[highlightIndex].sprite0;

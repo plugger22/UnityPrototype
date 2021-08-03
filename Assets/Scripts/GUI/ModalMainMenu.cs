@@ -597,7 +597,7 @@ public class ModalMainMenu : MonoBehaviour
                 generic.tooltipHeader = buttonDetails.buttonTooltipHeader;
                 generic.tooltipMain = buttonDetails.buttonTooltipMain;
                 generic.tooltipDetails = buttonDetails.buttonTooltipDetail;
-                generic.x_offset = 40;
+                generic.x_offset = 80;
             }
         }
 
