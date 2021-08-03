@@ -84,8 +84,7 @@ public class ModalHelpUI : MonoBehaviour
     private List<GameHelp> listOfHelp = new List<GameHelp>();
     private List<MasterHelpInteraction> listOfInteractions = new List<MasterHelpInteraction>();             //index linked with listOfHelp
     private List<Button> listOfQuickButtons = new List<Button>();                                           //quick access buttons
-    private List<ButtonInteraction> listOfQuickInteractions = new List<ButtonInteraction>();                //quick access interactions -> indexed linked with listOfQuickButtons
-    private List<TextMeshProUGUI> listOfQuickTexts = new List<TextMeshProUGUI>();                           //quick access button texts -> indexed linked with listOfQuickButtons
+    private List<MasterSetInteraction> listOfQuickInteractions = new List<MasterSetInteraction>();          //quick access button components -> indexed linked with listOfQuickButtons
     private List<GameHelpSet> listOfSets = new List<GameHelpSet>();                                         //quick access help sets -> indexed linked with listOfQuickButtons
     private List<int> listOfHistory = new List<int>();                                                      //tracks page indexes of all browsing history in any given open up session
 
@@ -375,20 +374,15 @@ public class ModalHelpUI : MonoBehaviour
             if (listOfQuickButtons[i] != null)
             {
                 //buttonInteractions
-                ButtonInteraction interaction = listOfQuickButtons[i].GetComponent<ButtonInteraction>();
+                MasterSetInteraction interaction = listOfQuickButtons[i].GetComponent<MasterSetInteraction>();
                 if (interaction != null)
                 {
                     //assign index
-                    interaction.SetButton(EventType.MasterHelpSet, i);
+                    interaction.interact.SetButton(EventType.MasterHelpSet, i);
                     //add to list
                     listOfQuickInteractions.Add(interaction);
                 }
                 else { Debug.LogErrorFormat("Invalid buttonInteraction (Null) for listOfQuickButtons[{0}]", i); }
-                //button texts
-                TextMeshProUGUI text = listOfQuickButtons[i].GetComponent<TextMeshProUGUI>();
-                if (text != null)
-                { listOfQuickTexts.Add(text); }
-                else { Debug.LogErrorFormat("Invalid text (Null) for listOfQuickButtons[{0}]", i); }
             }
             else { Debug.LogErrorFormat("Invalid button (Null) for listOfQuickButtons[{0}]", i); }
         }
@@ -409,7 +403,7 @@ public class ModalHelpUI : MonoBehaviour
                     {
                         listOfQuickButtons[i].gameObject.SetActive(true);
                         //assign button name
-                        listOfQuickTexts[i].text = listOfSets[i].descriptor;
+                        listOfQuickInteractions[i].text.text = listOfSets[i].descriptor;
                     }
                     else { Debug.LogErrorFormat("Invalid GameHelpSet (Null) in listOfSets[{0}]", i); }
                 }
@@ -648,8 +642,6 @@ public class ModalHelpUI : MonoBehaviour
         else { Debug.LogWarningFormat("Invalid index \"{0}\"", index); }
     }
     #endregion
-
-
 
     #region ShowHelpItem
     /// <summary>
