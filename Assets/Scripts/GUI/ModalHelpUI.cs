@@ -75,14 +75,17 @@ public class ModalHelpUI : MonoBehaviour
     //quick access buttons on Home page
     private int maxQuickOptions = -1;
     private int numQuickOptions = -1;
+    private bool isAllHelp;                                         //true if default set of all help is showing (includes home page)
 
     //home page 
     private GameHelp homePage;                                      //contains quick access buttons to pre-configured sets of gamehelp
 
 
     //collections
-    private List<GameHelp> listOfHelp = new List<GameHelp>();
+    private List<GameHelp> listOfHelp = new List<GameHelp>();                                               //working list with whatever set is currently in use
+    private List<GameObject> listOfOptions = new List<GameObject>();                                        //prefab options -> indexed linked with listOfHelp
     private List<MasterHelpInteraction> listOfInteractions = new List<MasterHelpInteraction>();             //index linked with listOfHelp
+    private List<GameHelp> listOfAll = new List<GameHelp>();                                                //All game help (default set whenever you return to the home page)
     private List<Button> listOfQuickButtons = new List<Button>();                                           //quick access buttons
     private List<MasterSetInteraction> listOfQuickInteractions = new List<MasterSetInteraction>();          //quick access button components -> indexed linked with listOfQuickButtons
     private List<GameHelpSet> listOfSets = new List<GameHelpSet>();                                         //quick access help sets -> indexed linked with listOfQuickButtons
@@ -310,15 +313,16 @@ public class ModalHelpUI : MonoBehaviour
                 //check correct number of GameHelp in list
                 if (listOfHelp.Count == numOfItemsTotal)
                 {
-                    //clear out interactions list
+                    //clear out lists
+                    listOfAll.Clear();
                     listOfInteractions.Clear();
                     //initialise prefabs
                     for (int i = 0; i < listOfHelp.Count; i++)
                     {
-                        //create help option from prefab
-                        instanceOption = Instantiate(optionPrefab) as GameObject;
-                        instanceOption.transform.SetParent(scrollContent);
-                        instanceOption.SetActive(true);
+                        //add to listOfAll
+                        listOfAll.Add(listOfHelp[i]);
+                        //create help option from prefab using global 'instanceOption'
+                        CreateOption();
                         //add interaction
                         MasterHelpInteraction interact = instanceOption.GetComponent<MasterHelpInteraction>();
                         if (interact != null)
@@ -411,6 +415,8 @@ public class ModalHelpUI : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid listOfSets (Null)"); }
+        //set default flag
+        isAllHelp = true;
     }
     #endregion
 
@@ -578,19 +584,29 @@ public class ModalHelpUI : MonoBehaviour
     /// </summary>
     private void ExecuteHome()
     {
-        if (historyIndex > -1)
+        if (isAllHelp == true)
         {
-            if (highlightIndex > -1)
+            //currently using default help set (all)
+            if (historyIndex > -1)
             {
-                //return colour to normal for most recent text
-                listOfInteractions[recentIndex].text.color = colorInactive;
-                //update
-                highlightIndex = -1;
-                ShowHelpItem();
-                recentIndex = -1;
-                //reset history index
-                historyIndex = 0;
+                if (highlightIndex > -1)
+                {
+
+                    //return colour to normal for most recent text
+                    listOfInteractions[recentIndex].text.color = colorInactive;
+                    //update
+                    highlightIndex = -1;
+                    ShowHelpItem();
+                    recentIndex = -1;
+                    //reset history index
+                    historyIndex = 0;
+                }
             }
+        }
+        else
+        {
+            //sub set
+            ExecuteSet(-1);
         }
     }
     #endregion
@@ -616,12 +632,87 @@ public class ModalHelpUI : MonoBehaviour
 
     #region ExecuteSet
     /// <summary>
-    /// Quick access button pressed on home page, change set of GameHelp options (LHS)
+    /// Quick access button pressed on home page, or revert to home page, change set of GameHelp options (LHS)
+    /// change to default set (all game help) if index -1, otherwise use relevant set from listOfSets[index]
     /// </summary>
     /// <param name="index"></param>
     private void ExecuteSet(int index)
     {
+        List<GameHelp> tempList = new List<GameHelp>();
+        //clear history
+        listOfHistory.Clear();
+        historyIndex = -1;
+        numOfHistoryTotal = -1;
+        //get new set
+        if (index == -1)
+        {
+            //default set -> all help
+            tempList = listOfAll;
+            //home page
+            highlightIndex = -1;
+            DisplayHomePageButtons(true);
+            isAllHelp = true;
+        }
+        else
+        {
+            //sub set from quick access buttons
+            tempList = listOfSets[index].listOfGameHelp;
+            highlightIndex = 0;
+            listOfHistory.Add(highlightIndex);
+            //hide quick access buttons (don't start on home page)
+            DisplayHomePageButtons(false);
+            isAllHelp = false;
+        }
+        if (tempList.Count > 0)
+        {
+            //
+            // - - - Tidy up first
+            //
 
+            //index
+            recentIndex = 0;
+            //destroy LHS options -> reverse loop
+            for (int i = listOfOptions.Count - 1; i >= 0; i--)
+            { Destroy(listOfOptions[i]); }
+            /*Debug.Assert(listOfOptions.Count == 0, "Invalid listOfOptions (Should be Empty but isn't)");*/
+            listOfOptions.Clear();
+            //clear lists
+            listOfHelp.Clear();
+            listOfInteractions.Clear();
+            //
+            // - - - Initialise new set
+            //
+            for (int i = 0; i < tempList.Count; i++)
+            {
+                //GameHelp
+                if (tempList[i] != null)
+                {
+                    //add to list
+                    listOfHelp.Add(tempList[i]);
+                }
+                else { Debug.LogErrorFormat("Invalid GameHelp (Null) in tempList[{0}]", i); }
+            }
+            numOfItemsTotal = listOfHelp.Count;
+            //Set up Options
+            for (int i = 0; i < numOfItemsTotal; i++)
+            {
+                //Instantiate options
+                CreateOption();
+                //add interaction
+                MasterHelpInteraction interact = instanceOption.GetComponent<MasterHelpInteraction>();
+                if (interact != null)
+                {
+                    listOfInteractions.Add(interact);
+                    //add name
+                    listOfInteractions[i].text.text = listOfHelp[i].descriptor;
+                    listOfInteractions[i].index = i;
+                }
+                else { Debug.LogErrorFormat("Invalid masterHelpInteraction (Null) for listOfHelp[{0}]", i); }
+            }
+            //display first item
+            ShowHelpItem();
+        }
+        else { Debug.LogWarningFormat("Invalid tempList (Empty)"); }
     }
     #endregion
 
@@ -653,7 +744,7 @@ public class ModalHelpUI : MonoBehaviour
         {
             //hide home page buttons
             if (recentIndex == -1)
-            { quickPanel.gameObject.SetActive(false); }
+            { DisplayHomePageButtons(false); }
             //display help
             helpImage.sprite = listOfHelp[highlightIndex].sprite0;
             displayHeader.text = listOfHelp[highlightIndex].header;
@@ -672,7 +763,7 @@ public class ModalHelpUI : MonoBehaviour
             helpImage.sprite = homePage.sprite0;
             displayHeader.text = homePage.header;
             //display buttons
-            quickPanel.gameObject.SetActive(true);
+            DisplayHomePageButtons(true);
         }
         else { Debug.LogErrorFormat("Invalid highlightIndex \"{0}\"", highlightIndex); }
     }
@@ -702,6 +793,30 @@ public class ModalHelpUI : MonoBehaviour
     /// <returns></returns>
     public bool CheckIsOpen()
     { return isOpen; }
+
+    #region CreateOption
+    /// <summary>
+    /// Instantiates a prefab LHS help option. Note that 'instanceOption' is a global
+    /// </summary>
+    private void CreateOption()
+    {
+        //create help option from prefab
+        instanceOption = Instantiate(optionPrefab) as GameObject;
+        instanceOption.transform.SetParent(scrollContent);
+        instanceOption.SetActive(true);
+        //add to list
+        listOfOptions.Add(instanceOption);
+    }
+    #endregion
+
+    #region DisplayHomePageButtons
+    /// <summary>
+    /// Displays home page quick access buttons if true
+    /// </summary>
+    /// <param name="isTrue"></param>
+    private void DisplayHomePageButtons(bool isTrue)
+    { quickPanel.gameObject.SetActive(isTrue); }
+    #endregion
 
     #endregion
 

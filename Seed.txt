@@ -14132,3 +14132,21 @@ System.ThrowHelper.ThrowArgumentOutOfRangeException (System.ExceptionArgument ar
 	
 Dev seed 61361 -> Tuesday, 3 August 2021 11:01 AM
 City seed 64629 -> VirtualCity, Eurasia
+
+Dev seed 58049 -> Tuesday, 3 August 2021 11:36 AM
+City seed 31625 -> Londus, Eurasia
+
+Dev seed 40067 -> Tuesday, 3 August 2021 12:31 PM
+City seed 44631 -> Londus, Eurasia
+
+Dev seed 26126 -> Tuesday, 3 August 2021 12:38 PM
+City seed 26843 -> Londus, Eurasia
+
+Dev seed 43799 -> Tuesday, 3 August 2021 12:41 PM
+City seed 41631 -> Londus, Eurasia
+
+Dev seed 62579 -> Tuesday, 3 August 2021 12:46 PM
+City seed 50857 -> Londus, Eurasia
+
+Dev seed 14575 -> Tuesday, 3 August 2021 12:47 PM
+City seed 54425 -> Londus, Eurasia
