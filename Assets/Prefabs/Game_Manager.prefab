@@ -1628,6 +1628,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 564543bbaaeeb7541b861970caea63e7, type: 2}
   - {fileID: 11400000, guid: cf32935db69b78d42ad55ad5687bc9a4, type: 2}
   - {fileID: 11400000, guid: b1712b6e8b33e8a4e881b8412e944168, type: 2}
+  - {fileID: 11400000, guid: f7eb3323cfbf6bb4e86f2d4d902d321a, type: 2}
   arrayOfGameHelpSets:
   - {fileID: 11400000, guid: 39c0e7dc2b2c56a4c9f353e781ea9a41, type: 2}
   - {fileID: 11400000, guid: 347b0e256661a6044adc8c5620a2bcae, type: 2}
@@ -1902,6 +1903,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d52c843496f953846ab188ecf33ebf11, type: 2}
   - {fileID: 11400000, guid: 55b2e5eed833a824d81f6c88410cbac5, type: 2}
   - {fileID: 11400000, guid: b8f613ae1fd09824786ddb18f57bce01, type: 2}
+  - {fileID: 11400000, guid: ea57d731bfce875459cb67e57e5b076a, type: 2}
   arrayOfTutorialTypes:
   - {fileID: 11400000, guid: 6af73092ead59e34f89fadf31d6d355c, type: 2}
   - {fileID: 11400000, guid: 3ea5e079678bd114896744e070740f21, type: 2}

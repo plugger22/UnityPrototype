@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Res3
   m_EditorClassIdentifier: 
   tutorial: {fileID: 11400000, guid: c050560a8867a3a4c806544632dda679, type: 2}
-  notes: 
+  notes: Management
   index: 3
   actorConfig: {fileID: 11400000, guid: 71c33337e621cc54d9d497433b21eebf, type: 2}
   listOfFeaturesOff:
@@ -30,3 +30,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 168a0cb22f88d7b47a75f838959ad276, type: 2}
   - {fileID: 11400000, guid: b8f613ae1fd09824786ddb18f57bce01, type: 2}
   - {fileID: 11400000, guid: c96b889f230661a4fa5dd2ec48b66e3e, type: 2}
+  - {fileID: 11400000, guid: ea57d731bfce875459cb67e57e5b076a, type: 2}

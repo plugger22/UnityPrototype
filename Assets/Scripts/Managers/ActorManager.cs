@@ -1231,6 +1231,8 @@ public class ActorManager : MonoBehaviour
             actor.AddHistory(new HistoryActor() { text = string.Format("{0}Reports for active duty at <b>{1}</b>{2}", colourNeutral, cityName, colourEnd), isHighlight = true });
             //city stat
             actor.numOfCities++;
+            //compatibility stars
+            GameManager.i.actorPanelScript.UpdateActorCompatibilityUI(slotID, actor.GetPersonality().GetCompatibilityWithPlayer());
         }
     }
 
