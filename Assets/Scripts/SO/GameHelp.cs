@@ -28,7 +28,7 @@ public class GameHelp : ScriptableObject
     {
         Debug.Assert(string.IsNullOrEmpty(descriptor) == false, "Invalid descriptor (Null or Empty)");
         Debug.Assert(string.IsNullOrEmpty(header) == false, "Invalid header (Null or Empty)");
-
+        //NOTE: sprite is null checked in ValidationManager.cs
     }
 
 }

@@ -268,12 +268,11 @@ public class ModalHelpUI : MonoBehaviour
         List<GameHelp> tempListOfHomeHelp = GameManager.i.loadScript.arrayOfGameHelp.Where(x => x.isHomePage == true).ToList();
         if (tempListOfHomeHelp != null)
         {
-            if (tempListOfHomeHelp.Count == 1)
-            {
-                //take first, ignore the rest (should only be one)
-                homePage = tempListOfHomeHelp[0];
-            }
-            else { Debug.LogWarningFormat("Invalid number of home pages in arrayOfGameHelp (is {0}, should be {1})", tempListOfHomeHelp.Count, 1); }
+            //take first, ignore the rest (should only be one)
+            homePage = tempListOfHomeHelp[0];
+            //check valid sprite
+            if (homePage.sprite0 == null)
+            { Debug.LogErrorFormat("Invalid homePage \"{0}\" sprite (Null)", homePage.name); }
         }
         else { Debug.LogError("Invalid home page (Not found in arrayOfGameHelp.isHomePage == true)"); }
         //get list of descriptors

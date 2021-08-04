@@ -14252,3 +14252,111 @@ City seed 22480 -> Londus, Eurasia
 
 Dev seed 29979 -> Tuesday, 3 August 2021 3:20 PM
 City seed 14767 -> Londus, Eurasia
+
+Dev seed 2928 -> Wednesday, 4 August 2021 9:59 AM
+City seed 7883 -> Londus, Eurasia
+
+Dev seed 19022 -> Wednesday, 4 August 2021 10:00 AM
+City seed 31710 -> Londus, Eurasia
+
+Dev seed 54117 -> Wednesday, 4 August 2021 10:01 AM
+City seed 43003 -> Londus, Eurasia
+
+Dev seed 18660 -> Wednesday, 4 August 2021 10:02 AM
+City seed 7552 -> Londus, Eurasia
+
+Dev seed 48567 -> Wednesday, 4 August 2021 10:05 AM
+City seed 4793 -> Londus, Eurasia
+
+Dev seed 55281 -> Wednesday, 4 August 2021 10:08 AM
+City seed 46446 -> Londus, Eurasia
+WARNING Invalid number of home pages in arrayOfGameHelp (is 2, should be 1)
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalHelpUI:InitialiseHelpOptions() (at Assets/Scripts/GUI/ModalHelpUI.cs:276)
+	ModalHelpUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ModalHelpUI.cs:234)
+	ModalHelpUI:Initialise(GameState) (at Assets/Scripts/GUI/ModalHelpUI.cs:129)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:943)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:1003)
+	ControlManager:ProcessCloseNewGameOptions() (at Assets/Scripts/Managers/ControlManager.cs:195)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:86)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:390)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:344)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:477)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalHelpUI.ShowHelpItem () (at Assets/Scripts/GUI/ModalHelpUI.cs:761)
+	ModalHelpUI.InitialiseHelpOptions () (at Assets/Scripts/GUI/ModalHelpUI.cs:341)
+	ModalHelpUI.SubInitialiseSessionStart () (at Assets/Scripts/GUI/ModalHelpUI.cs:234)
+	ModalHelpUI.Initialise (gameAPI.GameState state) (at Assets/Scripts/GUI/ModalHelpUI.cs:129)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:943)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:1003)
+	ControlManager.ProcessCloseNewGameOptions () (at Assets/Scripts/Managers/ControlManager.cs:195)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:86)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:390)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:344)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:477)
+	
+Dev seed 7413 -> Wednesday, 4 August 2021 10:13 AM
+City seed 38621 -> Londus, Eurasia
+WARNING Invalid number of home pages in arrayOfGameHelp (is 2, should be 1)
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalHelpUI:InitialiseHelpOptions() (at Assets/Scripts/GUI/ModalHelpUI.cs:279)
+	ModalHelpUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ModalHelpUI.cs:234)
+	ModalHelpUI:Initialise(GameState) (at Assets/Scripts/GUI/ModalHelpUI.cs:129)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:943)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:1003)
+	ControlManager:ProcessCloseNewGameOptions() (at Assets/Scripts/Managers/ControlManager.cs:195)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:86)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:390)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:344)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:477)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalHelpUI.ShowHelpItem () (at Assets/Scripts/GUI/ModalHelpUI.cs:765)
+	ModalHelpUI.InitialiseHelpOptions () (at Assets/Scripts/GUI/ModalHelpUI.cs:344)
+	ModalHelpUI.SubInitialiseSessionStart () (at Assets/Scripts/GUI/ModalHelpUI.cs:234)
+	ModalHelpUI.Initialise (gameAPI.GameState state) (at Assets/Scripts/GUI/ModalHelpUI.cs:129)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:943)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:1003)
+	ControlManager.ProcessCloseNewGameOptions () (at Assets/Scripts/Managers/ControlManager.cs:195)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:86)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:390)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:344)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:477)
+	
+Dev seed 52587 -> Wednesday, 4 August 2021 10:16 AM
+City seed 53710 -> Londus, Eurasia
+WARNING Invalid number of home pages in arrayOfGameHelp (is 2, should be 1)
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalHelpUI:InitialiseHelpOptions() (at Assets/Scripts/GUI/ModalHelpUI.cs:272)
+	ModalHelpUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ModalHelpUI.cs:234)
+	ModalHelpUI:Initialise(GameState) (at Assets/Scripts/GUI/ModalHelpUI.cs:129)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:943)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:1003)
+	ControlManager:ProcessCloseNewGameOptions() (at Assets/Scripts/Managers/ControlManager.cs:195)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:86)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:390)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:344)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:477)
+	
+Dev seed 25620 -> Wednesday, 4 August 2021 10:17 AM
+City seed 58871 -> Londus, Eurasia
+
+Dev seed 43759 -> Wednesday, 4 August 2021 10:24 AM
+City seed 10536 -> Londus, Eurasia
+
+Dev seed 20302 -> Wednesday, 4 August 2021 10:28 AM
+City seed 24609 -> Londus, Eurasia
+
+Dev seed 22323 -> Wednesday, 4 August 2021 10:29 AM
+WARNING [Val] ValidateSO: MISMATCH on GameHelp, array 9, assets 10 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(GameHelp[]) (at Assets/Scripts/Managers/ValidationManager.cs:2477)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2444)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:943)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:434)
+	City seed 10969 -> Londus, Eurasia
+
+Dev seed 56795 -> Wednesday, 4 August 2021 10:31 AM
+City seed 8480 -> Londus, Eurasia
+
+Dev seed 24968 -> Wednesday, 4 August 2021 10:33 AM
+City seed 35832 -> Londus, Eurasia

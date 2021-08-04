@@ -176,6 +176,7 @@ public class ValidationManager : MonoBehaviour
                 ValidateCapture();
                 ValidateMetaOptions();
                 ValidateTutorialData();
+                ValidateHelpData();
                 break;
             case GameState.FollowOnInitialisation:
             //do nothing
@@ -2145,6 +2146,92 @@ public class ValidationManager : MonoBehaviour
 
         }
         else { Debug.LogError("Invalid arrayOfTutorials (Null)"); }
+    }
+    #endregion
+
+    #region void ValidateHelpData
+    /// <summary>
+    /// runs checks on game help data (Master help)
+    /// </summary>
+    private void ValidateHelpData()
+    {
+        List<string> tempList;
+        int counter = 0;
+        int nullCounter = 0;
+        string tag = "[Val] ValidationManager.cs -> ValidateHelpData:";
+        GameHelp help;
+        GameHelpSet set;
+        //GameHelp
+        GameHelp[] arrayOfHelp = GameManager.i.loadScript.arrayOfGameHelp;
+        if (arrayOfHelp != null)
+        {
+            for (int i = 0; i < arrayOfHelp.Length; i++)
+            {
+                help = arrayOfHelp[i];
+                //check for null
+                if (help != null)
+                {
+                    //tally number of home pages (should be exactly 1)
+                    if (help.isHomePage == true)
+                    { counter++; }
+                    //check sprite isn't null
+                    if (help.sprite0 == null)
+                    { Debug.LogFormat("{0} Invalid sprite (Null) for gameHelp \"{1}\"{2}", tag, help.name, "\n"); }
+                }
+                else
+                {
+                    //tally nulls
+                    nullCounter++;
+                    Debug.LogFormat("{0} Null entry in arrayOfHelp[{1}]{2}", tag, i, "\n");
+                }
+            }
+            //Home page check
+            if (counter != 1)
+            { Debug.LogFormat("{0} Invalid number of GameHelp with 'isHomePage' (is {1}, should be 1){2}", tag, counter, "\n"); }
+            //dupe check (can't do if nulls present)
+            if (nullCounter == 0)
+            {
+                tempList = arrayOfHelp.Select(x => x.descriptor).ToList();
+                CheckListForDuplicates(tempList, "descriptor", "GameHelp.so", "arrayOfGameHelp");
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfHelp (Null)"); }
+        //GameHelpSet
+        List<GameHelp> listOfHelp;
+        GameHelpSet[] arrayOfSets = GameManager.i.loadScript.arrayOfGameHelpSets;
+        if (arrayOfSets != null)
+        {
+            for (int i = 0; i < arrayOfSets.Length; i++)
+            {
+                set = arrayOfSets[i];
+                if (set != null)
+                {
+                    listOfHelp = set.listOfGameHelp;
+                    if (listOfHelp != null)
+                    {
+                        //null check
+                        if (CheckList(listOfHelp, string.Format("{0}.\"listOfHelp\"", set.name), tag) == true)
+                        {
+                            //dupe check
+                            tempList = listOfHelp.Select(x => x.descriptor).ToList();
+                            CheckListForDuplicates(tempList, "descriptor", "GameHelpSet", "listOfGameHelp");
+                            //home page check
+                            for (int j = 0; j < listOfHelp.Count; j++)
+                            {
+                                help = listOfHelp[j];
+                                //NO home pages allowed
+                                if (help.isHomePage == true)
+                                { Debug.LogFormat("{0} Invalid GameHelp \"{1}\" (isHomePage TRUE) for GameHelpSet \"{2}\"{3}", tag, help.name, set.name, "\n"); }
+                            }
+                        }
+                    }
+                    else { Debug.LogFormat("{0} Invalid listOfHelp (Null) for GameHelpSet \"{1}\"{2}", tag, set.name, "\n"); }
+                }
+                else
+                { Debug.LogFormat("{0} Invalid gameHelpSet (Null) in arrayOfSets[{1}]{2}", tag, i, "\n"); }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfSets (Null)"); }
     }
     #endregion
 
