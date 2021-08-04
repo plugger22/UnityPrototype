@@ -15,4 +15,4 @@ MonoBehaviour:
   header: Keeping a Low Profile
   isHomePage: 0
   layout: {fileID: 11400000, guid: f86e231ef3f7d1b40a9c086b0d0da6bd, type: 2}
-  sprite0: {fileID: 21300000, guid: e47c4b8a3b9b6ee4393a776508af785f, type: 3}
+  sprite0: {fileID: 21300000, guid: b9ea86a2bf965d848993e6affd901a1b, type: 3}

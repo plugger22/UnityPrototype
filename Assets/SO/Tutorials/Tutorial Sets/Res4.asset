@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Res4
   m_EditorClassIdentifier: 
   tutorial: {fileID: 11400000, guid: c050560a8867a3a4c806544632dda679, type: 2}
-  notes: 5th set in Resistance Tutorial
+  notes: 
   index: 4
   actorConfig: {fileID: 11400000, guid: 01183d9023211c744ac43b91c959c912, type: 2}
   listOfFeaturesOff:

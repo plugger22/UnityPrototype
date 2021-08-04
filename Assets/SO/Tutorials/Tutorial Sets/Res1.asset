@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Name: Res1
   m_EditorClassIdentifier: 
   tutorial: {fileID: 11400000, guid: c050560a8867a3a4c806544632dda679, type: 2}
-  notes: '2nd set in Resistance Tutorial
-
-    Connection security and Invisibility'
+  notes: Connection security and Invisibility
   index: 1
+  actorConfig: {fileID: 0}
   listOfFeaturesOff:
   - {fileID: 11400000, guid: 60b4bacf16a2f574fa7fa81a919e7bbc, type: 2}
   - {fileID: 11400000, guid: 7e2f496678746a1488d0508fb5ac34ef, type: 2}

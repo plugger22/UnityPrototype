@@ -1125,6 +1125,7 @@ public class ActorManager : MonoBehaviour
                         }
                         else { Debug.LogErrorFormat("Invalid tutorialActorType (Null) for config.listOfOnMapArcs[{0}]", i); }
                     }
+                    //log
                     Debug.LogFormat("[Tut] ActorManager.cs -> ConfigureTutorialActors: Custom actor lineUp used for OnMap, config \"{0}\"", config.name);
                 }
                 else
