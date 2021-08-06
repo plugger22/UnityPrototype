@@ -715,7 +715,7 @@ public class TutorialUI : MonoBehaviour
                     goalColours.normalColor = colourCompleted;
                     listOfButtons[index].colors = goalColours;
                     //update tooltip
-                    UpdateGoalTooltip(index, "Goal Completed", GameManager.Formatt("It's done, man, move on", ColourType.neutralText));
+                    UpdateGoalTooltip(index, "Goal Completed", GameManager.Formatt("Left Click to <b>Redo</b> at any time", ColourType.neutralText));
                 }
                 else { Debug.LogWarningFormat("Invalid currentItem (tutorial) (Null)"); }
             }
