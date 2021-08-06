@@ -2109,6 +2109,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ede910bcff73263429ccc25cceacd3ae, type: 2}
   - {fileID: 11400000, guid: 71c33337e621cc54d9d497433b21eebf, type: 2}
   - {fileID: 11400000, guid: 01183d9023211c744ac43b91c959c912, type: 2}
+  arrayOfTutorialPlayerConfigs:
+  - {fileID: 11400000, guid: 84d000ec40260584bbf2523e2a645935, type: 2}
   arrayOfFiveFactorModel:
   - {fileID: 11400000, guid: 456adeff3cd08484bb73dab8396a5d8d, type: 2}
   - {fileID: 11400000, guid: 7acfd5c74d59ce64198cf88e42ca66ff, type: 2}

@@ -763,7 +763,6 @@ public class ActorManager : MonoBehaviour
                 }
                 else { Debug.LogError("Invalid actorPoolFinal (Null)"); }
                 #endregion
-
                 //set up onMap and Reserve actors
                 ConfigureTutorialActors();
                 break;

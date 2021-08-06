@@ -924,6 +924,9 @@ public class TutorialManager : MonoBehaviour
                     InitialiseTutorialSet(set);
                     //reset contact dictionaries
                     GameManager.i.dataScript.TutorialResetContacts();
+                    //configure player
+                    if (set.playerConfig != null)
+                    { GameManager.i.playerScript.ConfigureTutorialPlayer(set.playerConfig); }
                     //configure actors
                     GameManager.i.actorScript.ConfigureTutorialActors(true);
                     //activate tutorialUI
@@ -969,6 +972,9 @@ public class TutorialManager : MonoBehaviour
                     InitialiseTutorialSet(set);
                     //reset contact dictionaries
                     GameManager.i.dataScript.TutorialResetContacts();
+                    //configure player
+                    if (set.playerConfig != null)
+                    { GameManager.i.playerScript.ConfigureTutorialPlayer(set.playerConfig); }
                     //configure actors
                     GameManager.i.actorScript.ConfigureTutorialActors(true);
                     //activate tutorialUI

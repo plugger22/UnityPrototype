@@ -14,6 +14,7 @@ MonoBehaviour:
   tutorial: {fileID: 11400000, guid: c050560a8867a3a4c806544632dda679, type: 2}
   notes: 
   index: 4
+  playerConfig: {fileID: 11400000, guid: 84d000ec40260584bbf2523e2a645935, type: 2}
   actorConfig: {fileID: 11400000, guid: 01183d9023211c744ac43b91c959c912, type: 2}
   listOfFeaturesOff:
   - {fileID: 11400000, guid: 7e2f496678746a1488d0508fb5ac34ef, type: 2}

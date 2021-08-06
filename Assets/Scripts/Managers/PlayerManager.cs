@@ -360,6 +360,7 @@ public class PlayerManager : MonoBehaviour
     {
         GameManager.i.personScript.SetDescriptors(personality);
         GameManager.i.personScript.CheckPersonalityProfile(GameManager.i.dataScript.GetDictOfProfiles(), personality);
+
         //Debug -> testing purposes only
         /*Investigation invest = new Investigation()
         {
@@ -372,6 +373,14 @@ public class PlayerManager : MonoBehaviour
             outcome = InvestOutcome.Innocent
         };
         GameManager.instance.dataScript.AddInvestigationCompleted(invest);*/
+
+        //tutorial
+        if (GameManager.i.inputScript.GameState == GameState.TutorialOptions)
+        {
+            //Tutorial -> configure player
+            if (GameManager.i.tutorialScript.set.playerConfig != null)
+            { ConfigureTutorialPlayer(GameManager.i.tutorialScript.set.playerConfig); }
+        }
     }
     #endregion
 
@@ -590,6 +599,63 @@ public class PlayerManager : MonoBehaviour
     {
         //handles situation of no compromised gear checks and resets isEndOfTurnGearCheck
         ResetAllGear();
+    }
+
+    /// <summary>
+    /// Initialises player state at the start of a set
+    /// </summary>
+    public void ConfigureTutorialPlayer(TutorialPlayerConfig config)
+    {
+        if (config != null)
+        {
+            int count;
+            GlobalSide side = GameManager.i.sideScript.PlayerSide;
+            //invisibility
+            Invisibility = config.invisibility;
+            //power
+            Power = config.power;
+            //mood
+            mood = config.mood;
+            //innocence
+            Innocence = config.innocence;
+            //conditions
+            count = config.listOfConditions.Count;
+            if (count > 0)
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    Condition condition = config.listOfConditions[i];
+                    if (condition != null)
+                    {  AddCondition(condition, side, "tutorial config"); }
+                    else { Debug.LogWarningFormat("Invalid condition (Null) in config.listOfConditions[{0}]", i); }
+                }
+            }
+            //secrets
+            count = config.listOfSecrets.Count;
+            if (count > 0)
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    Secret secret = config.listOfSecrets[i];
+                    if (secret != null)
+                    { AddSecret(secret); }
+                    else { Debug.LogWarningFormat("Invalid secret (Null) in config.listOfSecrets[{0}]", i); }
+                }
+            }
+            //gear
+            count = config.listOfGear.Count;
+            if (count > 0)
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    Gear gear = config.listOfGear[i];
+                    if (gear != null)
+                    { AddGear(gear.name); }
+                    else { Debug.LogWarningFormat("Invalid gear (Null) in config.listOfGear[{0}]", i); }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid tutorialPlayerConfig (Null)"); }
     }
 
 

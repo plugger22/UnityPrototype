@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Name: Res3
   m_EditorClassIdentifier: 
   tutorial: {fileID: 11400000, guid: c050560a8867a3a4c806544632dda679, type: 2}
-  notes: Management
+  notes: 'Management
+
+    Must have a recruiter in lineup'
   index: 3
+  playerConfig: {fileID: 11400000, guid: 84d000ec40260584bbf2523e2a645935, type: 2}
   actorConfig: {fileID: 11400000, guid: 71c33337e621cc54d9d497433b21eebf, type: 2}
   listOfFeaturesOff:
   - {fileID: 11400000, guid: 7e2f496678746a1488d0508fb5ac34ef, type: 2}

@@ -17,7 +17,9 @@ public class TutorialSet : ScriptableObject
     [Range(0, 10)] public int index;
 
     [Header("Configuration")]
-    [Tooltip("Specifies the actor line up, if needed. Leave as 'none' if not required")]
+    [Tooltip("Specifies the Player state at the start of the set. Optional")]
+    public TutorialPlayerConfig playerConfig;
+    [Tooltip("Specifies the actor line up, if needed. Optional")]
     public TutorialActorConfig actorConfig;
 
     [Header("Features OFF")]
