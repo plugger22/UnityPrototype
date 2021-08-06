@@ -5697,7 +5697,7 @@ public class ActorManager : MonoBehaviour
                                 actorRecruited.arc.name, colourEnd, colourNormal, colourEnd);
                             if (actorRecruited.CheckTraitEffect(actorUnhappyNone) == false)
                             {
-                                builderBottom.AppendFormat("{0}{1}{2}{3} will become Unhappy in {4} turn{5}{6}{7}", "\n", "\n", colourNeutral, actorRecruited.arc.name, unhappyTimer, unhappyTimer != 1 ? "s" : "",
+                                builderBottom.AppendFormat("{0}{1}{2}{3} will become Unhappy in {4} turn{5}{6}{7}", "\n", "\n", colourNeutral, actorRecruited.firstName, unhappyTimer, unhappyTimer != 1 ? "s" : "",
                                   traitText, colourEnd);
                             }
                             else
@@ -5903,7 +5903,7 @@ public class ActorManager : MonoBehaviour
                             actorRecruited.arc.name, colourEnd, colourNormal, actorRecruited.actorName, colourEnd);
                         if (actorRecruited.CheckTraitEffect(actorUnhappyNone) == false)
                         {
-                            builderBottom.AppendFormat("{0}{1}{2}{3} will become Unhappy in {4} turn{5}{6}{7}", "\n", "\n", colourNeutral, actorRecruited.arc.name, unhappyTimer, unhappyTimer != 1 ? "s" : "",
+                            builderBottom.AppendFormat("{0}{1}{2}{3} will become Unhappy in {4} turn{5}{6}{7}", "\n", "\n", colourNeutral, actorRecruited.firstName, unhappyTimer, unhappyTimer != 1 ? "s" : "",
                               traitText, colourEnd);
                         }
                         else

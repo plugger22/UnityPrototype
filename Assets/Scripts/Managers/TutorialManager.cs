@@ -635,9 +635,11 @@ public class TutorialManager : MonoBehaviour
             {
                 case "MoveBasic": goalType = GoalType.Move; break;
                 case "MoveSecurity": goalType = GoalType.MoveSecurity; break;
+                case "SubordinateNodeAction": goalType = GoalType.SubordinateNodeActions; break;
+                case "SubordinateRecruit": goalType = GoalType.SubordinateRecruit; break;
                 case "PlayerInvisibility": goalType = GoalType.PlayerInvisibility; break;
                 case "PlayerNodeAction": goalType = GoalType.PlayerNodeActions; break;
-                case "SubordinateNodeAction": goalType = GoalType.SubordinateNodeActions; break;
+                case "PlayerRecruit": goalType = GoalType.PlayerRecruit; break;
                 default: Debug.LogWarningFormat("Unrecognised goal \"{0}\"", goal); break;
             }
         }
@@ -665,6 +667,14 @@ public class TutorialManager : MonoBehaviour
                 //moved over a secure connection
                 goalValue = GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerMoveSecureConnections);
                 break;
+            case GoalType.SubordinateNodeActions:
+                //subordinate node actions (excluding target attempts)
+                goalValue = GameManager.i.dataScript.StatisticGetLevel(StatType.SubordinateNodeActions);
+                break;
+            case GoalType.SubordinateRecruit:
+                //surordinate recruits somebody
+                goalValue = GameManager.i.dataScript.StatisticGetLevel(StatType.ActorsRecruited);
+                break;
             case GoalType.PlayerInvisibility:
                 //player lost invisibility
                 goalValue = GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerInvisibilityLost);
@@ -673,9 +683,9 @@ public class TutorialManager : MonoBehaviour
                 //player node actions (excluding target attempts)
                 goalValue = GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerNodeActions);
                 break;
-            case GoalType.SubordinateNodeActions:
-                //subordinate node actions (excluding target attempts)
-                goalValue = GameManager.i.dataScript.StatisticGetLevel(StatType.SubordinateNodeActions);
+            case GoalType.PlayerRecruit:
+                //player recruits somebody
+                goalValue = GameManager.i.dataScript.StatisticGetLevel(StatType.ActorsRecruited);
                 break;
             case GoalType.None: break;
             default: Debug.LogWarningFormat("Unrecognised goalType \"{0}\"", goalType); break;

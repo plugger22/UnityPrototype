@@ -18,9 +18,9 @@ public class TutorialGoal : ScriptableObject
     [TextArea(3,4)] public string startBottomText;
     [Tooltip("Used in game. Message shown to player at completion of the goal")]
     [TextArea(1,2)] public string finishTopText;
-    [TextArea] public string finishBottomText;
+    [TextArea(3,4)] public string finishBottomText;
     [Tooltip("Tooltip text displayed once goal activated. Keep short and self contained. Explain what is required to achieve goal")]
-    [TextArea(1, 2)] public string tooltipText;
+    [TextArea(2, 3)] public string tooltipText;
 
     [Header("Primary Goal")]
     [Tooltip("enum.SO that is used in code to look up the primary, tracker0 goal. Required")]

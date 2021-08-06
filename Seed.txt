@@ -14420,3 +14420,39 @@ City seed 27408 -> Londus, Eurasia
 
 Dev seed 27392 -> Wednesday, 4 August 2021 5:27 PM
 City seed 53447 -> VirtualCity, Eurasia
+
+Dev seed 33870 -> Friday, 6 August 2021 10:15 AM
+City seed 15017 -> VirtualCity, Eurasia
+WARNING TutorialManager.cs -> UpdateGoal: Can't add goal "PlayerRecruit",  as already present in listOfGoals
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TutorialManager:UpdateGoal(TutorialGoal, Int32) (at Assets/Scripts/Managers/TutorialManager.cs:493)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:429)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:271)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:390)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 27542 -> Friday, 6 August 2021 10:24 AM
+City seed 57113 -> VirtualCity, Eurasia
+
+Dev seed 62195 -> Friday, 6 August 2021 10:28 AM
+City seed 30292 -> VirtualCity, Eurasia
+WARNING TutorialManager.cs -> UpdateGoal: Can't add goal "PlayerRecruit",  as already present in listOfGoals
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TutorialManager:UpdateGoal(TutorialGoal, Int32) (at Assets/Scripts/Managers/TutorialManager.cs:493)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:429)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:271)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:390)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 22986 -> Friday, 6 August 2021 10:38 AM
+City seed 43276 -> VirtualCity, Eurasia
+
+Dev seed 60370 -> Friday, 6 August 2021 10:39 AM
+City seed 11923 -> VirtualCity, Eurasia
+
+Dev seed 62972 -> Friday, 6 August 2021 10:55 AM
+City seed 14501 -> VirtualCity, Eurasia

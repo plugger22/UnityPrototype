@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14ce46f3171943c4288c53f60de62339, type: 3}
+  m_Name: SubordinateRecruit
+  m_EditorClassIdentifier: 
+  notes: Player recruits a subordinates contacts
+  startTopText: Delegate Recruitment
+  startBottomText: You don't have to do everything. You can <b>delegate</b><br><br>Left
+    Click on a district where your RECRUITER has a contact (mouse over their image
+    to find)<br><br>Select <b>RECRUIT</b> from the menu and choose an applicant
+  finishTopText: They're in the Reserves
+  finishBottomText: Your new member is now in the <b>Reserves</b> along with the others<br><br>Note
+    that you'll get a <b>better</b> class of candidate if you let your Recruiter handle
+    matters<br><br>To view the Reserves, <b>press R</b> (after exiting this)
+  tooltipText: Click on a district where your Recruiter has a contact (mouseover RECRUITER
+    image to see)<br><br>Select RECRUIT and hire the candidate of your choice.
+  goal0: {fileID: 11400000, guid: 44c5c13d4db5c5844be28a91d4795207, type: 2}
+  tracker0Notes: Subordinate Recruits
+  target0: 1
+  goal1: {fileID: 0}
+  tracker1Notes: 
+  target1: -1

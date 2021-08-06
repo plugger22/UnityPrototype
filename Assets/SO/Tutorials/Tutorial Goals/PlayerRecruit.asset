@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14ce46f3171943c4288c53f60de62339, type: 3}
+  m_Name: PlayerRecruit
+  m_EditorClassIdentifier: 
+  notes: Player recruits a subordinate directly
+  startTopText: Recruit A Subordinate
+  startBottomText: Take control and hire a new subordinate<br><br>Left Click on your
+    <b>current district</b> (mouse over your image to find)<br><br>Select <b>RECRUIT</b>
+    from the menu and choose an applicant
+  finishTopText: They're in the Reserves
+  finishBottomText: Your chosen candidate is now residing in your <b>Reserve Pool</b><br><br>They'll
+    wait there until you are ready for them<br><br>Or until they become <b>upset</b>
+    at being <b>ignored</b> and quit!
+  tooltipText: Click on your current district (mouseover Player image to see) and
+    select RECRUIT. Hire the candidate of your choice.
+  goal0: {fileID: 11400000, guid: d3a9943fbeab66f4d8ce942ff77118e9, type: 2}
+  tracker0Notes: Player Recruits
+  target0: 1
+  goal1: {fileID: 0}
+  tracker1Notes: 
+  target1: -1
