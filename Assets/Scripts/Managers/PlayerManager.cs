@@ -19,6 +19,8 @@ public class PlayerManager : MonoBehaviour
     [Range(1, 3)] public int moodStart = 2;
     [Tooltip("Mood resets to this value once Player loses their Stressed Condition or completes Lying Low")]
     [Range(1, 3)] public int moodReset = 3;
+    [Tooltip("Maximum amount per turn that Mood can improve by not spending actions")]
+    [Range(1, 3)] public int moodImprove = 1;
 
     [Header("Investigations")]
     [Tooltip("Maximum number of investigations that can be active at a time")]
@@ -2630,7 +2632,12 @@ public class PlayerManager : MonoBehaviour
                 GameManager.i.dataScript.StatisticIncrement(StatType.PlayerDoNothing, unusedActions);
                 //only improve mood if there is room for improvement
                 if (mood < moodMax && isStressed == false)
-                { ChangeMood(unusedActions, "Watching SerialFlix", "", false); }
+                {
+                    //there's a cap on mood improvements from doing nothing
+                    int moodIncrease = Mathf.Min(unusedActions, moodImprove);
+                    //improve mood
+                    ChangeMood(moodIncrease, "Watching SerialFlix", "", false);
+                }
             }
         }
         else { Debug.LogWarning("Invalid unused Actions (Zero)"); }

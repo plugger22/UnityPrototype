@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Res3
   m_EditorClassIdentifier: 
   tutorial: {fileID: 11400000, guid: c050560a8867a3a4c806544632dda679, type: 2}
-  notes: 'Management
+  notes: 'Management and Mood
 
     Must have a recruiter in lineup'
   index: 3
@@ -36,3 +36,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ea57d731bfce875459cb67e57e5b076a, type: 2}
   - {fileID: 11400000, guid: 20ad6e7178774734b99dcbeaa660fcd3, type: 2}
   - {fileID: 11400000, guid: a89bfc17bbe9be44283515df74ec72a0, type: 2}
+  - {fileID: 11400000, guid: d3fa740fb45290048977eb7bde966e90, type: 2}
