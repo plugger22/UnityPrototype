@@ -27,12 +27,13 @@ public class ModalActionMenu : MonoBehaviour
     public Button button4;
     public Button button5;
     public Button button6;
-    public Text button1Text;
-    public Text button2Text;
-    public Text button3Text;
-    public Text button4Text;
-    public Text button5Text;
-    public Text button6Text;
+    public TextMeshProUGUI button1Text;
+    public TextMeshProUGUI button2Text;
+    public TextMeshProUGUI button3Text;
+    public TextMeshProUGUI button4Text;
+    public TextMeshProUGUI button5Text;
+    public TextMeshProUGUI button6Text;
+
     
     [HideInInspector] public string tooltip1;
     [HideInInspector] public string tooltip2;
@@ -177,7 +178,7 @@ public class ModalActionMenu : MonoBehaviour
             //There can be a max of 6 buttons (5 plus 1 x Cancel)
             int counter = 0;
             Button tempButton;
-            Text title;
+            TextMeshProUGUI title;
             foreach (EventButtonDetails buttonDetails in details.listOfButtonDetails)
             {
                 tempButton = null;

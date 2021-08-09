@@ -18,9 +18,7 @@ MonoBehaviour:
   power: 10
   listOfConditions:
   - {fileID: 11400000, guid: d80a46178c34f11438a36c56d5193b84, type: 2}
-  - {fileID: 11400000, guid: d80a46178c34f11438a36c56d5193b84, type: 2}
   listOfSecrets:
-  - {fileID: 11400000, guid: 91ad651ee3516d54eb63d80ed311a6ff, type: 2}
   - {fileID: 11400000, guid: 91ad651ee3516d54eb63d80ed311a6ff, type: 2}
   listOfGear:
   - {fileID: 11400000, guid: 9ba2f9be3624468409b33a0a72f134fc, type: 2}
