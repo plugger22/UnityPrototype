@@ -13,6 +13,8 @@ using UnityEngine;
 /// </summary>
 public class ValidationManager : MonoBehaviour
 {
+    #region Public vars...
+
     [Header("Campaign.SO Pool Criteria")]
     [Tooltip("TopicType for Story -> different to the rest but needed to be here for EffectManager.cs -> CheckCriteria")]
     public TopicType storyType;
@@ -143,11 +145,15 @@ public class ValidationManager : MonoBehaviour
     [Tooltip("TargetTrigger for story targets ('Live')")]
     public TargetTrigger storyTargetTrigger;
 
+    #endregion
+
+    #region Private vars...
     //fast access
     private GlobalSide globalAuthority;
     private GlobalSide globalResistance;
     private string levelScopeName;
     private string campaignScopeName;
+    #endregion
 
     #region Initialise...
     /// <summary>
@@ -1912,6 +1918,7 @@ public class ValidationManager : MonoBehaviour
         bool isSpecialCase;
         int maxActors = GameManager.i.actorScript.maxNumOfOnMapActors;
         int maxReserveActors = GameManager.i.actorScript.maxNumOfReserveActors;
+        int maxStat = GameManager.i.actorScript.maxStatValue;
         int maxTutorialItems = GameManager.i.tutorialScript.maxNumOfItems;
         int maxTutorialOptions = GameManager.i.topicScript.maxOptions;
         int minTutorialOptions = GameManager.i.tutorialScript.minNumOfOptions;
@@ -1979,6 +1986,13 @@ public class ValidationManager : MonoBehaviour
                                         {
                                             Debug.LogFormat("{0} Set \"{1}\", invalid count in listOfTutorialItems (has {2}, max allowed is {3}){4}", tag, set.name, set.listOfTutorialItems.Count, maxTutorialItems, "\n");
                                         }
+                                    }
+                                    //check player configs
+                                    if (set.playerConfig != null)
+                                    {
+                                        //check same side
+                                        if (set.playerConfig.side.level != set.tutorial.side.level)
+                                        { Debug.LogFormat("{0} Set \"{1}\", invalid playerConfig (wrong side), \"{2}\"{3}", tag, set.name, set.playerConfig.name, "\n"); }
                                     }
                                     //check actor configs
                                     if (set.actorConfig != null)
@@ -2091,17 +2105,76 @@ public class ValidationManager : MonoBehaviour
             }
             #endregion
 
+            #region TutorialPlayerConfigs
+            //
+            // - - - TutorialPlayerConfigs
+            //
+            TutorialPlayerConfig[] arrayOfConfigPlayer = GameManager.i.loadScript.arrayOfTutorialPlayerConfigs;
+            if (arrayOfConfigPlayer != null)
+            {
+                List<string> tempList;
+                for (int i = 0; i < arrayOfConfigPlayer.Length; i++)
+                {
+                    TutorialPlayerConfig config = arrayOfConfigPlayer[i];
+                    if (config != null)
+                    {
+                        //stats should be within limits
+                        if (config.invisibility < 0) { Debug.LogFormat("{0} Invalid Invisibility stat \"{1}\" (Less than Zero) for {2}{3}", tag, config.invisibility, config, "\n"); }
+                        else if (config.invisibility > maxStat) { Debug.LogFormat("{0} Invalid Invisibility stat \"{1}\" (> than max value of {2}) for {3}{4}", tag, config.invisibility, maxStat, config, "\n"); }
+                        if (config.mood < 0) { Debug.LogFormat("{0} Invalid Mood stat \"{1}\" (Less than Zero) for {2}{3}", tag, config.mood, config, "\n"); }
+                        else if (config.mood > maxStat) { Debug.LogFormat("{0} Invalid Mood stat \"{1}\" (> than max value of {2}) for {3}{4}", tag, config.mood, maxStat, config, "\n"); }
+                        if (config.innocence < 0) { Debug.LogFormat("{0} Invalid Innocence stat \"{1}\" (Less than Zero) for {2}{3}", tag, config.innocence, config, "\n"); }
+                        else if (config.innocence > maxStat) { Debug.LogFormat("{0} Invalid Innocence stat \"{1}\" (> than max value of {2}) for {3}{4}", tag, config.innocence, maxStat, config, "\n"); }
+                        if (config.power < 0) { Debug.LogFormat("{0} Invalid Power stat \"{1}\" (Less than Zero) for {2}{3}", tag, config.power, config, "\n"); }
+                        //Conditions
+                        if (config.listOfConditions.Count > 0)
+                        {
+                            //null check
+                            if (CheckList(config.listOfConditions, string.Format("{0}.{1}", config.name, "listOfConditions"), tag) == true)
+                            {
+                                //dupe check
+                                tempList = config.listOfConditions.Select(x => x.name).ToList();
+                                CheckListForDuplicates(tempList, "playerConfig", config.name, "listOfConditions");
+                            }
+                        }
+                        //Secrets -> null check
+                        if (config.listOfSecrets.Count > 0)
+                        {
+                            if (CheckList(config.listOfSecrets, string.Format("{0}.{1}", config.name, "listOfSecrets"), tag) == true)
+                            {
+                                //dupe check
+                                tempList = config.listOfSecrets.Select(x => x.name).ToList();
+                                CheckListForDuplicates(tempList, "playerConfig", config.name, "listOfSecrets");
+                            }
+                        }
+                        //Gear -> null check
+                        if (config.listOfGear.Count > 0)
+                        {
+                            if (CheckList(config.listOfGear, string.Format("{0}.{1}", config.name, "listOfGear"), tag) == true)
+                            {
+                                //dupe check
+                                tempList = config.listOfGear.Select(x => x.name).ToList();
+                                CheckListForDuplicates(tempList, "playerConfig", config.name, "listOfGear");
+                            }
+                        }
+                    }
+                    else { Debug.LogErrorFormat("Invalid TutorialPlayerConfig (Null) in arrayOfConfigPlayer[{0}]", i); }
+                }
+            }
+            else { Debug.LogError("Invalid arrayOfConfigPlayer (Null)"); }
+            #endregion
+
             #region TutorialActorConfigs
             //
             // - - - TutorialActorConfigs
             //
-            TutorialActorConfig[] arrayOfConfigs = GameManager.i.loadScript.arrayOfTutorialActorConfigs;
-            if (arrayOfConfigs != null)
+            TutorialActorConfig[] arrayOfConfigActor = GameManager.i.loadScript.arrayOfTutorialActorConfigs;
+            if (arrayOfConfigActor != null)
             {
 
-                for (int i = 0; i < arrayOfConfigs.Length; i++)
+                for (int i = 0; i < arrayOfConfigActor.Length; i++)
                 {
-                    TutorialActorConfig config = arrayOfConfigs[i];
+                    TutorialActorConfig config = arrayOfConfigActor[i];
                     if (config != null)
                     {
                         //should be set number of onMap actors (zero is O.K)
@@ -2138,7 +2211,7 @@ public class ValidationManager : MonoBehaviour
                         }
 
                     }
-                    else { Debug.LogErrorFormat("Invalid TutorialActorConfig (Null) in arrayOfConfigs[{0}]", i); }
+                    else { Debug.LogErrorFormat("Invalid TutorialActorConfig (Null) in arrayOfConfigActor[{0}]", i); }
                 }
             }
             else { Debug.LogError("Invalid arrayOfTutorialActorConfigs (Null)"); }

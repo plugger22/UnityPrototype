@@ -14569,3 +14569,24 @@ City seed 11615 -> VirtualCity, Eurasia
 
 Dev seed 29963 -> Friday, 6 August 2021 2:18 PM
 City seed 15762 -> VirtualCity, Eurasia
+
+Dev seed 31239 -> Monday, 9 August 2021 9:54 AM
+City seed 35358 -> Londus, Eurasia
+
+Dev seed 55281 -> Monday, 9 August 2021 9:55 AM
+City seed 15595 -> Londus, Eurasia
+
+Dev seed 24820 -> Monday, 9 August 2021 9:58 AM
+City seed 31411 -> Londus, Eurasia
+
+Dev seed 21521 -> Monday, 9 August 2021 9:59 AM
+City seed 59022 -> Londus, Eurasia
+
+Dev seed 548 -> Monday, 9 August 2021 10:00 AM
+City seed 52372 -> Londus, Eurasia
+
+Dev seed 59253 -> Monday, 9 August 2021 10:07 AM
+City seed 20981 -> Londus, Eurasia
+
+Dev seed 36313 -> Monday, 9 August 2021 10:17 AM
+City seed 59588 -> Londus, Eurasia
