@@ -1029,8 +1029,8 @@ public class ModalTabbedUI : MonoBehaviour
         // - - - Page 9
         //
         //org options
-        if (tab9Interaction0 != null) { tab9Interaction0.SetEvent(EventType.TabbedOrganisation); } else { Debug.LogError("Invalid tab9Interaction0 (Null)"); }
-        if (tab9Interaction1 != null) { tab9Interaction1.SetEvent(EventType.TabbedMegaCorp); } else { Debug.LogError("Invalid tab9Interaction1 (Null)"); }
+        if (tab9Interaction0 != null) { tab9Interaction0.SetEvent(EventType.TabbedMegaCorp); } else { Debug.LogError("Invalid tab9Interaction0 (Null)"); }
+        if (tab9Interaction1 != null) { tab9Interaction1.SetEvent(EventType.TabbedOrganisation); } else { Debug.LogError("Invalid tab9Interaction1 (Null)"); }
         //Organisations
         arrayOfOrgs[0] = tab9Org0;
         arrayOfOrgs[1] = tab9Org1;
@@ -1770,7 +1770,8 @@ public class ModalTabbedUI : MonoBehaviour
                 OpenStats();
                 break;
             case TabbedPage.Organisations:
-                OpenOrganisation(TabbedOrg.Organisation);
+                //default to MegaCorp on first opening
+                OpenOrganisation(TabbedOrg.MegaCorp);
                 break;
             default: Debug.LogWarningFormat("Unrecognised currentTopTabIndex \"{0}\"", currentTopTabIndex); break;
         }
@@ -3255,7 +3256,7 @@ public class ModalTabbedUI : MonoBehaviour
     {
         switch (orgType)
         {
-            case TabbedOrg.Organisation:
+            case TabbedOrg.MegaCorp:
                 //image button colours
                 tab9Interaction0.image.color = optionActiveColour;
                 tab9Interaction1.image.color = pageOptionDormantColour;
@@ -3263,12 +3264,12 @@ public class ModalTabbedUI : MonoBehaviour
                 tab9Interaction0.title.color = tabTextActiveColour;
                 tab9Interaction1.title.color = tabTextDormantColour;
                 //help
-                tab9PageHelpOrg.gameObject.SetActive(true);
-                tab9PageHelpCorp.gameObject.SetActive(false);
+                tab9PageHelpOrg.gameObject.SetActive(false);
+                tab9PageHelpCorp.gameObject.SetActive(true);
                 //header
-                tab9Header.text = "Organisations";
+                tab9Header.text = "MegaCorps";
                 break;
-            case TabbedOrg.MegaCorp:
+            case TabbedOrg.Organisation:
                 //image button colours
                 tab9Interaction0.image.color = pageOptionDormantColour;
                 tab9Interaction1.image.color = optionActiveColour;
@@ -3276,10 +3277,10 @@ public class ModalTabbedUI : MonoBehaviour
                 tab9Interaction0.title.color = tabTextDormantColour;
                 tab9Interaction1.title.color = tabTextActiveColour;
                 //help
-                tab9PageHelpOrg.gameObject.SetActive(false);
-                tab9PageHelpCorp.gameObject.SetActive(true);
+                tab9PageHelpOrg.gameObject.SetActive(true);
+                tab9PageHelpCorp.gameObject.SetActive(false);
                 //header
-                tab9Header.text = "MegaCorps";
+                tab9Header.text = "Organisations";
                 break;
             default: Debug.LogWarningFormat("Unrecognised TabbedOrg \"{0}\"", orgType); break;
         }

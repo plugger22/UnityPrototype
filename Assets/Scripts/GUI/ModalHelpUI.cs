@@ -516,6 +516,11 @@ public class ModalHelpUI : MonoBehaviour
     {
         masterCanvas.gameObject.SetActive(false);
         isOpen = false;
+        if (recentIndex > -1)
+        {
+            //return colour to normal for most recent text (prevents still being highlighted when helped reopened)
+            listOfInteractions[recentIndex].text.color = colorInactive;
+        }
         //set modal status
         GameManager.i.guiScript.SetIsBlocked(false);
         //set game state

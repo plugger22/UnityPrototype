@@ -14698,3 +14698,108 @@ City seed 44686 -> Londus, Eurasia
 
 Dev seed 6653 -> Tuesday, 10 August 2021 12:05 PM
 City seed 8668 -> Londus, Eurasia
+
+Dev seed 55314 -> Tuesday, 10 August 2021 12:33 PM
+City seed 24887 -> Londus, Eurasia
+
+Dev seed 43604 -> Tuesday, 10 August 2021 12:45 PM
+
+Dev seed 12556 -> Tuesday, 10 August 2021 12:45 PM
+City seed 45417 -> Londus, Eurasia
+
+Dev seed 1809 -> Tuesday, 10 August 2021 12:45 PM
+City seed 47658 -> Londus, Eurasia
+
+Dev seed 48440 -> Tuesday, 10 August 2021 2:39 PM
+City seed 48087 -> Londus, Eurasia
+
+Dev seed 40665 -> Tuesday, 10 August 2021 2:40 PM
+City seed 31422 -> Londus, Eurasia
+
+Dev seed 6966 -> Tuesday, 10 August 2021 2:40 PM
+City seed 8553 -> Londus, Eurasia
+
+Dev seed 1197 -> Tuesday, 10 August 2021 2:42 PM
+City seed 49278 -> Londus, Eurasia
+
+Dev seed 32225 -> Tuesday, 10 August 2021 2:42 PM
+City seed 65532 -> Londus, Eurasia
+
+Dev seed 34398 -> Tuesday, 10 August 2021 2:44 PM
+City seed 45473 -> Londus, Eurasia
+
+Dev seed 8744 -> Tuesday, 10 August 2021 2:46 PM
+City seed 6874 -> Londus, Eurasia
+
+Dev seed 47000 -> Tuesday, 10 August 2021 2:47 PM
+City seed 1298 -> Londus, Eurasia
+
+Dev seed 56145 -> Tuesday, 10 August 2021 2:48 PM
+City seed 24609 -> Londus, Eurasia
+
+Dev seed 56844 -> Tuesday, 10 August 2021 2:54 PM
+City seed 39499 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalTabbedUI.SubInitialiseSessionStart () (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:726)
+	ModalTabbedUI.Initialise (gameAPI.GameState state) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:433)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:943)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:1003)
+	ControlManager.ProcessCloseNewGameOptions () (at Assets/Scripts/Managers/ControlManager.cs:195)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:86)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:390)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:344)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:477)
+	
+Dev seed 63453 -> Tuesday, 10 August 2021 2:56 PM
+City seed 55828 -> Londus, Eurasia
+
+Dev seed 31105 -> Tuesday, 10 August 2021 2:59 PM
+City seed 55684 -> Londus, Eurasia
+
+Dev seed 38567 -> Tuesday, 10 August 2021 3:05 PM
+City seed 36958 -> Londus, Eurasia
+
+Dev seed 56160 -> Tuesday, 10 August 2021 3:17 PM
+City seed 25671 -> Londus, Eurasia
+
+Dev seed 38944 -> Tuesday, 10 August 2021 3:19 PM
+City seed 34035 -> Londus, Eurasia
+
+Dev seed 57825 -> Tuesday, 10 August 2021 3:21 PM
+City seed 55673 -> Londus, Eurasia
+
+Dev seed 38296 -> Tuesday, 10 August 2021 3:23 PM
+City seed 14810 -> Londus, Eurasia
+
+Dev seed 65491 -> Tuesday, 10 August 2021 3:24 PM
+City seed 44672 -> Londus, Eurasia
+
+Dev seed 31624 -> Tuesday, 10 August 2021 3:26 PM
+City seed 1355 -> Londus, Eurasia
+
+Dev seed 45418 -> Tuesday, 10 August 2021 3:35 PM
+City seed 20133 -> Londus, Eurasia
+
+Dev seed 59200 -> Tuesday, 10 August 2021 3:39 PM
+City seed 29513 -> Londus, Eurasia
+
+Dev seed 57034 -> Tuesday, 10 August 2021 3:45 PM
+City seed 18030 -> Londus, Eurasia
+
+Dev seed 16006 -> Tuesday, 10 August 2021 3:48 PM
+City seed 45849 -> Londus, Eurasia
+
+Dev seed 11825 -> Tuesday, 10 August 2021 3:53 PM
+City seed 26250 -> Londus, Eurasia
+
+Dev seed 58536 -> Tuesday, 10 August 2021 4:33 PM
+City seed 19049 -> Londus, Eurasia
+
+Dev seed 6133 -> Tuesday, 10 August 2021 8:36 PM
+City seed 60132 -> Londus, Eurasia
+
+Dev seed 48240 -> Tuesday, 10 August 2021 8:39 PM
+City seed 15761 -> Londus, Eurasia
+
+Dev seed 22621 -> Tuesday, 10 August 2021 8:41 PM
+City seed 51349 -> Londus, Eurasia
