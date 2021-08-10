@@ -706,8 +706,6 @@ public class HelpManager : MonoBehaviour
         listOfHelp.Add(data);
         #endregion
 
-        #endregion
-
         #region Tutorial UI
         //
         // - - - Tutorial UI
@@ -733,6 +731,7 @@ public class HelpManager : MonoBehaviour
         listOfHelp.Add(data);
         #endregion
 
+        #endregion
 
         #region ...Topics
 
@@ -2074,7 +2073,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "person_15";
         data.header = "Personality";
-        data.text = string.Format("Every character has a {0}unique{1} personality that defines their behaviour and {2}compatibility{3} {4} towards yourself. Your own personality determines your likes and dislikes.",
+        data.text = string.Format("Every character has a {0}unique{1} personality that defines their behaviour and {2}compatibility{3} {4} towards yourself. Your own personality determines your beliefs.",
             colourAlert, colourEnd, colourAlert, colourEnd, GameManager.i.guiScript.compatibilityIcon);
         listOfHelp.Add(data);
         //personality -> compatibility
@@ -2102,21 +2101,22 @@ public class HelpManager : MonoBehaviour
             colourAlert, colourEnd, GameManager.i.guiScript.compatibilityIcon, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //
-        // - - - Likes and Dislikes
+        // - - - Beliefs
         //
-        //personality -> likes overview
+        //personality -> beliefs overview
         data = new HelpData();
         data.tag = "person_19";
-        data.header = "Likes and Dislikes";
-        data.text = string.Format("Your personality may {0}predispose{1} you to liking, or disliking, certain things. Listed below are various actions and what {2}effect{3} they will have on your {4}mood{5} {6}",
+        data.header = "Beliefs";
+        data.text = string.Format("Your personality may {0}predispose{1} you to agreeing to, or opposing, certain actions based on your beliefs. " +
+            "Listed below are various actions and what {2}effect{3} they will have on your {4}mood{5} {6}",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, GameManager.i.guiScript.opinionIcon);
         listOfHelp.Add(data);
         //personality -> tip
         data = new HelpData();
         data.tag = "person_20";
         data.header = string.Format("{0}Tip{1}", colourTip, colourEnd);
-        data.text = string.Format("Your personality doesn't {0}prevent{1} you from taking specific actions. You can {2}do what you like{3} but be aware that if you do something that is in {4}opposition{5} to your " +
-            "{6}core beliefs{7} your mood will suffer and vice versa. We all have a {8}natural tendency{9} to do what we prefer",
+        data.text = string.Format("Your personality {0}doesn't{1} prevent you from taking specific actions. You can {2}do what you like{3} but be aware that if you do something that is in {4}opposition{5} to your " +
+            "beliefs your {6}mood{7} will suffer and vice versa. We all have a {8}natural tendency{9} to do what we prefer",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion

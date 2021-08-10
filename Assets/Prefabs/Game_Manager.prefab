@@ -6327,8 +6327,8 @@ MonoBehaviour:
   conditionWhoResistance: 999
   conditionResistance: {fileID: 0}
   playerInvisibility: -1
-  actorSlotID: 0
-  actorType: {fileID: 11400000, guid: 37d9dfd62535e6b438debd5d11731168, type: 2}
+  actorSlotID: -1
+  actorType: {fileID: 0}
   actorDatapoint0: -1
   actorDatapoint1: -1
   actorDatapoint2: -1
