@@ -14650,3 +14650,48 @@ City seed 6338 -> VirtualCity, Eurasia
 
 Dev seed 6870 -> Monday, 9 August 2021 4:53 PM
 City seed 11658 -> Londus, Eurasia
+
+Dev seed 64896 -> Tuesday, 10 August 2021 9:32 AM
+City seed 941 -> Londus, Eurasia
+WARNING Gear Not found virtualbomb, in dict 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetGear(String) (at Assets/Scripts/Managers/DataManager.cs:6241)
+	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:2270)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1757)
+	
+Dev seed 26733 -> Tuesday, 10 August 2021 9:50 AM
+City seed 30178 -> Londus, Eurasia
+
+Dev seed 57776 -> Tuesday, 10 August 2021 9:58 AM
+City seed 40142 -> Londus, Eurasia
+
+Dev seed 34381 -> Tuesday, 10 August 2021 9:58 AM
+City seed 10238 -> Londus, Eurasia
+
+Dev seed 58074 -> Tuesday, 10 August 2021 9:59 AM
+City seed 5044 -> Londus, Eurasia
+
+Dev seed 17289 -> Tuesday, 10 August 2021 9:59 AM
+City seed 19010 -> Londus, Eurasia
+
+Dev seed 43265 -> Tuesday, 10 August 2021 10:00 AM
+City seed 13731 -> Londus, Eurasia
+
+Dev seed 39143 -> Tuesday, 10 August 2021 10:00 AM
+City seed 17357 -> Londus, Eurasia
+
+Dev seed 339 -> Tuesday, 10 August 2021 10:03 AM
+City seed 64156 -> Londus, Eurasia
+
+Dev seed 26744 -> Tuesday, 10 August 2021 10:10 AM
+City seed 21876 -> Londus, Eurasia
+
+Dev seed 14744 -> Tuesday, 10 August 2021 10:12 AM
+City seed 23849 -> Londus, Eurasia
+
+Dev seed 50285 -> Tuesday, 10 August 2021 10:51 AM
+City seed 27808 -> Londus, Eurasia
+
+Dev seed 37855 -> Tuesday, 10 August 2021 11:12 AM
+City seed 44686 -> Londus, Eurasia

@@ -2441,6 +2441,12 @@ public class ActorManager : MonoBehaviour
                                                                 builder.AppendFormat("{0}{1} {2}{3}", colourBad, actor.arc.name, effect.description, colourEnd);
                                                             }
                                                         }
+                                                        //Mood (special case -> Player only)
+                                                        if (isPlayerAction == true && effect.isMoodEffect == true)
+                                                        {
+                                                            string moodText = GameManager.i.personScript.GetMoodTooltip(effect.belief, "Player");
+                                                            builder.Append(moodText);
+                                                        }
                                                     }
                                                     else
                                                     {
@@ -2476,7 +2482,9 @@ public class ActorManager : MonoBehaviour
                                                         action = () => { EventManager.i.PostNotification(EventType.NodeAction, this, actionDetails, "ActorManager.cs -> GetNodeActions"); }
                                                     };
                                                 }
-                                                //special case, Resistance node actions only
+                                                //
+                                                // - - - Special case, Resistance node actions only
+                                                //
                                                 else
                                                 {
                                                     switch (actor.arc.nodeAction.special.name)

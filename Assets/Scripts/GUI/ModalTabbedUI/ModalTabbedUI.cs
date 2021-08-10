@@ -31,7 +31,7 @@ public class ModalTabbedUI : MonoBehaviour
     public Canvas canvasTab2;               //OnMap Actor contacts
     public Canvas canvasTab3;               //secrets
     public Canvas canvasTab4;               //Player investigations
-    public Canvas canvasTab5;               //Player Likes
+    public Canvas canvasTab5;               //Player beliefs
     public Canvas canvasTab6;               //Gear
     public Canvas canvasTab7;               //history
     public Canvas canvasTab8;               //stats
@@ -136,11 +136,11 @@ public class ModalTabbedUI : MonoBehaviour
     public GenericHelpTooltipUI tab4PageHelp;
     public TextMeshProUGUI tab4NonePresent;
 
-    [Header("Canvas5 -> Likes")]
-    public TabbedLikesInteraction tab5Likes0;       //strongly likes
-    public TabbedLikesInteraction tab5Likes1;       //likes
-    public TabbedLikesInteraction tab5Likes2;       //strong dislikes
-    public TabbedLikesInteraction tab5Likes3;       //dislikes
+    [Header("Canvas5 -> Likes (Beliefs)")]
+    public TabbedLikesInteraction tab5Likes0;       //strongly agrees
+    public TabbedLikesInteraction tab5Likes1;       //agrees
+    public TabbedLikesInteraction tab5Likes2;       //strong opposes
+    public TabbedLikesInteraction tab5Likes3;       //opposes
     public GenericHelpTooltipUI tab5PageHelp;
 
     [Header("Canvas6 -> Gear")]
@@ -238,7 +238,7 @@ public class ModalTabbedUI : MonoBehaviour
     //Page 4
     private int maxNumOfInvestigations;
     //Page 5
-    private int maxNumOfLikes;
+    private int maxNumOfBeliefs;
     //Page 6
     private int maxNumOfGear;
     private int maxNumOfDevices;
@@ -691,8 +691,8 @@ public class ModalTabbedUI : MonoBehaviour
         maxNumOfInvestigations = GameManager.i.playerScript.maxInvestigations;
         arrayOfInvestigations = new TabbedInvestInteraction[maxNumOfInvestigations];
         //page 5
-        maxNumOfLikes = 4;
-        arrayOfLikes = new TabbedLikesInteraction[maxNumOfLikes];
+        maxNumOfBeliefs = 4;
+        arrayOfLikes = new TabbedLikesInteraction[maxNumOfBeliefs];
         //page 7
         maxNumOfScrollItems = listOfTab7Items.Count;
         Debug.Assert(maxNumOfScrollItems > 0, "Invalid maxNumOfScrollItems (Zero or less)");
@@ -1682,7 +1682,7 @@ public class ModalTabbedUI : MonoBehaviour
                     case TabbedPage.Contacts: arrayOfCanvas[2].gameObject.SetActive(true); break;
                     case TabbedPage.Secrets: arrayOfCanvas[3].gameObject.SetActive(true); break;
                     case TabbedPage.Investigations: arrayOfCanvas[4].gameObject.SetActive(true); break;
-                    case TabbedPage.Likes: arrayOfCanvas[5].gameObject.SetActive(true); break;
+                    case TabbedPage.Beliefs: arrayOfCanvas[5].gameObject.SetActive(true); break;
                     case TabbedPage.Gear: arrayOfCanvas[6].gameObject.SetActive(true); break;
                     case TabbedPage.History: arrayOfCanvas[7].gameObject.SetActive(true); break;
                     case TabbedPage.Stats: arrayOfCanvas[8].gameObject.SetActive(true); break;
@@ -1756,7 +1756,7 @@ public class ModalTabbedUI : MonoBehaviour
             case TabbedPage.Investigations:
                 OpenInvestigations();
                 break;
-            case TabbedPage.Likes:
+            case TabbedPage.Beliefs:
                 //cached data (InitialiseSessionStart) -> no need to do anything
                 break;
             case TabbedPage.Secrets:
@@ -1895,7 +1895,7 @@ public class ModalTabbedUI : MonoBehaviour
                 numOfActors = 1;
                 arrayOfPages[0] = TabbedPage.Main;
                 arrayOfPages[1] = TabbedPage.Personality;
-                arrayOfPages[2] = TabbedPage.Likes;
+                arrayOfPages[2] = TabbedPage.Beliefs;
                 arrayOfPages[3] = TabbedPage.Secrets;
                 arrayOfPages[4] = TabbedPage.Gear;
                 arrayOfPages[5] = TabbedPage.Investigations;
@@ -1914,7 +1914,7 @@ public class ModalTabbedUI : MonoBehaviour
                 arrayOfTopTabObjects[8].SetActive(true);
                 arrayOfTopTabTitles[0].text = "Main";
                 arrayOfTopTabTitles[1].text = "Person";
-                arrayOfTopTabTitles[2].text = "Likes";
+                arrayOfTopTabTitles[2].text = "Beliefs";
                 arrayOfTopTabTitles[3].text = "Secrets";
                 arrayOfTopTabTitles[4].text = "Gear";
                 arrayOfTopTabTitles[5].text = "Invest";

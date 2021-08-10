@@ -770,27 +770,34 @@ MonoBehaviour:
   - Not promising subordinates sent to the Reserves
   - Bullying subordinates in the Reserves
   - Personally coercing  (drugs, money, etc.) district VIPs
+  - Spreading Fake News in a district
   listOfConscientiousnessGood:
-  - Personally hacking district security systems
+  - Hacking district security systems
+  - Inserting Tracers into a district
   listOfConscientiousnessBad:
   - Giving gear to subordinates
   listOfExtroversionGood:
   - Disposing of Corrupt subordinates
   - Disposing of Disloyal (Questionable) subordinates
   - Personal drug use (Jungle Juice, NZT, NitroPills, Stims)
+  - Recruiting in a district
   listOfExtroversionBad:
   - Taking back gear that's already been given to a subordinate
+  - Neutralising Teams in a district
   listOfNeurotiscismGood:
   - Firing active subordinates for no particular reason
   - Killing off subordinates because you don't like them
   - Firing subordinates in the Reserves just because you can
-  listOfNeurotiscismBad: []
+  - Spreading Unrest in a district
+  listOfNeurotiscismBad:
+  - Obtaining gear in a district
   listOfOpennessGood:
   - Personally using HoloPorn
+  - Acquiring Target information
   listOfOpennessBad:
   - Dismissing subordinates for Incompetence
   - Having to Let Go subordinates in the Reserves
-  - Personally blowing up districts
+  - Blowing up districts
 --- !u!114 &114333061750755962
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6320,8 +6327,8 @@ MonoBehaviour:
   conditionWhoResistance: 999
   conditionResistance: {fileID: 0}
   playerInvisibility: -1
-  actorSlotID: -1
-  actorType: {fileID: 0}
+  actorSlotID: 0
+  actorType: {fileID: 11400000, guid: 37d9dfd62535e6b438debd5d11731168, type: 2}
   actorDatapoint0: -1
   actorDatapoint1: -1
   actorDatapoint2: -1
@@ -6708,6 +6715,7 @@ MonoBehaviour:
   moodMax: 3
   moodStart: 2
   moodReset: 3
+  moodImprove: 1
   maxInvestigations: 3
   chanceInvestigation: 50
   chanceEvidence: 5

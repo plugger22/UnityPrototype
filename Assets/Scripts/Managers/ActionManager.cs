@@ -327,8 +327,10 @@ public class ActionManager : MonoBehaviour
                         //
                         // - - - Process effects
                         //
+                        bool isProceed;
                         foreach (Effect effect in listOfEffects)
                         {
+                            isProceed = true;
                             //ongoing effect?
                             if (effect.duration.name.Equals("Ongoing", StringComparison.Ordinal) == true)
                             {
@@ -336,35 +338,42 @@ public class ActionManager : MonoBehaviour
                                 dataInput.ongoingID = GameManager.i.effectScript.GetOngoingEffectID();
                             }
                             else { dataInput.ongoingID = -1; dataInput.ongoingText = action.name; }
-                            effectReturn = GameManager.i.effectScript.ProcessEffect(effect, node, dataInput, actor);
-                            if (effectReturn != null)
+                            //mood effects only apply to Player
+                            if (effect.isMoodEffect == true && isPlayer == false)
+                            { isProceed = false; }
+                            if (isProceed == true)
                             {
-                                //sprite
-                                if (isPlayer == true) { outcomeDetails.sprite = GameManager.i.playerScript.sprite; }
-                                else { outcomeDetails.sprite = actor.sprite; }
-                                //specail outcome gfx
-                                outcomeDetails.isSpecial = true;
-                                //update stringBuilder texts
-                                if (string.IsNullOrEmpty(effectReturn.topText) == false)
+                                //Process effect
+                                effectReturn = GameManager.i.effectScript.ProcessEffect(effect, node, dataInput, actor);
+                                if (effectReturn != null)
                                 {
-                                    if (builderTop.Length > 0) { builderTop.AppendLine(); builderTop.AppendLine(); }
-                                    builderTop.Append(effectReturn.topText);
+                                    //sprite
+                                    if (isPlayer == true) { outcomeDetails.sprite = GameManager.i.playerScript.sprite; }
+                                    else { outcomeDetails.sprite = actor.sprite; }
+                                    //specail outcome gfx
+                                    outcomeDetails.isSpecial = true;
+                                    //update stringBuilder texts
+                                    if (string.IsNullOrEmpty(effectReturn.topText) == false)
+                                    {
+                                        if (builderTop.Length > 0) { builderTop.AppendLine(); builderTop.AppendLine(); }
+                                        builderTop.Append(effectReturn.topText);
+                                    }
+                                    if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
+                                    builderBottom.Append(effectReturn.bottomText);
+                                    //exit effect loop on error
+                                    if (effectReturn.errorFlag == true) { break; }
+                                    //valid action? -> only has to be true once for an action to be valid
+                                    if (effectReturn.isAction == true) { isAction = true; }
                                 }
-                                if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
-                                builderBottom.Append(effectReturn.bottomText);
-                                //exit effect loop on error
-                                if (effectReturn.errorFlag == true) { break; }
-                                //valid action? -> only has to be true once for an action to be valid
-                                if (effectReturn.isAction == true) { isAction = true; }
-                            }
-                            else
-                            {
-                                builderTop.AppendLine();
-                                builderTop.Append("Error");
-                                builderBottom.AppendLine();
-                                builderBottom.Append("Error");
-                                effectReturn.errorFlag = true;
-                                break;
+                                else
+                                {
+                                    builderTop.AppendLine();
+                                    builderTop.Append("Error");
+                                    builderBottom.AppendLine();
+                                    builderBottom.Append("Error");
+                                    effectReturn.errorFlag = true;
+                                    break;
+                                }
                             }
                         }
                         //Nervous trait gains Stressed condition if security measures are in place
