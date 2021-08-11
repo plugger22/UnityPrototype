@@ -258,7 +258,9 @@ public class ModalHelpUI : MonoBehaviour
     #endregion
 
     #region InitialiseHelpOptions
-    //Sets up lists and Initialise Option
+    /// <summary>
+    /// Sets up lists and Initialise Option
+    /// </summary>
     private void InitialiseHelpOptions()
     {
         string helpName;

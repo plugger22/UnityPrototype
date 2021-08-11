@@ -14803,3 +14803,60 @@ City seed 15761 -> Londus, Eurasia
 
 Dev seed 22621 -> Tuesday, 10 August 2021 8:41 PM
 City seed 51349 -> Londus, Eurasia
+
+Dev seed 20548 -> Wednesday, 11 August 2021 9:32 AM
+City seed 2548 -> Londus, Eurasia
+
+Dev seed 9111 -> Wednesday, 11 August 2021 9:48 AM
+City seed 20870 -> Londus, Eurasia
+
+Dev seed 29355 -> Wednesday, 11 August 2021 10:50 AM
+City seed 47312 -> Londus, Eurasia
+
+Dev seed 61696 -> Wednesday, 11 August 2021 12:16 PM
+WARNING [Val] ValidateSO: MISMATCH on GameHelp, array 12, assets 14 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(GameHelp[]) (at Assets/Scripts/Managers/ValidationManager.cs:2552)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2519)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:943)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:434)
+	City seed 3402 -> Londus, Eurasia
+
+Dev seed 48980 -> Wednesday, 11 August 2021 3:56 PM
+WARNING [Val] ValidateSO: MISMATCH on GameHelp, array 12, assets 14 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(GameHelp[]) (at Assets/Scripts/Managers/ValidationManager.cs:2552)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2519)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:943)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:434)
+	City seed 21088 -> Londus, Eurasia
+
+Dev seed 4293 -> Wednesday, 11 August 2021 3:57 PM
+WARNING [Val] ValidateSO: MISMATCH on GameHelp, array 12, assets 14 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(GameHelp[]) (at Assets/Scripts/Managers/ValidationManager.cs:2552)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2519)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:943)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:434)
+	City seed 1872 -> Londus, Eurasia
+
+Dev seed 24148 -> Wednesday, 11 August 2021 3:59 PM
+WARNING [Val] ValidateSO: MISMATCH on GameHelp, array 12, assets 14 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(GameHelp[]) (at Assets/Scripts/Managers/ValidationManager.cs:2552)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2519)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:943)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:434)
+	City seed 4083 -> Londus, Eurasia
+
+Dev seed 59175 -> Wednesday, 11 August 2021 4:17 PM
+WARNING [Val] ValidateSO: MISMATCH on GameHelp, array 12, assets 14 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(GameHelp[]) (at Assets/Scripts/Managers/ValidationManager.cs:2552)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2519)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:943)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:434)
+	City seed 7038 -> Londus, Eurasia
+
+Dev seed 5505 -> Wednesday, 11 August 2021 5:01 PM
+City seed 13227 -> Londus, Eurasia

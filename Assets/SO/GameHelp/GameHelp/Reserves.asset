@@ -9,10 +9,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0a96cf628e828134da5d0c4d79195566, type: 3}
-  m_Name: SubordinatesPersonality
+  m_Name: Reserves
   m_EditorClassIdentifier: 
-  descriptor: Subordinates - Personalities
-  header: Subordinate Personalities
+  descriptor: Reserves
+  header: Reserves
   isHomePage: 0
   layout: {fileID: 11400000, guid: f86e231ef3f7d1b40a9c086b0d0da6bd, type: 2}
-  sprite0: {fileID: 21300000, guid: 5f7540c76fd059c48a10e28a7c7f4c4d, type: 3}
+  sprite0: {fileID: 21300000, guid: 37a41cde2e5b58d4eb01f1ff771a6f47, type: 3}

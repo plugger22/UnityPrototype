@@ -9,10 +9,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0a96cf628e828134da5d0c4d79195566, type: 3}
-  m_Name: Stress
+  m_Name: SubordinatesContacts
   m_EditorClassIdentifier: 
-  descriptor: Stress
-  header: Stress
+  descriptor: Subordinate - Contacts
+  header: Subordinate Contacts
   isHomePage: 0
   layout: {fileID: 11400000, guid: f86e231ef3f7d1b40a9c086b0d0da6bd, type: 2}
-  sprite0: {fileID: 21300000, guid: f93188bdf7ad8744cbfa6ebceb482d95, type: 3}
+  sprite0: {fileID: 21300000, guid: 49fcc7701a22a22438cd886f19887154, type: 3}

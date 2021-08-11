@@ -1627,17 +1627,21 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f86e231ef3f7d1b40a9c086b0d0da6bd, type: 2}
   arrayOfGameHelp:
   - {fileID: 11400000, guid: 695b16a6bbe55124680ffaddad0a0b60, type: 2}
-  - {fileID: 11400000, guid: 7ae51771a2d97054cbffb8896156f03d, type: 2}
-  - {fileID: 11400000, guid: 532a755c66254a049a5ddb3c85afdbe1, type: 2}
-  - {fileID: 11400000, guid: b9d5b06e3c95671478801660d588f13d, type: 2}
-  - {fileID: 11400000, guid: dd5eafc56577fc04d9412a8eabaf7450, type: 2}
-  - {fileID: 11400000, guid: 77ec93847121dc542a7a4fabebcb9487, type: 2}
   - {fileID: 11400000, guid: 564543bbaaeeb7541b861970caea63e7, type: 2}
-  - {fileID: 11400000, guid: cf32935db69b78d42ad55ad5687bc9a4, type: 2}
   - {fileID: 11400000, guid: b1712b6e8b33e8a4e881b8412e944168, type: 2}
-  - {fileID: 11400000, guid: f7eb3323cfbf6bb4e86f2d4d902d321a, type: 2}
+  - {fileID: 11400000, guid: 532a755c66254a049a5ddb3c85afdbe1, type: 2}
+  - {fileID: 11400000, guid: 7ae51771a2d97054cbffb8896156f03d, type: 2}
+  - {fileID: 11400000, guid: b9d5b06e3c95671478801660d588f13d, type: 2}
   - {fileID: 11400000, guid: 039b03d2b5bb91c4c9a485a4ce905c76, type: 2}
+  - {fileID: 11400000, guid: bca530f25eda0c64b9592461345360c5, type: 2}
   - {fileID: 11400000, guid: e291c57a5fde5114c992e2eaa06b793e, type: 2}
+  - {fileID: 11400000, guid: f503133739a7f164aa24a1a24348cff6, type: 2}
+  - {fileID: 11400000, guid: 77ec93847121dc542a7a4fabebcb9487, type: 2}
+  - {fileID: 11400000, guid: efa9f7c764e02d84d9e529bb02073a82, type: 2}
+  - {fileID: 11400000, guid: f7eb3323cfbf6bb4e86f2d4d902d321a, type: 2}
+  - {fileID: 11400000, guid: d5fd64c998375e04397ba2565f19b675, type: 2}
+  - {fileID: 11400000, guid: dd5eafc56577fc04d9412a8eabaf7450, type: 2}
+  - {fileID: 11400000, guid: cf32935db69b78d42ad55ad5687bc9a4, type: 2}
   arrayOfGameHelpSets:
   - {fileID: 11400000, guid: 39c0e7dc2b2c56a4c9f353e781ea9a41, type: 2}
   - {fileID: 11400000, guid: 347b0e256661a6044adc8c5620a2bcae, type: 2}
@@ -6328,8 +6332,8 @@ MonoBehaviour:
   conditionWhoResistance: 999
   conditionResistance: {fileID: 0}
   playerInvisibility: -1
-  actorSlotID: -1
-  actorType: {fileID: 0}
+  actorSlotID: 0
+  actorType: {fileID: 11400000, guid: 33cfb0c161a7cde409d27df1080bd2c8, type: 2}
   actorDatapoint0: -1
   actorDatapoint1: -1
   actorDatapoint2: -1
