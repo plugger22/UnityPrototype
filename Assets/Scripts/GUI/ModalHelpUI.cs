@@ -80,7 +80,6 @@ public class ModalHelpUI : MonoBehaviour
     //home page 
     private GameHelp homePage;                                      //contains quick access buttons to pre-configured sets of gamehelp
 
-
     //collections
     private List<GameHelp> listOfHelp = new List<GameHelp>();                                               //working list with whatever set is currently in use
     private List<GameObject> listOfOptions = new List<GameObject>();                                        //prefab options -> indexed linked with listOfHelp
@@ -432,25 +431,6 @@ public class ModalHelpUI : MonoBehaviour
     }
     #endregion
 
-    #region SortGameHelpList
-    /// <summary>
-    /// Submethod for InitialiseQuickOptions to sort a listOfGameHelp into alphabetical order. Returns null if a problem.
-    /// </summary>
-    /// <param name="listToSort"></param>
-    private List<GameHelp> SortGameHelpList(List<GameHelp> listToSort)
-    {
-        List<GameHelp> tempList = null;
-        if (listToSort != null)
-        {
-            var sorted = listToSort.OrderBy(o => o.descriptor).Select(x => x);
-            tempList = sorted.ToList();
-        }
-        else { Debug.LogError("Invalid listToSort (Null)"); }
-        return tempList;
-    }
-    #endregion
-
-
     #region OnEvent
     /// <summary>
     /// Event Handler
@@ -496,7 +476,6 @@ public class ModalHelpUI : MonoBehaviour
         }
     }
     #endregion
-
 
     #region SetHelp
     /// <summary>
@@ -849,6 +828,24 @@ public class ModalHelpUI : MonoBehaviour
     /// <param name="isTrue"></param>
     private void DisplayHomePageButtons(bool isTrue)
     { quickPanel.gameObject.SetActive(isTrue); }
+    #endregion
+
+    #region SortGameHelpList
+    /// <summary>
+    /// Submethod for InitialiseQuickOptions to sort a listOfGameHelp into alphabetical order. Returns null if a problem.
+    /// </summary>
+    /// <param name="listToSort"></param>
+    private List<GameHelp> SortGameHelpList(List<GameHelp> listToSort)
+    {
+        List<GameHelp> tempList = null;
+        if (listToSort != null)
+        {
+            var sorted = listToSort.OrderBy(o => o.descriptor).Select(x => x);
+            tempList = sorted.ToList();
+        }
+        else { Debug.LogError("Invalid listToSort (Null)"); }
+        return tempList;
+    }
     #endregion
 
     #endregion
