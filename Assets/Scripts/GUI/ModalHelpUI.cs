@@ -355,6 +355,7 @@ public class ModalHelpUI : MonoBehaviour
     /// </summary>
     private void InitialiseQuickOptions()
     {
+        List<GameHelp> tempList;
         //populate button list
         listOfQuickButtons.Add(quickButton0);
         listOfQuickButtons.Add(quickButton1);
@@ -392,7 +393,9 @@ public class ModalHelpUI : MonoBehaviour
             else { Debug.LogErrorFormat("Invalid button (Null) for listOfQuickButtons[{0}]", i); }
         }
         //GameHelpSets
-        listOfSets = GameManager.i.loadScript.arrayOfGameHelpSets.ToList();
+        listOfSets.Clear();
+        //add by value as we're going to be sorting the gameHelp lists into alpha order
+        listOfSets.AddRange(GameManager.i.loadScript.arrayOfGameHelpSets.ToList());
         if (listOfSets != null)
         {
             numQuickOptions = listOfSets.Count;
@@ -409,6 +412,14 @@ public class ModalHelpUI : MonoBehaviour
                         listOfQuickButtons[i].gameObject.SetActive(true);
                         //assign button name
                         listOfQuickInteractions[i].text.text = listOfSets[i].descriptor;
+                        //sort each list into alpha order
+                        tempList = SortGameHelpList(listOfSets[i].listOfGameHelp);
+                        if (tempList != null)
+                        {
+                            listOfSets[i].listOfGameHelp.Clear();
+                            listOfSets[i].listOfGameHelp.AddRange(tempList);
+                        }
+                        else { Debug.LogErrorFormat("Invalid tempList<GameHelp> (Null) for listOfSets[{0}]", i); }
                     }
                     else { Debug.LogErrorFormat("Invalid GameHelpSet (Null) in listOfSets[{0}]", i); }
                 }
@@ -420,6 +431,25 @@ public class ModalHelpUI : MonoBehaviour
         isAllHelp = true;
     }
     #endregion
+
+    #region SortGameHelpList
+    /// <summary>
+    /// Submethod for InitialiseQuickOptions to sort a listOfGameHelp into alphabetical order. Returns null if a problem.
+    /// </summary>
+    /// <param name="listToSort"></param>
+    private List<GameHelp> SortGameHelpList(List<GameHelp> listToSort)
+    {
+        List<GameHelp> tempList = null;
+        if (listToSort != null)
+        {
+            var sorted = listToSort.OrderBy(o => o.descriptor).Select(x => x);
+            tempList = sorted.ToList();
+        }
+        else { Debug.LogError("Invalid listToSort (Null)"); }
+        return tempList;
+    }
+    #endregion
+
 
     #region OnEvent
     /// <summary>
@@ -652,9 +682,8 @@ public class ModalHelpUI : MonoBehaviour
         //get new set
         if (index == -1)
         {
-            //default set -> all help
+            //HOME page -> default set -> all help
             tempList = listOfAll;
-            //home page
             highlightIndex = -1;
             DisplayHomePageButtons(true);
             isAllHelp = true;

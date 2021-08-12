@@ -15,4 +15,4 @@ MonoBehaviour:
   header: Subordinate Personalities
   isHomePage: 0
   layout: {fileID: 11400000, guid: f86e231ef3f7d1b40a9c086b0d0da6bd, type: 2}
-  sprite0: {fileID: 21300000, guid: 5f7540c76fd059c48a10e28a7c7f4c4d, type: 3}
+  sprite0: {fileID: 21300000, guid: bd0831f31bf24a84896c6e4535d23179, type: 3}

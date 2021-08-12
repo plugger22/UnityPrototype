@@ -14860,3 +14860,21 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 
 Dev seed 5505 -> Wednesday, 11 August 2021 5:01 PM
 City seed 13227 -> Londus, Eurasia
+
+Dev seed 22322 -> Thursday, 12 August 2021 9:31 AM
+City seed 31517 -> Londus, Eurasia
+
+Dev seed 12102 -> Thursday, 12 August 2021 10:31 AM
+City seed 47159 -> Londus, Eurasia
+
+Dev seed 33825 -> Thursday, 12 August 2021 10:33 AM
+City seed 42158 -> Londus, Eurasia
+
+Dev seed 135 -> Thursday, 12 August 2021 10:39 AM
+City seed 17541 -> Londus, Eurasia
+
+Dev seed 20344 -> Thursday, 12 August 2021 11:52 AM
+City seed 22504 -> Londus, Eurasia
+
+Dev seed 19201 -> Thursday, 12 August 2021 12:01 PM
+City seed 20605 -> Londus, Eurasia
