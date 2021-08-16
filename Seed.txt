@@ -14903,3 +14903,57 @@ City seed 28237 -> Londus, Eurasia
 
 Dev seed 52441 -> Thursday, 12 August 2021 5:18 PM
 City seed 16600 -> Londus, Eurasia
+
+Dev seed 19486 -> Monday, 16 August 2021 9:36 AM
+City seed 34706 -> Londus, Eurasia
+
+Dev seed 48498 -> Monday, 16 August 2021 9:42 AM
+City seed 40141 -> Londus, Eurasia
+
+Dev seed 45281 -> Monday, 16 August 2021 9:48 AM
+City seed 14674 -> Londus, Eurasia
+
+Dev seed 51944 -> Monday, 16 August 2021 9:56 AM
+City seed 48856 -> Londus, Eurasia
+
+Dev seed 62394 -> Monday, 16 August 2021 10:00 AM
+City seed 3702 -> Londus, Eurasia
+
+Dev seed 1036 -> Monday, 16 August 2021 11:36 AM
+City seed 41588 -> Londus, Eurasia
+
+Dev seed 37764 -> Monday, 16 August 2021 11:58 AM
+City seed 32058 -> Londus, Eurasia
+
+Dev seed 19861 -> Monday, 16 August 2021 2:45 PM
+City seed 15999 -> Londus, Eurasia
+
+Dev seed 22471 -> Monday, 16 August 2021 3:29 PM
+City seed 25527 -> Londus, Eurasia
+
+Dev seed 21835 -> Monday, 16 August 2021 4:42 PM
+City seed 29588 -> Londus, Eurasia
+
+Dev seed 35867 -> Monday, 16 August 2021 4:47 PM
+City seed 34116 -> Londus, Eurasia
+
+Dev seed 2646 -> Monday, 16 August 2021 4:48 PM
+City seed 50613 -> Londus, Eurasia
+
+Dev seed 47861 -> Monday, 16 August 2021 4:48 PM
+City seed 23549 -> Londus, Eurasia
+
+Dev seed 61577 -> Monday, 16 August 2021 4:50 PM
+City seed 17724 -> Londus, Eurasia
+
+Dev seed 44444 -> Monday, 16 August 2021 4:50 PM
+City seed 46739 -> Londus, Eurasia
+
+Dev seed 52315 -> Monday, 16 August 2021 4:51 PM
+City seed 25759 -> Londus, Eurasia
+
+Dev seed 60397 -> Monday, 16 August 2021 4:59 PM
+City seed 19199 -> Londus, Eurasia
+
+Dev seed 1682 -> Monday, 16 August 2021 5:02 PM
+City seed 53124 -> Londus, Eurasia

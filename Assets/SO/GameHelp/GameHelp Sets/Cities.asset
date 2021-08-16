@@ -14,6 +14,7 @@ MonoBehaviour:
   descriptor: Cities
   listOfGameHelp:
   - {fileID: 11400000, guid: 695b16a6bbe55124680ffaddad0a0b60, type: 2}
+  - {fileID: 11400000, guid: 564543bbaaeeb7541b861970caea63e7, type: 2}
   - {fileID: 11400000, guid: 532a755c66254a049a5ddb3c85afdbe1, type: 2}
   - {fileID: 11400000, guid: 7ae51771a2d97054cbffb8896156f03d, type: 2}
-  - {fileID: 11400000, guid: 564543bbaaeeb7541b861970caea63e7, type: 2}
+  - {fileID: 11400000, guid: 780974b82202fc84f9ce844208c03194, type: 2}

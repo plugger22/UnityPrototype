@@ -1981,6 +1981,7 @@ public class TargetManager : MonoBehaviour
     private void ProcessTargetInfo(GenericReturnData detailsGeneric)
     {
         bool isPlayer = false;
+        bool isProceed;
         Target target = GameManager.i.dataScript.GetTarget(detailsGeneric.optionName);
         if (target != null)
         {
@@ -2023,17 +2024,24 @@ public class TargetManager : MonoBehaviour
                         {
                             if (effect.ignoreEffect == false)
                             {
-                                //process effect normally
-                                EffectDataReturn effectReturn = GameManager.i.effectScript.ProcessEffect(effect, node, dataInput, actor);
-                                if (effectReturn != null)
+                                isProceed = true;
+                                //mood effects only for player
+                                if (effect.isMoodEffect == true && isPlayer == false)
+                                { isProceed = false; }
+                                if (isProceed == true)
                                 {
-                                    builderTop.AppendLine();
-                                    builderTop.Append(effectReturn.topText);
-                                    if (builderBottom.Length > 0)
-                                    { builderBottom.AppendLine(); builderBottom.AppendLine(); }
-                                    builderBottom.Append(effectReturn.bottomText);
+                                    //process effect normally
+                                    EffectDataReturn effectReturn = GameManager.i.effectScript.ProcessEffect(effect, node, dataInput, actor);
+                                    if (effectReturn != null)
+                                    {
+                                        builderTop.AppendLine();
+                                        builderTop.Append(effectReturn.topText);
+                                        if (builderBottom.Length > 0)
+                                        { builderBottom.AppendLine(); builderBottom.AppendLine(); }
+                                        builderBottom.Append(effectReturn.bottomText);
+                                    }
+                                    else { Debug.LogError("Invalid effectReturn (Null)"); }
                                 }
-                                else { Debug.LogError("Invalid effectReturn (Null)"); }
                             }
                         }
                     }

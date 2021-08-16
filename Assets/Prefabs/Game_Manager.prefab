@@ -1644,7 +1644,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cf32935db69b78d42ad55ad5687bc9a4, type: 2}
   - {fileID: 11400000, guid: 2efe0989dd460b742b7d452c327dea9a, type: 2}
   - {fileID: 11400000, guid: 0f8e477a3c9d3654fb785f640318366f, type: 2}
+  - {fileID: 11400000, guid: 1aba6206e432dc945ab19706b2b68129, type: 2}
   - {fileID: 11400000, guid: d365554101ad1d545b7c6b630db5542b, type: 2}
+  - {fileID: 11400000, guid: bf6577cc16cf0de45a007d63dd6f807a, type: 2}
+  - {fileID: 11400000, guid: 780974b82202fc84f9ce844208c03194, type: 2}
+  - {fileID: 11400000, guid: cb00fcf336eb27946a2eac883fdd6e78, type: 2}
   arrayOfGameHelpSets:
   - {fileID: 11400000, guid: 39c0e7dc2b2c56a4c9f353e781ea9a41, type: 2}
   - {fileID: 11400000, guid: 347b0e256661a6044adc8c5620a2bcae, type: 2}
@@ -6335,8 +6339,8 @@ MonoBehaviour:
   conditionWhoResistance: 999
   conditionResistance: {fileID: 0}
   playerInvisibility: -1
-  actorSlotID: 0
-  actorType: {fileID: 11400000, guid: 33cfb0c161a7cde409d27df1080bd2c8, type: 2}
+  actorSlotID: -1
+  actorType: {fileID: 0}
   actorDatapoint0: -1
   actorDatapoint1: -1
   actorDatapoint2: -1
