@@ -271,6 +271,8 @@ public class TurnManager : MonoBehaviour
             { GameManager.i.validateScript.ExecuteIntegrityCheck(); }
             //start animations
             GameManager.i.animateScript.StartAnimations();
+            //set random opinions
+            DebugRandomOpinions();
         }
         else { Debug.LogWarning("Invalid autoTurns (must be > 0)"); }
     }
@@ -957,9 +959,50 @@ public class TurnManager : MonoBehaviour
     }
 
 
+    #region DebugRandomOpinions
+    /// <summary>
+    /// Debug method to randomise opinions for onMap and HQ at the end of an autoRun
+    /// </summary>
+    private void DebugRandomOpinions()
+    {
+        //On map
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(GameManager.i.globalScript.sideResistance);
+        if (arrayOfActors != null)
+        {
+            for (int i = 0; i < arrayOfActors.Length; i++)
+            {
+                //check actor is present in slot (not vacant)
+                if (GameManager.i.dataScript.CheckActorSlotStatus(i, GameManager.i.globalScript.sideResistance) == true)
+                {
+                    Actor actor = arrayOfActors[i];
+                    if (actor != null)
+                    {
+                        //randomise opinion
+                        actor.SetDatapoint(ActorDatapoint.Opinion1, Random.Range(0, 4));
+                    }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfActors (Null)"); }
+        //HQ
+        Actor[] arrayOfHqActors = GameManager.i.dataScript.GetArrayOfActorsHQ();
+        if (arrayOfHqActors != null)
+        {
+            for (int i = 1; i < arrayOfHqActors.Length; i++)
+            {
+                Actor actor = arrayOfHqActors[i];
+                if (actor != null)
+                {
+                    //randomise opinion
+                    actor.SetDatapoint(ActorDatapoint.Opinion1, Random.Range(0, 4));
+                }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfHqActors (Null)"); }
+    }
+    #endregion
 
-
-
+    #region DebugSetState
     /// <summary>
     /// debug method to change game states
     /// category is 'a' -> AuthorityState, 'r' -> ResistanceState EDIT: ResistanceState redundant, 20May19
@@ -1026,6 +1069,7 @@ public class TurnManager : MonoBehaviour
         }
         return string.Format("{0}{1}Press ESC to exit", text, "\n");
     }
+    #endregion
 
 
     /// <summary>

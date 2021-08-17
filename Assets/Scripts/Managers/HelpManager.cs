@@ -584,14 +584,14 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "review_1";
         data.header = "Votes";
-        data.text = string.Format("Your Subordinates each gets a {0}single vote{1} as does all members of HQ with the exception of the {2}Head of HQ{3} who gets {4}two{5}. ",
+        data.text = string.Format("Your Subordinates each gets a {0}single vote{1} as does all members of HQ with the exception of the {2}HQ Director{3} who gets {4}two{5}. ",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Director
         data = new HelpData();
         data.tag = "review_2";
-        data.header = "Head of HQ";
-        data.text = string.Format("Your Head of HQ votes once for his {0}Opinion{1} of you and once for his judgment of the {2}decisions you have taken{3}",
+        data.header = "HQ Director";
+        data.text = string.Format("Your HQ Director votes once for his {0}Opinion{1} of you and once for his judgment of the {2}decisions you have taken{3}",
             colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Close

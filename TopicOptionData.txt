@@ -1014,7 +1014,7 @@ PlyGenRes1Opt2
 PlyGenRes1Opt3
 One day I'm going to join the Resistance, says [npc], of [node]. They really look after you
 PlyGenRes2Opt0
-They say that the Resistance is like the Army. I'm glad that I have a [handicap] and can't join, says [npc], [handicap] of [node]
+They say that the Resistance is like the Army. I'm glad that I have a [handicap] and can't join, says [npc], [job] of [node]
 PlyGenRes2Opt1
 I hear that they treat you really badly in the Resistance, like robots, says [npc], [job] of [node]
 PlyGenRes2Opt2
@@ -3037,4 +3037,14 @@ storyPig3Opt1
 storyPig3Opt2
 
 storyPig3Opt3
+
+TutRESoptT0
+
+TutRESoptT1
+
+TutRESoptT2
+
+TutRESoptT3
+
+TutRESIgnore
 

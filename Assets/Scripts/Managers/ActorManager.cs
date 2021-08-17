@@ -5163,7 +5163,8 @@ public class ActorManager : MonoBehaviour
                             {
                                 case 3: actor.numOfVotesFor++; break;
                                 case 2: actor.numOfVotesAbstained++; break;
-                                case 1: actor.numOfVotesAgainst++; break;
+                                case 1:
+                                case 0: actor.numOfVotesAgainst++; break;
                                 default: Debug.LogWarningFormat("Unrecognised opinion \"{0}\" for actor {1}, ID {2}", actor.GetDatapoint(ActorDatapoint.Opinion1), actor.actorName, actor.actorID); break;
                             }
                         }

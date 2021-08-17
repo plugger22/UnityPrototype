@@ -439,9 +439,13 @@ public class InputManager : MonoBehaviour
                     }
                     else if (Input.GetButtonDown("ShowAutoRun") == true)
                     {
-                        //only do so if new turn processing hasn't commenced
-                        if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
-                        { GameManager.i.sideScript.ShowAutoRunMessage(); }
+                        //not during debug mode
+                        if (GameManager.i.debugScript.showGUI == false)
+                        {
+                            //only do so if new turn processing hasn't commenced
+                            if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
+                            { GameManager.i.sideScript.ShowAutoRunMessage(); }
+                        }
                     }
                     //Generic NodeArc's 0 to 9 correspond to function keys F1 -> F10 and map directly to ArcTypeID's 0 to 9
                     else if (Input.GetButtonDown("NodeArc0") == true)
