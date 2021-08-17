@@ -52,7 +52,7 @@ public class ModalHelpUI : MonoBehaviour
     public Button quickButton13;
     public Button quickButton14;
 
-    //UI button Interactoins
+    //UI button Interactions
     private ButtonInteraction closeInteraction;
     private ButtonInteraction forwardInteraction;
     private ButtonInteraction homeInteraction;
@@ -551,8 +551,13 @@ public class ModalHelpUI : MonoBehaviour
         if (highlightIndex > 0)
         {
             highlightIndex--;
+            //move viewport
+            scrollRect.verticalNormalizedPosition = 1.0f - (float)highlightIndex / numOfItemsTotal;
+            //display
             ShowHelpItem();
+            //recent
             recentIndex = highlightIndex;
+            //history
             AddHistory();
         }
     }
@@ -566,9 +571,15 @@ public class ModalHelpUI : MonoBehaviour
     {
         if (highlightIndex < (numOfItemsTotal - 1))
         {
+            //index
             highlightIndex++;
+            //move viewport
+            scrollRect.verticalNormalizedPosition = 1.0f - (float)highlightIndex / numOfItemsTotal;
+            //display
             ShowHelpItem();
+            //recent
             recentIndex = highlightIndex;
+            //history
             AddHistory();
         }
     }

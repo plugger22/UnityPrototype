@@ -809,6 +809,7 @@ public class InputManager : MonoBehaviour
                                                 //close on F1 (toggles open/shut)
                                                 EventManager.i.PostNotification(EventType.MasterHelpClose, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
                                             }
+                                            
                                             else if (Input.GetButtonDown("Vertical"))
                                             {
                                                 y_axis = Input.GetAxisRaw("Vertical");
