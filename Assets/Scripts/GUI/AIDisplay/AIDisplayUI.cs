@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class AIDisplayUI : MonoBehaviour
 {
     //structural elements
+    public Canvas aiCanvas;
     public GameObject aiDisplayObject;
     public Image mainPanel;
     public Image backgroundImage;
@@ -65,10 +66,9 @@ public class AIDisplayUI : MonoBehaviour
     private ButtonInteraction cancelInteraction;
     private ButtonInteraction proceedInteraction;
 
+    #region Static instance...
     private static AIDisplayUI aiDisplayUI;
     
-
-
     /// <summary>
     /// provide a static reference to AIDisplayUI that can be accessed from any script
     /// </summary>
@@ -83,7 +83,9 @@ public class AIDisplayUI : MonoBehaviour
         }
         return aiDisplayUI;
     }
+    #endregion
 
+    #region Initialise
     /// <summary>
     /// Conditional activation based on player side for GameState.LoadGame
     /// </summary>
@@ -97,12 +99,14 @@ public class AIDisplayUI : MonoBehaviour
             {
                 case GameState.TutorialOptions:
                 case GameState.NewInitialisation:
+                    SubInitialiseAsserts();
                     SubInitialiseSessionStart();
                     SubInitialiseFastAccess();
                     SubInitialiseEvents();
                     SubInitialiseResistance();
                     break;
                 case GameState.LoadAtStart:
+                    SubInitialiseAsserts();
                     SubInitialiseSessionStart();
                     SubInitialiseFastAccess();
                     SubInitialiseEvents();
@@ -122,9 +126,46 @@ public class AIDisplayUI : MonoBehaviour
             }
         }
     }
+    #endregion
 
+    #region Initialise SubMethods...
 
-    #region Initialise SubMethods
+    #region SubInitialiseAsserts
+    private void SubInitialiseAsserts()
+    {
+        Debug.Assert(aiCanvas != null, "Invalid aiCanvas (Null)");
+        Debug.Assert(aiDisplayObject != null, "Invalid aiDisplayObject (Null)");
+        Debug.Assert(mainPanel != null, "Invalid mainPanel (Null)");
+        Debug.Assert(backgroundImage != null, "Invalid backgroundImage (Null)");
+        Debug.Assert(innerPanel != null, "Invalid innerPanel (Null)");
+        Debug.Assert(subTopPanel != null, "Invalid subTopPanel (Null)");
+        Debug.Assert(subMiddlePanel != null, "Invalid subMiddlePanel (Null)");
+        Debug.Assert(subBottomPanel != null, "Invalid subBottomPanel (Null)");
+        Debug.Assert(powerPanel != null, "Invalid powerPanel (Null)");
+        Debug.Assert(textPanel != null, "Invalid textPanel (Null)");
+        Debug.Assert(buttonPanel != null, "Invalid buttonPanel (Null)");
+        Debug.Assert(cancelButton != null, "Invalid cancelButton (Null)");
+        Debug.Assert(proceedButton != null, "Invalid proceedButton (Null)");
+        Debug.Assert(tabSideMouse != null, "Invalid tabSideMouse (Null)");
+        Debug.Assert(tabTopMouse != null, "Invalid tabTopMouse (Null)");
+        Debug.Assert(tabBottomMouse != null, "Invalid tabBottomMouse (Null)");
+        Debug.Assert(detectedFlasher != null, "Invalid detectedFlasher (Null)");
+        Debug.Assert(tabTopText != null, "Invalid tabTopText (Null)");
+        Debug.Assert(tabBottomText != null, "Invalid tabBottomText (Null)");
+        Debug.Assert(tabCloseText != null, "Invalid tabCloseText (Null)");
+        Debug.Assert(subTopUpper != null, "Invalid subTopUpper (Null)");
+        Debug.Assert(subTopLower != null, "Invalid subTopLower (Null)");
+        Debug.Assert(subTopChance != null, "Invalid subTopChance (Null)");
+        Debug.Assert(subMiddleUpper != null, "Invalid subMidleUpper (Null)");
+        Debug.Assert(subMiddleLower != null, "Invalid subMidleLower (Null)");
+        Debug.Assert(subMiddleChance != null, "Invalid subMidleChance (Null)");
+        Debug.Assert(subBottomUpper != null, "Invalid subBottomUpper (Null)");
+        Debug.Assert(subBottomLower != null, "Invalid subBottomLower (Null)");
+        Debug.Assert(subBottomChance != null, "Invalid subBottomChance (Null)");
+        Debug.Assert(decisionText != null, "Invalid decisionText (Null)");
+        Debug.Assert(gearText != null, "Invalid gearText (Null)");
+    }
+    #endregion
 
     #region SubInitialiseFastAccess
     private void SubInitialiseFastAccess()
@@ -154,9 +195,12 @@ public class AIDisplayUI : MonoBehaviour
         //tooltip data
         InitialiseTooltips();
         Debug.Assert(string.IsNullOrEmpty(hackingDetected) == false, "Invalid hackingDetected (Null or Empty)");
-        //set button sprites
+
+        /*
+        //set button sprites -> Not needed -> Aug '21
         cancelButton.GetComponent<Image>().sprite = GameManager.i.sideScript.button_Resistance;
         proceedButton.GetComponent<Image>().sprite = GameManager.i.sideScript.button_Resistance;
+        */
         //top text
         tabTopText.text = string.Format("{0}{1}Authority AI", GameManager.i.globalScript.tagGlobalAIName, "\n");
         //active
@@ -200,7 +244,7 @@ public class AIDisplayUI : MonoBehaviour
 
     #endregion
 
-
+    #region OnEvent
     /// <summary>
     /// Event handler
     /// </summary>
@@ -235,14 +279,16 @@ public class AIDisplayUI : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
-
+    #region SetAllStatus
     /// <summary>
     /// set all UI components (apart from main) to active. Run at level start to ensure no problems (something hasn't been switched off in the editor)
     /// </summary>
     public void SetAllStatus(bool status)
     {
         //switch gui elements on/off
+        aiCanvas.gameObject.SetActive(false);
         aiDisplayObject.SetActive(false);
         mainPanel.gameObject.SetActive(status);
         backgroundImage.gameObject.SetActive(status);
@@ -263,7 +309,9 @@ public class AIDisplayUI : MonoBehaviour
         //switch off flashers
         detectedFlasher.gameObject.SetActive(false);
     }
+    #endregion
 
+    #region InitialiseTooltips
     /// <summary>
     /// initialise data for fixed generic tooltips
     /// </summary>
@@ -296,7 +344,9 @@ public class AIDisplayUI : MonoBehaviour
         bottomTaskTooltip.x_offset = 330;
         bottomTaskTooltip.y_offset = 310;
     }
+    #endregion
 
+    #region ProcessDisplayData
     /// <summary>
     /// populates all text fields with data package sent from AIManager.cs -> ProcessTasksDataPackage
     /// </summary>
@@ -386,7 +436,9 @@ public class AIDisplayUI : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid AIDisplayData package (Null)"); }
     }
+    #endregion
 
+    #region ProcessHackingData
     /// <summary>
     /// populates Hacking data (bottom tab in display) with data from AIManager.cs -> UpdateHackingStatus
     /// </summary>
@@ -415,7 +467,9 @@ public class AIDisplayUI : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid AIHackingData package (Null)"); }
     }
+    #endregion
 
+    #region SetAIDisplay
     /// <summary>
     /// show AI display
     /// </summary>
@@ -440,6 +494,7 @@ public class AIDisplayUI : MonoBehaviour
             powerPanel.gameObject.SetActive(true);
         }
         //switch on display
+        aiCanvas.gameObject.SetActive(true);
         aiDisplayObject.SetActive(true);
         //set modal status
         GameManager.i.guiScript.SetIsBlocked(true);
@@ -451,7 +506,9 @@ public class AIDisplayUI : MonoBehaviour
         package.infoState = ModalInfoSubState.AIInfo;
         GameManager.i.inputScript.SetModalState(package);
     }
+    #endregion
 
+    #region OpenAIDisplayPanel
     /// <summary>
     /// 'Proceed' clicked on Power panel. Panel 'opened' to reveal AI data underneath
     /// </summary>
@@ -478,13 +535,16 @@ public class AIDisplayUI : MonoBehaviour
             detectedFlasher.gameObject.SetActive(false);
         }
     }
+    #endregion
 
+    #region CloseAIDisplay
     /// <summary>
     /// close AIDisplayUI
     /// </summary>
     private void CloseAIDisplay()
     {
         GameManager.i.tooltipGenericScript.CloseTooltip("AIDisplayUI.cs -> CloseAIDisplay");
+        aiCanvas.gameObject.SetActive(false);
         aiDisplayObject.SetActive(false);
         GameManager.i.guiScript.SetIsBlocked(false);
         //switch off flashers
@@ -496,7 +556,9 @@ public class AIDisplayUI : MonoBehaviour
         //open side tab
         EventManager.i.PostNotification(EventType.AISideTabOpen, this, null, "AIDisplayUI.cs -> CloseAIDisplay");
     }
+    #endregion
 
+    #region SetDetectedFlasher
     /// <summary>
     /// Start (true) or Stop  (false) the flashing red indicator for a detected hacking attempt
     /// </summary>
@@ -523,8 +585,13 @@ public class AIDisplayUI : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
-    
+    #region ShowDetected
+    /// <summary>
+    /// Coroutine for flasher
+    /// </summary>
+    /// <returns></returns>
     IEnumerator ShowDetected()
     {
         //infinite loop
@@ -547,6 +614,7 @@ public class AIDisplayUI : MonoBehaviour
             yield return null;
         }
     }
+    #endregion
 
     //new methods above here
 }
