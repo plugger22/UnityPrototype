@@ -159,7 +159,7 @@ MonoBehaviour:
   handoutCityLoyaltyLow: 1
   handoutCityLoyaltyMed: 2
   handoutCityLoyaltyHigh: 3
-  hackingBaseCost: 1
+  hackingBaseCost: 2
   hackingIncrement: 1
   hackingDetectBaseChance: 50
   hackingRebootTimer: 3

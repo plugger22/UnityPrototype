@@ -480,7 +480,7 @@ public class GameManager : MonoBehaviour
     #endregion
 
 
-    #region StartUp Sequence
+    #region StartUp Sequence...
     /// <summary>
     /// set up list of delegates ready for initialisation (do this because there are two version of initialisation, performance monitoring ON or OFF)
     /// </summary>

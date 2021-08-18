@@ -1,11 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using gameAPI;
+﻿using gameAPI;
 using packageAPI;
-using System.Text;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 // NOTE: Subclasses are in PackageManager.cs
@@ -157,7 +156,7 @@ public class AIManager : MonoBehaviour
     [Range(0, 10)] public int thresholdLowHQApproval = 2;
     [Tooltip("Amount that HQ Approval increases by as a result of a successful lobbying attempt")]
     [Range(1, 5)] public int increaseHQApproval = 2;
-    
+
 
     [Header("AI Countermeasures")]
     [Tooltip("The highest level that the AI can raise it's Security Protocols to in order to increase the chances of detecting Hacking")]
@@ -167,7 +166,7 @@ public class AIManager : MonoBehaviour
     [Tooltip("When the AI instigates any Network counter measures they will stay in place for this number of turns")]
     [Range(1, 10)] public int aiCounterMeasureTimer = 5;
     [Tooltip("When the AI instigates any Policies they will stay in place for this number of turns")]
-    [Range(1, 10)] public int aiPolicyTimer= 5;
+    [Range(1, 10)] public int aiPolicyTimer = 5;
 
     [Header("Power/Resources")]
     [Tooltip("At the end of an AutoRun the amount of resources is divided by this in order to give the amount of Power to the Authority player")]
@@ -222,7 +221,7 @@ public class AIManager : MonoBehaviour
     private int detectModifierGear;
     //factions
     private string authorityPreferredArc;                               //string name of preferred node Arc for faction (if none then null)
-   /* private string resistancePreferredArc;*/
+                                                                        /* private string resistancePreferredArc;*/
     private int actionsPerTurn;                               //how many tasks the AI can undertake in a turns
     //player target (Nemesis / Erasure teams)
     private int playerTargetNodeID;                                     //most likely node where player is, -1 if no viable recent information available
@@ -744,7 +743,7 @@ public class AIManager : MonoBehaviour
             }
         }
     }
-    
+
     //
     // - - - Global Flags - - -
     //
@@ -795,7 +794,7 @@ public class AIManager : MonoBehaviour
         {
             numNodesHalf = listOfNodes.Count / 2;
             //loop nodes and set up dictionary of nodes and their # of connections (Neighbours are used but same thing)
-            foreach(Node node in listOfNodes)
+            foreach (Node node in listOfNodes)
             {
                 if (node != null)
                 {
@@ -812,7 +811,7 @@ public class AIManager : MonoBehaviour
                 }
                 else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", node.nodeID); }
             }
-         
+
             //check that there are at least 3 nodes in dict
             if (dictOfConnected.Count < 3)
             {
@@ -820,7 +819,7 @@ public class AIManager : MonoBehaviour
                 int numSpecific = nodeConnectionThreshold - 1;
                 if (numSpecific > 0)
                 {
-                    foreach(Node node in listOfNodes)
+                    foreach (Node node in listOfNodes)
                     {
                         if (node != null)
                         {
@@ -837,7 +836,7 @@ public class AIManager : MonoBehaviour
                         }
                         else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", node.nodeID); }
                     }
-                    Debug.Log(string.Format("[Aim] -> SetConnectedNodes: Extra nodes ({0} connections) have been added to the listOfMostConnectedNodes{1}", 
+                    Debug.Log(string.Format("[Aim] -> SetConnectedNodes: Extra nodes ({0} connections) have been added to the listOfMostConnectedNodes{1}",
                         numSpecific, "\n"));
                 }
                 else { Debug.LogWarning("Insufficient records for SetConnectedNodes"); }
@@ -956,7 +955,7 @@ public class AIManager : MonoBehaviour
         bool isSuccessful;
         if (listOfNodes != null)
         {
-            foreach(Node node in listOfNodes)
+            foreach (Node node in listOfNodes)
             {
                 isSuccessful = false;
                 if (node != null)
@@ -1015,13 +1014,13 @@ public class AIManager : MonoBehaviour
         List<Node> listOfNodes = GameManager.i.dataScript.GetListOfAllNodes();
         if (listOfNodes != null)
         {
-            foreach(Node node in listOfNodes)
+            foreach (Node node in listOfNodes)
             {
                 List<Node> listOfImmediateNeighbours = node.GetNeighbouringNodes();
                 if (listOfImmediateNeighbours != null)
                 {
                     //immediate neighbours
-                    foreach(Node nodeimmediate in listOfImmediateNeighbours)
+                    foreach (Node nodeimmediate in listOfImmediateNeighbours)
                     {
                         //use lookup list to check that node isn't already in system
                         if (listLookup.Exists(id => id == nodeimmediate.nodeID) == false)
@@ -1036,7 +1035,7 @@ public class AIManager : MonoBehaviour
                         {
                             if (listOfNeighbours.Count > 0)
                             {
-                                foreach(Node nodeNear in listOfNeighbours)
+                                foreach (Node nodeNear in listOfNeighbours)
                                 {
                                     //use lookup list to check that node isn't already in system
                                     if (listLookup.Exists(id => id == nodeNear.nodeID) == false)
@@ -1303,7 +1302,7 @@ public class AIManager : MonoBehaviour
             foreach (AINodeData data in listNodeMaster)
             {
                 //critical is when datapoint has reached max bad condition
-                switch(data.type)
+                switch (data.type)
                 {
                     case NodeData.Stability:
                         if (data.current == 0)
@@ -1476,7 +1475,7 @@ public class AIManager : MonoBehaviour
             if (nodeReturnID > 0)
             { listOfErasureAILog.Add(string.Format("Target: nodeReturnID {0}", nodeReturnID)); }
             else { listOfErasureAILog.Add("No viable target node found"); }
-            Debug.LogFormat("[Aim]  -> ProcessErasureTarget: queueRecentConnected {0} records, queueRecentNodes {1} records, target nodeID {2}{3}", queueRecentConnections.Count,  
+            Debug.LogFormat("[Aim]  -> ProcessErasureTarget: queueRecentConnected {0} records, queueRecentNodes {1} records, target nodeID {2}{3}", queueRecentConnections.Count,
                 queueRecentNodes.Count, nodeReturnID, "\n");
         }
         else { Debug.LogWarning("Invalid queue (Null)"); }
@@ -1706,9 +1705,9 @@ public class AIManager : MonoBehaviour
         if (listOfConnections != null)
         {
             tally = 0;
-            foreach(Connection conn in listOfConnections)
+            foreach (Connection conn in listOfConnections)
             {
-                switch(conn.SecurityLevel)
+                switch (conn.SecurityLevel)
                 {
                     case ConnectionType.HIGH:
                         tally += 3f;
@@ -1721,7 +1720,7 @@ public class AIManager : MonoBehaviour
                         break;
                 }
             }
-            connSecRatio = tally / (float)totalConnections;
+            connSecRatio = tally / totalConnections;
         }
         else { Debug.LogWarning("Invalid listOfConnections (Null)"); }
         //work out team ratio (total teams / total nodes)
@@ -1729,7 +1728,7 @@ public class AIManager : MonoBehaviour
         //number of erasure teams onMap
         erasureTeamsOnMap = GameManager.i.dataScript.CheckTeamInfo(teamArcErasure, TeamInfo.OnMap);
         //log output
-        Debug.LogFormat("[Aim] -> ProcessDecisionData: connection Security Ratio {0:f1} {1}{2}", connSecRatio, 
+        Debug.LogFormat("[Aim] -> ProcessDecisionData: connection Security Ratio {0:f1} {1}{2}", connSecRatio,
             connSecRatio >= connectionRatioThreshold ? "THRESHOLD EXCEEDED" : "", "\n");
         Debug.LogFormat("[Aim] -> ProcessDecisionData: teamRatio {0:f1} {1}{2}", teamRatio, teamRatio >= teamRatioThreshold ? "THRESHOLD EXCEEDED" : "", "\n");
         Debug.LogFormat("[Aim] -> ProcessDecisionData: number of Erasure teams onMap {0}", erasureTeamsOnMap);
@@ -1982,7 +1981,7 @@ public class AIManager : MonoBehaviour
         {
             if (listOfTargetsDamaged.Count > 0)
             {
-                foreach(AINodeData data in listOfTargetsDamaged)
+                foreach (AINodeData data in listOfTargetsDamaged)
                 {
                     if (data != null)
                     {
@@ -2079,7 +2078,7 @@ public class AIManager : MonoBehaviour
             }
         }
         //Connections -> Medium priority
-        if (connSecRatio < connectionRatioThreshold )
+        if (connSecRatio < connectionRatioThreshold)
         {
             int connID = ProcessConnectionSelection();
             if (connID > -1)
@@ -2177,7 +2176,7 @@ public class AIManager : MonoBehaviour
         if (isPolicy == false)
         {
             //there is no policy currently in play (one at a time allowed) -> Check City Loyalty
-            
+
             if (cityLoyalty >= policyCrisisLoyaltyCriteria)
             {
                 //LOW IMPACT
@@ -2238,7 +2237,7 @@ public class AIManager : MonoBehaviour
                         }
                     }
                     else
-                    { 
+                    {
                         //Robo Cops
                         if (resources >= decisionRoboCop.cost)
                         {
@@ -2598,7 +2597,7 @@ public class AIManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid listOfMostConnectedNodes (Null)"); }
         if (isDone == true)
-        { 
+        {
             //update listOfDecisionNodes
             GameManager.i.aiScript.SetDecisionNodes();
         }
@@ -2812,12 +2811,12 @@ public class AIManager : MonoBehaviour
                 { tempList.Add(task); }
                 else { numTasksAlreadyChosen++; }
             }
-            
+
             //work out and assign odds
             int numOfRemainingTasks = tempList.Count;
             int numOfOutstandingChoices = numOfFactionTasks - numTasksAlreadyChosen;
             numOfOutstandingChoices = Mathf.Max(0, numOfOutstandingChoices);
-            if (numOfRemainingTasks > 0 )
+            if (numOfRemainingTasks > 0)
             {
                 //otherwise keep chance at 0 as no more choices required
                 if (numOfOutstandingChoices > 0)
@@ -2825,7 +2824,7 @@ public class AIManager : MonoBehaviour
                     if (numOfOutstandingChoices < numOfRemainingTasks)
                     {
                         foreach (AITask task in tempList)
-                        { task.chance = (int)(baseOdds * (float)numOfOutstandingChoices / (float)numOfRemainingTasks); }
+                        { task.chance = (int)(baseOdds * numOfOutstandingChoices / numOfRemainingTasks); }
                     }
                     else
                     {
@@ -2929,7 +2928,7 @@ public class AIManager : MonoBehaviour
         if (task != null)
         {
             //tooltip Details (chance)
-            switch(task.chance)
+            switch (task.chance)
             {
                 case 100:
                     tooltipDetails = string.Format("{0}Automatically{1} implemented at the {2}end of your turn{3}", colourNeutral, colourEnd, colourAlert, colourEnd);
@@ -2942,7 +2941,7 @@ public class AIManager : MonoBehaviour
                     break;
             }
             //tooltip Main
-            switch(task.type)
+            switch (task.type)
             {
                 case AITaskType.Team:
                     textUpper = string.Format("Deploy {0} Team", task.name1);
@@ -3126,7 +3125,7 @@ public class AIManager : MonoBehaviour
         //
         // - - - Execute all 100% tasks first & remove any 0 % tasks -> delete tasks as you go
         //
-        for (int i = listOfTasksFinal.Count -1; i >= 0; i--)
+        for (int i = listOfTasksFinal.Count - 1; i >= 0; i--)
         {
             AITask task = listOfTasksFinal[i];
             if (task != null)
@@ -3790,7 +3789,8 @@ public class AIManager : MonoBehaviour
     /// </summary>
     public void UpdateSideTabData(int power = 0)
     {
-        if (GameManager.i.sideScript.resistanceOverall == SideState.Human)
+        /*if (GameManager.i.sideScript.resistanceOverall == SideState.Human)*/   //NOTE: changed to allow AI side tab to Update 'cause sideState is AI during autoruns
+        if (GameManager.i.sideScript.PlayerSide == globalResistance)
         {
             AISideTabData data = new AISideTabData();
             //ai gear effects?
@@ -4061,7 +4061,7 @@ public class AIManager : MonoBehaviour
                     Debug.LogFormat("[Rnd] AIManager.cs -> UpdateHackingStatus: Hacking attempt DETECTED, need < {0}, rolled {1}{2}", chance, rnd, "\n");
                     Debug.LogFormat("[Ply] AIManager.cs -> UpdateHackingStatus: Player HACKS AI and is DETECTED{0}", "\n");
                     //History
-                    GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = "DETECTED hacking the AI"});
+                    GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = "DETECTED hacking the AI" });
                     GameManager.i.messageScript.GeneralRandom("Hacking attempt DETECTED", "Detection", chance, rnd, true);
                     isDetected = true;
                     hackingAttemptsDetected++;
@@ -4149,7 +4149,7 @@ public class AIManager : MonoBehaviour
                                 Debug.Log("[Aim] -> UpdateHackingStatus: AI Screamer defeated by Hacking Gear (Screamer Mask)");
                                 GameManager.i.gearScript.SetGearUsed(gear, "defeat AI Screamer hacking countermeasure");
                             }
-                            
+
                         }
                     }
                 }
@@ -4218,8 +4218,10 @@ public class AIManager : MonoBehaviour
                             {
                                 builder.AppendFormat("{0}{1}{2}{3}", colourBad, screamerFormattedText, colourEnd, "\n");
                                 if (isScreamerMasker == false)
-                                { builder.AppendFormat("{0}Player gains{1}{2}{3}STRESSED{4}{5} Condition{6}{7}", colourBad, colourEnd, "\n", 
-                                    colourNeutral, colourEnd, colourBad, colourEnd, "\n"); }
+                                {
+                                    builder.AppendFormat("{0}Player gains{1}{2}{3}STRESSED{4}{5} Condition{6}{7}", colourBad, colourEnd, "\n",
+                                      colourNeutral, colourEnd, colourBad, colourEnd, "\n");
+                                }
                                 else
                                 { builder.AppendFormat("{0}{1}{2}{3} defeats Screamer{4}{5}", colourNeutral, screamerGearName, colourEnd, colourGood, colourEnd, "\n"); }
                             }
@@ -4236,8 +4238,10 @@ public class AIManager : MonoBehaviour
                             {
                                 builder.AppendFormat("{0}{1}{2}{3}", colourBad, screamerFormattedText, colourEnd, "\n");
                                 if (isScreamerMasker == false)
-                                { builder.AppendFormat("{0}Player gains{1}{2}{3}STRESSED{4}{5} Condition{6}{7}", colourBad, colourEnd, "\n",
-                                      colourNeutral, colourEnd, colourBad, colourEnd, "\n"); }
+                                {
+                                    builder.AppendFormat("{0}Player gains{1}{2}{3}STRESSED{4}{5} Condition{6}{7}", colourBad, colourEnd, "\n",
+                                        colourNeutral, colourEnd, colourBad, colourEnd, "\n");
+                                }
                                 else
                                 { builder.AppendFormat("{0}{1}{2}{3} defeats Screamer{4}{5}", colourNeutral, screamerGearName, colourEnd, colourGood, colourEnd, "\n"); }
                             }
@@ -4267,8 +4271,10 @@ public class AIManager : MonoBehaviour
                         {
                             builder.AppendFormat("{0}{1}{2}{3}", colourBad, screamerFormattedText, colourEnd, "\n");
                             if (isScreamerMasker == false)
-                            { builder.AppendFormat("{0}Player gains{1}{2}{3}STRESSED{4}{5} Condition{6}{7}", colourBad, colourEnd, "\n",
-                                colourNeutral, colourEnd, colourBad, colourEnd, "\n"); }
+                            {
+                                builder.AppendFormat("{0}Player gains{1}{2}{3}STRESSED{4}{5} Condition{6}{7}", colourBad, colourEnd, "\n",
+                                  colourNeutral, colourEnd, colourBad, colourEnd, "\n");
+                            }
                             else
                             { builder.AppendFormat("{0}{1}{2}{3} defeats Screamer{4}{5}", colourNeutral, screamerGearName, colourEnd, colourGood, colourEnd, "\n"); }
                         }
@@ -4286,8 +4292,10 @@ public class AIManager : MonoBehaviour
                     {
                         builder.AppendFormat("{0}{1}{2}{3}", colourBad, screamerFormattedText, colourEnd, "\n");
                         if (isScreamerMasker == false)
-                        { builder.AppendFormat("{0}Player gains{1}{2}{3}STRESSED{4}{5} Condition{6}{7}", colourBad, colourEnd, "\n",
-                            colourNeutral, colourEnd, colourBad, colourEnd, "\n"); }
+                        {
+                            builder.AppendFormat("{0}Player gains{1}{2}{3}STRESSED{4}{5} Condition{6}{7}", colourBad, colourEnd, "\n",
+                              colourNeutral, colourEnd, colourBad, colourEnd, "\n");
+                        }
                         else
                         { builder.AppendFormat("{0}{1}{2}{3} defeats Screamer{4}{5}", colourNeutral, screamerGearName, colourEnd, colourGood, colourEnd, "\n"); }
                     }
@@ -4310,7 +4318,7 @@ public class AIManager : MonoBehaviour
                 }
             }
             data.tooltipDetails = string.Format("{0}The AI has detected{1}{2}{3}{4} hacking attempt{5}{6}{7}{8}since its last Reboot{9}", colourNormal, colourEnd, "\n",
-                colourNeutral, hackingAttemptsDetected,  hackingAttemptsDetected != 1 ? "s" : "", colourEnd, "\n", colourNormal, colourEnd);
+                colourNeutral, hackingAttemptsDetected, hackingAttemptsDetected != 1 ? "s" : "", colourEnd, "\n", colourNormal, colourEnd);
             //
             // - - -admin - - - 
             //
@@ -4374,7 +4382,7 @@ public class AIManager : MonoBehaviour
         //deduct cost
         int power = GameManager.i.playerScript.Power;
         //ai gear effects?
-        Tuple <int, string> results = GetHackingCost(true);
+        Tuple<int, string> results = GetHackingCost(true);
         hackingModifiedCost = results.Item1;
         string gearEffect = results.Item2;
         //update Player Power
@@ -4457,7 +4465,7 @@ public class AIManager : MonoBehaviour
         else
         {
             builder.AppendFormat("{0}<size=90%>Gear Effects</size>{1}", colourAlert, colourEnd);
-            foreach(string text in listOfPlayerEffectDescriptors)
+            foreach (string text in listOfPlayerEffectDescriptors)
             { builder.AppendFormat("{0}{1}", "\n", text); }
         }
         return builder.ToString();
@@ -4592,7 +4600,7 @@ public class AIManager : MonoBehaviour
             if (logGearUse == true)
             { GameManager.i.gearScript.SetGearUsed(gear, "provide Invisibile AI Hacking"); }
             //Invisible Hacking gear present -> Player can't be detected -> no change to status
-            detectText = string.Format("There is {0}NO{1} chance of being {2}Detected{3} due to {4}{5}{6} gear", colourGood, colourEnd, colourBad, colourEnd, 
+            detectText = string.Format("There is {0}NO{1} chance of being {2}Detected{3} due to {4}{5}{6} gear", colourGood, colourEnd, colourBad, colourEnd,
                 colourNeutral, gearName, colourEnd);
         }
         return new Tuple<int, string>(chance, detectText);
@@ -4976,9 +4984,9 @@ public class AIManager : MonoBehaviour
         builder.AppendFormat("{0}- listOfDecisionTasksNonCritical{1}", "\n", "\n");
         builder.Append(DebugTaskList(listOfDecisionTasksNonCritical));
         builder.AppendFormat("{0}{1}- ProcessDecisionData{2}", "\n", "\n", "\n");
-        builder.AppendFormat(" connectionSecurityRatio -> {0:f2} / {1} {2}{3}", connSecRatio, connectionRatioThreshold, 
+        builder.AppendFormat(" connectionSecurityRatio -> {0:f2} / {1} {2}{3}", connSecRatio, connectionRatioThreshold,
             connSecRatio >= connectionRatioThreshold ? "THRESHOLD EXCEEDED" : "", "\n");
-        builder.AppendFormat(" teamRatio -> {0:f2} / {1} {2}{3}", teamRatio, teamRatioThreshold, 
+        builder.AppendFormat(" teamRatio -> {0:f2} / {1} {2}{3}", teamRatio, teamRatioThreshold,
             teamRatio >= teamRatioThreshold ? "THRESHOLD EXCEEDED" : "", "\n");
         builder.AppendFormat(" erasureTeamsOnMap -> {0}{1}", erasureTeamsOnMap, "\n");
         builder.AppendFormat(" immediateFlagResistance -> {0}{1}", immediateFlagResistance, "\n");
@@ -5030,8 +5038,10 @@ public class AIManager : MonoBehaviour
                     {
                         case AITaskType.Team:
                             if (showChance == true)
-                            { builderList.AppendFormat(" teamID {0} {1}, {2} team, {3} priority, Prob {4} %{5}", task.data0, task.name0, task.name1, task.priority, 
-                                task.chance, "\n"); }
+                            {
+                                builderList.AppendFormat(" teamID {0} {1}, {2} team, {3} priority, Prob {4} %{5}", task.data0, task.name0, task.name1, task.priority,
+                                  task.chance, "\n");
+                            }
                             else
                             { builderList.AppendFormat(" teamID {0} {1}, {2} team, {3} priority{4}", task.data0, task.name0, task.name1, task.priority, "\n"); }
                             break;
@@ -5054,7 +5064,7 @@ public class AIManager : MonoBehaviour
     }
 
 
-   
+
     /// <summary>
     /// Runs specific turn based test conditions for debugging purposes
     /// </summary>
@@ -5106,7 +5116,7 @@ public class AIManager : MonoBehaviour
         {
             if (arrayOfAITaskTypes[i] > 0)
             {
-                typeShare = (float)arrayOfAITaskTypes[i] / (float)total * 100;
+                typeShare = arrayOfAITaskTypes[i] / (float)total * 100;
                 //add to dictionary
                 dictTemp.Add((AITaskType)i, typeShare);
             }
@@ -5199,7 +5209,7 @@ public class AIManager : MonoBehaviour
                 text = "ERASURE team may be present";
                 topText = "Sighting";
                 detailsTop = string.Format("You can be <b>{0}Captured{1}</b> provided", colourNeutral, colourEnd);
-                detailsBottom = string.Format("{0}<b>Your Invisibility is {1}{2}Zero{3}{4}{5}{6}You are in the same District as an {7}{8}Erasure Team</b>{9}", colourAlert, colourEnd, colourBad, colourEnd, 
+                detailsBottom = string.Format("{0}<b>Your Invisibility is {1}{2}Zero{3}{4}{5}{6}You are in the same District as an {7}{8}Erasure Team</b>{9}", colourAlert, colourEnd, colourBad, colourEnd,
                     colourAlert, "\n", "\n", colourEnd, colourBad, colourEnd);
                 Sprite sprite = GameManager.i.spriteScript.capturedSprite;
                 if (GameManager.i.sideScript.PlayerSide.level == globalResistance.level)
@@ -5208,7 +5218,7 @@ public class AIManager : MonoBehaviour
             default:
                 Debug.LogWarningFormat("Invalid AuthoritySecurityState \"{0}\"", GameManager.i.turnScript.authoritySecurityState);
                 break;
-            
+
         }
     }
 

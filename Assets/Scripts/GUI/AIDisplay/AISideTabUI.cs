@@ -198,7 +198,7 @@ public class AISideTabUI : MonoBehaviour
 
 
     /// <summary>
-    /// update data on side tab (sent from AIManager.cs -> UpdateSideTabData) & GenericTooltipUI data
+    /// update data on side tab (sent from AIManager.cs -> UpdateSideTabData) and GenericTooltipUI data
     /// </summary>
     /// <param name="data"></param>
     private void UpdateSideTab(AISideTabData data)

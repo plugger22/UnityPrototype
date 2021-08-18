@@ -15018,3 +15018,97 @@ WARNING New Scene in play mode is not supported. Exit play mode and try again.
 
 Dev seed 5614 -> Tuesday, 17 August 2021 5:09 PM
 City seed 614 -> Londus, Eurasia
+
+Dev seed 33530 -> Wednesday, 18 August 2021 10:25 AM
+City seed 45596 -> Londus, Eurasia
+
+Dev seed 40011 -> Wednesday, 18 August 2021 10:43 AM
+City seed 39781 -> Londus, Eurasia
+WARNING Invalid side (can only be for Resistance Human player)
+UnityEngine.Debug:LogWarning(Object)
+	AIManager:UpdateSideTabData(Int32) (at Assets/Scripts/Managers/AIManager.cs:3908)
+	AIManager:SubInitialiseHackingData() (at Assets/Scripts/Managers/AIManager.cs:550)
+	AIManager:Initialise(GameState) (at Assets/Scripts/Managers/AIManager.cs:359)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:943)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:1002)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:443)
+	
+Dev seed 31685 -> Wednesday, 18 August 2021 10:51 AM
+City seed 11876 -> Londus, Eurasia
+WARNING Invalid side (can only be for Resistance Human player)
+UnityEngine.Debug:LogWarning(Object)
+	AIManager:UpdateSideTabData(Int32) (at Assets/Scripts/Managers/AIManager.cs:3908)
+	AIManager:SubInitialiseHackingData() (at Assets/Scripts/Managers/AIManager.cs:550)
+	AIManager:Initialise(GameState) (at Assets/Scripts/Managers/AIManager.cs:359)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:943)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:1002)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:443)
+	
+Dev seed 22842 -> Wednesday, 18 August 2021 10:55 AM
+City seed 8232 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerManager.get_Power () (at Assets/Scripts/Managers/PlayerManager.cs:147)
+	AIManager.GetHackingCost (System.Boolean logGearUse) (at Assets/Scripts/Managers/AIManager.cs:4483)
+	AIManager.UpdateSideTabData (System.Int32 power) (at Assets/Scripts/Managers/AIManager.cs:3800)
+	AIManager.SubInitialiseHackingData () (at Assets/Scripts/Managers/AIManager.cs:550)
+	AIManager.Initialise (gameAPI.GameState state) (at Assets/Scripts/Managers/AIManager.cs:359)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:943)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:1002)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:443)
+	
+Dev seed 55203 -> Wednesday, 18 August 2021 10:58 AM
+City seed 9018 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerManager.get_Power () (at Assets/Scripts/Managers/PlayerManager.cs:147)
+	AIManager.GetHackingCost (System.Boolean logGearUse) (at Assets/Scripts/Managers/AIManager.cs:4483)
+	AIManager.UpdateSideTabData (System.Int32 power) (at Assets/Scripts/Managers/AIManager.cs:3800)
+	AIManager.SubInitialiseHackingData () (at Assets/Scripts/Managers/AIManager.cs:550)
+	AIManager.Initialise (gameAPI.GameState state) (at Assets/Scripts/Managers/AIManager.cs:359)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:943)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:1002)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:443)
+	
+Dev seed 37459 -> Wednesday, 18 August 2021 11:04 AM
+City seed 21730 -> Londus, Eurasia
+WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "AISendSideData"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:377)
+	AIManager:UpdateSideTabData(Int32) (at Assets/Scripts/Managers/AIManager.cs:3933)
+	AIManager:SubInitialiseLate() (at Assets/Scripts/Managers/AIManager.cs:610)
+	AIManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/AIManager.cs:393)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:948)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:1007)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:443)
+	
+Dev seed 33906 -> Wednesday, 18 August 2021 11:05 AM
+City seed 65509 -> Londus, Eurasia
+WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "AISendSideData"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:377)
+	AIManager:UpdateSideTabData(Int32) (at Assets/Scripts/Managers/AIManager.cs:3933)
+	AIManager:SubInitialiseLate() (at Assets/Scripts/Managers/AIManager.cs:610)
+	AIManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/AIManager.cs:393)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:948)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:1007)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:443)
+	
+Dev seed 25508 -> Wednesday, 18 August 2021 11:07 AM
+City seed 21276 -> Londus, Eurasia
+WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "AISendSideData"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:377)
+	AIManager:UpdateSideTabData(Int32) (at Assets/Scripts/Managers/AIManager.cs:3933)
+	AIManager:SubInitialiseLate() (at Assets/Scripts/Managers/AIManager.cs:610)
+	AIManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/AIManager.cs:393)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:948)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:1007)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:443)
+	
+Dev seed 64476 -> Wednesday, 18 August 2021 11:11 AM
+City seed 49179 -> Londus, Eurasia
+
+Dev seed 2606 -> Wednesday, 18 August 2021 11:14 AM
+City seed 3878 -> Londus, Eurasia
+
+Dev seed 24893 -> Wednesday, 18 August 2021 11:15 AM
+City seed 42319 -> Londus, Eurasia
