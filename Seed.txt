@@ -15213,3 +15213,95 @@ City seed 31363 -> Londus, Eurasia
 
 Dev seed 63751 -> Thursday, 19 August 2021 11:01 AM
 City seed 33958 -> Londus, Eurasia
+
+Dev seed 3309 -> Thursday, 19 August 2021 12:06 PM
+City seed 65305 -> Londus, Eurasia
+WARNING Unrecognised opinion "0" for actor Aurelio Derrick, ID 13
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ActorManager:InitialiseReview() (at Assets/Scripts/Managers/ActorManager.cs:5245)
+	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:890)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:821)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Unrecognised opinion "0" for actor Derrik Brice, ID 15
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ActorManager:InitialiseReview() (at Assets/Scripts/Managers/ActorManager.cs:5245)
+	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:890)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:821)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 39556 -> Thursday, 19 August 2021 2:47 PM
+City seed 19823 -> Londus, Eurasia
+
+Dev seed 3369 -> Thursday, 19 August 2021 3:24 PM
+City seed 28668 -> Londus, Eurasia
+
+Dev seed 25814 -> Thursday, 19 August 2021 3:41 PM
+City seed 53763 -> Londus, Eurasia
+
+Dev seed 27839 -> Thursday, 19 August 2021 3:55 PM
+City seed 39534 -> Londus, Eurasia
+WARNING Unrecognised opinion "0" for actor Scrumpy Smith, ID 3
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ActorManager:InitialiseReview() (at Assets/Scripts/Managers/ActorManager.cs:5198)
+	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:890)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:821)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Unrecognised opinion "0" for actor Princeton Morris, ID 13
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ActorManager:InitialiseReview() (at Assets/Scripts/Managers/ActorManager.cs:5245)
+	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:890)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:821)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 36469 -> Thursday, 19 August 2021 4:16 PM
+City seed 29830 -> Londus, Eurasia
+WARNING Duplicate secret already in list, secret Beastiality
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	gameAPI.Actor:AddSecret(Secret) (at Assets/Scripts/Base Classes/Actor.cs:960)
+	ActorManager:ProcessSecrets(Actor, List`1, Int32, Boolean) (at Assets/Scripts/Managers/ActorManager.cs:7092)
+	ActorManager:CheckActiveResistanceActorsHuman() (at Assets/Scripts/Managers/ActorManager.cs:7827)
+	ActorManager:StartTurnLate() (at Assets/Scripts/Managers/ActorManager.cs:554)
+	ActorManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActorManager.cs:501)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:390)
+	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:561)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:344)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:190)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:390)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:388)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:477)
+	
+Dev seed 25416 -> Thursday, 19 August 2021 5:01 PM
+City seed 21566 -> Londus, Eurasia
+WARNING Unrecognised opinion "0" for actor Darth Dark, ID 1
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ActorManager:InitialiseReview() (at Assets/Scripts/Managers/ActorManager.cs:5198)
+	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:890)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:821)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Unrecognised opinion "0" for actor Wyatt Taylor, ID 12
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ActorManager:InitialiseReview() (at Assets/Scripts/Managers/ActorManager.cs:5245)
+	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:890)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:821)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Unrecognised opinion "0" for actor Esta Garcia, ID 13
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ActorManager:InitialiseReview() (at Assets/Scripts/Managers/ActorManager.cs:5245)
+	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:890)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:821)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Unrecognised opinion "0" for actor Lilly Peterson, ID 15
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ActorManager:InitialiseReview() (at Assets/Scripts/Managers/ActorManager.cs:5245)
+	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:890)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:821)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	

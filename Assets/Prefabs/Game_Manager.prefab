@@ -1654,6 +1654,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5dd1042632d06f64dbc5cfda15095d1f, type: 2}
   - {fileID: 11400000, guid: d7a1416163ef14a44a31435404b97db5, type: 2}
   - {fileID: 11400000, guid: 46dad303d5b751c47b23649728a864a8, type: 2}
+  - {fileID: 11400000, guid: 42a3c89ed9078ee42b89f5524769dbd1, type: 2}
+  - {fileID: 11400000, guid: da174fda523447e47b9ead2cdff27cf2, type: 2}
+  - {fileID: 11400000, guid: e077fc8e03581ce4890cf803c15f8d4b, type: 2}
+  - {fileID: 11400000, guid: 256fb5032bd980e4bbdf15fda85c7e43, type: 2}
   arrayOfGameHelpSets:
   - {fileID: 11400000, guid: 39c0e7dc2b2c56a4c9f353e781ea9a41, type: 2}
   - {fileID: 11400000, guid: 347b0e256661a6044adc8c5620a2bcae, type: 2}

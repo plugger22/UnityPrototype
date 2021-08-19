@@ -14,6 +14,7 @@ MonoBehaviour:
   descriptor: Player
   listOfGameHelp:
   - {fileID: 11400000, guid: 2efe0989dd460b742b7d452c327dea9a, type: 2}
+  - {fileID: 11400000, guid: 46dad303d5b751c47b23649728a864a8, type: 2}
   - {fileID: 11400000, guid: 0f8e477a3c9d3654fb785f640318366f, type: 2}
   - {fileID: 11400000, guid: 1aba6206e432dc945ab19706b2b68129, type: 2}
   - {fileID: 11400000, guid: cb00fcf336eb27946a2eac883fdd6e78, type: 2}
@@ -25,4 +26,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d365554101ad1d545b7c6b630db5542b, type: 2}
   - {fileID: 11400000, guid: e291c57a5fde5114c992e2eaa06b793e, type: 2}
   - {fileID: 11400000, guid: f7eb3323cfbf6bb4e86f2d4d902d321a, type: 2}
-  - {fileID: 11400000, guid: 46dad303d5b751c47b23649728a864a8, type: 2}
+  - {fileID: 11400000, guid: 256fb5032bd980e4bbdf15fda85c7e43, type: 2}
+  - {fileID: 11400000, guid: da174fda523447e47b9ead2cdff27cf2, type: 2}
+  - {fileID: 11400000, guid: e077fc8e03581ce4890cf803c15f8d4b, type: 2}
+  - {fileID: 11400000, guid: 42a3c89ed9078ee42b89f5524769dbd1, type: 2}
