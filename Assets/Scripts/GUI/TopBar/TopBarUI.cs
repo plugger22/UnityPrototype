@@ -57,6 +57,7 @@ public class TopBarUI : MonoBehaviour
     [HideInInspector] public int doomData;
     #endregion
 
+    #region static Instance
     private static TopBarUI topBarUI;
 
     /// <summary>
@@ -73,8 +74,9 @@ public class TopBarUI : MonoBehaviour
         }
         return topBarUI;
     }
+    #endregion
 
-
+    #region Initialise
     public void Initialise(GameState state)
     {
         switch (state)
@@ -103,7 +105,7 @@ public class TopBarUI : MonoBehaviour
                 break;
         }
     }
-
+    #endregion
 
     #region Initialise SubMethods
 
@@ -239,7 +241,7 @@ public class TopBarUI : MonoBehaviour
 
     #endregion
 
-
+    #region LoadSavedData
     /// <summary>
     /// Updates toolbar with loaded save game data -> Called from FileManager.cs -> UpdateGUI
     /// </summary>
@@ -261,7 +263,9 @@ public class TopBarUI : MonoBehaviour
         UpdateBlackmail(blackmailData);
         UpdateDoom(doomData);
     }
+    #endregion
 
+    #region OnEvent
     /// <summary>
     /// Event Handler
     /// </summary>
@@ -284,7 +288,11 @@ public class TopBarUI : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
+    #region Update...
+
+    #region UpdateCommendations
     /// <summary>
     /// Update methods for top bar left data (don't use events, after speed here)
     /// Set active only if > 0 and >= blackmarks
@@ -318,7 +326,9 @@ public class TopBarUI : MonoBehaviour
         //tooltip
         UpdateCommendationsTooltip(value);
     }
+    #endregion
 
+    #region UpdateBlackmarks
     /// <summary>
     /// Set active only if > 0 and >= commendations 
     /// </summary>
@@ -351,7 +361,9 @@ public class TopBarUI : MonoBehaviour
         //tooltip
         UpdateBlackmarksTooltip(value);
     }
+    #endregion
 
+    #region UpdateInvestigations
     /// <summary>
     /// set active if > 0
     /// </summary>
@@ -384,7 +396,9 @@ public class TopBarUI : MonoBehaviour
         //tooltip
         UpdateInvestigationsTooltip(value);
     }
+    #endregion
 
+    #region UpdateInnocence
     /// <summary>
     /// colour Active if value 1 or less, dormant otherwise
     /// </summary>
@@ -417,7 +431,9 @@ public class TopBarUI : MonoBehaviour
         //tooltip
         UpdateInnocenceTooltip(value);
     }
+    #endregion
 
+    #region UpdateUnhappy
     /// <summary>
     /// Unhappy actors in Reserves, Status item -> bring to full opacity if value > 0
     /// </summary>
@@ -451,7 +467,9 @@ public class TopBarUI : MonoBehaviour
         //tooltip
         UpdateUnhappyTooltip(value);
     }
+    #endregion
 
+    #region UpdateConflict
     /// <summary>
     /// Number of Relationship Conflicts, Status item -> bring to full opacity if value > 0
     /// </summary>
@@ -484,7 +502,9 @@ public class TopBarUI : MonoBehaviour
         //tooltip
         UpdateConflictTooltip(value);
     }
+    #endregion
 
+    #region UpdateBlackmail
     /// <summary>
     /// Number of Blackmail attempts, Status item -> bring to full opacity if value > 0
     /// </summary>
@@ -517,7 +537,9 @@ public class TopBarUI : MonoBehaviour
         //tooltip
         UpdateBlackmailTooltip(value);
     }
+    #endregion
 
+    #region UpdateDoom
     /// <summary>
     /// Doom timer, Status item -> bring to full opacity if value > 0
     /// </summary>
@@ -549,9 +571,13 @@ public class TopBarUI : MonoBehaviour
         }
         UpdateDoomTooltip(value);
     }
+    #endregion
 
+    #endregion
 
+    #region Tooltips...
 
+    #region InitialiseTooltips
     /// <summary>
     /// Set up initial tooltip status
     /// NOTE: tooltipMain details are required for initial default settings (tooltips won't work if the main component isn't there)
@@ -616,7 +642,9 @@ public class TopBarUI : MonoBehaviour
         tipDoom.x_offset = 5;
         tipDoom.y_offset = 60;
     }
+    #endregion
 
+    #region UpdateCommendationsTooltip
     /// <summary>
     /// dynamically updates Commendations tooltip (excludes header, details and offsets)
     /// </summary>
@@ -630,7 +658,9 @@ public class TopBarUI : MonoBehaviour
         else
         { tipCommendation.tooltipMain = string.Format("HQ have yet to award you {0} Commendations", GameManager.Formatt("ANY", ColourType.neutralText)); }
     }
+    #endregion
 
+    #region UpdateBlackmarksTooltip
     /// <summary>
     /// dynamically updates Blackmarks tooltip (excludes header, details and offsets)
     /// </summary>
@@ -648,7 +678,9 @@ public class TopBarUI : MonoBehaviour
                 GameManager.Formatt("Blackmarks", ColourType.salmonText), "\n");
         }
     }
+    #endregion
 
+    #region UpdateInvestigationsTooltip
     /// <summary>
     /// dynamically updates Investigations tooltip (excludes header and offsets)
     /// </summary>
@@ -667,7 +699,9 @@ public class TopBarUI : MonoBehaviour
             tipInvestigation.tooltipDetails = "";
         }
     }
+    #endregion
 
+    #region UpdateInnocenceTooltip
     /// <summary>
     /// dynamically updates Innocence tooltip (excludes details and offsets)
     /// </summary>
@@ -688,7 +722,9 @@ public class TopBarUI : MonoBehaviour
             tipInnocence.tooltipMain = string.Format("Authority currently views you as a{0}{1}", "\n", GameManager.i.playerScript.GetInnocenceDescriptor());
         }
     }
+    #endregion
 
+    #region UpdateUnhappyTooltip
     /// <summary>
     /// dynamically updates Unhappy actors tooltip (exluding header and offsets)
     /// </summary>
@@ -707,7 +743,9 @@ public class TopBarUI : MonoBehaviour
             tipUnhappy.tooltipDetails = "";
         }
     }
+    #endregion
 
+    #region UpdateConflictTooltip
     /// <summary>
     /// dynamically updates potential (opinion 0) relationship Conflicts tooltip (exluding header and offsets)
     /// </summary>
@@ -727,7 +765,9 @@ public class TopBarUI : MonoBehaviour
                 GameManager.Formatt("drops below ZERO", ColourType.salmonText));
         }
     }
+    #endregion
 
+    #region UpdateBlackmailTooltip
     /// <summary>
     /// dynamically updates Blackmail tooltip (exluding header and offsets)
     /// </summary>
@@ -745,7 +785,9 @@ public class TopBarUI : MonoBehaviour
             tipBlackmail.tooltipDetails = "";
         }
     }
+    #endregion
 
+    #region UpdateDoomTooltip
     /// <summary>
     /// dynamically updates Doom timer tooltip (exluding header and offsets)
     /// </summary>
@@ -764,7 +806,9 @@ public class TopBarUI : MonoBehaviour
             tipDoom.tooltipDetails = "";
         }
     }
+    #endregion
 
+    #endregion
 
     //place new methods above here
 }

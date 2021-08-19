@@ -146,6 +146,7 @@ public class ActorManager : MonoBehaviour
     [HideInInspector] public int hqIDCounter = 0;                               //used to sequentially number hqID's
     #endregion
 
+    #region Private...
     //cached recruit picker choices
     private int resistancePlayerTurn;                                           //turn number of last choice for a resistance Player Recruit selection
     private int resistanceActorTurn;                                            //turn number of last choice for an resistance Actor Recruit selection
@@ -225,6 +226,7 @@ public class ActorManager : MonoBehaviour
     private string colourRecruit;
     private string colourArc;
     private string colourEnd;
+    #endregion
 
     #region PerInitialiseActors
     /// <summary>
@@ -9601,7 +9603,7 @@ public class ActorManager : MonoBehaviour
                     Actor actor = arrayOfActors[i];
                     if (actor != null)
                     {
-                        if (actor.GetDatapoint(ActorDatapoint.Opinion1) == 0)
+                        if (actor.GetDatapoint(ActorDatapoint.Opinion1) == 0 && actor.CheckTraitEffect(actorConflictNone) == false)
                         { numOfOpinionZero++; }
                     }
                     else { Debug.LogErrorFormat("Invalid actor (Null) for arrayOfActors[{0}]", i); }
@@ -9714,6 +9716,7 @@ public class ActorManager : MonoBehaviour
     }
     #endregion
 
+    #region Tooltips...
     //
     // - - - Tooltips - - -
     //
@@ -9991,8 +9994,9 @@ public class ActorManager : MonoBehaviour
         data.main = builderMain.ToString();
         return data;
     }
+    #endregion
 
-
+    #region GetManagerPowerCost
     /// <summary>
     /// sub method used to calculate adjusted Power cost for dismissing, firing , disposing off actors (where a cost is involved) due to actor threatening player and/or knowing secrets
     /// Returns a ManagePower data package giving adjusted cost and a colour formatted tooltip string (starts on next line) explaining why, eg. '(HEAVY knows 1 secret, +1 Power cost)'
@@ -10067,7 +10071,9 @@ public class ActorManager : MonoBehaviour
         else { Debug.LogWarning("Invalid Actor (Null)"); }
         return managePower;
     }
+    #endregion
 
+    #region Timers...
     /// <summary>
     /// resets cooldown timer everytime a lie low action is used
     /// </summary>
@@ -10080,7 +10086,9 @@ public class ActorManager : MonoBehaviour
 
     public void StopDoomTimer()
     { doomTimer = 0; }
+    #endregion
 
+    #region CheckForBetrayal
     /// <summary>
     /// checks for possibility of the Resistance Player/Leader being betrayed by traitorous minions or anonymous haters in RebelHQ
     /// </summary>
@@ -10136,7 +10144,9 @@ public class ActorManager : MonoBehaviour
             else { Debug.LogFormat("[Rnd] ActorManager.cs -> CheckForBetrayal: Resistance Leader Not Betrayed (need {0}, rolled {1}){2}", chance, rndNum, "\n"); }
         }
     }
+    #endregion
 
+    #region AddNewActorOnMapAI
     /// <summary>
     /// add a new OnMap actor
     /// </summary>
@@ -10223,8 +10233,9 @@ public class ActorManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid side (Null)"); }
     }
+    #endregion
 
-
+    #region AddNewActorReserveAI
     /// <summary>
     /// Add a new Reserve actor. NOTE: Reserve Pool is assumed to be empty
     /// </summary>
@@ -10285,7 +10296,9 @@ public class ActorManager : MonoBehaviour
         }
         else { Debug.LogFormat("[Rim] ActorManager.cs -> AddNewActorReserveAI: No actors available to add to Reserve Pool{0}", "\n"); }
     }
+    #endregion
 
+    #region DismissActorAI
     /// <summary>
     /// AI fires an actor, returns true if successful
     /// </summary>
@@ -10304,7 +10317,9 @@ public class ActorManager : MonoBehaviour
         }
         return false;
     }
+    #endregion
 
+    #region ProcessMetaActors
     /// <summary>
     /// handles all Meta (between level) game actor matters (Both sides)
     /// </summary>
@@ -10600,7 +10615,9 @@ public class ActorManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfWorkers (Null)"); }
     }
+    #endregion
 
+    #region PromoteActorToHQ
     /// <summary>
     /// subMethod for ProcessMetaGame to have an actor promoted to HQ. Handles all details. Returns true if actor promoted to HQ, false otherwise
     /// If workers maxxed out then can replace an existing worker (eg. worker.hqID less than or equal to highestHqID)
@@ -10681,7 +10698,9 @@ public class ActorManager : MonoBehaviour
         }
         return isSuccess;
     }
+    #endregion
 
+    #region GetWorkerWithLowestPower
     /// <summary>
     /// Submethod of PromoteActorToHQ which returns a tuple, index of worker in listOfWorkers, Power of worker. Default values of -1 for index and 999 for Power
     /// Only checks existing workers (determined if their hqID is less than or equal to highestHqID)
@@ -10710,7 +10729,9 @@ public class ActorManager : MonoBehaviour
         else { Debug.LogError("Invalid listOfWorkers (Null)"); }
         return new Tuple<int, int>(index, lowestPower);
     }
+    #endregion
 
+    #region SendActorBackToRecruitPool
     /// <summary>
     /// SubMethod for ProcessMetaActors to handle all admin for sending actor back to Recruit Pool. Power is retained. 'whereFrom' is the actor source, eg. 'Reserves / OnMap / Dismissed / Resigned'
     /// </summary>
@@ -10736,7 +10757,9 @@ public class ActorManager : MonoBehaviour
         actor.AddHistory(new HistoryActor() { text = "Sent back to the Recruit Pool" });
         Debug.LogFormat("[Tor] ActorManager.cs -> SendActorBackToRecruitPool: {0} actor, {1}, {2}, ID {3} sent back to Recruit pool{4}", whereFrom, actor.actorName, actor.arc.name, actor.actorID, "\n");
     }
+    #endregion
 
+    #region AddActorToHQ
     /// <summary>
     /// handles all admin to transfer a normal actor to HQ (as a worker), string 'reason' is for message moved to HQ [...] ('after being dismissed', 'from active duty', 'after resigning', etc)
     /// NOTE: actor checked for Null by parent method
@@ -10753,7 +10776,9 @@ public class ActorManager : MonoBehaviour
         if (string.IsNullOrEmpty(reason) == true) { reason = "for reasons Unknown"; }
         Debug.LogFormat("[Act] ActorManager.cs -> AddActorToHQ: {0}, {1}, actID {2}, hqID {3}, moved to HQ {4}{5}", actor.actorName, actor.arc.name, actor.actorID, actor.hqID, reason, "\n");
     }
+    #endregion
 
+    #region DebugTest
     /// <summary>
     /// Checks TestManager.cs for any relevant debug test settings that may require changes to actors (PlayerSide only) at startUp (First Scenario in Campaign only)
     /// Can request a particular actor Arc type in the line up and/or a particular slotID actor having specified dataPoint settings
@@ -10838,7 +10863,9 @@ public class ActorManager : MonoBehaviour
             }
         }
     }
+    #endregion
 
+    #region DebugCreateConflict
     /// <summary>
     /// Debug initiate an immediate relationship conflict with the actor in the specified slotID (inputString)
     /// </summary>
@@ -10880,7 +10907,9 @@ public class ActorManager : MonoBehaviour
         else { result = string.Format("No actor is slot {0}", slotID); }
         return result;
     }
+    #endregion
 
+    #region GetPlayerCurrentStatus
     /// <summary>
     /// Generates a composite, formatted string ready for display in Player Status page in TransitionUI
     /// </summary>
@@ -11007,8 +11036,9 @@ public class ActorManager : MonoBehaviour
         }
         return builder.ToString();
     }
+    #endregion
 
-
+    #region GetBriefingOne
     /// <summary>
     /// Generates a composite, formatted string ready for display in BriefingOne page in TransitionUI
     /// </summary>
@@ -11058,7 +11088,9 @@ public class ActorManager : MonoBehaviour
         else { Debug.LogError("Invalid mission (Null)"); }
         return builder.ToString();
     }
+    #endregion
 
+    #region GetBriefingTwo
     /// <summary>
     /// Generates a composite, formatted string ready for display in BriefingTwo page in TransitionUI
     /// </summary>
@@ -11132,7 +11164,9 @@ public class ActorManager : MonoBehaviour
         else { Debug.LogError("Invalid mission (Null)"); }
         return builder.ToString();
     }
+    #endregion
 
+    #region GetBriefingNotes
     /// <summary>
     /// returns formatted briefing notes. 'debugName' is name of briefing notes, eg. "City" , for debug purposes
     /// Replaces any string enclosed in "[...]" with colourAlert / colourEnd tags
@@ -11160,7 +11194,9 @@ public class ActorManager : MonoBehaviour
         }
         return briefingNotes;
     }
+    #endregion
 
+    #region UpdateRelationMessages
     //
     // - - - Relations
     //
@@ -11228,7 +11264,9 @@ public class ActorManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfRelations (Null)"); }
     }
+    #endregion
 
+    #region GetOutcomeTooltip
     /// <summary>
     /// Sends a list of colour formatted help for the current campaign outcome, eg. BlackMarks and Commendations. Used by ModalReviewUI.cs. Done here due to access to colour tags
     /// </summary>
@@ -11245,7 +11283,9 @@ public class ActorManager : MonoBehaviour
         listOfHelp.Add(helpData);
         return listOfHelp;
     }
+    #endregion
 
+    #region DebugSetTraitor
     /// <summary>
     /// Set an actor to traitor status
     /// </summary>
@@ -11273,7 +11313,9 @@ public class ActorManager : MonoBehaviour
         else { Debug.LogError("Invalid slotIDString (Null or Empty)"); }
         return reply;
     }
+    #endregion
 
+    #region ToggleOnMapActors
     /// <summary>
     /// Toggles all onMap actors lie low / active (used for OptionManager.cs -> isSubordinates via DebugGUI). Resistance side only
     /// </summary>
@@ -11326,7 +11368,9 @@ public class ActorManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid arrayOfActors (Null)"); }
     }
+    #endregion
 
+    #region GetExportActorPool
     /// <summary>
     /// Get data for ActorPool export to file in order to check actor backstories and personalities
     /// </summary>
@@ -11416,7 +11460,9 @@ public class ActorManager : MonoBehaviour
 
         return builder.ToString();
     }
+    #endregion
 
+    #region GetExportActorData
     /// <summary>
     /// Takes an actor and returns their data in a consistent format for GetExportActorPool.cs
     /// </summary>
@@ -11448,6 +11494,7 @@ public class ActorManager : MonoBehaviour
         else { Debug.LogError("Invalid actor (Null)"); }
         return builder.ToString();
     }
+    #endregion
 
     //new methods above here
 }
