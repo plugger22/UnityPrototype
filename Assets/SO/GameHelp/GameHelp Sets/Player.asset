@@ -15,13 +15,14 @@ MonoBehaviour:
   listOfGameHelp:
   - {fileID: 11400000, guid: 2efe0989dd460b742b7d452c327dea9a, type: 2}
   - {fileID: 11400000, guid: 0f8e477a3c9d3654fb785f640318366f, type: 2}
+  - {fileID: 11400000, guid: 1aba6206e432dc945ab19706b2b68129, type: 2}
+  - {fileID: 11400000, guid: cb00fcf336eb27946a2eac883fdd6e78, type: 2}
   - {fileID: 11400000, guid: b9d5b06e3c95671478801660d588f13d, type: 2}
   - {fileID: 11400000, guid: 039b03d2b5bb91c4c9a485a4ce905c76, type: 2}
   - {fileID: 11400000, guid: bca530f25eda0c64b9592461345360c5, type: 2}
+  - {fileID: 11400000, guid: bf6577cc16cf0de45a007d63dd6f807a, type: 2}
   - {fileID: 11400000, guid: f503133739a7f164aa24a1a24348cff6, type: 2}
   - {fileID: 11400000, guid: d365554101ad1d545b7c6b630db5542b, type: 2}
   - {fileID: 11400000, guid: e291c57a5fde5114c992e2eaa06b793e, type: 2}
   - {fileID: 11400000, guid: f7eb3323cfbf6bb4e86f2d4d902d321a, type: 2}
-  - {fileID: 11400000, guid: 1aba6206e432dc945ab19706b2b68129, type: 2}
-  - {fileID: 11400000, guid: cb00fcf336eb27946a2eac883fdd6e78, type: 2}
-  - {fileID: 11400000, guid: bf6577cc16cf0de45a007d63dd6f807a, type: 2}
+  - {fileID: 11400000, guid: 46dad303d5b751c47b23649728a864a8, type: 2}

@@ -574,7 +574,7 @@ public class ModalHelpUI : MonoBehaviour
             //index
             highlightIndex++;
             //move viewport
-            scrollRect.verticalNormalizedPosition = 1.0f - (float)highlightIndex / numOfItemsTotal;
+            scrollRect.verticalNormalizedPosition = 1.0f - (float)highlightIndex / (numOfItemsTotal - 1);
             //display
             ShowHelpItem();
             //recent
@@ -620,6 +620,8 @@ public class ModalHelpUI : MonoBehaviour
 
                     //return colour to normal for most recent text
                     listOfInteractions[recentIndex].text.color = colorInactive;
+                    //viewport to default position
+                    scrollRect.verticalNormalizedPosition = 1.0f;
                     //update
                     highlightIndex = -1;
                     ShowHelpItem();

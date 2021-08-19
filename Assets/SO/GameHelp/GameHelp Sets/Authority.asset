@@ -15,3 +15,5 @@ MonoBehaviour:
   listOfGameHelp:
   - {fileID: 11400000, guid: 75ccbdffc4f93dd4b90acc9614a20e70, type: 2}
   - {fileID: 11400000, guid: 389d53919e3f0bb47bae5418bf27c083, type: 2}
+  - {fileID: 11400000, guid: d7a1416163ef14a44a31435404b97db5, type: 2}
+  - {fileID: 11400000, guid: 46dad303d5b751c47b23649728a864a8, type: 2}
