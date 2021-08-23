@@ -1,3 +1,15 @@
 
 Dev seed 51021 -> Friday, 20 August 2021 8:31 PM
 City seed 26030 -> Londus, Eurasia
+
+Dev seed 36253 -> Monday, 23 August 2021 9:39 AM
+City seed 46735 -> Londus, Eurasia
+
+Dev seed 39144 -> Monday, 23 August 2021 9:54 AM
+City seed 1566 -> Londus, Eurasia
+
+Dev seed 3072 -> Monday, 23 August 2021 9:57 AM
+City seed 9856 -> Londus, Eurasia
+
+Dev seed 56254 -> Monday, 23 August 2021 10:54 AM
+City seed 27873 -> Londus, Eurasia

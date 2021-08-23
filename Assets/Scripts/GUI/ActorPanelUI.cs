@@ -50,6 +50,16 @@ public class ActorPanelUI : MonoBehaviour
     public TextMeshProUGUI powerText3;
     public TextMeshProUGUI powerTextPlayer;
 
+    public Image statusPanel0;
+    public Image statusPanel1;
+    public Image statusPanel2;
+    public Image statusPanel3;
+
+    public TextMeshProUGUI statusText0;
+    public TextMeshProUGUI statusText1;
+    public TextMeshProUGUI statusText2;
+    public TextMeshProUGUI statusText3;
+
     private CanvasGroup canvas0;
     private CanvasGroup canvas1;
     private CanvasGroup canvas2;
@@ -74,6 +84,8 @@ public class ActorPanelUI : MonoBehaviour
     private TextMeshProUGUI[] arrayOfCompatibility = new TextMeshProUGUI[4];     //compatibility
     private GenericTooltipUI[] arrayOfCompatibilityTooltips = new GenericTooltipUI[4];    //compatibility tooltips
     private GenericTooltipUI[] arrayOfTypeTooltips = new GenericTooltipUI[4]; //actorArc tooltips
+    private Image[] arrayOfStatusPanels = new Image[4];
+    private TextMeshProUGUI[] arrayOfStatusTexts = new TextMeshProUGUI[4];
 
     //fast access
     private Sprite vacantAuthorityActor;
@@ -133,6 +145,15 @@ public class ActorPanelUI : MonoBehaviour
         Debug.Assert(compatibility1 != null, "Invalid compatibility1 (Null)");
         Debug.Assert(compatibility2 != null, "Invalid compatibility2 (Null)");
         Debug.Assert(compatibility3 != null, "Invalid compatibility3 (Null)");
+        //status (friends and enemies)
+        Debug.Assert(statusPanel0 != null, "Invalid statusPanel0 (Null)");
+        Debug.Assert(statusPanel1 != null, "Invalid statusPanel1 (Null)");
+        Debug.Assert(statusPanel2 != null, "Invalid statusPanel2 (Null)");
+        Debug.Assert(statusPanel3 != null, "Invalid statusPanel3 (Null)");
+        Debug.Assert(statusText0 != null, "Invalid statusText0 (Null)");
+        Debug.Assert(statusText1 != null, "Invalid statusText1 (Null)");
+        Debug.Assert(statusText2 != null, "Invalid statusText2 (Null)");
+        Debug.Assert(statusText3 != null, "Invalid statusText3 (Null)");
 
     }
 
@@ -270,6 +291,16 @@ public class ActorPanelUI : MonoBehaviour
         arrayOfTypeTooltips[1] = actor1TypeTooltip;
         arrayOfTypeTooltips[2] = actor2TypeTooltip;
         arrayOfTypeTooltips[3] = actor3TypeTooltip;
+        //initialise arrayOfStatusPanels
+        arrayOfStatusPanels[0] = statusPanel0;
+        arrayOfStatusPanels[1] = statusPanel1;
+        arrayOfStatusPanels[2] = statusPanel2;
+        arrayOfStatusPanels[3] = statusPanel3;
+        //initialise arrayOfStatusTexts
+        arrayOfStatusTexts[0] = statusText0;
+        arrayOfStatusTexts[1] = statusText1;
+        arrayOfStatusTexts[2] = statusText2;
+        arrayOfStatusTexts[3] = statusText3;
         //array components and assignments
         for (int i = 0; i < 4; i++)
         {
