@@ -2929,6 +2929,7 @@ public class HelpManager : MonoBehaviour
             .AppendFormat(" MainInfoApp Forward -> PageUp{0}{1}", "\n", "\n")
             .AppendFormat("-Global Options (Modal/non-Modal){0}", "\n")
             .AppendFormat(" Actor Info toggle -> 1{0}", "\n")
+            .AppendFormat(" Actor Relations toggle -> 2{0}", "\n")
             .AppendFormat(" Test Condition -> Z{0}", "\n")
             .ToString();
     }

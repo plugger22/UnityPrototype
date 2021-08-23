@@ -3788,7 +3788,7 @@ public class ModalTabbedUI : MonoBehaviour
             Actor actor = GameManager.i.dataScript.GetActor(data.actorID);
             if (actor != null)
             {
-                tab0Header2.listOfItems[0].descriptor.text = string.Format("{0} {1}", data.relationship == ActorRelationship.Friend ? "Friends with " : "Enemies with ", actor.arc.name);
+                tab0Header2.listOfItems[0].descriptor.text = string.Format("{0} {1}", data.relationship == ActorRelationship.FRIEND ? "Friends with " : "Enemies with ", actor.arc.name);
                 isRelationship = true;
             }
             else

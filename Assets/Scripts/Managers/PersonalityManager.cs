@@ -1617,7 +1617,7 @@ public class PersonalityManager : MonoBehaviour
                         Actor actorOther = GameManager.i.dataScript.GetActor(relation.Value.actorID);
                         if (actorOther != null)
                         {
-                            builder.AppendFormat("  {0} with {1}, actorID {2}, slotID {3}{4}", relation.Value.relationship == ActorRelationship.Friend ? "Friends" : "Enemies",
+                            builder.AppendFormat("  {0} with {1}, actorID {2}, slotID {3}{4}", relation.Value.relationship == ActorRelationship.FRIEND ? "Friends" : "Enemies",
                                 actorOther.arc.name, actorOther.actorID, actorOther.slotID, "\n");
                         }
                         else { Debug.LogErrorFormat("Invalid actorOther (Null) for relation.Value.actorID {0}", relation.Value.actorID); }

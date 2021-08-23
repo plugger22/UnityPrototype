@@ -272,6 +272,11 @@ public class InputManager : MonoBehaviour
             //Toggle Actor Info display between Renown and Compatibility
             EventManager.i.PostNotification(EventType.ActorInfo, this, "ActorInfo Toggle", string.Format("InputManager.cs -> ProcessKeyInput ActorInfo"));
         }
+        if (Input.GetButtonDown("ActorStatus") == true)
+        {
+            //Toggle Actor Status display (friends and enemies)
+            EventManager.i.PostNotification(EventType.ActorRelation, this, "ActorStatus Toggle", string.Format("InputManager.cs -> ProcessKeyInput ActorStatus"));
+        }
         else if (Input.GetButtonDown("Test") == true)
         {
             //runs a test condition (whatever you want)

@@ -276,6 +276,7 @@ public enum EventType
     ShowMeRestore,
     //ActorPanelUI
     ActorInfo,
+    ActorRelation,
     //City Info
     CityInfoOpen,
     CityInfoClose,

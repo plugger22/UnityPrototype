@@ -2101,12 +2101,12 @@ public class TopicManager : MonoBehaviour
             //need data for dual actor effect and also relationship type
             tagActorID = data.actorFirstID;
             tagActorOtherID = data.actorSecondID;
-            if (data.compatibility > 0) { tagRelation = ActorRelationship.Friend; }
-            else if (data.compatibility < 0) { tagRelation = ActorRelationship.Enemy; }
+            if (data.compatibility > 0) { tagRelation = ActorRelationship.FRIEND; }
+            else if (data.compatibility < 0) { tagRelation = ActorRelationship.ENEMY; }
             else
             {
                 //compatibility 0, 50/50 chance of Friend/Enemy relationship
-                if (Random.Range(0, 100) < 50) { tagRelation = ActorRelationship.Friend; } else { tagRelation = ActorRelationship.Enemy; }
+                if (Random.Range(0, 100) < 50) { tagRelation = ActorRelationship.FRIEND; } else { tagRelation = ActorRelationship.ENEMY; }
             }
             //group based on Player Mood
             group = GetGroupMood(GameManager.i.playerScript.GetMood());
@@ -6446,16 +6446,16 @@ public class TopicManager : MonoBehaviour
                             {
                                 switch (tagRelation)
                                 {
-                                    case ActorRelationship.Friend:
+                                    case ActorRelationship.FRIEND:
                                         replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.topicScript.textListFriend.GetRandomRecord(), colourEnd);
                                         break;
-                                    case ActorRelationship.Enemy:
+                                    case ActorRelationship.ENEMY:
                                         replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.topicScript.textListEnemy.GetRandomRecord(), colourEnd);
                                         break;
                                     default: Debug.LogWarningFormat("Unrecognised tagRelation \"{0}\"", tagRelation); break;
                                 }
                             }
-                            else { replaceText = tagRelation == ActorRelationship.Friend ? GameManager.i.topicScript.textListFriend.GetRandomRecord() : GameManager.i.topicScript.textListEnemy.GetRandomRecord(); }
+                            else { replaceText = tagRelation == ActorRelationship.FRIEND ? GameManager.i.topicScript.textListFriend.GetRandomRecord() : GameManager.i.topicScript.textListEnemy.GetRandomRecord(); }
                         }
                         else { CountTextTag("relation", dictOfTags); }
                         break;
@@ -6467,17 +6467,17 @@ public class TopicManager : MonoBehaviour
                             {
                                 switch (tagRelation)
                                 {
-                                    case ActorRelationship.Friend:
+                                    case ActorRelationship.FRIEND:
                                         replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.topicScript.textListFriendAction.GetRandomRecord(), colourEnd);
                                         break;
-                                    case ActorRelationship.Enemy:
+                                    case ActorRelationship.ENEMY:
                                         replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.topicScript.textListEnemyAction.GetRandomRecord(), colourEnd);
                                         break;
                                     default: Debug.LogWarningFormat("Unrecognised tagRelation \"{0}\"", tagRelation); break;
                                 }
                             }
                             else
-                            { replaceText = tagRelation == ActorRelationship.Friend ? GameManager.i.topicScript.textListFriendAction.GetRandomRecord() : GameManager.i.topicScript.textListEnemyAction.GetRandomRecord(); }
+                            { replaceText = tagRelation == ActorRelationship.FRIEND ? GameManager.i.topicScript.textListFriendAction.GetRandomRecord() : GameManager.i.topicScript.textListEnemyAction.GetRandomRecord(); }
                         }
                         else { CountTextTag("relAct", dictOfTags); }
                         break;
@@ -6489,17 +6489,17 @@ public class TopicManager : MonoBehaviour
                             {
                                 switch (tagRelation)
                                 {
-                                    case ActorRelationship.Friend:
+                                    case ActorRelationship.FRIEND:
                                         replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.topicScript.textListFriendReason.GetRandomRecord(), colourEnd);
                                         break;
-                                    case ActorRelationship.Enemy:
+                                    case ActorRelationship.ENEMY:
                                         replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.topicScript.textListEnemyReason.GetRandomRecord(), colourEnd);
                                         break;
                                     default: Debug.LogWarningFormat("Unrecognised tagRelation \"{0}\"", tagRelation); break;
                                 }
                             }
                             else
-                            { replaceText = tagRelation == ActorRelationship.Friend ? GameManager.i.topicScript.textListFriendReason.GetRandomRecord() : GameManager.i.topicScript.textListEnemyReason.GetRandomRecord(); }
+                            { replaceText = tagRelation == ActorRelationship.FRIEND ? GameManager.i.topicScript.textListFriendReason.GetRandomRecord() : GameManager.i.topicScript.textListEnemyReason.GetRandomRecord(); }
                         }
                         else { CountTextTag("relRes", dictOfTags); }
                         break;

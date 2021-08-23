@@ -10075,7 +10075,7 @@ public class DataManager : MonoBehaviour
                             Actor secondActor = GetCurrentActor(secondSlotID, playerSide);
                             if (secondActor != null)
                             {
-                                if (AddRelationship(firstSlotID, secondSlotID, firstActor.actorID, secondActor.actorID, ActorRelationship.Friend) == true)
+                                if (AddRelationship(firstSlotID, secondSlotID, firstActor.actorID, secondActor.actorID, ActorRelationship.FRIEND) == true)
                                 { reply = $"Friends made ({input_0} & {input_1})"; }
                                 else { reply = $"Friends NOT made (timer hasn't expired) ({input_0} & {input_1})"; }
                             }
@@ -10125,7 +10125,7 @@ public class DataManager : MonoBehaviour
                             Actor secondActor = GetCurrentActor(secondSlotID, playerSide);
                             if (secondActor != null)
                             {
-                                if (AddRelationship(firstSlotID, secondSlotID, firstActor.actorID, secondActor.actorID, ActorRelationship.Enemy) == true)
+                                if (AddRelationship(firstSlotID, secondSlotID, firstActor.actorID, secondActor.actorID, ActorRelationship.ENEMY) == true)
                                 { reply = $"Enemies made ({input_0} & {input_1})"; }
                                 else { reply = $"Enemies NOT made (timer hasn't expired) ({input_0} & {input_1})"; }
                             }

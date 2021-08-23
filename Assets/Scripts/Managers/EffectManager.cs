@@ -4707,16 +4707,16 @@ public class EffectManager : MonoBehaviour
                 if (GameManager.i.dataScript.AddRelationship(actor.slotID, actorOther.slotID, actor.actorID, actorOther.actorID, relationship) == true)
                 {
                     effectResolve.bottomText = string.Format("{0}{1} and {2} are now {3}{4}", colourBad, actor.arc.name, actorOther.arc.name,
-                      relationship == ActorRelationship.Friend ? "Friends" : "Enemies", colourEnd);
+                      relationship == ActorRelationship.FRIEND ? "Friends" : "Enemies", colourEnd);
                     //history
                     actor.AddHistory(new HistoryActor()
                     {
-                        text = string.Format("Has become {0} with {1}, {2}", relationship == ActorRelationship.Friend ? "Friends" : "Enemies",
+                        text = string.Format("Has become {0} with {1}, {2}", relationship == ActorRelationship.FRIEND ? "Friends" : "Enemies",
                         actorOther.actorName, actorOther.arc.name)
                     });
                     actorOther.AddHistory(new HistoryActor()
                     {
-                        text = string.Format("Has become {0} with {1}, {2}", relationship == ActorRelationship.Friend ? "Friends" : "Enemies",
+                        text = string.Format("Has become {0} with {1}, {2}", relationship == ActorRelationship.FRIEND ? "Friends" : "Enemies",
                         actor.actorName, actor.arc.name)
                     });
                     GameManager.i.popUpFixedScript.SetData(actor.slotID, "Friends");
@@ -5646,7 +5646,7 @@ public class EffectManager : MonoBehaviour
                     string newOperand = operandName;
                     switch (data.relationship)
                     {
-                        case ActorRelationship.Friend:
+                        case ActorRelationship.FRIEND:
                             switch (operandName)
                             {
                                 case "Add": description = "Opinion +1"; isGood = false; break;
@@ -5654,7 +5654,7 @@ public class EffectManager : MonoBehaviour
                                 default: Debug.LogWarningFormat("Unrecognised operandName \"{0}\"", operandName); break;
                             }
                             break;
-                        case ActorRelationship.Enemy:
+                        case ActorRelationship.ENEMY:
                             switch (operandName)
                             {
                                 case "Add": description = "Opinion -1"; newOperand = "Subtract"; isGood = true; break;
@@ -5683,7 +5683,7 @@ public class EffectManager : MonoBehaviour
                     //random msg
                     if (chanceOpinionShift < 100)
                     {
-                        string msgText = string.Format("{0} is {1} {2}", actor.arc.name, data.relationship == ActorRelationship.Friend ? "Friends with" : "an Enemy of", originatingActor.arc.name);
+                        string msgText = string.Format("{0} is {1} {2}", actor.arc.name, data.relationship == ActorRelationship.FRIEND ? "Friends with" : "an Enemy of", originatingActor.arc.name);
                         GameManager.i.messageScript.GeneralRandom(msgText, $"{data.relationship} Opinion", chanceOpinionShift, rnd, isGood, "rand_6");
                     }
                 }

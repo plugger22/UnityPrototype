@@ -11236,8 +11236,8 @@ public class ActorManager : MonoBehaviour
                                         tempList.Add(i);
                                         //gnerate message
                                         ActiveEffectData msgData = new ActiveEffectData();
-                                        relationship = data.relationship == ActorRelationship.Friend ? "Friends" : "Enemies";
-                                        colourRelation = data.relationship == ActorRelationship.Friend ? colourGood : colourBad;
+                                        relationship = data.relationship == ActorRelationship.FRIEND ? "Friends" : "Enemies";
+                                        colourRelation = data.relationship == ActorRelationship.FRIEND ? colourGood : colourBad;
                                         detailsTop = string.Format("{0}, {1}{2}{3}{4}is {5}{6}{7} with{8}{9}, {10}{11}{12}", actorFirst.actorName, colourAlert, actorFirst.arc.name, colourEnd, "\n",
                                             colourRelation, relationship, colourEnd, "\n", actorSecond.actorName, colourAlert, actorSecond.arc.name, colourEnd);
                                         detailsBottom = string.Format("Any changes in {0}Opinion{1} in one {2}can affect the other{3}", colourAlert, colourEnd, colourAlert, colourEnd);
@@ -11245,7 +11245,7 @@ public class ActorManager : MonoBehaviour
                                         msgData.topText = "Relationship Exists";
                                         msgData.detailsTop = detailsTop;
                                         msgData.detailsBottom = detailsBottom;
-                                        msgData.sprite = data.relationship == ActorRelationship.Friend ? GameManager.i.spriteScript.friendSprite : GameManager.i.spriteScript.enemySprite;
+                                        msgData.sprite = data.relationship == ActorRelationship.FRIEND ? GameManager.i.spriteScript.friendSprite : GameManager.i.spriteScript.enemySprite;
                                         msgData.help0 = "relation_0";
                                         msgData.help1 = "relation_1";
                                         msgData.help2 = "relation_2";

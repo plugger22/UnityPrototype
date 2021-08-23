@@ -13,3 +13,59 @@ City seed 9856 -> Londus, Eurasia
 
 Dev seed 56254 -> Monday, 23 August 2021 10:54 AM
 City seed 27873 -> Londus, Eurasia
+
+Dev seed 4635 -> Monday, 23 August 2021 2:38 PM
+City seed 45317 -> Londus, Eurasia
+
+Dev seed 55276 -> Monday, 23 August 2021 2:50 PM
+City seed 61834 -> Londus, Eurasia
+
+Dev seed 51065 -> Monday, 23 August 2021 2:59 PM
+City seed 31558 -> Londus, Eurasia
+
+Dev seed 15266 -> Monday, 23 August 2021 3:06 PM
+City seed 26258 -> Londus, Eurasia
+
+Dev seed 9345 -> Monday, 23 August 2021 3:18 PM
+City seed 62520 -> Londus, Eurasia
+
+Dev seed 12332 -> Monday, 23 August 2021 3:31 PM
+City seed 60676 -> Londus, Eurasia
+ASSERT IndexOutOfRangeException: Index was outside the bounds of the array.
+ActorPanelUI.SetActorRelation () (at Assets/Scripts/GUI/ActorPanelUI.cs:781)
+	ActorPanelUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ActorPanelUI.cs:371)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:391)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:278)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:477)
+	
+Dev seed 62309 -> Monday, 23 August 2021 3:35 PM
+City seed 21198 -> Londus, Eurasia
+
+Dev seed 48759 -> Monday, 23 August 2021 3:37 PM
+City seed 44787 -> Londus, Eurasia
+
+Dev seed 64041 -> Monday, 23 August 2021 3:41 PM
+City seed 1932 -> Londus, Eurasia
+ASSERT IndexOutOfRangeException: Index was outside the bounds of the array.
+ActorPanelUI.SetActorRelation () (at Assets/Scripts/GUI/ActorPanelUI.cs:788)
+	ActorPanelUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ActorPanelUI.cs:371)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:391)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:278)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:477)
+	
+Dev seed 16206 -> Monday, 23 August 2021 3:42 PM
+City seed 60041 -> Londus, Eurasia
+
+Dev seed 60772 -> Monday, 23 August 2021 3:52 PM
+City seed 46129 -> Londus, Eurasia
+
+Dev seed 23591 -> Monday, 23 August 2021 3:59 PM
+City seed 60826 -> Londus, Eurasia
+ASSERT FormatException: Index (zero based) must be greater than or equal to zero and less than the size of the argument list.
+System.Text.StringBuilder.AppendFormatHelper (System.IFormatProvider provider, System.String format, System.ParamsArray args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Text.StringBuilder.AppendFormat (System.String format, System.Object[] args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	HelpManager.DisplayHelp () (at Assets/Scripts/Managers/HelpManager.cs:2932)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1730)
+	
+Dev seed 57623 -> Monday, 23 August 2021 4:04 PM
+City seed 25951 -> Londus, Eurasia

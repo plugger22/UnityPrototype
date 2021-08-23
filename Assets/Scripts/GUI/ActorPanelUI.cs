@@ -37,7 +37,6 @@ public class ActorPanelUI : MonoBehaviour
     public TextMeshProUGUI compatibility2;
     public TextMeshProUGUI compatibility3;
 
-
     public Image powerCircle0;
     public Image powerCircle1;
     public Image powerCircle2;
@@ -50,15 +49,15 @@ public class ActorPanelUI : MonoBehaviour
     public TextMeshProUGUI powerText3;
     public TextMeshProUGUI powerTextPlayer;
 
-    public Image statusPanel0;
-    public Image statusPanel1;
-    public Image statusPanel2;
-    public Image statusPanel3;
+    public Image relationPanel0;
+    public Image relationPanel1;
+    public Image relationPanel2;
+    public Image relationPanel3;
 
-    public TextMeshProUGUI statusText0;
-    public TextMeshProUGUI statusText1;
-    public TextMeshProUGUI statusText2;
-    public TextMeshProUGUI statusText3;
+    public TextMeshProUGUI relationText0;
+    public TextMeshProUGUI relationText1;
+    public TextMeshProUGUI relationText2;
+    public TextMeshProUGUI relationText3;
 
     private CanvasGroup canvas0;
     private CanvasGroup canvas1;
@@ -79,23 +78,23 @@ public class ActorPanelUI : MonoBehaviour
     private GenericTooltipUI actor3TypeTooltip;
 
     private bool isPowerUI;                                                     //gives status of Info UI display (true -> Shows Power, false -> COMPATIBILITY)
+    private bool isRelationship;                                                //true if actor relationship status on display, false if not
 
     private Image[] arrayOfPowerCircles = new Image[4];                        //used for more efficient access, populated in initialise. Actors only, index is actorSlotID (0 to 3)
     private TextMeshProUGUI[] arrayOfCompatibility = new TextMeshProUGUI[4];     //compatibility
     private GenericTooltipUI[] arrayOfCompatibilityTooltips = new GenericTooltipUI[4];    //compatibility tooltips
     private GenericTooltipUI[] arrayOfTypeTooltips = new GenericTooltipUI[4]; //actorArc tooltips
-    private Image[] arrayOfStatusPanels = new Image[4];
-    private TextMeshProUGUI[] arrayOfStatusTexts = new TextMeshProUGUI[4];
+    private Image[] arrayOfRelationPanels = new Image[4];                               //displays actor relationship status, eg. friends and enemies
+    private TextMeshProUGUI[] arrayOfRelationTexts = new TextMeshProUGUI[4];
 
     //fast access
     private Sprite vacantAuthorityActor;
     private Sprite vacantResistanceActor;
     private int starFontSize = -1;
 
+    #region static Instance...
+
     private static ActorPanelUI actorPanelUI;
-
-
-
 
     /// <summary>
     /// provide a static reference to ActorPanelUI that can be accessed from any script
@@ -111,8 +110,45 @@ public class ActorPanelUI : MonoBehaviour
         }
         return actorPanelUI;
     }
+    #endregion
 
-    public void Awake()
+    #region Initialise
+    /// <summary>
+    /// Not called for LoadGame
+    /// </summary>
+    public void Initialise(GameState state)
+    {
+        switch (state)
+        {
+            case GameState.TutorialOptions:
+            case GameState.NewInitialisation:
+                SubInitialiseAsserts();
+                SubInitialiseFastAccess();
+                SubInitialiseSessionStart();
+                SubInitialiseEvents();
+                SubInitialiseAll();
+                break;
+            case GameState.LoadAtStart:
+                SubInitialiseAsserts();
+                SubInitialiseFastAccess();
+                SubInitialiseSessionStart();
+                SubInitialiseEvents();
+                SubInitialiseAll();
+                break;
+            case GameState.FollowOnInitialisation:
+                SubInitialiseAll();
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
+                break;
+        }
+    }
+    #endregion
+
+    #region Initialisation Submethods...
+
+    #region SubInitialiseAsserts
+    public void SubInitialiseAsserts()
     {
 
         /*picture0.GetComponent<ActorSpriteTooltipUI>().actorSlotID = 0;
@@ -146,47 +182,16 @@ public class ActorPanelUI : MonoBehaviour
         Debug.Assert(compatibility2 != null, "Invalid compatibility2 (Null)");
         Debug.Assert(compatibility3 != null, "Invalid compatibility3 (Null)");
         //status (friends and enemies)
-        Debug.Assert(statusPanel0 != null, "Invalid statusPanel0 (Null)");
-        Debug.Assert(statusPanel1 != null, "Invalid statusPanel1 (Null)");
-        Debug.Assert(statusPanel2 != null, "Invalid statusPanel2 (Null)");
-        Debug.Assert(statusPanel3 != null, "Invalid statusPanel3 (Null)");
-        Debug.Assert(statusText0 != null, "Invalid statusText0 (Null)");
-        Debug.Assert(statusText1 != null, "Invalid statusText1 (Null)");
-        Debug.Assert(statusText2 != null, "Invalid statusText2 (Null)");
-        Debug.Assert(statusText3 != null, "Invalid statusText3 (Null)");
-
+        Debug.Assert(relationPanel0 != null, "Invalid relationPanel0 (Null)");
+        Debug.Assert(relationPanel1 != null, "Invalid relationPanel1 (Null)");
+        Debug.Assert(relationPanel2 != null, "Invalid relationPanel2 (Null)");
+        Debug.Assert(relationPanel3 != null, "Invalid relationPanel3 (Null)");
+        Debug.Assert(relationText0 != null, "Invalid relationText0 (Null)");
+        Debug.Assert(relationText1 != null, "Invalid relationText1 (Null)");
+        Debug.Assert(relationText2 != null, "Invalid relationText2 (Null)");
+        Debug.Assert(relationText3 != null, "Invalid relationText3 (Null)");
     }
-
-    /// <summary>
-    /// Not called for LoadGame
-    /// </summary>
-    public void Initialise(GameState state)
-    {
-        switch (state)
-        {
-            case GameState.TutorialOptions:
-            case GameState.NewInitialisation:
-                SubInitialiseFastAccess();
-                SubInitialiseSessionStart();
-                SubInitialiseEvents();
-                SubInitialiseAll();
-                break;
-            case GameState.LoadAtStart:
-                SubInitialiseFastAccess();
-                SubInitialiseSessionStart();
-                SubInitialiseEvents();
-                SubInitialiseAll();
-                break;
-            case GameState.FollowOnInitialisation:
-                SubInitialiseAll();
-                break;
-            default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
-                break;
-        }
-    }
-
-    #region Initialisation Submethods
+    #endregion
 
     #region SubInitialiseEvents
     /// <summary>
@@ -197,6 +202,7 @@ public class ActorPanelUI : MonoBehaviour
         //event listener
         EventManager.i.AddListener(EventType.ChangeSide, OnEvent, "ActorPanelUI");
         EventManager.i.AddListener(EventType.ActorInfo, OnEvent, "ActorPanelUI");
+        EventManager.i.AddListener(EventType.ActorRelation, OnEvent, "ActorPanelUI");
     }
     #endregion
 
@@ -292,15 +298,18 @@ public class ActorPanelUI : MonoBehaviour
         arrayOfTypeTooltips[2] = actor2TypeTooltip;
         arrayOfTypeTooltips[3] = actor3TypeTooltip;
         //initialise arrayOfStatusPanels
-        arrayOfStatusPanels[0] = statusPanel0;
-        arrayOfStatusPanels[1] = statusPanel1;
-        arrayOfStatusPanels[2] = statusPanel2;
-        arrayOfStatusPanels[3] = statusPanel3;
+        arrayOfRelationPanels[0] = relationPanel0;
+        arrayOfRelationPanels[1] = relationPanel1;
+        arrayOfRelationPanels[2] = relationPanel2;
+        arrayOfRelationPanels[3] = relationPanel3;
         //initialise arrayOfStatusTexts
-        arrayOfStatusTexts[0] = statusText0;
-        arrayOfStatusTexts[1] = statusText1;
-        arrayOfStatusTexts[2] = statusText2;
-        arrayOfStatusTexts[3] = statusText3;
+        arrayOfRelationTexts[0] = relationText0;
+        arrayOfRelationTexts[1] = relationText1;
+        arrayOfRelationTexts[2] = relationText2;
+        arrayOfRelationTexts[3] = relationText3;
+        //switch off status panels
+        for (int i = 0; i < arrayOfRelationPanels.Length; i++)
+        { arrayOfRelationPanels[i].gameObject.SetActive(false); }
         //array components and assignments
         for (int i = 0; i < 4; i++)
         {
@@ -339,6 +348,7 @@ public class ActorPanelUI : MonoBehaviour
 
     #endregion
 
+    #region OnEvent
     /// <summary>
     /// handles events
     /// </summary>
@@ -356,13 +366,17 @@ public class ActorPanelUI : MonoBehaviour
             case EventType.ActorInfo:
                 SetActorInfoUI(!isPowerUI);
                 break;
+            case EventType.ActorRelation:
+                ToggleActorRelation();
+                break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
         }
     }
+    #endregion
 
-
+    #region UpdateActorPanel
     /// <summary>
     /// places actor data (type and sprite) into GUI elements via lists (player is static so no need to update)
     /// </summary>
@@ -420,7 +434,11 @@ public class ActorPanelUI : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfActorTypes (Null)"); }
     }
+    #endregion
 
+    #region Tooltips...
+
+    #region SetActorArcTooltip
     /// <summary>
     /// Sets tooltip on actorArc type name, eg. "Heavy", explaining what that actorArc does
     /// </summary>
@@ -437,7 +455,9 @@ public class ActorPanelUI : MonoBehaviour
         }
         else { Debug.LogErrorFormat("Invalid actor (Null) for slotID {0}", slotID); }
     }
+    #endregion
 
+    #region SetVacantActorTooltip
     /// <summary>
     /// Sets tooltip for actor arcs at vacant actor slots
     /// </summary>
@@ -449,68 +469,9 @@ public class ActorPanelUI : MonoBehaviour
         arrayOfTypeTooltips[slotID].tooltipDetails = "Missing subordinates are a handicap";
         arrayOfTypeTooltips[slotID].y_offset = 150;
     }
+    #endregion
 
-    /// <summary>
-    /// changes the alpha of an actor sprite and text
-    /// </summary>
-    /// <param name="actorSlotID"></param>
-    /// <param name="alpha"></param>
-    public void UpdateActorAlpha(int actorSlotID, float alpha)
-    {
-        Debug.Assert(actorSlotID > -1 && actorSlotID < GameManager.i.actorScript.maxNumOfOnMapActors, "Invalid slotID");
-        //check actor present in slot, eg. not vacant
-        if (GameManager.i.dataScript.CheckActorSlotStatus(actorSlotID, GameManager.i.sideScript.PlayerSide) == true)
-        {
-            switch (actorSlotID)
-            {
-                case 0:
-                    canvas0.alpha = alpha;
-                    break;
-                case 1:
-                    canvas1.alpha = alpha;
-                    break;
-                case 2:
-                    canvas2.alpha = alpha;
-                    break;
-                case 3:
-                    canvas3.alpha = alpha;
-                    break;
-                default:
-                    Debug.LogError(string.Format("Invalid actorSlotID {0}", actorSlotID));
-                    break;
-            }
-        }
-    }
-
-    /// <summary>
-    /// Sets actor alpha to active for all onMap slotID's
-    /// </summary>
-    public void SetActorsAlphaActive()
-    {
-        float alpha = GameManager.i.guiScript.alphaActive;
-        //set all actor alpha's to active (may still be set to inactive from previous level)
-        for (int i = 0; i < GameManager.i.actorScript.maxNumOfOnMapActors; i++)
-        { UpdateActorAlpha(i, alpha); }
-    }
-
-    /// <summary>
-    /// Sets actor alpha to inactive for all onMap slotID's
-    /// </summary>
-    public void SetActorsAlphaInactive()
-    {
-        float alpha = GameManager.i.guiScript.alphaInactive;
-        //set all actor alpha's to active (may still be set to inactive from previous level)
-        for (int i = 0; i < GameManager.i.actorScript.maxNumOfOnMapActors; i++)
-        { UpdateActorAlpha(i, alpha); }
-    }
-
-    /// <summary>
-    /// changes the alpha of the player sprite and text
-    /// </summary>
-    /// <param name="alpha"></param>
-    public void UpdatePlayerAlpha(float alpha)
-    { canvasPlayer.alpha = alpha; }
-
+    #region InitialiseTooltips
     /// <summary>
     /// Initialise Actor and Player related tooltips
     /// NOTE: Using custom Generic Tooltips here rather than  Help Tooltips due to sequencing issues at startup
@@ -551,7 +512,84 @@ public class ActorPanelUI : MonoBehaviour
         }
         else { Debug.LogWarningFormat("Invalid GenericTooltipData (Null) for Compatibility tooltip"); }
     }
+    #endregion
 
+    #endregion
+
+    #region Alpha...
+
+    #region UpdateActorAlpha
+    /// <summary>
+    /// changes the alpha of an actor sprite and text
+    /// </summary>
+    /// <param name="actorSlotID"></param>
+    /// <param name="alpha"></param>
+    public void UpdateActorAlpha(int actorSlotID, float alpha)
+    {
+        Debug.Assert(actorSlotID > -1 && actorSlotID < GameManager.i.actorScript.maxNumOfOnMapActors, "Invalid slotID");
+        //check actor present in slot, eg. not vacant
+        if (GameManager.i.dataScript.CheckActorSlotStatus(actorSlotID, GameManager.i.sideScript.PlayerSide) == true)
+        {
+            switch (actorSlotID)
+            {
+                case 0:
+                    canvas0.alpha = alpha;
+                    break;
+                case 1:
+                    canvas1.alpha = alpha;
+                    break;
+                case 2:
+                    canvas2.alpha = alpha;
+                    break;
+                case 3:
+                    canvas3.alpha = alpha;
+                    break;
+                default:
+                    Debug.LogError(string.Format("Invalid actorSlotID {0}", actorSlotID));
+                    break;
+            }
+        }
+    }
+    #endregion
+
+    #region SetActorsAlphaActive
+    /// <summary>
+    /// Sets actor alpha to active for all onMap slotID's
+    /// </summary>
+    public void SetActorsAlphaActive()
+    {
+        float alpha = GameManager.i.guiScript.alphaActive;
+        //set all actor alpha's to active (may still be set to inactive from previous level)
+        for (int i = 0; i < GameManager.i.actorScript.maxNumOfOnMapActors; i++)
+        { UpdateActorAlpha(i, alpha); }
+    }
+    #endregion
+
+    #region SetActorsAlphaInactive
+    /// <summary>
+    /// Sets actor alpha to inactive for all onMap slotID's
+    /// </summary>
+    public void SetActorsAlphaInactive()
+    {
+        float alpha = GameManager.i.guiScript.alphaInactive;
+        //set all actor alpha's to active (may still be set to inactive from previous level)
+        for (int i = 0; i < GameManager.i.actorScript.maxNumOfOnMapActors; i++)
+        { UpdateActorAlpha(i, alpha); }
+    }
+    #endregion
+
+    #region UpdatePlayerAlpha
+    /// <summary>
+    /// changes the alpha of the player sprite and text
+    /// </summary>
+    /// <param name="alpha"></param>
+    public void UpdatePlayerAlpha(float alpha)
+    { canvasPlayer.alpha = alpha; }
+    #endregion
+
+    #endregion
+
+    #region SetPlayerMoodUI
     /// <summary>
     /// changes the sprite for the  moodPanel to reflect player mood
     /// </summary>
@@ -594,7 +632,11 @@ public class ActorPanelUI : MonoBehaviour
             moodStars.text = GameManager.i.guiScript.GetNormalStars(mood);
         }
     }
+    #endregion
 
+    #region ActorInfoUI...
+
+    #region SetActorInfoUI
     /// <summary>
     /// toggles actor Power/compatibility display. If 'showPower' true POWER, false COMPATIBILITY and no actor present in slot (Vacant) will auto switch off
     /// </summary>
@@ -642,14 +684,18 @@ public class ActorPanelUI : MonoBehaviour
         //logging
         Debug.LogFormat("[UI] ActorPanelUI.cs -> ToggleActorInfoUI: {0}{1}", showPower == true ? "POWER" : "COMPATIBILITY", "\n");
     }
+    #endregion
 
+    #region CheckInfoUIStatus
     /// <summary>
     /// returns true if actor Info UI shows POWER, false if COMPATIBILITY
     /// </summary>
     /// <returns></returns>
     public bool CheckInfoUIStatus()
     { return isPowerUI; }
+    #endregion
 
+    #region UpdateActorPowerUI
     /// <summary>
     /// updates actor slot Power UI with current Power
     /// </summary>
@@ -668,7 +714,9 @@ public class ActorPanelUI : MonoBehaviour
             default: Debug.LogWarningFormat("Invalid actorSlotID {0}", actorSlotID); break;
         }
     }
+    #endregion
 
+    #region UpdateActorCompatibilityUI
     /// <summary>
     /// updates actor slot compatibility UI with compatibility stars
     /// </summary>
@@ -687,14 +735,96 @@ public class ActorPanelUI : MonoBehaviour
             default: Debug.LogWarningFormat("Invalid actorSlotID {0}", actorSlotID); break;
         }
     }
+    #endregion
 
+    #region UpdatePlayerPowerUI
     /// <summary>
     /// updates Power UI with player's current Power
     /// </summary>
     /// <param name="power"></param>
     public void UpdatePlayerPowerUI(int power)
     { powerTextPlayer.text = Convert.ToString(power); }
+    #endregion
 
+    #endregion
+
+    #region ActorRelation...
+
+    #region ToggleActorRelation
+    /// <summary>
+    /// Toggle actor relation display (friends and enemies) on/off
+    /// </summary>
+    private void ToggleActorRelation()
+    {
+        if (isRelationship == true)
+        {
+            CloseActorRelation();
+            isRelationship = false;
+        }
+        else
+        {
+            SetActorRelation();
+            isRelationship = true;
+        }
+    }
+    #endregion
+
+    #region SetActorRelation
+    /// <summary>
+    /// displays friend or enemy status on face of actor portraits
+    /// </summary>
+    private void SetActorRelation()
+    {
+        Dictionary<int, RelationshipData> dictOfRelations = GameManager.i.dataScript.GetDictOfRelations();
+        if (dictOfRelations != null)
+        {
+            int slotID;
+            string text = "Unknown";
+            GlobalSide globalResistance = GameManager.i.globalScript.sideResistance;
+            foreach (var relation in dictOfRelations)
+            {
+                if (relation.Value != null)
+                {
+                    slotID = relation.Key;
+                    //ignore vacant slots
+                    if (GameManager.i.dataScript.CheckActorSlotStatus(slotID, globalResistance) == true)
+                    {
+                        switch (relation.Value.relationship)
+                        {
+                            case ActorRelationship.None:
+                                text = GameManager.Formatt(Convert.ToString(relation.Value.relationship), ColourType.greyText);
+                                break;
+                            case ActorRelationship.FRIEND:
+                                text = GameManager.Formatt(Convert.ToString(relation.Value.relationship), ColourType.goodText);
+                                break;
+                            case ActorRelationship.ENEMY:
+                                text = GameManager.Formatt(Convert.ToString(relation.Value.relationship), ColourType.badText);
+                                break;
+                            default: Debug.LogWarningFormat("Unrecognised relationship \"{0}\" for slot ID {1}{2}", relation.Value.relationship, relation.Value.slotID, "\n"); break;
+                        }
+                        arrayOfRelationTexts[slotID].text = text;
+                        arrayOfRelationPanels[slotID].gameObject.SetActive(true);
+                    }
+                }
+                else { Debug.LogWarningFormat("Invalid RelationshipData (Null) for dictOfRelations[{0}]", relation.Key); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfRelations (Null)"); }
+    }
+    #endregion
+
+    #region CloseActorRelation
+    /// <summary>
+    /// toggle off actor relationship status display
+    /// </summary>
+    private void CloseActorRelation()
+    {
+        for (int i = 0; i < arrayOfRelationPanels.Length; i++)
+        { arrayOfRelationPanels[i].gameObject.SetActive(false); }
+    }
+    #endregion
+
+    #endregion
 
     //new methods above here
 }
