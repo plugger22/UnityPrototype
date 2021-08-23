@@ -69,3 +69,6 @@ System.Text.StringBuilder.AppendFormatHelper (System.IFormatProvider provider, S
 	
 Dev seed 57623 -> Monday, 23 August 2021 4:04 PM
 City seed 25951 -> Londus, Eurasia
+
+Dev seed 17704 -> Monday, 23 August 2021 4:42 PM
+City seed 3404 -> Londus, Eurasia
