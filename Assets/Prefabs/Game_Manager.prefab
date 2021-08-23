@@ -1663,6 +1663,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1023dac60c566144c8a2642c7eefdbac, type: 2}
   - {fileID: 11400000, guid: 6682a1028fb465e4ba5fb95d1a1516b9, type: 2}
   - {fileID: 11400000, guid: f611b046c962fba4b9540b8ecdeb7402, type: 2}
+  - {fileID: 11400000, guid: 83da031f37348f040ae5054348dd720e, type: 2}
   arrayOfGameHelpSets:
   - {fileID: 11400000, guid: 39c0e7dc2b2c56a4c9f353e781ea9a41, type: 2}
   - {fileID: 11400000, guid: 347b0e256661a6044adc8c5620a2bcae, type: 2}
@@ -7195,7 +7196,7 @@ MonoBehaviour:
   gameHelpScript: {fileID: 0}
   newTurnScript: {fileID: 0}
   seedDev: 0
-  autoRunTurns: 10
+  autoRunTurns: 20
   scenarioStartLevel: 0
   tutorialStartLevel: 3
   isPerformanceLog: 1
