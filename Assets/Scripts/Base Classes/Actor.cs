@@ -108,9 +108,12 @@ namespace gameAPI
         [HideInInspector] public int compatibilityTwo;
         [HideInInspector] public int compatibilityThree;
 
+
         //private backing field
         private ActorStatus _status;
         private int _power;
+
+        #region Properties...
 
         public ActorStatus Status
         {
@@ -140,7 +143,9 @@ namespace gameAPI
                 { GameManager.i.actorPanelScript.UpdateActorPowerUI(slotID, _power); }
             }
         }
+        #endregion
 
+        #region Constructors...
         /// <summary>
         /// default constructor (called anytime an actor is created, even if it is assigned another actor's reference)
         /// </summary>
@@ -178,7 +183,9 @@ namespace gameAPI
                 Debug.AssertFormat(compatibilityThree > 0, "Invalid compatibilityThree (Zero) for {0}", actorName);
             }
         }
+        #endregion
 
+        #region ResetStates
         /// <summary>
         /// reset all state indicators back to their defaults of false
         /// </summary>
@@ -194,7 +201,9 @@ namespace gameAPI
             isStressLeave = false;
             /*isTraitor = false;  //leave as is so traitor status can carry over between levels */
         }
+        #endregion
 
+        #region Datapoints...
         //
         // - - - Datapoints - - - 
         //
@@ -455,7 +464,9 @@ namespace gameAPI
                     break;
             }
         }
+        #endregion
 
+        #region Teams...
         //
         // - - - Teams - - -
         //
@@ -488,7 +499,9 @@ namespace gameAPI
         /// </summary>
         public void RemoveAllTeams()
         { listOfTeams.Clear(); }
+        #endregion
 
+        #region Contacts...
         //
         // - - - Contacts - - -
         //
@@ -710,7 +723,9 @@ namespace gameAPI
             }
             return false;
         }
+#endregion
 
+        #region Conditions...
         //
         // - - - Conditions - - -
         //
@@ -909,7 +924,9 @@ namespace gameAPI
 
         public int CheckNumOfConditions()
         { return listOfConditions.Count; }
+        #endregion
 
+        #region Secrets...
         //
         // - - - Secrets - - -
         //
@@ -1073,7 +1090,9 @@ namespace gameAPI
             }
             return secret;
         }
+        #endregion
 
+        #region Trait...
         //
         // - - -  Trait - - -
         //
@@ -1115,7 +1134,9 @@ namespace gameAPI
             }
             return false;
         }
+        #endregion
 
+        #region Gear...
         //
         // - - - Gear - - -
         //
@@ -1249,7 +1270,9 @@ namespace gameAPI
             { return false; }
             return true;
         }
+        #endregion
 
+        #region Tooltip...
         //
         // - - - Tooltip - - -
         //
@@ -1279,14 +1302,18 @@ namespace gameAPI
             };
             return data;
         }
+        #endregion
 
+        #region Personality...
         //
         // - - - Personality
         //
 
         public Personality GetPersonality()
         { return personality; }
+        #endregion
 
+        #region Node Actions...
         //
         // - - - Node Actions (Both sides)
         //
@@ -1365,7 +1392,9 @@ namespace gameAPI
             }
             else { Debug.LogError("Invalid listOfData (Null)"); }
         }
+        #endregion
 
+        #region Team Actions...
         //
         // - - - Team Actions (Authority actors only)
         //
@@ -1441,7 +1470,9 @@ namespace gameAPI
             }
             else { Debug.LogError("Invalid listOfData (Null)"); }
         }
+        #endregion
 
+        #region HQ Actors...
         //
         // - - - HQ actors
         //
@@ -1494,7 +1525,9 @@ namespace gameAPI
             }
             else { Debug.LogError("Invalid listOfHqPowerData (Null)"); }
         }
+        #endregion
 
+        #region History...
         //
         // - - - History
         //
@@ -1567,6 +1600,7 @@ namespace gameAPI
             }
             else { Debug.LogError("Invalid listOfHistory (Null)"); }
         }
+        #endregion
 
         //place methods above here
     }

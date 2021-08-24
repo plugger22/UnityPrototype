@@ -80,6 +80,7 @@ public class PlayerManager : MonoBehaviour
 
     /*[HideInInspector] public bool isOrgActivatedCurePresent;*/
 
+    #region Private fields...
     //private backing fields, need to track separately to handle AI playing both sides
     private int _powerResistance;
     private int _powerAuthority;
@@ -106,7 +107,7 @@ public class PlayerManager : MonoBehaviour
     private Condition conditionStressed;
     private Condition conditionAddicted;
     private Gear gearSpecialMove;
-
+    #endregion
 
 
     //Note: There is no ActorStatus for the player as the 'ResistanceState' handles this -> EDIT: Nope, status does
@@ -240,8 +241,9 @@ public class PlayerManager : MonoBehaviour
     }
     #endregion
 
-    #endregion 
+    #endregion
 
+    #region Initialisation...
 
     /// <summary>
     /// Not for GameState.LoadGame
@@ -285,9 +287,9 @@ public class PlayerManager : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
-
-    #region Initialise SubMethods
+    #region Initialise SubMethods...
 
     #region SubInitialiseSessionStartEarly
     private void SubInitialiseSessionStartEarly()
@@ -530,6 +532,7 @@ public class PlayerManager : MonoBehaviour
 
     #endregion
 
+    #region InitialisePlayerStartNode
     /// <summary>
     /// starts player at a random SPRAWL node, error if not or if City Hall district (player can't start here as nemesis always starts from there)
     /// </summary>
@@ -569,7 +572,9 @@ public class PlayerManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid player start node (City Hall location)"); }
     }
+    #endregion
 
+    #region OnEvent
     /// <summary>
     /// Event Handler
     /// </summary>
@@ -593,7 +598,9 @@ public class PlayerManager : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
+    #region EndTurnFinal
     /// <summary>
     /// end of turn final
     /// </summary>
@@ -602,7 +609,9 @@ public class PlayerManager : MonoBehaviour
         //handles situation of no compromised gear checks and resets isEndOfTurnGearCheck
         ResetAllGear();
     }
+    #endregion
 
+    #region ConfigureTutorialPlayer
     /// <summary>
     /// Initialises player state at the start of a set
     /// </summary>
@@ -659,8 +668,9 @@ public class PlayerManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid tutorialPlayerConfig (Null)"); }
     }
+    #endregion
 
-
+    #region Gear...
     //
     /// - - - Gear - - -
     /// 
@@ -1097,7 +1107,9 @@ public class PlayerManager : MonoBehaviour
         { gearName = listOfGear[Random.Range(0, count)]; }
         return gearName;
     }
+    #endregion
 
+    #region Conditions...
     //
     // - - - Conditions - - -
     //
@@ -1509,7 +1521,9 @@ public class PlayerManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfConditions (Null)"); }
     }
+    #endregion
 
+    #region Secrets...
     //
     // - - - Secrets - - -
     //
@@ -1690,7 +1704,9 @@ public class PlayerManager : MonoBehaviour
         { secret = listOfSecrets[Random.Range(0, numOfSecrets)]; }
         return secret;
     }
+    #endregion
 
+    #region Investigations...
     //
     // - - - Investigations - - -
     //
@@ -2178,8 +2194,9 @@ public class PlayerManager : MonoBehaviour
         }
         return text;
     }
+    #endregion
 
-
+    #region Debug...
     //
     // - - - Debug - - -
     //
@@ -2432,257 +2449,6 @@ public class PlayerManager : MonoBehaviour
     }
 
 
-    //
-    // - - - Names - - -
-    //
-
-
-    public void SetPlayerNameAuthority(string playerName)
-    {
-        if (string.IsNullOrEmpty(playerName) == false)
-        { _playerNameAuthority = playerName; }
-        else { Debug.LogError("Invalid Authority playerName (Null or Empty)"); }
-    }
-
-    public void SetPlayerNameResistance(string playerName)
-    {
-        if (string.IsNullOrEmpty(playerName) == false)
-        { _playerNameResistance = playerName; }
-        else { Debug.LogError("Invalid Resistance playerName (Null or Empty)"); }
-    }
-
-    public void SetPlayerFirstName(string firstName)
-    {
-        if (string.IsNullOrEmpty(firstName) == false)
-        { _firstName = firstName; }
-        else { Debug.LogError("Invalid Player First Name (Null or Empty)"); }
-    }
-
-    /// <summary>
-    /// returns name of Authority Player regardless of whether it is AI or Human controlled
-    /// </summary>
-    /// <returns></returns>
-    public string GetPlayerNameAuthority()
-    { return _playerNameAuthority; }
-
-    /// <summary>
-    /// returns name of Resistance Player regardless of whether it is AI or Human controlled
-    /// </summary>
-    /// <returns></returns>
-    public string GetPlayerNameResistance()
-    { return _playerNameResistance; }
-
-    /// <summary>
-    /// returns name of specific side player regardless of whether it is AI or Human controlled
-    /// </summary>
-    /// <param name="side"></param>
-    /// <returns></returns>
-    public string GetPlayerName(GlobalSide side)
-    {
-        if (side != null)
-        {
-            if (side.level == 1)
-            {
-                //Authority
-                return _playerNameAuthority;
-            }
-            else if (side.level == 2)
-            {
-                //Resistance
-                return _playerNameResistance;
-            }
-            else { Debug.LogErrorFormat("Invalid side \"{0}\"", side.name); }
-        }
-        else { Debug.LogError("Invalid side (Null)"); }
-        return "Unknown Name";
-    }
-
-
-
-
-    //
-    // - - - Personality & mood
-    //
-
-    public Personality GetPersonality()
-    { return personality; }
-
-    public int GetMood()
-    { return mood; }
-
-    /// <summary>
-    /// Main method to change mood. Give a reason (keep short, eg. "Dismissed FIXER") and the name of the Factor that applied). Auto adds a history record. Auto displays popUp unless isPopUp set to false 
-    /// NOTE: You only want to call this method if there is definite change (eg. not Zero)
-    /// NOTE: No changes are possible while player is STRESSED
-    /// </summary>
-    /// <param name="change"></param>
-    /// <param name="reason"></param>
-    /// <param name="factor"></param>
-    public void ChangeMood(int change, string reason, string factor, bool isPopUp = true)
-    {
-        string text = "Unknown";
-        GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
-        //check player isn't currently stressed
-        if (isStressed == false)
-        {
-            Debug.Assert(change != 0, "Invalid change (no point of it's Zero)");
-            if (string.IsNullOrEmpty(reason) == true)
-            {
-                reason = "Unknown";
-                Debug.LogWarning("Invalid reason (Null or Empty)");
-            }
-            //factor can be EMPTY but not Null
-            if (factor == null)
-            {
-                factor = "Unknown";
-                Debug.LogWarning("Invalid factor (Null or Empty)");
-            }
-            //update mood
-            bool isStressed = false;
-            mood += change;
-            if (isPopUp == true)
-            { GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, string.Format("Mood {0}{1}", change > 0 ? "+" : "", change)); }
-            if (mood < 0)
-            {
-                //player immune to stress
-                if (stressImmunityCurrent <= 0)
-                {
-                    //player gains stressed condition
-                    AddCondition(conditionStressed, playerSide, "Mood drops below Zero");
-                    isStressed = true;
-                }
-                text = string.Format("[Msg] Player did NOT become STRESSED due to drugs, currentImmunity {0}, startImmunity {1}, isAddicted {2}{3}", stressImmunityCurrent, stressImmunityStart, isAddicted, "\n");
-                GameManager.i.messageScript.PlayerImmuneStress(text, stressImmunityCurrent, stressImmunityStart, isAddicted);
-            }
-            mood = Mathf.Clamp(mood, 0, moodMax);
-            Debug.LogFormat("[Sta] PlayerManager.cs -> ChangeMood: Mood {0}{1} (now {2}){3}", change > 0 ? "+" : "", change, mood, "\n");
-            //change sprite
-            GameManager.i.actorPanelScript.SetPlayerMoodUI(mood, isStressed);
-            //add a record
-            HistoryMood record = new HistoryMood()
-            {
-                change = change,
-                mood = mood,
-                factor = factor,
-                isStressed = isStressed
-            };
-            //colour coded descriptor
-            if (isAddicted == true)
-            { text = string.Format("{0} {1}{2} {3}", reason, change > 0 ? "+" : "", change, isStressed == true ? ", IMMUNE" : ""); }
-            else { text = string.Format("{0} {1}{2} {3}", reason, change > 0 ? "+" : "", change, isStressed == true ? ", STRESSED" : ""); }
-            if (change > 0) { record.descriptor = GameManager.Formatt(text, ColourType.goodText); }
-            else if (change < 0) { { record.descriptor = GameManager.Formatt(text, ColourType.badText); } }
-            else { record.descriptor = GameManager.Formatt(text, ColourType.neutralText); }
-            //add to list
-            listOfMoodHistory.Add(record);
-            //message
-            GameManager.i.messageScript.PlayerMoodChange(reason, change, mood, isStressed);
-        }
-        else
-        {
-            //player already stressed
-            if ((mood + change) < 0)
-            {
-                GameManager.i.dataScript.StatisticIncrement(StatType.PlayerSuperStressed);
-                //used to force a breakdown at the next opportunity
-                numOfSuperStress++;
-            }
-        }
-    }
-
-    /// <summary>
-    /// Set mood to a particular value based on loaded save game data
-    /// </summary>
-    /// <param name="mood"></param>
-    public void SetMood(int mood)
-    {
-        Debug.AssertFormat(mood >= 0 && mood <= moodMax, "Invalid mood \"{0}\", (should be between 0 & 3)");
-        this.mood = mood;
-        this.mood = Mathf.Clamp(this.mood, 0, moodMax);
-    }
-
-    public List<HistoryMood> GetListOfMoodHistory()
-    { return listOfMoodHistory; }
-
-    /// <summary>
-    /// Set listOfMoodHistory with loaded save game data. Clears out any existing data prior to updating.
-    /// </summary>
-    /// <param name="listOfHistory"></param>
-    public void SetMoodHistory(List<HistoryMood> listOfHistory)
-    {
-        if (listOfHistory != null)
-        {
-            listOfMoodHistory.Clear();
-            listOfMoodHistory.AddRange(listOfHistory);
-        }
-        else { Debug.LogError("Invalid listOfHistory (Null)"); }
-    }
-
-    /// <summary>
-    /// Any unused actions at the end of the turn are used to improve the Players mood, +1 / action. Player must be active for this to occur
-    /// </summary>
-    /// <param name="unusedActions"></param>
-    public void ProcessDoNothing(int unusedActions)
-    {
-        if (unusedActions > 0)
-        {
-            if (status == ActorStatus.Active)
-            {
-                //stats
-                GameManager.i.dataScript.StatisticIncrement(StatType.PlayerDoNothing, unusedActions);
-                //only improve mood if there is room for improvement
-                if (mood < moodMax && isStressed == false)
-                {
-                    //there's a cap on mood improvements from doing nothing
-                    int moodIncrease = Mathf.Min(unusedActions, moodImprove);
-                    //improve mood
-                    ChangeMood(moodIncrease, "Watching SerialFlix", "", false);
-                }
-            }
-        }
-        else { Debug.LogWarning("Invalid unused Actions (Zero)"); }
-    }
-
-    /// <summary>
-    /// Player captured and ransomed off, eg. Bounty Hunter nemesis. All gear and all power lost
-    /// </summary>
-    public void RansomPlayer()
-    {
-        int numOfGear;
-        string gearName;
-        switch (GameManager.i.sideScript.resistanceOverall)
-        {
-            case SideState.Human:
-                //gear -> remove all, reverse loop
-                numOfGear = listOfGear.Count;
-                if (numOfGear > 0)
-                {
-                    for (int i = numOfGear - 1; i >= 0; i--)
-                    {
-                        gearName = listOfGear[i];
-                        if (string.IsNullOrEmpty(gearName) == false)
-                        { RemoveGear(gearName, true); }
-                        else { Debug.LogWarningFormat("Invalid gearName (Null or Empty) for listOfGear[{0}]", i); }
-                    }
-                }
-                //power -> remove all
-                Power = 0;
-                break;
-            case SideState.AI:
-                //Power
-                GameManager.i.dataScript.SetAIResources(GameManager.i.globalScript.sideResistance, 0);
-                //gear
-                GameManager.i.aiRebelScript.ResetGearPool();
-                break;
-            default: Debug.LogWarningFormat("Unrecognised resistanceOverall sideState \"{0}\"", GameManager.i.sideScript.resistanceOverall); break;
-        }
-    }
-
-
-    //
-    // - - - Debug 
-    //
-
     /// <summary>
     /// return a list of all secretsto SecretManager.cs -> DisplaySecretData for Debug display
     /// </summary>
@@ -2930,7 +2696,259 @@ public class PlayerManager : MonoBehaviour
         GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, "Power +10");
         GameManager.i.popUpFixedScript.ExecuteFixed();
     }
+    #endregion
+    
+    #region Names...
+    //
+    // - - - Names - - -
+    //
 
+
+    public void SetPlayerNameAuthority(string playerName)
+    {
+        if (string.IsNullOrEmpty(playerName) == false)
+        { _playerNameAuthority = playerName; }
+        else { Debug.LogError("Invalid Authority playerName (Null or Empty)"); }
+    }
+
+    public void SetPlayerNameResistance(string playerName)
+    {
+        if (string.IsNullOrEmpty(playerName) == false)
+        { _playerNameResistance = playerName; }
+        else { Debug.LogError("Invalid Resistance playerName (Null or Empty)"); }
+    }
+
+    public void SetPlayerFirstName(string firstName)
+    {
+        if (string.IsNullOrEmpty(firstName) == false)
+        { _firstName = firstName; }
+        else { Debug.LogError("Invalid Player First Name (Null or Empty)"); }
+    }
+
+    /// <summary>
+    /// returns name of Authority Player regardless of whether it is AI or Human controlled
+    /// </summary>
+    /// <returns></returns>
+    public string GetPlayerNameAuthority()
+    { return _playerNameAuthority; }
+
+    /// <summary>
+    /// returns name of Resistance Player regardless of whether it is AI or Human controlled
+    /// </summary>
+    /// <returns></returns>
+    public string GetPlayerNameResistance()
+    { return _playerNameResistance; }
+
+    /// <summary>
+    /// returns name of specific side player regardless of whether it is AI or Human controlled
+    /// </summary>
+    /// <param name="side"></param>
+    /// <returns></returns>
+    public string GetPlayerName(GlobalSide side)
+    {
+        if (side != null)
+        {
+            if (side.level == 1)
+            {
+                //Authority
+                return _playerNameAuthority;
+            }
+            else if (side.level == 2)
+            {
+                //Resistance
+                return _playerNameResistance;
+            }
+            else { Debug.LogErrorFormat("Invalid side \"{0}\"", side.name); }
+        }
+        else { Debug.LogError("Invalid side (Null)"); }
+        return "Unknown Name";
+    }
+
+    #endregion
+
+    #region Personality and Mood...
+    //
+    // - - - Personality & mood
+    //
+
+    public Personality GetPersonality()
+    { return personality; }
+
+    public int GetMood()
+    { return mood; }
+
+    /// <summary>
+    /// Main method to change mood. Give a reason (keep short, eg. "Dismissed FIXER") and the name of the Factor that applied). Auto adds a history record. Auto displays popUp unless isPopUp set to false 
+    /// NOTE: You only want to call this method if there is definite change (eg. not Zero)
+    /// NOTE: No changes are possible while player is STRESSED
+    /// </summary>
+    /// <param name="change"></param>
+    /// <param name="reason"></param>
+    /// <param name="factor"></param>
+    public void ChangeMood(int change, string reason, string factor, bool isPopUp = true)
+    {
+        string text = "Unknown";
+        GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
+        //check player isn't currently stressed
+        if (isStressed == false)
+        {
+            Debug.Assert(change != 0, "Invalid change (no point of it's Zero)");
+            if (string.IsNullOrEmpty(reason) == true)
+            {
+                reason = "Unknown";
+                Debug.LogWarning("Invalid reason (Null or Empty)");
+            }
+            //factor can be EMPTY but not Null
+            if (factor == null)
+            {
+                factor = "Unknown";
+                Debug.LogWarning("Invalid factor (Null or Empty)");
+            }
+            //update mood
+            bool isStressed = false;
+            mood += change;
+            if (isPopUp == true)
+            { GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, string.Format("Mood {0}{1}", change > 0 ? "+" : "", change)); }
+            if (mood < 0)
+            {
+                //player immune to stress
+                if (stressImmunityCurrent <= 0)
+                {
+                    //player gains stressed condition
+                    AddCondition(conditionStressed, playerSide, "Mood drops below Zero");
+                    isStressed = true;
+                }
+                text = string.Format("[Msg] Player did NOT become STRESSED due to drugs, currentImmunity {0}, startImmunity {1}, isAddicted {2}{3}", stressImmunityCurrent, stressImmunityStart, isAddicted, "\n");
+                GameManager.i.messageScript.PlayerImmuneStress(text, stressImmunityCurrent, stressImmunityStart, isAddicted);
+            }
+            mood = Mathf.Clamp(mood, 0, moodMax);
+            Debug.LogFormat("[Sta] PlayerManager.cs -> ChangeMood: Mood {0}{1} (now {2}){3}", change > 0 ? "+" : "", change, mood, "\n");
+            //change sprite
+            GameManager.i.actorPanelScript.SetPlayerMoodUI(mood, isStressed);
+            //add a record
+            HistoryMood record = new HistoryMood()
+            {
+                change = change,
+                mood = mood,
+                factor = factor,
+                isStressed = isStressed
+            };
+            //colour coded descriptor
+            if (isAddicted == true)
+            { text = string.Format("{0} {1}{2} {3}", reason, change > 0 ? "+" : "", change, isStressed == true ? ", IMMUNE" : ""); }
+            else { text = string.Format("{0} {1}{2} {3}", reason, change > 0 ? "+" : "", change, isStressed == true ? ", STRESSED" : ""); }
+            if (change > 0) { record.descriptor = GameManager.Formatt(text, ColourType.goodText); }
+            else if (change < 0) { { record.descriptor = GameManager.Formatt(text, ColourType.badText); } }
+            else { record.descriptor = GameManager.Formatt(text, ColourType.neutralText); }
+            //add to list
+            listOfMoodHistory.Add(record);
+            //message
+            GameManager.i.messageScript.PlayerMoodChange(reason, change, mood, isStressed);
+        }
+        else
+        {
+            //player already stressed
+            if ((mood + change) < 0)
+            {
+                GameManager.i.dataScript.StatisticIncrement(StatType.PlayerSuperStressed);
+                //used to force a breakdown at the next opportunity
+                numOfSuperStress++;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Set mood to a particular value based on loaded save game data
+    /// </summary>
+    /// <param name="mood"></param>
+    public void SetMood(int mood)
+    {
+        Debug.AssertFormat(mood >= 0 && mood <= moodMax, "Invalid mood \"{0}\", (should be between 0 & 3)");
+        this.mood = mood;
+        this.mood = Mathf.Clamp(this.mood, 0, moodMax);
+    }
+
+    public List<HistoryMood> GetListOfMoodHistory()
+    { return listOfMoodHistory; }
+
+    /// <summary>
+    /// Set listOfMoodHistory with loaded save game data. Clears out any existing data prior to updating.
+    /// </summary>
+    /// <param name="listOfHistory"></param>
+    public void SetMoodHistory(List<HistoryMood> listOfHistory)
+    {
+        if (listOfHistory != null)
+        {
+            listOfMoodHistory.Clear();
+            listOfMoodHistory.AddRange(listOfHistory);
+        }
+        else { Debug.LogError("Invalid listOfHistory (Null)"); }
+    }
+
+    /// <summary>
+    /// Any unused actions at the end of the turn are used to improve the Players mood, +1 / action. Player must be active for this to occur
+    /// </summary>
+    /// <param name="unusedActions"></param>
+    public void ProcessDoNothing(int unusedActions)
+    {
+        if (unusedActions > 0)
+        {
+            if (status == ActorStatus.Active)
+            {
+                //stats
+                GameManager.i.dataScript.StatisticIncrement(StatType.PlayerDoNothing, unusedActions);
+                //only improve mood if there is room for improvement
+                if (mood < moodMax && isStressed == false)
+                {
+                    //there's a cap on mood improvements from doing nothing
+                    int moodIncrease = Mathf.Min(unusedActions, moodImprove);
+                    //improve mood
+                    ChangeMood(moodIncrease, "Watching SerialFlix", "", false);
+                }
+            }
+        }
+        else { Debug.LogWarning("Invalid unused Actions (Zero)"); }
+    }
+    #endregion
+
+    #region RansomPlayer
+    /// <summary>
+    /// Player captured and ransomed off, eg. Bounty Hunter nemesis. All gear and all power lost
+    /// </summary>
+    public void RansomPlayer()
+    {
+        int numOfGear;
+        string gearName;
+        switch (GameManager.i.sideScript.resistanceOverall)
+        {
+            case SideState.Human:
+                //gear -> remove all, reverse loop
+                numOfGear = listOfGear.Count;
+                if (numOfGear > 0)
+                {
+                    for (int i = numOfGear - 1; i >= 0; i--)
+                    {
+                        gearName = listOfGear[i];
+                        if (string.IsNullOrEmpty(gearName) == false)
+                        { RemoveGear(gearName, true); }
+                        else { Debug.LogWarningFormat("Invalid gearName (Null or Empty) for listOfGear[{0}]", i); }
+                    }
+                }
+                //power -> remove all
+                Power = 0;
+                break;
+            case SideState.AI:
+                //Power
+                GameManager.i.dataScript.SetAIResources(GameManager.i.globalScript.sideResistance, 0);
+                //gear
+                GameManager.i.aiRebelScript.ResetGearPool();
+                break;
+            default: Debug.LogWarningFormat("Unrecognised resistanceOverall sideState \"{0}\"", GameManager.i.sideScript.resistanceOverall); break;
+        }
+    }
+    #endregion
+
+    #region Node Actions...
     //
     // - - - Node Actions
     //
@@ -3034,11 +3052,9 @@ public class PlayerManager : MonoBehaviour
         builder.AppendLine();
         return builder.ToString();
     }
+    #endregion
 
-    //
-    // - - - Assorted
-    //
-
+    #region CheckPlayerSpecial
     /// <summary>
     /// returns true for the player if active and if meets the special enum criteria, false otherwise
     /// </summary>
@@ -3077,7 +3093,9 @@ public class PlayerManager : MonoBehaviour
         }
         return isResult;
     }
+    #endregion
 
+    #region Capture Tools...
     //
     // - - - Capture Tools
     //
@@ -3151,30 +3169,9 @@ public class PlayerManager : MonoBehaviour
         Debug.AssertFormat(innocenceLevel > -1 && innocenceLevel < 4, "Invalid innocence level \"{0}\" (should be within range 0 to 3)", innocenceLevel);
         return arrayOfCaptureTools[innocenceLevel];
     }
+    #endregion
 
-    /*//
-    // - - - Personality EDIT: NOT NEEDED
-    //
-
-    /// <summary>
-    /// ArrayOfFactors is used to determine player's personality. Could come from default value (all random) or a tutorial player choice
-    /// </summary>
-    /// <param name="arrayOfFactors"></param>
-    public void SetPersonalityFactors(int[] arrayOfFactors)
-    {
-        if (arrayOfFactors != null)
-        {
-            if (arrayOfFactors.Length == GameManager.i.personScript.numOfFactors)
-            {
-                this.arrayOfFactors = arrayOfFactors;
-            }
-            else { Debug.LogErrorFormat("Invalid arrayOfFactors (is length {0}, should be {1})", arrayOfFactors.Length, GameManager.i.personScript.numOfFactors); }
-        }
-        else { Debug.LogError("Invalid arrayOfFactors (Null)"); }
-    }*/
-
-
-
+    #region MetaGame...
     //
     // - - - MetaGame
     //
@@ -3194,8 +3191,9 @@ public class PlayerManager : MonoBehaviour
         { arrayOfCaptureTools[i] = false; }
 
     }
+    #endregion
 
-
+    #region GetInnocenceDescriptor
     /// <summary>
     /// Returns a colour formatted, and Bolded, string 'The authority views you as a [...]'. Used for CheckText as well as TopBarUI tooltip. Standardises innocence descriptors across code base.
     /// NOTE: Can specify colour if required, default  ColourType.neutralText)
@@ -3214,7 +3212,7 @@ public class PlayerManager : MonoBehaviour
         }
         return replaceText;
     }
-
+    #endregion
 
     //place new methods above here
 }

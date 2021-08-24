@@ -3860,7 +3860,19 @@ public class ModalTabbedUI : MonoBehaviour
                     if (condition != null)
                     {
                         tab0Header3.listOfItems[i].gameObject.SetActive(true);
-                        tab0Header3.listOfItems[i].descriptor.text = condition.tag;
+                        //allow for special cases (require timers)
+                        switch (condition.tag)
+                        {
+                            case "DOOMED":
+                                tab0Header3.listOfItems[i].descriptor.text = string.Format("{0}   <b>{1}</b> Days", condition.tag, GameManager.i.actorScript.doomTimer);
+                                break;
+                            case "BLACKMAILER":
+                                tab0Header3.listOfItems[i].descriptor.text = string.Format("{0}   <b>{1}</b> Days", condition.tag, arrayOfActorsTemp[currentSideTabIndex].blackmailTimer);
+                                break;
+                            default:
+                                tab0Header3.listOfItems[i].descriptor.text = condition.tag;
+                                break;
+                        }
                         //turn on help
                         tab0Header3.listOfItems[i].image.gameObject.SetActive(true);
                         tab0Header3.listOfItems[i].image.color = tabItemHelpActiveColour;
