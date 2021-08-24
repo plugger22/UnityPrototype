@@ -14,4 +14,5 @@ MonoBehaviour:
   descriptor: Reference
   listOfGameHelp:
   - {fileID: 11400000, guid: 389d53919e3f0bb47bae5418bf27c083, type: 2}
-  - {fileID: 11400000, guid: cf32935db69b78d42ad55ad5687bc9a4, type: 2}
+  - {fileID: 11400000, guid: 781ab58db9792e74bb0c8a0684a0bc2d, type: 2}
+  - {fileID: 11400000, guid: d8cb8295c7dc47148bb012fc3cd317e8, type: 2}
