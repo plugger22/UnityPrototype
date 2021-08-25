@@ -2408,6 +2408,43 @@ public class HelpManager : MonoBehaviour
             "\n", colourAlert, colourEnd, colourAlert, colourEnd, "\n", colourAlert, colourEnd, colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
+        //Spotting
+        data = new HelpData();
+        data.tag = "nemesis_1";
+        data.header = "Spotting";
+        builder = new StringBuilder();
+        builder.AppendFormat("Tracers will {0}automatically{1} spot your Nemesis. Contacts will spot them only if their effetiveness is {2}equal to, or higher{3}, than the stealth rating of the Nemesis", 
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //Hiding
+        data = new HelpData();
+        data.tag = "nemesis_2";
+        data.header = "Hiding";
+        builder = new StringBuilder();
+        builder.AppendFormat("If your Nemesis is in the {0}same district{1} as yourself it will find you if your Invisibility is {2}less then, or equal to{3}, it's search rating", 
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //Safe
+        data = new HelpData();
+        data.tag = "nemesis_3";
+        data.header = "Safe Refuge";
+        builder = new StringBuilder();
+        builder.AppendFormat("If you are {0}Lying Low{1} or on {2}Stress Leave{3} your Nemesis can't find you. This {4}doesn't{5} apply if you are suffering a Stress induced {6}Breakdown{7}",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //Modes
+        data = new HelpData();
+        data.tag = "nemesis_4";
+        data.header = "Modes";
+        builder = new StringBuilder();
+        builder.AppendFormat("A Nemesis will wait at a central location until it gets a confirmed sighting whereupon it changes to {0}HUNT{1} mode and begins actively look for you. At times it may switch to {2}AMBUSH{3} mode" +
+            " where it lurks in a likely district, waiting...",
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
         #endregion
 
         #region Npc
@@ -2880,10 +2917,10 @@ public class HelpManager : MonoBehaviour
     /// </summary>
     public void DebugShowHelp()
     {
-        string tag0 = "hq_0";
-        string tag1 = "hq_1";
-        string tag2 = "relation_2";
-        string tag3 = "relation_3";
+        string tag0 = "nemesis_2";
+        string tag1 = "nemesis_3";
+        string tag2 = "nemesis_1";
+        string tag3 = "nemesis_4";
         List<HelpData> listOfHelp = GetHelpData(tag0, tag1, tag2, tag3);
         Vector3 screenPos = new Vector3(Screen.width / 2, Screen.height / 2);
         GameManager.i.tooltipHelpScript.SetTooltip(listOfHelp, screenPos);

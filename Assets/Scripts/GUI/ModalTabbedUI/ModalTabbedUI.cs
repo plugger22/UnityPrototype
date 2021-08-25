@@ -3849,6 +3849,7 @@ public class ModalTabbedUI : MonoBehaviour
         bool isConditions = true;
         Condition condition;
         int count = listOfConditions.Count;
+        int data;
         if (count > 0)
         {
             for (int i = 0; i < maxNumOfConditions; i++)
@@ -3864,10 +3865,12 @@ public class ModalTabbedUI : MonoBehaviour
                         switch (condition.tag)
                         {
                             case "DOOMED":
-                                tab0Header3.listOfItems[i].descriptor.text = string.Format("{0}   <b>{1}</b> Days", condition.tag, GameManager.i.actorScript.doomTimer);
+                                data = GameManager.i.actorScript.doomTimer;
+                                tab0Header3.listOfItems[i].descriptor.text = string.Format("{0}   <b>{1}</b> Day{2}", condition.tag, data, data != 1 ? "s" : "");
                                 break;
                             case "BLACKMAILER":
-                                tab0Header3.listOfItems[i].descriptor.text = string.Format("{0}   <b>{1}</b> Days", condition.tag, arrayOfActorsTemp[currentSideTabIndex].blackmailTimer);
+                                data = arrayOfActorsTemp[currentSideTabIndex].blackmailTimer;
+                                tab0Header3.listOfItems[i].descriptor.text = string.Format("{0}   <b>{1}</b> Day{2}", condition.tag, data, data != 1 ? "s" : "");
                                 break;
                             default:
                                 tab0Header3.listOfItems[i].descriptor.text = condition.tag;

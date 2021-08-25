@@ -2453,6 +2453,10 @@ public class MessageManager : MonoBehaviour
             data.subType = message.subType;
             data.sideLevel = message.sideLevel;
             data.help = 1;
+            data.tag0 = "nemesis_2";
+            data.tag1 = "nemesis_3";
+            data.tag2 = "nemesis_1";
+            data.tag3 = "nemesis_4";
             //add
             GameManager.i.dataScript.AddMessage(message);
             GameManager.i.dataScript.AddItemData(data);
@@ -5057,8 +5061,7 @@ public class MessageManager : MonoBehaviour
     /// Npc ongoing status for Effects tab
     /// </summary>
     /// <param name="text"></param>
-    /// <param name="nodeID"></param>
-    /// <param name="nemesis"></param>
+    /// <param name="npc"></param>
     /// <returns></returns>
     public Message NpcOngoing(string text, Npc npc)
     {

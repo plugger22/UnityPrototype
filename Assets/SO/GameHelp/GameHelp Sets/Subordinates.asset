@@ -13,6 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Subordinates
   listOfGameHelp:
+  - {fileID: 11400000, guid: 65992b58027fd074089ea1295b0b0271, type: 2}
   - {fileID: 11400000, guid: 1aba6206e432dc945ab19706b2b68129, type: 2}
   - {fileID: 11400000, guid: b9d5b06e3c95671478801660d588f13d, type: 2}
   - {fileID: 11400000, guid: bf6577cc16cf0de45a007d63dd6f807a, type: 2}
@@ -25,4 +26,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: dd5eafc56577fc04d9412a8eabaf7450, type: 2}
   - {fileID: 11400000, guid: cf32935db69b78d42ad55ad5687bc9a4, type: 2}
   - {fileID: 11400000, guid: 6682a1028fb465e4ba5fb95d1a1516b9, type: 2}
-  - {fileID: 11400000, guid: 65992b58027fd074089ea1295b0b0271, type: 2}
+  - {fileID: 11400000, guid: 4d22af021fcec7b46a6b2202e94a264a, type: 2}
