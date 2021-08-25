@@ -11,6 +11,8 @@ public class TutorialSet : ScriptableObject
     [Header("Main")]
     [Tooltip("provide a reference to which tutorial this set is associated with to enable validation")]
     public Tutorial tutorial;
+    [Tooltip("Single word descriptor for tutorial set (shown at top of tutorial items under '4 of 7' progress tracker)")]
+    public string descriptor;
     [Tooltip("Developer notes only, not used in-game")]
     [TextArea]public string notes;
     [Tooltip("Where the set sits within the tutorial sequence (zero based)")]
@@ -38,5 +40,6 @@ public class TutorialSet : ScriptableObject
     public void OnEnable()
     {
         Debug.AssertFormat(tutorial != null, "Invalid tutorial (Null) for {0}", name);
+        Debug.AssertFormat(string.IsNullOrEmpty(descriptor) == false, "Invalid descriptor (Null or Empty) for {0}", name);
     }
 }

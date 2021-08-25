@@ -925,6 +925,7 @@ public class TutorialManager : MonoBehaviour
                     //reset contact dictionaries
                     GameManager.i.dataScript.TutorialResetContacts();
                     //configure player
+                    GameManager.i.playerScript.ResetTutorialPlayer();
                     if (set.playerConfig != null)
                     { GameManager.i.playerScript.ConfigureTutorialPlayer(set.playerConfig); }
                     //configure actors
@@ -973,6 +974,7 @@ public class TutorialManager : MonoBehaviour
                     //reset contact dictionaries
                     GameManager.i.dataScript.TutorialResetContacts();
                     //configure player
+                    GameManager.i.playerScript.ResetTutorialPlayer();
                     if (set.playerConfig != null)
                     { GameManager.i.playerScript.ConfigureTutorialPlayer(set.playerConfig); }
                     //configure actors

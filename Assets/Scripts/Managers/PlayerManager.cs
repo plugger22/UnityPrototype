@@ -611,12 +611,27 @@ public class PlayerManager : MonoBehaviour
     }
     #endregion
 
+    #region Tutorial...
+
+    #region ResetTutorialPlayer
+    /// <summary>
+    /// Do this at start of every new tutorial set regardless of whether a tutorialPlayerConfig file is present or not
+    /// </summary>
+    public void ResetTutorialPlayer()
+    {
+        //automatically clear out gear and secrets
+        listOfSecrets.Clear();
+        listOfGear.Clear();
+    }
+    #endregion
+
     #region ConfigureTutorialPlayer
     /// <summary>
     /// Initialises player state at the start of a set
     /// </summary>
     public void ConfigureTutorialPlayer(TutorialPlayerConfig config)
     {
+        //player config present
         if (config != null)
         {
             int count;
@@ -668,6 +683,8 @@ public class PlayerManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid tutorialPlayerConfig (Null)"); }
     }
+    #endregion
+
     #endregion
 
     #region Gear...

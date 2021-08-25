@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Name: Res0
   m_EditorClassIdentifier: 
   tutorial: {fileID: 11400000, guid: c050560a8867a3a4c806544632dda679, type: 2}
+  descriptor: Movement
   notes: Movement
   index: 0
+  playerConfig: {fileID: 0}
   actorConfig: {fileID: 11400000, guid: ede910bcff73263429ccc25cceacd3ae, type: 2}
   listOfFeaturesOff:
   - {fileID: 11400000, guid: 60af24f1ab6cad24784d77e56f88cc75, type: 2}

@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Name: Res2
   m_EditorClassIdentifier: 
   tutorial: {fileID: 11400000, guid: c050560a8867a3a4c806544632dda679, type: 2}
+  descriptor: Subordinates
   notes: Subordinates
   index: 2
+  playerConfig: {fileID: 0}
   actorConfig: {fileID: 0}
   listOfFeaturesOff:
   - {fileID: 11400000, guid: 7e2f496678746a1488d0508fb5ac34ef, type: 2}

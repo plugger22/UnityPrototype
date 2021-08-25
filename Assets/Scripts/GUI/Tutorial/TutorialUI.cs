@@ -350,7 +350,7 @@ public class TutorialUI : MonoBehaviour
                         else { Debug.LogWarningFormat("Invalid listOfItems[{0}] (Null) for set \"{1}\"", i, set.name); }
                     }
                     //progress indicator
-                    progressText.text = string.Format("{0} of {1}", GameManager.i.tutorialScript.index + 1, GameManager.i.tutorialScript.GetNumberOfSets());
+                    progressText.text = string.Format("{0} of {1}{2}<size=90%>{3}</size>", GameManager.i.tutorialScript.index + 1, GameManager.i.tutorialScript.GetNumberOfSets(), "\n", set.descriptor);
                     progressText.gameObject.SetActive(true);
                     progressTooltip.tooltipHeader = string.Format("<size=120%><b>{0}</b></size>", GameManager.Formatt("Progress", ColourType.salmonText));
                     progressTooltip.tooltipMain = string.Format("Indicates where you are in the {0}", GameManager.Formatt("Tutorial", ColourType.neutralText));

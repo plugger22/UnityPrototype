@@ -156,3 +156,78 @@ UnityEngine.Debug:LogWarning(Object)
 	
 Dev seed 2395 -> Wednesday, 25 August 2021 11:11 AM
 City seed 45073 -> Londus, Eurasia
+
+Dev seed 57198 -> Wednesday, 25 August 2021 12:04 PM
+City seed 55158 -> Londus, Eurasia
+
+Dev seed 34199 -> Wednesday, 25 August 2021 12:06 PM
+City seed 50216 -> VirtualCity, Eurasia
+
+Dev seed 29606 -> Wednesday, 25 August 2021 12:15 PM
+City seed 20551 -> VirtualCity, Eurasia
+WARNING Duplicate secret already in list, secretID Kleptomaniac
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	PlayerManager:AddSecret(Secret) (at Assets/Scripts/Managers/PlayerManager.cs:1593)
+	PlayerManager:ConfigureTutorialPlayer(TutorialPlayerConfig) (at Assets/Scripts/Managers/PlayerManager.cs:652)
+	TutorialManager:SetNextSet() (at Assets/Scripts/Managers/TutorialManager.cs:977)
+	TutorialManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TutorialManager.cs:152)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:391)
+	TutorialWidgetRight:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Tutorial/TutorialWidgetRight.cs:22)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Gear 'Briefcase", is already present in Player inventory
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	PlayerManager:AddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:868)
+	PlayerManager:ConfigureTutorialPlayer(TutorialPlayerConfig) (at Assets/Scripts/Managers/PlayerManager.cs:664)
+	TutorialManager:SetNextSet() (at Assets/Scripts/Managers/TutorialManager.cs:977)
+	TutorialManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TutorialManager.cs:152)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:391)
+	TutorialWidgetRight:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Tutorial/TutorialWidgetRight.cs:22)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Duplicate secret already in list, secretID Kleptomaniac
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	PlayerManager:AddSecret(Secret) (at Assets/Scripts/Managers/PlayerManager.cs:1593)
+	PlayerManager:ConfigureTutorialPlayer(TutorialPlayerConfig) (at Assets/Scripts/Managers/PlayerManager.cs:652)
+	TutorialManager:SetNextSet() (at Assets/Scripts/Managers/TutorialManager.cs:977)
+	TutorialManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TutorialManager.cs:152)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:391)
+	TutorialWidgetRight:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Tutorial/TutorialWidgetRight.cs:22)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Gear 'Briefcase", is already present in Player inventory
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	PlayerManager:AddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:868)
+	PlayerManager:ConfigureTutorialPlayer(TutorialPlayerConfig) (at Assets/Scripts/Managers/PlayerManager.cs:664)
+	TutorialManager:SetNextSet() (at Assets/Scripts/Managers/TutorialManager.cs:977)
+	TutorialManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TutorialManager.cs:152)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:391)
+	TutorialWidgetRight:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Tutorial/TutorialWidgetRight.cs:22)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 59652 -> Wednesday, 25 August 2021 12:27 PM
+City seed 29984 -> VirtualCity, Eurasia
+
+Dev seed 27891 -> Wednesday, 25 August 2021 12:27 PM
+City seed 48175 -> VirtualCity, Eurasia
+WARNING Duplicate secret already in list, secretID Kleptomaniac
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	PlayerManager:AddSecret(Secret) (at Assets/Scripts/Managers/PlayerManager.cs:1595)
+	PlayerManager:ConfigureTutorialPlayer(TutorialPlayerConfig) (at Assets/Scripts/Managers/PlayerManager.cs:653)
+	TutorialManager:SetNextSet() (at Assets/Scripts/Managers/TutorialManager.cs:977)
+	TutorialManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TutorialManager.cs:152)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:391)
+	TutorialWidgetRight:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Tutorial/TutorialWidgetRight.cs:22)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Gear 'Briefcase", is already present in Player inventory
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	PlayerManager:AddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:870)
+	PlayerManager:ConfigureTutorialPlayer(TutorialPlayerConfig) (at Assets/Scripts/Managers/PlayerManager.cs:666)
+	TutorialManager:SetNextSet() (at Assets/Scripts/Managers/TutorialManager.cs:977)
+	TutorialManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TutorialManager.cs:152)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:391)
+	TutorialWidgetRight:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Tutorial/TutorialWidgetRight.cs:22)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 34598 -> Wednesday, 25 August 2021 12:32 PM
+City seed 54438 -> VirtualCity, Eurasia
+
+Dev seed 8110 -> Wednesday, 25 August 2021 12:37 PM
+City seed 54931 -> VirtualCity, Eurasia
