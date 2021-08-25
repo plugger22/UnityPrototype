@@ -3207,7 +3207,7 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Initialises generic targets array. Called by LoadManager.cs -> targets (due to sequence issues with # of nodeArcs which determines size of array)
+    /// Initialises generic targets array. Called by TargetManager.cs -> InitialiseArrayOfGenericTargets (due to sequence issues with # of nodeArcs which determines size of array)
     /// </summary>
     public void InitialiseArrayOfGenericTargets()
     {
@@ -3523,38 +3523,38 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public string DebugDisplayGenericTargets()
     {
-        if (GameManager.i.optionScript.isTargets == true)
-        {
-            StringBuilder builder = new StringBuilder();
-            Target target = null;
-            List<string> tempList = new List<string>();
-            builder.AppendFormat(" ArrayOfGenericTargets{0}", "\n");
-            for (int i = 0; i < arrayOfGenericTargets.Length; i++)
+            if (GameManager.i.optionScript.isTargets == true)
             {
-                builder.AppendFormat("{0} NodeArc -> {1}{2}", "\n", GetNodeArc(i).name, "\n");
-                tempList = arrayOfGenericTargets[i];
-                if (tempList != null)
+                StringBuilder builder = new StringBuilder();
+                Target target = null;
+                List<string> tempList = new List<string>();
+                builder.AppendFormat(" ArrayOfGenericTargets{0}", "\n");
+                for (int i = 0; i < arrayOfGenericTargets.Length; i++)
                 {
-                    if (tempList.Count > 0)
+                    builder.AppendFormat("{0} NodeArc -> {1}{2}", "\n", GetNodeArc(i).name, "\n");
+                    tempList = arrayOfGenericTargets[i];
+                    if (tempList != null)
                     {
-                        for (int j = 0; j < tempList.Count; j++)
+                        if (tempList.Count > 0)
                         {
-                            target = GetTarget(tempList[j]);
-                            if (target != null)
+                            for (int j = 0; j < tempList.Count; j++)
                             {
-                                builder.AppendFormat(" {0}, level {1}, act {2}, del {3}, win {4}{5}", target.targetName, target.targetLevel,
-                                    target.profile.activation.name, target.timerDelay, target.timerWindow, "\n");
+                                target = GetTarget(tempList[j]);
+                                if (target != null)
+                                {
+                                    builder.AppendFormat(" {0}, level {1}, act {2}, del {3}, win {4}{5}", target.targetName, target.targetLevel,
+                                        target.profile.activation.name, target.timerDelay, target.timerWindow, "\n");
+                                }
+                                else { builder.AppendFormat(" INVALID Target (Null){0}", "\n"); }
                             }
-                            else { builder.AppendFormat(" INVALID Target (Null){0}", "\n"); }
                         }
+                        else { builder.AppendFormat(" No Targets present{0}", "\n"); }
                     }
-                    else { builder.AppendFormat(" No Targets present{0}", "\n"); }
+                    else { builder.AppendFormat(" INVALID List (Null){0}", "\n"); }
                 }
-                else { builder.AppendFormat(" INVALID List (Null){0}", "\n"); }
+                return builder.ToString();
             }
-            return builder.ToString();
-        }
-        else { return "Targets have been disabled"; }
+            else { return "Targets have been disabled"; }
     }
 
     /// <summary>

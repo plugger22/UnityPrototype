@@ -12,6 +12,10 @@ public class TutorialTargetConfig : ScriptableObject
     [Tooltip("Which side")]
     public GlobalSide side;
 
+    [Header("Placement")]
+    [Tooltip("Minimum distance in nodes for random target placement from Player's starting location. Default of 0 is ignore and place anywhere except player's starting node")]
+    [Range(0, 4)] public int minDistance = 0;
+
     [Header("Targets")]
     [Tooltip("All of the listed targets will start the set Live and visibile")]
     public List<Target> listOfTargets;

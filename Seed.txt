@@ -249,3 +249,20 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 
 Dev seed 40736 -> Wednesday, 25 August 2021 3:44 PM
 City seed 60305 -> VirtualCity, Eurasia
+
+Dev seed 59008 -> Wednesday, 25 August 2021 4:28 PM
+City seed 27655 -> VirtualCity, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+DataManager.DebugDisplayGenericTargets () (at Assets/Scripts/Managers/DataManager.cs:3532)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1902)
+	
+Dev seed 38492 -> Wednesday, 25 August 2021 4:36 PM
+City seed 9598 -> VirtualCity, Eurasia
+
+Dev seed 43758 -> Wednesday, 25 August 2021 4:40 PM
+
+Dev seed 33151 -> Wednesday, 25 August 2021 4:41 PM
+City seed 14338 -> VirtualCity, Eurasia
+
+Dev seed 40144 -> Wednesday, 25 August 2021 4:58 PM
+City seed 27045 -> VirtualCity, Eurasia

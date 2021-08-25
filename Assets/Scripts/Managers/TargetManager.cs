@@ -153,8 +153,27 @@ public class TargetManager : MonoBehaviour
         Debug.Assert(activateExtremeLimit > 0, "Invalid activateExtremeLimit (Zero or Less");
         //reset all targets (caters for followOn levels)
         ResetAllTargets();
-        //set up generic target array
         InitialiseGenericTargetArray();
+        /*                
+        switch (GameManager.i.inputScript.GameState)
+        {
+            case GameState.NewInitialisation:
+            case GameState.FollowOnInitialisation:
+            case GameState.LoadAtStart:
+                //set up generic target array
+
+                break;
+            case GameState.TutorialOptions:
+                InitialiseTutorialTargets();
+                break;
+            case GameState.LoadGame:
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
+                break;
+        }
+        */
+
         //set up listOfTargetFactors. Note -> Sequence matters and is the order that the factors will be displayed
         foreach (var factor in Enum.GetValues(typeof(TargetFactors)))
         { listOfFactors.Add((TargetFactors)factor); }
@@ -165,7 +184,7 @@ public class TargetManager : MonoBehaviour
 
     #region InitialiseGenericTargetArray
     /// <summary>
-    /// initialise Generic target array
+    /// initialise Generic target array (excluded for Tutorials)
     /// </summary>
     private void InitialiseGenericTargetArray()
     {
@@ -206,6 +225,16 @@ public class TargetManager : MonoBehaviour
             else { Debug.LogError("Invalid arrayOfGenericTargets (Null)"); }
         }
         else { Debug.LogError("Invalid dictOfTargets (Null)"); }
+    }
+    #endregion
+
+    #region InitialiseTutorialTargets
+    /// <summary>
+    /// Initialise only the subset of tutorial targets
+    /// </summary>
+    private void InitialiseTutorialTargets()
+    {
+
     }
     #endregion
 
@@ -751,6 +780,16 @@ public class TargetManager : MonoBehaviour
             }
             else { Debug.LogFormat("[Tar] TargetManager.cs -> AssignOrganisationTarget: No org target this level as player already in contact with max (contact {0}, limit {1}){2}", numOfOrgs, maxOrgs, "\n"); }
         }
+    }
+    #endregion
+
+    #region AssignTutorialTargets
+    /// <summary>
+    /// Assign tutorial targets to random nodes a set distance minimum from player start node. Called directly from MissionManager.cs -> SubInitialseAll
+    /// </summary>
+    public void AssignTutorialTargets()
+    {
+        //CHECK tutorial option for targets is valid
     }
     #endregion
 
