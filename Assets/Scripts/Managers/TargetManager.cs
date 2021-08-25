@@ -232,9 +232,29 @@ public class TargetManager : MonoBehaviour
     /// <summary>
     /// Initialise only the subset of tutorial targets
     /// </summary>
-    private void InitialiseTutorialTargets()
+    private void InitialiseTutorialTargets(TutorialTargetConfig config)
     {
-
+        if (GameManager.i.optionScript.isTargets == true)
+        {
+            if (config != null)
+            {
+                List<Target> listOfLiveTargets = GameManager.i.dataScript.GetTargetPool(Status.Live);
+                if (listOfLiveTargets != null)
+                {
+                    //clear collection
+                    listOfLiveTargets.Clear();
+                    //add targets
+                    for (int i = 0; i < config.listOfTargets.Count; i++)
+                    {
+                        if (config.listOfTargets[i] != null)
+                        { listOfLiveTargets.Add(config.listOfTargets[i]); }
+                        else { Debug.LogWarningFormat("Invalid target (Null) for config.listOfTargets[{0}]", i); }
+                    }
+                }
+                else { Debug.LogError("Invalid listOfLiveTargets (Null)"); }
+            }
+            else { Debug.LogError("Invalid TutorialTargetConfig (Null)"); }
+        }
     }
     #endregion
 
@@ -463,6 +483,7 @@ public class TargetManager : MonoBehaviour
 
     #region AssignTargets...
 
+    #region AssignTargets
     /// <summary>
     /// master method to assign targets at level start
     /// </summary>
@@ -480,6 +501,7 @@ public class TargetManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid mission (Null)"); }
     }
+    #endregion
 
     #region AssignCityTargets
     /// <summary>
@@ -789,7 +811,12 @@ public class TargetManager : MonoBehaviour
     /// </summary>
     public void AssignTutorialTargets()
     {
-        //CHECK tutorial option for targets is valid
+       if (GameManager.i.optionScript.isTargets == true)
+        {
+            //player node
+
+        }
+       else { Debug.LogWarning("Can't assign targets as optionManager.isTargets FALSE"); }
     }
     #endregion
 
