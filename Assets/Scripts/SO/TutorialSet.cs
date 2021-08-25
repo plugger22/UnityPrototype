@@ -18,11 +18,13 @@ public class TutorialSet : ScriptableObject
     [Tooltip("Where the set sits within the tutorial sequence (zero based)")]
     [Range(0, 10)] public int index;
 
-    [Header("Configuration")]
+    [Header("Configurations")]
     [Tooltip("Specifies the Player state at the start of the set. Optional")]
     public TutorialPlayerConfig playerConfig;
     [Tooltip("Specifies the actor line up, if needed. Optional")]
     public TutorialActorConfig actorConfig;
+    [Tooltip("Specifies targets for the set (Live). Optional")]
+    public TutorialTargetConfig targetConfig;
 
     [Header("Features OFF")]
     [Tooltip("List of features switched OFF for this tutorial set")]

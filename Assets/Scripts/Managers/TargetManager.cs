@@ -14,11 +14,6 @@ using Random = UnityEngine.Random;
 public class TargetManager : MonoBehaviour
 {
 
-    /*[Tooltip("The % of the total Nodes on the level which commence with a Live target")]
-    [Range(0, 20)] public int startPercentTargets = 10;
-    [Tooltip("The % of the total Nodes on the level that can have a Live target at any one time")]
-    [Range(20, 50)] public int maxPercentTargets = 25;*/
-
     [Header("Target Activation Chances")]
     [Tooltip("% Chance of target going Live each turn with LOW activation")]
     [Range(1, 50)] public int activateLowChance = 5;
@@ -57,7 +52,6 @@ public class TargetManager : MonoBehaviour
     [Tooltip("Each target should have a TargetProfile. If not and there is no Mission SO profile, this profile is used as the default")]
     public TargetProfile defaultProfile;
 
-
     #region Save Compatible Data
     [HideInInspector] public int StartTargets;
     [HideInInspector] public int ActiveTargets;
@@ -87,6 +81,7 @@ public class TargetManager : MonoBehaviour
     private string colourTarget;
     private string colourEnd;
 
+    #region Initialise
     /// <summary>
     /// NOTE: Initialise called by MissionManager.cs -> Initialise and higher up by CampaignManager.cs -> Initialise
     /// </summary>
@@ -109,8 +104,9 @@ public class TargetManager : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
-    #region Initialise SubMethods
+    #region Initialise SubMethods...
 
     #region SubInitialiseFastAccess
     private void SubInitialiseFastAccess()
@@ -167,6 +163,7 @@ public class TargetManager : MonoBehaviour
 
     #endregion
 
+    #region InitialiseGenericTargetArray
     /// <summary>
     /// initialise Generic target array
     /// </summary>
@@ -210,7 +207,9 @@ public class TargetManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfTargets (Null)"); }
     }
+    #endregion
 
+    #region OnEvent
     /// <summary>
     /// Event handler
     /// </summary>
@@ -241,7 +240,9 @@ public class TargetManager : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
+    #region SetColours
     /// <summary>
     /// Set colour palette for tooltip
     /// </summary>
@@ -259,7 +260,9 @@ public class TargetManager : MonoBehaviour
         //colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
         colourEnd = GameManager.i.colourScript.GetEndTag();
     }
+    #endregion
 
+    #region StartTurnEarly
     /// <summary>
     /// loops nodes, checks all targets and updates isTargetKnown status
     /// </summary>
@@ -268,7 +271,9 @@ public class TargetManager : MonoBehaviour
         if (GameManager.i.optionScript.isTargets == true)
         { CheckTargets(); }
     }
+    #endregion
 
+    #region ResetAllTargets
     /// <summary>
     /// Set all targets back to default values
     /// </summary>
@@ -286,6 +291,7 @@ public class TargetManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfTargets (Null)"); }
     }
+    #endregion
 
     #region CheckTargets
     /// <summary>
@@ -877,6 +883,8 @@ public class TargetManager : MonoBehaviour
         return isSuccess;
     }
     #endregion
+
+    #region Tooltip...
 
     #region GetTargetTooltip
     /// <summary>
@@ -1553,7 +1561,9 @@ public class TargetManager : MonoBehaviour
     }
     #endregion
 
+    #endregion
 
+    #region ContainTarget
     /// <summary>
     /// Contains a completed (Oustanding) target as a result of Damage team intervention. Handles all related matters.
     /// Note: target is checked for Null by the calling method
@@ -1571,7 +1581,9 @@ public class TargetManager : MonoBehaviour
         }
         else { Debug.LogError(string.Format("Invalid node (Null) for target.nodeID {0}", target.nodeID)); }
     }
+    #endregion
 
+    #region SetTargetDone
     /// <summary>
     /// Called whenever a target is done (finished OnMap, eg. Contained or Completed with no ongoing effects or timed out (window). Handles all admin. Returns true if all O.K
     /// NOTE: called when Done, NOT exclusively when Successfully attempted 
@@ -1761,8 +1773,11 @@ public class TargetManager : MonoBehaviour
         { Debug.LogWarningFormat("TargetManager.cs -> SetTargetDone: Target \"{0}\", DONE admin FAILED", target.targetName); }
         return isSuccess;
     }
+    #endregion
 
+    #region Tooltips other...
 
+    #region InitialiseGenericPickerTargetInfo
     /// <summary>
     /// Choose Target for gaining Target Info (Resistance only): sets up ModalGenericPicker class and triggers event: ModalGenericEvent.cs -> SetGenericPicker()
     /// </summary>
@@ -1945,7 +1960,9 @@ public class TargetManager : MonoBehaviour
             EventManager.i.PostNotification(EventType.OpenGenericPicker, this, genericDetails, "TargetManager.cs -> InitialiseGenericPickerTargetInfo");
         }
     }
+    #endregion
 
+    #region GetTargetTooltipGeneric
     /// <summary>
     /// returns a data package of 3 formatted strings ready to slot into a gear tooltip. Null if a problem.
     /// </summary>
@@ -1973,7 +1990,13 @@ public class TargetManager : MonoBehaviour
         else { Debug.LogError("Invalid target (Null)"); }
         return details;
     }
+    #endregion
 
+    #endregion
+
+    #region Target Info...
+
+    #region ProcessTargetInfo
     /// <summary>
     /// Process Planner gain target info for selected target (from generic picker)
     /// </summary>
@@ -2096,7 +2119,9 @@ public class TargetManager : MonoBehaviour
         }
         else { Debug.LogErrorFormat("Invalid target (Null) for target {0}", detailsGeneric.optionName); }
     }
+    #endregion
 
+    #region GetTargetInfoNew
     /// <summary>
     /// algorithim to give the amount of intel gained (shows new level) based on distance between node and target. Closer the better. 
     /// Note that this takes into account the MAX cap of targetManager.cs -> maxTargetInfo
@@ -2109,7 +2134,9 @@ public class TargetManager : MonoBehaviour
         intel += existingInfo;
         return Mathf.Min(maxTargetInfo, intel);
     }
+    #endregion
 
+    #region GetTargetInfoGain
     /// <summary>
     /// gives the amount of intel to be gained, solely based around distance, ignoring max cap
     /// </summary>
@@ -2117,8 +2144,9 @@ public class TargetManager : MonoBehaviour
     /// <returns></returns>
     private int GetTargetInfoGain(int distance)
     { return Mathf.Max(1, 3 - distance); }
+    #endregion
 
-
+    #region ChangeTargetInfoAll
     /// <summary>
     /// Target info for all live targets +amount (if isGain = true), or -amount (if isGain false)
     /// </summary>
@@ -2153,7 +2181,11 @@ public class TargetManager : MonoBehaviour
         }
         return isSuccess;
     }
+    #endregion
 
+    #endregion
+
+    #region AssignDynamicTarget
     /// <summary>
     /// Assigns specified target dynamically during game (as opposed to the start of the game). Used for story targets
     /// </summary>
@@ -2185,7 +2217,7 @@ public class TargetManager : MonoBehaviour
         else { Debug.LogWarning("Invalid target (Null)"); }
         return message;
     }
-
+    #endregion
 
     //place methods above here
 }

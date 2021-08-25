@@ -231,3 +231,21 @@ City seed 54438 -> VirtualCity, Eurasia
 
 Dev seed 8110 -> Wednesday, 25 August 2021 12:37 PM
 City seed 54931 -> VirtualCity, Eurasia
+
+Dev seed 42907 -> Wednesday, 25 August 2021 3:33 PM
+WARNING [Val] ValidateSO: MISMATCH on Target, array 108, assets 109 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(Target[]) (at Assets/Scripts/Managers/ValidationManager.cs:2552)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2451)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:943)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:434)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialActorConfig, array 3, assets 4 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialActorConfig[]) (at Assets/Scripts/Managers/ValidationManager.cs:2552)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2513)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:943)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:434)
+	City seed 26694 -> VirtualCity, Eurasia
+
+Dev seed 40736 -> Wednesday, 25 August 2021 3:44 PM
+City seed 60305 -> VirtualCity, Eurasia

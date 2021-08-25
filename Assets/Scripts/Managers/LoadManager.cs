@@ -94,6 +94,7 @@ public class LoadManager : MonoBehaviour
     public TutorialActorType[] arrayOfTutorialActorTypes;
     public TutorialActorConfig[] arrayOfTutorialActorConfigs;
     public TutorialPlayerConfig[] arrayOfTutorialPlayerConfigs;
+    public TutorialTargetConfig[] arrayOfTutorialTargetConfigs;
 
     [Header("Personality Factors - ORDER MATTERS")]
     public Factor[] arrayOfFiveFactorModel;
@@ -187,6 +188,7 @@ public class LoadManager : MonoBehaviour
     public Target[] arrayOfTargetsStory;
     public Target[] arrayOfTargetsGoal;
     public Target[] arrayOfTargetsOrg;
+    public Target[] arrayOfTargetsTutorial;
 
     [Header("Sprites")]
     public Sprite[] arrayOfGearSprites;
@@ -556,6 +558,7 @@ public class LoadManager : MonoBehaviour
         listOfTargets.AddRange(arrayOfTargetsStory);
         listOfTargets.AddRange(arrayOfTargetsGoal);
         listOfTargets.AddRange(arrayOfTargetsOrg);
+        listOfTargets.AddRange(arrayOfTargetsTutorial);
         numArray = listOfTargets.Count;
         //master array
         arrayOfTargets = listOfTargets.ToArray();
@@ -1221,6 +1224,13 @@ public class LoadManager : MonoBehaviour
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTutorialPlayerConfigs has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No TutorialPlayerConfigs present"); }
         //
+        // - - - Tutorial Target Configurations (not stored in a collection)
+        //
+        numArray = arrayOfTutorialTargetConfigs.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTutorialTargetConfigs has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No TutorialTargetConfigs present"); }
+        //
         // - - - Layouts (not stored in a collection)
         //
         numArray = arrayOfLayouts.Length;
@@ -1503,6 +1513,7 @@ public class LoadManager : MonoBehaviour
         Debug.Assert(arrayOfTargetsVIP.Length > 0, "Invalid arrayOfTargetsVIP (no records)");
         Debug.Assert(arrayOfTargetsStory.Length > 0, "Invalid arrayOfTargetsStory (no records)");
         Debug.Assert(arrayOfTargetsGoal.Length > 0, "Invalid arrayOfTargetsGoal (no records)");
+        Debug.Assert(arrayOfTargetsTutorial.Length > 0, "Invalid arrayOfTargetsTutorial (no records)");
         Debug.AssertFormat(arrayOfTargetsOrg.Length == 1, "Invalid arrayOfTargetOrg (should be one OrgTemplate record only, there are {0})", arrayOfTargetsOrg.Length);
         Dictionary<string, Target> dictOfTargets = GameManager.i.dataScript.GetDictOfTargets();
         if (dictOfTargets != null)

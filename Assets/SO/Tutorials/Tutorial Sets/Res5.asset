@@ -12,15 +12,17 @@ MonoBehaviour:
   m_Name: Res5
   m_EditorClassIdentifier: 
   tutorial: {fileID: 11400000, guid: c050560a8867a3a4c806544632dda679, type: 2}
-  notes: 
+  descriptor: Targets
+  notes: Targets
   index: 5
-  actorConfig: {fileID: 0}
+  playerConfig: {fileID: 11400000, guid: ad88702123959524fa551d8575fcae68, type: 2}
+  actorConfig: {fileID: 11400000, guid: d0f994b65cfc31544abb9fc12bf58368, type: 2}
+  targetConfig: {fileID: 11400000, guid: 38998c681209a9b43acbbc5aeac6a026, type: 2}
   listOfFeaturesOff:
   - {fileID: 11400000, guid: 7e2f496678746a1488d0508fb5ac34ef, type: 2}
   - {fileID: 11400000, guid: 60c5546ae44161c4e96b856a75904210, type: 2}
   - {fileID: 11400000, guid: 70e66f38820226347909bc5dfe71319a, type: 2}
   - {fileID: 11400000, guid: 9ab41dcfbf11bf14f8fbeb9b7522f31a, type: 2}
-  - {fileID: 11400000, guid: e16c959b5f1eac342979baf4a1a9362b, type: 2}
   - {fileID: 11400000, guid: 60b4bacf16a2f574fa7fa81a919e7bbc, type: 2}
   listOfGUIOff:
   - {fileID: 11400000, guid: 4ecda8036df900d48b4b25e77b1b6ad0, type: 2}
