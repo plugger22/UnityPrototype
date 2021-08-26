@@ -3714,7 +3714,7 @@ public class TopicManager : MonoBehaviour
                                     if (effectReturn.isLargeText == true)
                                     {
                                         builderBottom.AppendFormat("<size=110%>{0}</size>", effectReturn.bottomText);
-                                        Debug.LogFormat("[Tst] TopicManager.cs -> ProcessOption: effectReturn.isLargeText TRUE{0}", "\n");
+                                        /*Debug.LogFormat("[Tst] TopicManager.cs -> ProcessOption: effectReturn.isLargeText TRUE{0}", "\n");*/
                                     }
                                     //all else
                                     else { builderBottom.AppendFormat("{0}", effectReturn.bottomText); }

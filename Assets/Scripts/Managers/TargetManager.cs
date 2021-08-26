@@ -232,7 +232,7 @@ public class TargetManager : MonoBehaviour
     /// <summary>
     /// Initialise only the subset of tutorial targets
     /// </summary>
-    private void InitialiseTutorialTargets(TutorialTargetConfig config)
+    public void InitialiseTutorialTargets(TutorialTargetConfig config)
     {
         if (GameManager.i.optionScript.isTargets == true)
         {
@@ -807,14 +807,49 @@ public class TargetManager : MonoBehaviour
 
     #region AssignTutorialTargets
     /// <summary>
-    /// Assign tutorial targets to random nodes a set distance minimum from player start node. Called directly from MissionManager.cs -> SubInitialseAll
+    /// Assign tutorial targets to random nodes a set distance minimum from player start node.
     /// </summary>
-    public void AssignTutorialTargets()
+    private void AssignTutorialTargets(TutorialTargetConfig config)
     {
        if (GameManager.i.optionScript.isTargets == true)
         {
-            //player node
-
+            if (config != null)
+            {
+                //should be at least one target present
+                int count = config.listOfTargets.Count;
+                if (count > 0)
+                {
+                    //player node
+                    Node playerNode = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.GetPlayerNodeID());
+                    if (playerNode != null)
+                    {
+                        //exclusion list which will hold all nodes with targets
+                        List<int> exclusionList = new List<int>();
+                        //loop targets
+                        for (int i = 0; i < count; i++)
+                        {
+                            Target target = config.listOfTargets[i];
+                            if (target != null)
+                            {
+                                //assign target to a random node at, or beyond, a minimum distance from player node
+                                Node nodeTarget = GameManager.i.dijkstraScript.GetRandomNodeAtMaxDistance(playerNode, config.minDistance, exclusionList);
+                                if (nodeTarget != null)
+                                {
+                                    //add to exclusion list
+                                    exclusionList.Add(nodeTarget.nodeID);
+                                    //set target
+                                    SetTargetDetails(target, nodeTarget);
+                                }
+                                else { Debug.LogErrorFormat("Invalid nodeTarget (Null) for target \"{0}\"", target.name); }
+                            }
+                            else { Debug.LogWarningFormat("Invalid target (Null) in TutorialTargetConfig {0}.listOfTargets[{1}]", config.name, i); }
+                        }
+                    }
+                    else { Debug.LogError("Invalid player Node (Null)"); }
+                }
+                else { Debug.LogWarningFormat("TutorialTargetConfig \"{0}\" has no targets in listOfTargets", config.name); }
+            }
+            else { Debug.LogError("Invalid TutorialTargetConfig (Null)"); }
         }
        else { Debug.LogWarning("Can't assign targets as optionManager.isTargets FALSE"); }
     }

@@ -31,15 +31,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}
   moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
   ongoingEffect: {fileID: 0}
-  profileBase: {fileID: 11400000, guid: 091aa6a0e6440bb4cb5f54ed9c3be515, type: 2}
+  profileBase: {fileID: 11400000, guid: 99aa47a7d7107424a9070623c2307990, type: 2}
   isSuccessNeeded: 1
   followOnTarget: {fileID: 0}
-  profile: {fileID: 0}
+  profile: {fileID: 11400000, guid: 091aa6a0e6440bb4cb5f54ed9c3be515, type: 2}
   targetStatus: 0
   intel: 0
   ongoingID: -1
   isKnownByAI: 0
-  nodeID: 0
+  nodeID: -1
   distance: 0
   newIntel: 0
   intelGain: 0

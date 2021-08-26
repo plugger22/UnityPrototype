@@ -79,7 +79,7 @@ public class DijkstraManager : MonoBehaviour
         }
     }
 
-    #region Initialise SubMethods
+    #region Initialise SubMethods...
 
     #region SubInitialiseAll
     private void SubInitialiseAll()
@@ -96,6 +96,9 @@ public class DijkstraManager : MonoBehaviour
 
     #endregion
 
+    #region InitialiseData...
+
+    #region InitialiseDictDataUnweighted
     /// <summary>
     /// Use standard graphAPI data to set up Dijkstra Graph ready for algorithm. Unweighted
     /// </summary>
@@ -189,8 +192,9 @@ public class DijkstraManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfNodes (Null)"); }
     }
+#endregion
 
-
+    #region InitialiseDataWeighted
     /// <summary>
     /// Use standard graphAPI data to set up Dijkstra Graph ready for algorithm. Weighted
     /// </summary>
@@ -310,7 +314,9 @@ public class DijkstraManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfNodes (Null)"); }
     }
+#endregion
 
+    #region InitialiseNodeDataUnweighted
     /// <summary>
     /// Runs dijkstra algo on all nodes and initialises up main dijkstra collection (dictOfDijkstra). Unweighted
     /// </summary>
@@ -366,8 +372,9 @@ public class DijkstraManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfNodes (Null)"); }
     }
+#endregion
 
-
+    #region InitialiseNodeDataWeighted
     /// <summary>
     /// Runs dijkstra algo on all nodes and initialises up main dijkstra collection (dictOfDijkstra). Weighted
     /// </summary>
@@ -423,7 +430,13 @@ public class DijkstraManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfNodes (Null)"); }
     }
+    #endregion
 
+    #endregion
+
+    #region Pathing...
+
+    #region GetShortestPath
     /// <summary>
     /// Shortest path from source node to all other nodes. Returns Dijkstra data package, null if a problem
     /// </summary>
@@ -448,7 +461,9 @@ public class DijkstraManager : MonoBehaviour
         else { Debug.LogError("Invalid nodeList (Null)"); data = null; }
         return data;
     }
+#endregion
 
+    #region GetPath
     /// <summary>
     /// given two nodes method returns a list of sequential cnnnections between the two. If 'isReverseOrder' is true then returns connections in order destination to source, otherwise opposite (default)
     /// 'isWeighted' true uses data from dictOfDijkstraWeighted (last calculated), if false then used dictOfDijkstraUnweighted data.
@@ -511,7 +526,40 @@ public class DijkstraManager : MonoBehaviour
         else { listOfConnections = null; }
         return listOfConnections;
     }
+    #endregion
 
+    #region DebugShowPath
+    /// <summary>
+    /// Debug method that takes two nodeID's and shows a flashing connection path between the two (Unweighted pathing by default, set 'isWeighted' to true for weighted pathing based on last set of calcs)
+    /// </summary>
+    /// <param name="nodeSourceID"></param>
+    /// <param name="nodeDestinationID"></param>
+    public string DebugShowPath(int nodeSourceID, int nodeDestinationID, bool isWeighted = false)
+    {
+        Debug.Assert(nodeSourceID < numOfNodes && nodeSourceID > -1, "Invalid nodeSourceID (must be btwn Zero and max. nodeID #)");
+        Debug.Assert(nodeDestinationID < numOfNodes && nodeDestinationID > -1, "Invalid nodeSourceID (must be btwn Zero and max. nodeID #)");
+        if (nodeSourceID != nodeDestinationID)
+        {
+            List<Connection> listOfConnections = GetPath(nodeSourceID, nodeDestinationID, isWeighted);
+            if (listOfConnections != null)
+            {
+                /*//debug print out connections list
+                for (int index = 0; index < listOfConnections.Count; index++)
+                { Debug.LogFormat("[Tst] DijkstraManager.cs -> DebugShowPath: listOfConnections[{0}] from {1} to {2}", index, listOfConnections[index].GetNode1(), listOfConnections[index].GetNode2()); }*/
+
+                //flash connections
+                EventManager.i.PostNotification(EventType.FlashMultipleConnectionsStart, this, listOfConnections, "DijkstraManager.cs -> DebugShowPath");
+            }
+            else { Debug.LogWarningFormat("Invalid listOfConnections (Null) for sourceID {0} and destinationID {1}", nodeSourceID, nodeDestinationID); }
+        }
+        else { Debug.LogWarningFormat("Invalid input nodes (Matching), nodeSourceID {0}, nodeDestinationID {1}", nodeSourceID, nodeDestinationID); }
+        return string.Format("Distance {0}", GetDistanceWeighted(nodeSourceID, nodeDestinationID));   /* here for dEbugGUI purposes only*/
+    }
+    #endregion
+    
+    #endregion
+
+    #region RecalculateWeightedData
     /// <summary>
     /// run whenever connection security levels change. Do so before calculating shortest path.
     /// </summary>
@@ -525,7 +573,11 @@ public class DijkstraManager : MonoBehaviour
         //log
         Debug.Log("[Dij] DijkstraManager.cs -> RecalculateWeightedData: Weighted data recalculated");
     }
+    #endregion
 
+    #region Distances...
+
+    #region GetDistanceWeighted
     /// <summary>
     /// Gets distance of shortest path between two nodes. Weighted. Returns -1 if a problem
     /// </summary>
@@ -553,7 +605,9 @@ public class DijkstraManager : MonoBehaviour
         /*Debug.LogFormat("[Tst] DijkstraManager.cs -> GetDistanceWeighted: Distance between nodeID {0} and nodeID {1} is {2}", sourceID, destinationID, distance);*/
         return distance;
     }
+    #endregion
 
+    #region GetDistanceUnweighted
     /// <summary>
     /// Gets distance of shortest path between two nodes. Unweighted. Returns -1 if a problem
     /// </summary>
@@ -576,99 +630,13 @@ public class DijkstraManager : MonoBehaviour
         /*Debug.LogFormat("[Tst] DijkstraManager.cs -> GetDistanceUnweighted: Distance between nodeID {0} and nodeID {1} is {2}", sourceID, destinationID, distance);*/
         return distance;
     }
+    #endregion
 
-    /*/// <summary>  -> EDIT: Wasn't random as the same input always gave the same path. New version below.
-    /// Finds a random node, 'x' distance links away from the source Node (may end up being less). Returns null if a problem
-    /// listOfExclusion is a list of NodeID's that are excluded from search (optional)
-    /// </summary>
-    /// <param name="distance"></param>
-    /// <returns></returns>
-    public Node GetRandomNodeAtDistanceArchived(Node sourceNode, int requiredDistance, List<int> listOfExclusion = null)
-    {
-        int nodeID = -1;
-        int furthestDistance = 0;
-        int actualDistance = 0;
-        Node node = null;
-        Debug.Assert(requiredDistance > 0, "Invalid cure.requiredDistance (must be > 0)");
-        if (sourceNode != null)
-        {
-            PathData data = GameManager.instance.dataScript.GetDijkstraPathUnweighted(sourceNode.nodeID);
-            if (data != null)
-            {
-                if (data.distanceArray != null)
-                {
-                    int[] arrayOfDistances = data.distanceArray;
-                    //get max distance possible from Resistance Player's current node
-                    furthestDistance = arrayOfDistances.Max();
-                    //adjust distance required to furthest available (if required in case map size, or player position, doesn't accomodate the requested distance)
-                    actualDistance = Mathf.Min(furthestDistance, requiredDistance);
-                    //loop distance Array and find first node that is that distance, or greater, and one that isn't on exclusion list
-                    for (int index = 0; index < arrayOfDistances.Length; index++)
-                    {
-                        if (arrayOfDistances[index] == actualDistance)
-                        {
-                            nodeID = CheckForMatch(index, actualDistance, listOfExclusion);
-                            if (nodeID > -1) { break; }
-                        }
-                    }
-                    //if not successful scale up distance until you get a hit. If you max out, scale down distance until you get a hit.
-                    if (nodeID < 0)
-                    {
-                        int tempDistance = actualDistance;
-                        if (actualDistance < furthestDistance)
-                        {
-                            //gradually increase distance until you find a suitable node
-                            do
-                            {
-                                tempDistance++;
-                                //search on new distance criteria
-                                for (int index = 0; index < arrayOfDistances.Length; index++)
-                                {
-                                    if (arrayOfDistances[index] == tempDistance)
-                                    {
-                                        nodeID = CheckForMatch(index, actualDistance, listOfExclusion);
-                                    }
-                                }
-                                if (nodeID > -1) { break; }
-                            }
-                            while (tempDistance < furthestDistance);
-                        }
-                        //if unsuccessful (or already maxxed out on distance) decrease distance until a suitable node is found
-                        if (nodeID < 0)
-                        {
-                            tempDistance = actualDistance;
-                            do
-                            {
-                                tempDistance--;
-                                //search on new distance criteria
-                                for (int index = 0; index < arrayOfDistances.Length; index++)
-                                {
-                                    if (arrayOfDistances[index] == tempDistance)
-                                    {
-                                        nodeID = CheckForMatch(index, actualDistance, listOfExclusion);
-                                    }
-                                }
-                                if (nodeID > -1) { break; }
-                            }
-                            while (tempDistance > 0);
-                        }
-                    }
-                }
-                else { Debug.LogError("Invalid distanceArray (Null)"); }
-            }
-            else { Debug.LogError("Invalid PathData (Null)"); }
-        }
-        else { Debug.LogError("Invalid sourceNode (Null)"); }
-        //return
-        if (nodeID > -1)
-        {
-            node = GameManager.instance.dataScript.GetNode(nodeID);
-            if (node == null) { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", nodeID); }
-        }
-        return node;
-    }*/
+    #endregion
 
+    #region Random Nodes...
 
+    #region GetRandomNodeAtDistance
     /// <summary>
     /// new version that gets a true random node selected from all nodes that meet the distance criteria
     /// </summary>
@@ -760,8 +728,9 @@ public class DijkstraManager : MonoBehaviour
         else { Debug.LogWarning("Invalid selectionList (Empty)"); }
         return node;
     }
+    #endregion
 
-
+    #region GetRandomNodeAtMaxDistance
     /// <summary>
     /// new version that gets a true random node selected from all nodes that meet the distance criteria (Same as other but takes nodes at required distance, OR GREATER)
     /// </summary>
@@ -853,7 +822,9 @@ public class DijkstraManager : MonoBehaviour
         else { Debug.LogWarning("Invalid selectionList (Empty)"); }
         return node;
     }
+    #endregion
 
+    #region CheckForMatch
     /// <summary>
     /// Sub method to check for a match (handles exclusion list, if present), returns nodeID or -1 if a problem
     /// </summary>
@@ -864,7 +835,7 @@ public class DijkstraManager : MonoBehaviour
     {
         int nodeID = -1;
         //valid exclusion list
-        if (listOfExclusion != null)
+        if (listOfExclusion != null && listOfExclusion.Count > 0)
         {
             //not on exclusion list
             if (listOfExclusion.Exists(x => x == index) == false)
@@ -875,41 +846,18 @@ public class DijkstraManager : MonoBehaviour
         }
         else
         {
-            //No exclusion list
-            /*Debug.LogFormat("[Tst] DijkstraManager.cs -> GetRandomNodeAtDistance: Straight Match for nodeID {0}, distance {1}{2}", index, actualDistance, "\n");*/
+            //No valid exclusion list
             nodeID = index;
+            /*Debug.LogFormat("[Tst] DijkstraManager.cs -> GetRandomNodeAtDistance: Straight Match for nodeID {0}, distance {1}{2}", index, actualDistance, "\n");*/
         }
         return nodeID;
     }
+    #endregion
+
+    #endregion
 
 
 
-    /// <summary>
-    /// Debug method that takes two nodeID's and shows a flashing connection path between the two (Unweighted pathing by default, set 'isWeighted' to true for weighted pathing based on last set of calcs)
-    /// </summary>
-    /// <param name="nodeSourceID"></param>
-    /// <param name="nodeDestinationID"></param>
-    public string DebugShowPath(int nodeSourceID, int nodeDestinationID, bool isWeighted = false)
-    {
-        Debug.Assert(nodeSourceID < numOfNodes && nodeSourceID > -1, "Invalid nodeSourceID (must be btwn Zero and max. nodeID #)");
-        Debug.Assert(nodeDestinationID < numOfNodes && nodeDestinationID > -1, "Invalid nodeSourceID (must be btwn Zero and max. nodeID #)");
-        if (nodeSourceID != nodeDestinationID)
-        {
-            List<Connection> listOfConnections = GetPath(nodeSourceID, nodeDestinationID, isWeighted);
-            if (listOfConnections != null)
-            {
-                /*//debug print out connections list
-                for (int index = 0; index < listOfConnections.Count; index++)
-                { Debug.LogFormat("[Tst] DijkstraManager.cs -> DebugShowPath: listOfConnections[{0}] from {1} to {2}", index, listOfConnections[index].GetNode1(), listOfConnections[index].GetNode2()); }*/
-
-                //flash connections
-                EventManager.i.PostNotification(EventType.FlashMultipleConnectionsStart, this, listOfConnections, "DijkstraManager.cs -> DebugShowPath");
-            }
-            else { Debug.LogWarningFormat("Invalid listOfConnections (Null) for sourceID {0} and destinationID {1}", nodeSourceID, nodeDestinationID); }
-        }
-        else { Debug.LogWarningFormat("Invalid input nodes (Matching), nodeSourceID {0}, nodeDestinationID {1}", nodeSourceID, nodeDestinationID); }
-        return string.Format("Distance {0}", GetDistanceWeighted(nodeSourceID, nodeDestinationID));   /* here for dEbugGUI purposes only*/
-    }
 
     //new methods above here
 }
