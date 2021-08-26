@@ -931,7 +931,8 @@ public class TutorialManager : MonoBehaviour
                     //configure actors
                     GameManager.i.actorScript.ConfigureTutorialActors(true);
                     //configure targets
-                    GameManager.i.targetScript.InitialiseTutorialTargets(set.targetConfig);
+                    if (set.targetConfig != null)
+                    { GameManager.i.targetScript.ConfigureTutorialTargets(set.targetConfig); }
                     //activate tutorialUI
                     EventManager.i.PostNotification(EventType.TutorialOpenUI, this, set, "TutorialManager.cs -> SetPreviousSet");
                 }
@@ -981,6 +982,9 @@ public class TutorialManager : MonoBehaviour
                     { GameManager.i.playerScript.ConfigureTutorialPlayer(set.playerConfig); }
                     //configure actors
                     GameManager.i.actorScript.ConfigureTutorialActors(true);
+                    //configure targets
+                    if (set.targetConfig != null)
+                    { GameManager.i.targetScript.ConfigureTutorialTargets(set.targetConfig); }
                     //activate tutorialUI
                     EventManager.i.PostNotification(EventType.TutorialOpenUI, this, set, "TutorialManager.cs -> SetNextSet");
                 }

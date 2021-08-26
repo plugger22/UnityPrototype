@@ -271,3 +271,42 @@ Dev seed 41081 -> Thursday, 26 August 2021 10:10 AM
 City seed 57264 -> Londus, Eurasia
 City seed 55602 -> VirtualCity, Eurasia
 City seed 54345 -> Londus, Eurasia
+
+Dev seed 51086 -> Thursday, 26 August 2021 12:14 PM
+City seed 5331 -> VirtualCity, Eurasia
+
+Dev seed 31379 -> Thursday, 26 August 2021 12:17 PM
+City seed 34380 -> VirtualCity, Eurasia
+
+Dev seed 59243 -> Thursday, 26 August 2021 12:18 PM
+City seed 29695 -> VirtualCity, Eurasia
+
+Dev seed 32745 -> Thursday, 26 August 2021 12:24 PM
+City seed 19976 -> VirtualCity, Eurasia
+
+Dev seed 46263 -> Thursday, 26 August 2021 12:25 PM
+City seed 12124 -> VirtualCity, Eurasia
+WARNING Node Sherwood, CORPORATE, id 17 NOT assigned target E-Charging Station (Target already in use at nodeID 8)
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TargetManager:SetTargetDetails(Target, Node, TargetProfile) (at Assets/Scripts/Managers/TargetManager.cs:951)
+	TargetManager:ConfigureTutorialTargets(TutorialTargetConfig) (at Assets/Scripts/Managers/TargetManager.cs:856)
+	TutorialManager:SetPreviousSet() (at Assets/Scripts/Managers/TutorialManager.cs:935)
+	TutorialManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TutorialManager.cs:149)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:391)
+	TutorialWidgetLeft:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Tutorial/TutorialWidgetLeft.cs:24)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Node Aparo Park, INDUSTRIAL, id 14 NOT assigned target E-Charging Station (Target already in use at nodeID 8)
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TargetManager:SetTargetDetails(Target, Node, TargetProfile) (at Assets/Scripts/Managers/TargetManager.cs:951)
+	TargetManager:ConfigureTutorialTargets(TutorialTargetConfig) (at Assets/Scripts/Managers/TargetManager.cs:856)
+	TutorialManager:SetNextSet() (at Assets/Scripts/Managers/TutorialManager.cs:987)
+	TutorialManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TutorialManager.cs:152)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:391)
+	TutorialWidgetRight:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Tutorial/TutorialWidgetRight.cs:22)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 33465 -> Thursday, 26 August 2021 12:32 PM
+City seed 19912 -> VirtualCity, Eurasia
+
+Dev seed 15456 -> Thursday, 26 August 2021 12:40 PM
+City seed 34575 -> VirtualCity, Eurasia

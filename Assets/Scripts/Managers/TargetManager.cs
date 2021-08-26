@@ -154,26 +154,9 @@ public class TargetManager : MonoBehaviour
         //reset all targets (caters for followOn levels)
         ResetAllTargets();
         InitialiseGenericTargetArray();
-        /*                
-        switch (GameManager.i.inputScript.GameState)
-        {
-            case GameState.NewInitialisation:
-            case GameState.FollowOnInitialisation:
-            case GameState.LoadAtStart:
-                //set up generic target array
-
-                break;
-            case GameState.TutorialOptions:
-                InitialiseTutorialTargets();
-                break;
-            case GameState.LoadGame:
-                break;
-            default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
-                break;
-        }
-        */
-
+        //tutorial targets if required
+        if (GameManager.i.inputScript.GameState == GameState.TutorialOptions)
+        { ConfigureTutorialTargets(GameManager.i.tutorialScript.set.targetConfig); }
         //set up listOfTargetFactors. Note -> Sequence matters and is the order that the factors will be displayed
         foreach (var factor in Enum.GetValues(typeof(TargetFactors)))
         { listOfFactors.Add((TargetFactors)factor); }
@@ -228,7 +211,7 @@ public class TargetManager : MonoBehaviour
     }
     #endregion
 
-    #region InitialiseTutorialTargets
+    /*#region InitialiseTutorialTargets
     /// <summary>
     /// Initialise only the subset of tutorial targets
     /// </summary>
@@ -256,7 +239,7 @@ public class TargetManager : MonoBehaviour
             else { Debug.LogError("Invalid TutorialTargetConfig (Null)"); }
         }
     }
-    #endregion
+    #endregion*/
 
     #region OnEvent
     /// <summary>
@@ -518,11 +501,7 @@ public class TargetManager : MonoBehaviour
             nodeID = GameManager.i.cityScript.cityHallDistrictID;
             Node node = GameManager.i.dataScript.GetNode(nodeID);
             if (node != null)
-            {
-                SetTargetDetails(target, node);
-                Debug.LogFormat("[Tar] MissionManager.cs -> AssignCityTarget: CityHall node \"{0}\", {1}, id {2}, assigned target \"{3}\"", node.nodeName, node.Arc.name, nodeID,
-                    target.targetName);
-            }
+            { SetTargetDetails(target, node); }
             else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0} for iconTarget", nodeID); }
         }
         //icon
@@ -532,11 +511,7 @@ public class TargetManager : MonoBehaviour
             nodeID = GameManager.i.cityScript.iconDistrictID;
             Node node = GameManager.i.dataScript.GetNode(nodeID);
             if (node != null)
-            {
-                SetTargetDetails(target, node);
-                Debug.LogFormat("[Tar] MissionManager.cs -> AssignCityTarget: Icon node \"{0}\", {1}, id {2}, assigned target \"{3}\"", node.nodeName, node.Arc.name, nodeID,
-                    target.targetName);
-            }
+            { SetTargetDetails(target, node); }
             else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0} for iconTarget", nodeID); }
         }
         //airport
@@ -546,11 +521,7 @@ public class TargetManager : MonoBehaviour
             nodeID = GameManager.i.cityScript.airportDistrictID;
             Node node = GameManager.i.dataScript.GetNode(nodeID);
             if (node != null)
-            {
-                SetTargetDetails(target, node);
-                Debug.LogFormat("[Tar] MissionManager.cs -> AssignCityTarget: Airport node \"{0}\", {1}, id {2}, assigned target \"{3}\"", node.nodeName, node.Arc.name, nodeID,
-                    target.targetName);
-            }
+            { SetTargetDetails(target, node); }
             else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0} for airportTarget", nodeID); }
         }
         //harbour
@@ -560,11 +531,7 @@ public class TargetManager : MonoBehaviour
             nodeID = GameManager.i.cityScript.harbourDistrictID;
             Node node = GameManager.i.dataScript.GetNode(nodeID);
             if (node != null)
-            {
-                SetTargetDetails(target, node);
-                Debug.LogFormat("[Tar] MissionManager.cs -> AssignCityTarget: Harbour node \"{0}\", {1}, id {2}, assigned target \"{3}\"", node.nodeName, node.Arc.name, nodeID,
-                    target.targetName);
-            }
+            { SetTargetDetails(target, node); }
         }
     }
     #endregion
@@ -642,8 +609,6 @@ public class TargetManager : MonoBehaviour
                             {
                                 //assign target to node
                                 SetTargetDetails(target, node, mission.profileGenericLive);
-                                Debug.LogFormat("[Tar] MissionManager.cs -> AssignGenericTarget LIVE: node \"{0}\", {1}, id {2}, assigned target \"{3}\"", node.nodeName, node.Arc.name, node.nodeID,
-                                    target.targetName);
                                 counter++;
                                 //delete target to prevent dupes
                                 if (GameManager.i.dataScript.RemoveTargetFromGenericList(target.name, nodeArc.nodeArcID) == false)
@@ -744,8 +709,6 @@ public class TargetManager : MonoBehaviour
                 Target target = mission.targetBaseVIP;
                 //VIP targets don't have follow-on targets (use repeating random node targets instead)
                 SetTargetDetails(target, node);
-                Debug.LogFormat("[Tar] MissionManager.cs -> AssignVIPTarget: VIP node \"{0}\", {1}, id {2}, assigned target \"{3}\"", node.nodeName, node.Arc.name, node.nodeID,
-                    target.targetName);
             }
         }
         else { Debug.LogWarning("Invalid node (Null) for VIPTarget"); }
@@ -789,8 +752,6 @@ public class TargetManager : MonoBehaviour
                                 //initialise org target template fields with org specific data
                                 target.targetName = $"Contact {org.tag}";
                                 target.rumourText = $"make contact with the {org.tag}";
-                                Debug.LogFormat("[Tar] MissionManager.cs -> AssignOrganisationTarget: Org node \"{0}\", {1}, id {2}, assigned target \"{3}\"", node.nodeName, node.Arc.name, node.nodeID,
-                                    target.targetName);
                             }
                             else { Debug.LogWarning("Invalid node (Null) for OrganisationTarget"); }
                         }
@@ -802,56 +763,6 @@ public class TargetManager : MonoBehaviour
             }
             else { Debug.LogFormat("[Tar] TargetManager.cs -> AssignOrganisationTarget: No org target this level as player already in contact with max (contact {0}, limit {1}){2}", numOfOrgs, maxOrgs, "\n"); }
         }
-    }
-    #endregion
-
-    #region AssignTutorialTargets
-    /// <summary>
-    /// Assign tutorial targets to random nodes a set distance minimum from player start node.
-    /// </summary>
-    private void AssignTutorialTargets(TutorialTargetConfig config)
-    {
-       if (GameManager.i.optionScript.isTargets == true)
-        {
-            if (config != null)
-            {
-                //should be at least one target present
-                int count = config.listOfTargets.Count;
-                if (count > 0)
-                {
-                    //player node
-                    Node playerNode = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.GetPlayerNodeID());
-                    if (playerNode != null)
-                    {
-                        //exclusion list which will hold all nodes with targets
-                        List<int> exclusionList = new List<int>();
-                        //loop targets
-                        for (int i = 0; i < count; i++)
-                        {
-                            Target target = config.listOfTargets[i];
-                            if (target != null)
-                            {
-                                //assign target to a random node at, or beyond, a minimum distance from player node
-                                Node nodeTarget = GameManager.i.dijkstraScript.GetRandomNodeAtMaxDistance(playerNode, config.minDistance, exclusionList);
-                                if (nodeTarget != null)
-                                {
-                                    //add to exclusion list
-                                    exclusionList.Add(nodeTarget.nodeID);
-                                    //set target
-                                    SetTargetDetails(target, nodeTarget);
-                                }
-                                else { Debug.LogErrorFormat("Invalid nodeTarget (Null) for target \"{0}\"", target.name); }
-                            }
-                            else { Debug.LogWarningFormat("Invalid target (Null) in TutorialTargetConfig {0}.listOfTargets[{1}]", config.name, i); }
-                        }
-                    }
-                    else { Debug.LogError("Invalid player Node (Null)"); }
-                }
-                else { Debug.LogWarningFormat("TutorialTargetConfig \"{0}\" has no targets in listOfTargets", config.name); }
-            }
-            else { Debug.LogError("Invalid TutorialTargetConfig (Null)"); }
-        }
-       else { Debug.LogWarning("Can't assign targets as optionManager.isTargets FALSE"); }
     }
     #endregion
 
@@ -899,6 +810,66 @@ public class TargetManager : MonoBehaviour
     }*/
     #endregion
 
+    #endregion
+
+    #region ConfigureTutorialTargets
+    /// <summary>
+    /// Assign tutorial targets to random nodes a set distance minimum from player start node.
+    /// </summary>
+    public void ConfigureTutorialTargets(TutorialTargetConfig config)
+    {
+       if (GameManager.i.optionScript.isTargets == true)
+        {
+            if (config != null)
+            {
+                //clear list of Live targets first (tutorial only deals with live targets)
+                List<Target> listOfLiveTargets = GameManager.i.dataScript.GetTargetPool(Status.Live);
+                if (listOfLiveTargets != null)
+                {
+                    //clear collection
+                    listOfLiveTargets.Clear();
+                }
+                else { Debug.LogError("Invalid listOfLiveTargets (Null)"); }
+                //should be at least one target present
+                int count = config.listOfTargets.Count;
+                if (count > 0)
+                {
+                    //player node
+                    Node playerNode = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.GetPlayerNodeID());
+                    if (playerNode != null)
+                    {
+                        //exclusion list which will hold all nodes with targets
+                        List<int> exclusionList = new List<int>();
+                        //loop targets
+                        for (int i = 0; i < count; i++)
+                        {
+                            Target target = config.listOfTargets[i];
+                            if (target != null)
+                            {
+                                //reset nodeID prior to assignment (may have been used in a previous set)
+                                target.nodeID = -1;
+                                //assign target to a random node at, or beyond, a minimum distance from player node
+                                Node nodeTarget = GameManager.i.dijkstraScript.GetRandomNodeAtMaxDistance(playerNode, config.minDistance, exclusionList);
+                                if (nodeTarget != null)
+                                {
+                                    //add to exclusion list
+                                    exclusionList.Add(nodeTarget.nodeID);
+                                    //set target
+                                    SetTargetDetails(target, nodeTarget);
+                                }
+                                else { Debug.LogErrorFormat("Invalid nodeTarget (Null) for target \"{0}\"", target.name); }
+                            }
+                            else { Debug.LogWarningFormat("Invalid target (Null) in TutorialTargetConfig {0}.listOfTargets[{1}]", config.name, i); }
+                        }
+                    }
+                    else { Debug.LogError("Invalid player Node (Null)"); }
+                }
+                else { Debug.LogWarningFormat("TutorialTargetConfig \"{0}\" has no targets in listOfTargets", config.name); }
+            }
+            else { Debug.LogError("Invalid TutorialTargetConfig (Null)"); }
+        }
+       else { Debug.LogWarning("Can't assign targets as optionManager.isTargets FALSE"); }
+    }
     #endregion
 
     #region SetTargetDetails
@@ -969,6 +940,9 @@ public class TargetManager : MonoBehaviour
                         //add to pool
                         if (isSuccess == true)
                         { GameManager.i.dataScript.AddTargetToPool(target, target.targetStatus); }
+                        //log
+                        Debug.LogFormat("[Tar] TargetManager.cs -> SetTargetDetails: node \"{0}\", {1}, id {2}, assigned target \"{3}\"", node.nodeName, node.Arc.name, node.nodeID,
+                            target.targetName);
                     }
                     else { Debug.LogWarningFormat("Invalid profile (Null) for target {0}", target.targetName); isSuccess = false; }
                 }

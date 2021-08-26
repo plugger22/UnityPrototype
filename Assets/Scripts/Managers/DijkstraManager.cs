@@ -746,7 +746,7 @@ public class DijkstraManager : MonoBehaviour
         int actualDistance = 0;
         Node node = null;
         List<int> selectionList = new List<int>();
-        Debug.Assert(requiredDistance > 0, "Invalid cure.requiredDistance (must be > 0)");
+        Debug.Assert(requiredDistance > 0, "Invalid requiredDistance (must be > 0)");
         if (sourceNode != null)
         {
             PathData data = GameManager.i.dataScript.GetDijkstraPathUnweighted(sourceNode.nodeID);

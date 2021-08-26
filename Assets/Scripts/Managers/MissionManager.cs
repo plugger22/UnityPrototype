@@ -79,9 +79,7 @@ public class MissionManager : MonoBehaviour
 
         //Targets -> initialise and assign
         GameManager.i.targetScript.Initialise();
-        if (GameManager.i.inputScript.GameState == GameState.TutorialOptions)
-        { GameManager.i.targetScript.AssignTutorialTargets(); }
-        else
+        if (GameManager.i.inputScript.GameState != GameState.TutorialOptions)
         { GameManager.i.targetScript.AssignTargets(mission); }
 
         //Npc -> Human Resistance Player only

@@ -5362,6 +5362,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 858a3a9041106fe47a3d4748c99535a0, type: 2}
   arrayOfTargetsTutorial:
   - {fileID: 11400000, guid: a807c096e67db78438d7b3f42d11356f, type: 2}
+  - {fileID: 11400000, guid: c8caaad5b3f94c6429d2961da8846896, type: 2}
   arrayOfGearSprites:
   - {fileID: 21300000, guid: d1c114319b9549f46995595d0bc5db8c, type: 3}
   arrayOfGlobalSprites:

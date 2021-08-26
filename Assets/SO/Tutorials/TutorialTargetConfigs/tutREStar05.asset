@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Name: tutREStar05
   m_EditorClassIdentifier: 
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
+  minDistance: 1
   listOfTargets:
   - {fileID: 11400000, guid: a807c096e67db78438d7b3f42d11356f, type: 2}
+  - {fileID: 11400000, guid: c8caaad5b3f94c6429d2961da8846896, type: 2}
