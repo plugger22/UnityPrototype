@@ -718,6 +718,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1b5e060f35571df4985ead7b62cc758f, type: 2}
   blackText:
   - {fileID: 11400000, guid: f29b18d30abf0b341915422fb5e7180f, type: 2}
+  cyberText:
+  - {fileID: 11400000, guid: bb7997d58208cd045b83ae0f9e123dbe, type: 2}
 --- !u!114 &114309057188216108
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1544,6 +1546,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: aba33f338d007664195cf70ddec624af, type: 2}
   - {fileID: 11400000, guid: 1b5e060f35571df4985ead7b62cc758f, type: 2}
   - {fileID: 11400000, guid: 79f1dc0903a143b49997772a08ab76da, type: 2}
+  - {fileID: 11400000, guid: bb7997d58208cd045b83ae0f9e123dbe, type: 2}
   arrayOfCitySize:
   - {fileID: 11400000, guid: a5def1f0e7e4469409978a9e402370f1, type: 2}
   - {fileID: 11400000, guid: 46de56f28630afa43848b86b20f802d8, type: 2}

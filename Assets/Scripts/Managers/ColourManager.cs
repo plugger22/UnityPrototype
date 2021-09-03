@@ -11,7 +11,7 @@ public enum ColourScheme { Normal, ColourBlind, Count }
 public enum ColourType
 {
     dataGood, dataNeutral, dataBad, dataTerrible,
-    normalText, goodText, neutralText, badText, blueText, salmonText, moccasinText, greyText, whiteText, blackText,
+    normalText, goodText, neutralText, badText, blueText, salmonText, moccasinText, greyText, whiteText, blackText, cyberText,
     Count
 }
 
@@ -37,8 +37,9 @@ public class ColourManager : MonoBehaviour
     public Colour[] blueText;                       //resistance side
     public Colour[] moccasinText;                   //cancel text
     public Colour[] greyText;                       //greyed out text
-    public Colour[] whiteText;                    //default White text if no colour provided
+    public Colour[] whiteText;                      //default White text if no colour provided
     public Colour[] blackText;
+    public Colour[] cyberText;                      //cyberpunk text colour
 
 
     private Colour[,] arrayOfColours;               //repositry of colourTypes
@@ -65,7 +66,8 @@ public class ColourManager : MonoBehaviour
             moccasinText,
             greyText,
             whiteText,
-            blackText
+            blackText,
+            cyberText
         };
 
         //loop thorugh list and auto populate array

@@ -933,6 +933,8 @@ public class TutorialManager : MonoBehaviour
                     //configure targets
                     if (set.targetConfig != null)
                     { GameManager.i.targetScript.ConfigureTutorialTargets(set.targetConfig); }
+                    //reset nodes and close AlertUI
+                    GameManager.i.alertScript.CloseAlertUI(true);
                     //activate tutorialUI
                     EventManager.i.PostNotification(EventType.TutorialOpenUI, this, set, "TutorialManager.cs -> SetPreviousSet");
                 }
@@ -985,6 +987,8 @@ public class TutorialManager : MonoBehaviour
                     //configure targets
                     if (set.targetConfig != null)
                     { GameManager.i.targetScript.ConfigureTutorialTargets(set.targetConfig); }
+                    //reset nodes and close AlertUI
+                    GameManager.i.alertScript.CloseAlertUI(true);
                     //activate tutorialUI
                     EventManager.i.PostNotification(EventType.TutorialOpenUI, this, set, "TutorialManager.cs -> SetNextSet");
                 }

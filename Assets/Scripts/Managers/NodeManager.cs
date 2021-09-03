@@ -121,6 +121,7 @@ public class NodeManager : MonoBehaviour
     //colours
     string colourDefault;
     string colourNormal;
+    string colourCyber;
     string colourAlert;
     string colourHighlight;
     string colourResistance;
@@ -453,6 +454,7 @@ public class NodeManager : MonoBehaviour
     {
         colourDefault = GameManager.i.colourScript.GetColour(ColourType.whiteText);
         colourNormal = GameManager.i.colourScript.GetColour(ColourType.normalText);
+        colourCyber = GameManager.i.colourScript.GetColour(ColourType.cyberText);
         colourAlert = GameManager.i.colourScript.GetColour(ColourType.salmonText);
         colourHighlight = GameManager.i.colourScript.GetColour(ColourType.neutralText);
         colourResistance = GameManager.i.colourScript.GetColour(ColourType.blueText);
@@ -644,7 +646,7 @@ public class NodeManager : MonoBehaviour
                                 }
                                 else { Debug.LogWarning(string.Format("Invalid node (Null) for target.nodeID {0}", target.nodeID)); }
                             }
-                            displayText = string.Format("{0}{1}{2}{3} Target{4}{5} district{6}{7}", colourDefault, tempList.Count, colourEnd, colourHighlight, colourEnd,
+                            displayText = string.Format("{0}{1}{2}{3} Target{4}{5} district{6}{7}", colourNormal, tempList.Count, colourEnd, colourCyber, colourEnd,
                                 colourDefault, tempList.Count != 1 ? "s" : "", colourEnd);
                         }
                         else { displayText = string.Format("{0}{1}{2}", colourError, "No Targets present", colourEnd); }
@@ -682,7 +684,7 @@ public class NodeManager : MonoBehaviour
                                 }
                                 else { Debug.LogWarningFormat("Invalid node (Null) for target.nodeID {0}", target.nodeID); }
                             }
-                            displayText = string.Format("{0}{1}{2}{3} Target{4}{5} district{6}{7}", colourDefault, counter, colourEnd, colourHighlight, colourEnd,
+                            displayText = string.Format("{0}{1}{2}{3} Target{4}{5} district{6}{7}", colourNormal, counter, colourEnd, colourCyber, colourEnd,
                                 colourDefault, tempList.Count != 1 ? "s" : "", colourEnd);
                         }
                         else { displayText = string.Format("{0}{1}{2}", colourError, "No Targets present", colourEnd); }
@@ -719,14 +721,14 @@ public class NodeManager : MonoBehaviour
                             if (GameManager.i.playerScript.isSpecialMoveGear == false)
                             {
                                 //normal move
-                                displayText = string.Format("{0}{1}{2} {3}valid Move district{4}{5}", colourDefault, nodeList.Count, colourEnd,
-                                colourHighlight, nodeList.Count != 1 ? "s" : "", colourEnd);
+                                displayText = string.Format("{0}{1}{2} {3}valid Move district{4}{5}", colourNormal, nodeList.Count, colourEnd,
+                                colourCyber, nodeList.Count != 1 ? "s" : "", colourEnd);
                             }
                             else
                             {
                                 //has special move gear
-                                displayText = string.Format("{0}{1}{2} {3}valid Move district{4} (using {5}){6}", colourDefault, nodeList.Count, colourEnd,
-                                colourHighlight, nodeList.Count != 1 ? "s" : "", GameManager.i.gearScript.gearSpecialMove.tag, colourEnd);
+                                displayText = string.Format("{0}{1}{2} {3}valid Move district{4} (using {5}){6}", colourNormal, nodeList.Count, colourEnd,
+                                colourCyber, nodeList.Count != 1 ? "s" : "", GameManager.i.gearScript.gearSpecialMove.tag, colourEnd);
                             }
                         }
                         else
@@ -789,8 +791,8 @@ public class NodeManager : MonoBehaviour
                     }
                     if (count > 0)
                     {
-                        displayText = string.Format("{0}{1}{2} {3}{4}{5} {6}district{7}{8}", colourDefault, count, colourEnd,
-                            colourHighlight, "Spider", colourEnd, colourDefault, count != 1 ? "s" : "", colourEnd);
+                        displayText = string.Format("{0}{1}{2} {3}{4}{5} {6}district{7}{8}", colourNormal, count, colourEnd,
+                            colourCyber, "Spider", colourEnd, colourDefault, count != 1 ? "s" : "", colourEnd);
                     }
                     else
                     { displayText = string.Format("{0}There are no Spider districts{1}", colourError, colourEnd); }
@@ -845,8 +847,8 @@ public class NodeManager : MonoBehaviour
                     }
                     if (count > 0)
                     {
-                        displayText = string.Format("{0}{1}{2} {3}{4}{5} {6}district{7}{8}", colourDefault, count, colourEnd,
-                            colourHighlight, "Tracer", colourEnd, colourDefault, count != 1 ? "s" : "", colourEnd);
+                        displayText = string.Format("{0}{1}{2} {3}{4}{5} {6}district{7}{8}", colourNormal, count, colourEnd,
+                            colourCyber, "Tracer", colourEnd, colourDefault, count != 1 ? "s" : "", colourEnd);
                     }
                     else
                     { displayText = string.Format("{0}There are no Tracer districts{1}", colourError, colourEnd); }
@@ -906,8 +908,8 @@ public class NodeManager : MonoBehaviour
                     else { Debug.LogError("Invalid listOfNodes (Null)"); }
                     if (count > 0)
                     {
-                        displayText = string.Format("{0}{1}{2} {3}{4}{5} {6}district{7}{8}", colourDefault, count, colourEnd,
-                            colourHighlight, "Team", colourEnd, colourDefault, count != 1 ? "s" : "", colourEnd);
+                        displayText = string.Format("{0}{1}{2} {3}{4}{5} {6}district{7}{8}", colourNormal, count, colourEnd,
+                            colourCyber, "Team", colourEnd, colourDefault, count != 1 ? "s" : "", colourEnd);
                     }
                     else
                     { displayText = string.Format("{0}There are no Teams present{1}", colourError, colourEnd); }
@@ -928,7 +930,7 @@ public class NodeManager : MonoBehaviour
                             }
                             else { Debug.LogWarning("Invalid node (Null)"); }
                         }
-                        displayText = string.Format("{0}{1}{2}{3} Most Connected district{4}{5}", colourDefault, connectedList.Count, colourEnd, colourHighlight,
+                        displayText = string.Format("{0}{1}{2}{3} Most Connected district{4}{5}", colourNormal, connectedList.Count, colourEnd, colourCyber,
                             connectedList.Count != 1 ? "s" : "", colourEnd);
                     }
                     else { displayText = string.Format("{0}{1}{2}", colourError, "0 Most Connected Districts present", colourEnd); }
@@ -954,7 +956,7 @@ public class NodeManager : MonoBehaviour
                             }
                             else { Debug.LogWarning("Invalid node (Null)"); }
                         }
-                        displayText = string.Format("{0}{1}{2}{3} Loiter district{4}{5}", colourDefault, loiterList.Count, colourEnd, colourHighlight,
+                        displayText = string.Format("{0}{1}{2}{3} Loiter district{4}{5}", colourNormal, loiterList.Count, colourEnd, colourCyber,
                             loiterList.Count != 1 ? "s" : "", colourEnd);
                     }
                     else { displayText = string.Format("{0}{1}{2}", colourError, "0 Loiter Districts present", colourEnd); }
@@ -986,7 +988,7 @@ public class NodeManager : MonoBehaviour
                             }
                             else { Debug.LogWarning("Invalid node (Null)"); }
                         }
-                        displayText = string.Format("{0}{1}{2}{3} Cure district{4}{5}", colourDefault, counter, colourEnd, colourHighlight, counter != 1 ? "s" : "", colourEnd);
+                        displayText = string.Format("{0}{1}{2}{3} Cure district{4}{5}", colourNormal, counter, colourEnd, colourCyber, counter != 1 ? "s" : "", colourEnd);
                     }
                     else { displayText = string.Format("{0}{1}{2}", colourError, "0 Cure Districts present", colourEnd); }
                 }
@@ -1012,7 +1014,7 @@ public class NodeManager : MonoBehaviour
                             }
                             else { Debug.LogWarning("Invalid node (Null)"); }
                         }
-                        displayText = string.Format("{0}{1}{2}{3} Decision district{4}{5}", colourDefault, decisionList.Count, colourEnd, colourHighlight,
+                        displayText = string.Format("{0}{1}{2}{3} Decision district{4}{5}", colourNormal, decisionList.Count, colourEnd, colourCyber,
                             decisionList.Count != 1 ? "s" : "", colourEnd);
                     }
                     else { displayText = string.Format("{0}{1}{2}", colourError, "0 Decision Districts present", colourEnd); }
@@ -1039,7 +1041,7 @@ public class NodeManager : MonoBehaviour
                             }
                             else { Debug.LogWarning("Invalid node (Null)"); }
                         }
-                        displayText = string.Format("{0}{1}{2}{3} Crisis district{4}{5}", colourDefault, crisisList.Count, colourEnd, colourHighlight,
+                        displayText = string.Format("{0}{1}{2}{3} Crisis district{4}{5}", colourNormal, crisisList.Count, colourEnd, colourCyber,
                             crisisList.Count != 1 ? "s" : "", colourEnd);
                     }
                     else { displayText = string.Format("{0}{1}{2}", colourError, "0 Crisis Districts present", colourEnd); }
@@ -1068,7 +1070,7 @@ public class NodeManager : MonoBehaviour
                                 }
                                 else { Debug.LogWarning("Invalid nodeTemp (Null)"); }
                             }
-                            displayText = string.Format("{0}{1}{2}{3} Near Neighbouring district{4}{5}", colourDefault, listOfNearNeighbours.Count, colourEnd, colourHighlight,
+                            displayText = string.Format("{0}{1}{2}{3} Near Neighbouring district{4}{5}", colourNormal, listOfNearNeighbours.Count, colourEnd, colourCyber,
                                 listOfNearNeighbours.Count != 1 ? "s" : "", colourEnd);
                         }
                         else { displayText = string.Format("{0}{1}{2}", colourError, "0 Near Neighbours present", colourEnd); }
@@ -1106,7 +1108,7 @@ public class NodeManager : MonoBehaviour
                             }
                             else { Debug.LogWarning("Invalid node (Null)"); }
                         }
-                        displayText = string.Format("{0}{1}{2}{3} Centred district{4}{5}", colourDefault, counter, colourEnd, colourHighlight,
+                        displayText = string.Format("{0}{1}{2}{3} Centred district{4}{5}", colourNormal, counter, colourEnd, colourCyber,
                             listOfCentreNodes.Count != 1 ? "s" : "", colourEnd);
                     }
                     else { displayText = string.Format("{0}{1}{2}", colourError, "0 Centre Districts present", colourEnd); }
@@ -1136,9 +1138,9 @@ public class NodeManager : MonoBehaviour
                             }
                             else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}, listOfInvisibleNodes[{1}]", listOfInvisibleNodes[i], i); }
                         }
-                        displayText = string.Format("{0}There {1} {2} District{3} where the Player is Known{4}", colourNeutral, counter != 1 ? "are" : "is", counter, counter != 1 ? "s" : "", colourEnd);
+                        displayText = string.Format("There {0} {1} District{2} where the Player is Known", counter != 1 ? "are" : "is", counter, counter != 1 ? "s" : "");
                     }
-                    else { displayText = string.Format("{0}{1}{2}", colourNeutral, "There are NO Districts where the Player is Known", colourEnd); }
+                    else { displayText = "There are NO Districts where the Player is Known"; }
                 }
                 else
                 {
@@ -1176,8 +1178,8 @@ public class NodeManager : MonoBehaviour
                             listOfHighlighted.Add(node);
                         }
                     }
-                    displayText = string.Format("{0}{1}{2} {3}{4}{5} {6}district{7}{8}", colourDefault, nodeList.Count, colourEnd,
-                    colourHighlight, nodeArc.name, colourEnd, colourDefault, nodeList.Count != 1 ? "s" : "", colourEnd);
+                    displayText = string.Format("{0}{1}{2} {3}{4}{5} {6}district{7}{8}", colourNormal, nodeList.Count, colourEnd,
+                    colourCyber, nodeArc.name, colourEnd, colourNormal, nodeList.Count != 1 ? "s" : "", colourEnd);
                 }
                 else
                 {
@@ -1238,10 +1240,10 @@ public class NodeManager : MonoBehaviour
         else { minionTitle = "Rebel "; }
         if (actor != null)
         {
-            displayText = string.Format("{0}\"{1}\"{2} {3}{4}{5}{6}{7}{8} {9}{10} district{11}{12}", colourHighlight, actor.actorName, colourEnd,
-                colourDefault, minionTitle, colourEnd,
-                colourHighlight, actor.arc.name, colourEnd,
-                colourDefault, tempNodeList.Count, tempNodeList.Count != 1 ? "s" : "", colourEnd);
+            displayText = string.Format("{0}\"{1}\"{2} {3}{4}{5}{6}{7}{8} {9}{10} district{11}{12}", colourCyber, actor.actorName, colourEnd,
+                colourNormal, minionTitle, colourEnd,
+                colourCyber, actor.arc.name, colourEnd,
+                colourNormal, tempNodeList.Count, tempNodeList.Count != 1 ? "s" : "", colourEnd);
             GameManager.i.alertScript.SetAlertUI(displayText);
             NodeShowFlag = 1;
         }
@@ -1832,10 +1834,10 @@ public class NodeManager : MonoBehaviour
         switch (activityUI)
         {
             case ActivityUI.Count:
-                displayText = string.Format("{0}Resistance Activity by Count{1}", colourNeutral, colourEnd);
+                displayText = "Resistance Activity by Count";
                 break;
             case ActivityUI.Time:
-                displayText = string.Format("{0}Resistance Activity by Time{1}", colourNeutral, colourEnd);
+                displayText = "Resistance Activity by Time";
                 break;
         }
         //active AlertUI

@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using gameAPI;
+using UnityEngine.UI;
 
 /// <summary>
 /// Handles the alert text UI at screen top centre (just below the Cause) which gives a message stating which nodes are being highlighted
 /// </summary>
 public class AlertUI : MonoBehaviour
 {
+    public Canvas alertCanvas;
     public GameObject alertObject;                                      //provides the text alert at top of map for ShowNodes
+    public Image alertBackground;
     public TextMeshProUGUI alertText;
 
     private Coroutine myCoroutine;
@@ -18,10 +21,23 @@ public class AlertUI : MonoBehaviour
 
     private static AlertUI alertUI;
 
+    public void OnEnable()
+    {
+        Debug.Assert(alertCanvas != null, "Invalid alertCanvas (Null)");
+        Debug.Assert(alertObject != null, "Invalid alertObject (Null)");
+        Debug.Assert(alertBackground != null, "Invalid alertBackground (Null)");
+        Debug.Assert(alertText != null, "Invalid alertText (Null)");
+    }
+
     public void Start()
     {
         timeDefault = GameManager.i.guiScript.alertDefaultTime;
         Debug.Assert(timeDefault > 0, "Invalid timeDefault (must be > Zero)");
+        //set default gfx status
+        alertCanvas.gameObject.SetActive(false);
+        alertObject.gameObject.SetActive(true);
+        alertBackground.gameObject.SetActive(true);
+        alertText.gameObject.SetActive(true);
     }
 
     /// <summary>
@@ -54,7 +70,7 @@ public class AlertUI : MonoBehaviour
                 {
                     alertText.text = text;
                     //show on screen
-                    alertObject.SetActive(true);
+                    alertCanvas.gameObject.SetActive(true);
                     //start coroutine for set time
                     timeToDisplay = timeForAlertToShow;
                     if (timeToDisplay == 0f)
@@ -74,10 +90,10 @@ public class AlertUI : MonoBehaviour
     /// </summary>
     public void CloseAlertUI(bool resetFlag = false)
     {
-        if (alertObject.activeSelf == true)
+        if (alertCanvas.gameObject.activeSelf == true)
         {
             Debug.LogFormat("[UI] AlertUI.cs -> CloseAlertUI{0}", "\n");
-            alertObject.SetActive(false);
+            alertCanvas.gameObject.SetActive(false);
             GameManager.i.nodeScript.NodeShowFlag = 0;
             //stop coroutine if still running
             if (myCoroutine != null)

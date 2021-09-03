@@ -1629,7 +1629,7 @@ public class MainInfoUI : MonoBehaviour
         tickerSpeed++;
         tickerSpeed = Mathf.Min(tickerSpeedMax, tickerSpeed);
         //feedback to player
-        GameManager.i.alertScript.SetAlertUI(string.Format("{0}<b>News Ticker Speed increased to {1}</b>{2}", colourNeutral, tickerSpeed, colourEnd));
+        GameManager.i.alertScript.SetAlertUI(string.Format("News Ticker Speed increased to {0}", tickerSpeed));
     }
     #endregion
 
@@ -1642,7 +1642,7 @@ public class MainInfoUI : MonoBehaviour
         tickerSpeed--;
         tickerSpeed = Mathf.Max(tickerSpeedMin, tickerSpeed);
         //feedback to player
-        GameManager.i.alertScript.SetAlertUI(string.Format("</b>News Ticker Speed decreased to {0}</b>", tickerSpeed));
+        GameManager.i.alertScript.SetAlertUI(string.Format("News Ticker Speed decreased to {0}", tickerSpeed));
     }
     #endregion
 
