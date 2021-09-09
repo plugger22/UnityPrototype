@@ -211,36 +211,6 @@ public class TargetManager : MonoBehaviour
     }
     #endregion
 
-    /*#region InitialiseTutorialTargets
-    /// <summary>
-    /// Initialise only the subset of tutorial targets
-    /// </summary>
-    public void InitialiseTutorialTargets(TutorialTargetConfig config)
-    {
-        if (GameManager.i.optionScript.isTargets == true)
-        {
-            if (config != null)
-            {
-                List<Target> listOfLiveTargets = GameManager.i.dataScript.GetTargetPool(Status.Live);
-                if (listOfLiveTargets != null)
-                {
-                    //clear collection
-                    listOfLiveTargets.Clear();
-                    //add targets
-                    for (int i = 0; i < config.listOfTargets.Count; i++)
-                    {
-                        if (config.listOfTargets[i] != null)
-                        { listOfLiveTargets.Add(config.listOfTargets[i]); }
-                        else { Debug.LogWarningFormat("Invalid target (Null) for config.listOfTargets[{0}]", i); }
-                    }
-                }
-                else { Debug.LogError("Invalid listOfLiveTargets (Null)"); }
-            }
-            else { Debug.LogError("Invalid TutorialTargetConfig (Null)"); }
-        }
-    }
-    #endregion*/
-
     #region OnEvent
     /// <summary>
     /// Event handler

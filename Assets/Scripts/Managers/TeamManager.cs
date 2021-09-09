@@ -54,6 +54,7 @@ public class TeamManager : MonoBehaviour
     [HideInInspector] public int teamIDCounter = 0;                     //provides unique ID to teams (reset at start of new level)
     #endregion
 
+    #region Initialise
     /// <summary>
     /// Set up at start. Not for GameState.LoadGame
     /// </summary>
@@ -81,9 +82,9 @@ public class TeamManager : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
-
-    #region Initialise SubMethods
+    #region Initialise SubMethods...
 
     #region SubInitialiseFastAccess
     private void SubInitialiseFastAccess()
@@ -142,7 +143,7 @@ public class TeamManager : MonoBehaviour
 
     #endregion
 
-
+    #region OnEvent
     /// <summary>
     /// Called when an event happens
     /// </summary>
@@ -183,7 +184,9 @@ public class TeamManager : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
+    #region SetColours
     /// <summary>
     /// set colour palette for modal Outcome Window
     /// </summary>
@@ -198,13 +201,17 @@ public class TeamManager : MonoBehaviour
         colourActor = GameManager.i.colourScript.GetColour(ColourType.neutralText);
         colourEnd = GameManager.i.colourScript.GetEndTag();
     }
+    #endregion
 
+    #region ResetCounter
     /// <summary>
     /// reset team ID counter prior to new level
     /// </summary>
     public void ResetCounter()
     { teamIDCounter = 0; }
+    #endregion
 
+    #region EndTurn
     /// <summary>
     /// End turn activity -> Event driven, decrement all timers in OnMap pool
     /// </summary>
@@ -229,8 +236,9 @@ public class TeamManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid teamPool (Null) -> no team timers decremented"); }
     }
+    #endregion
 
-
+    #region StartTurnEarly
     /// <summary>
     /// Start turn Early activity -> Event driven. Team Management (inTransit, OnMap timers)
     /// NOTE: needs to be before NodeManager.cs process ongoing effects in StartTurnLate (team can cancel effect and NodeManager.cs still creates an ongoing effect msg otherwise)
@@ -345,8 +353,11 @@ public class TeamManager : MonoBehaviour
                                     };
                                     actor.AddTeamAction(data);
                                 }
-                                else { Debug.LogFormat("[Tst] TeamManager.cs -> StartTurnEarly: No ACTIVE, OnMap actor available, teamActionData package not generated for {0} {1}, ID {2}{3}", 
-                                    team.arc.name, team.teamName, team.teamID, "\n"); }
+                                else
+                                {
+                                    Debug.LogFormat("[Tst] TeamManager.cs -> StartTurnEarly: No ACTIVE, OnMap actor available, teamActionData package not generated for {0} {1}, ID {2}{3}",
+                                 team.arc.name, team.teamName, team.teamID, "\n");
+                                }
                                 //AI Authority player
                                 MoveTeamAI(TeamPool.InTransit, team.teamID, node);
                                 //Permanent Team effect activated for node
@@ -387,7 +398,9 @@ public class TeamManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid teamPool (Null) -> no teams with expired timers recalled from OnMap"); }
     }
+    #endregion
 
+    #region GetTeamAction
     /// <summary>
     /// subMethod to get a teamAction (for TeamActionData package) from a specified team.Arc.name. Returns 'TeamAction.None' if a problem
     /// </summary>
@@ -412,8 +425,9 @@ public class TeamManager : MonoBehaviour
         }
         return teamAction;
     }
+    #endregion
 
-
+    #region ProcessErasureTeam
     /// <summary>
     /// Message notification of contact spotting an Erasure team (only have messages for erasure teams). Returns true if a valid Erasure team sighting
     /// NOTE: calling method has checked team and node for Null
@@ -488,8 +502,9 @@ public class TeamManager : MonoBehaviour
         { isSpotted = false; }
         return isSpotted;
     }
+    #endregion
 
-
+    #region InitialiseTeams
     /// <summary>
     /// Sets up intial Reserve pool of teams and related collections
     /// </summary>
@@ -597,8 +612,9 @@ public class TeamManager : MonoBehaviour
             }
         }
     }
+    #endregion
 
-
+    #region SeedTeamsOnMap
     /// <summary>
     /// Debug method -> each team in reserve pool at game start has a chance of being deployed
     /// </summary>
@@ -635,8 +651,68 @@ public class TeamManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid listOfNodes (Null)"); }
     }
+    #endregion
 
+    #region ConfigureTutorialTeams
+    /// <summary>
+    /// Places teams onMap at start of a tutorial set. Multiple teams can be placed on the same node (random). Most Connected nodes are used.
+    /// </summary>
+    /// <param name="config"></param>
+    public void ConfigureTutorialTeams(TutorialTeamConfig config)
+    {
+        if (config != null)
+        {
+            int actorSlotID;
+            int teamID;
+            //teams
+            int count = config.listOfTeams.Count;
+            if (count > 0)
+            {
+                //get list of Most connected
+                List<Node> listOfNodes = GameManager.i.dataScript.GetListOfMostConnectedNodes();
+                if (listOfNodes != null)
+                {
+                    if (listOfNodes.Count > 0)
+                    {
+                        //loop TutorialTeamsConfig.listOfTeams
+                        for (int i = 0; i < count; i++)
+                        {
+                            //get a random node
+                            Node node = listOfNodes[Random.Range(0, listOfNodes.Count)];
+                            if (node != null)
+                            {
+                                //get teamID
+                                TeamArc arc = config.listOfTeams[i];
+                                if (arc != null)
+                                {
+                                    teamID = GameManager.i.dataScript.GetTeamID(arc);
+                                    if (teamID > -1)
+                                    {
+                                        //get a random Actor
+                                        actorSlotID = Random.Range(0, GameManager.i.actorScript.maxNumOfOnMapActors);
+                                        //only do so if Actor is present in slot (player might start level with less than full complement of actors)
+                                        if (GameManager.i.dataScript.CheckActorSlotStatus(actorSlotID, globalAuthority) == true)
+                                        { MoveTeam(TeamPool.OnMap, teamID, actorSlotID, node); }
+                                    }
+                                    else { Debug.LogErrorFormat("Invalid teamID (-1) for teamArc \"{0}\", for {1}.listOfTeams[{2}]", arc.name, config.name, i); }
+                                }
+                                else { Debug.LogErrorFormat("Invalid teamArc (Null) for TutorialTeamConfig \"{0}\".listOfTeams[{1}]", config.name, i); }
+                            }
+                            else { Debug.LogError("Invalid node (Null)"); }
+                        }
+                    }
+                    else
+                    { Debug.LogError("Invalid listOfMostConnectedNodes (Empty)"); }
+                }
+                else { Debug.LogError("Invalid listOfMostConnectedNodes (Null)"); }
+            }
+            else { Debug.LogErrorFormat("Invalid teams (Empty) in {0}.listOfTeams", config.name); }
+        }
+        else { Debug.LogError("Invalid TutorialTeamConfig (Null)"); }
+    }
+    #endregion
 
+    #region MoveTeam
     /// <summary>
     /// handles all admin for moving a team from one pool to another. Assumed movement direction is 'Reserve -> OnMap -> InTransit -> Reserve'
     /// Takes care of all checks, eg. enough teams present in reserve for one to move to the map
@@ -850,7 +926,9 @@ public class TeamManager : MonoBehaviour
         }
         return true;
     }
+    #endregion
 
+    #region MoveTeamAI
     /// <summary>
     /// handles all admin for AI moving a team from one pool to another. Assumed movement direction is 'Reserve Pool -> OnMap -> InTransit -> Reserve Pool'
     /// Takes care of all checks, eg. enough teams present in reserve for one to move to the map
@@ -924,7 +1002,7 @@ public class TeamManager : MonoBehaviour
                                                 //get actor with least number of NodeActionData records to avoid loading up teams onto one or two actors
                                                 Actor actor = null;
                                                 int numOfActions = 99999;
-                                                foreach(Actor tempActor in listOfActors)
+                                                foreach (Actor tempActor in listOfActors)
                                                 {
                                                     if (tempActor.CheckNumOfNodeActions() < numOfActions)
                                                     {
@@ -948,7 +1026,7 @@ public class TeamManager : MonoBehaviour
                                                     };
                                                     //add to actor's personal list
                                                     actor.AddNodeAction(nodeActionData);
-                                                    Debug.LogFormat("[Tst] TeamManager.cs -> MoveTeamAI: nodeActionData added to {0}, {1}, ID {2} for {3} {4}, ID {5}{6}", 
+                                                    Debug.LogFormat("[Tst] TeamManager.cs -> MoveTeamAI: nodeActionData added to {0}, {1}, ID {2} for {3} {4}, ID {5}{6}",
                                                         actor.actorName, actor.arc.name, actor.actorID, team.arc.name, team.teamName, team.teamID, "\n");
                                                 }
                                                 else { Debug.LogError("Invalid actor (Null) from listOfActors (Active)"); }
@@ -1015,7 +1093,9 @@ public class TeamManager : MonoBehaviour
         { Debug.LogError(string.Format("Invalid Team (null) for TeamID {0}", teamID)); successFlag = false; }
         return successFlag;
     }
+    #endregion
 
+    #region DebugDisplayTeamAnalysis
     /// <summary>
     /// Debug function to display a breakdown of the team pools
     /// </summary>
@@ -1059,7 +1139,9 @@ public class TeamManager : MonoBehaviour
         }
         return builder.ToString();
     }
+    #endregion
 
+    #region DebugDisplayTeamActorAnalysis
     /// <summary>
     /// Debug method to show which actors xurrently have which teams OnMap
     /// </summary>
@@ -1101,7 +1183,9 @@ public class TeamManager : MonoBehaviour
         }
         return builder.ToString();
     }
+    #endregion
 
+    #region DebugDisplayIndividualTeams
     /// <summary>
     /// Debug function -> Gets data on all individual teams residing in dictOfTeams
     /// </summary>
@@ -1127,7 +1211,9 @@ public class TeamManager : MonoBehaviour
         }
         return builder.ToString();
     }
+    #endregion
 
+    #region InitialiseGenericPickerRecall
     /// <summary>
     /// Recall Team (Authority): sets up ModalGenericPicker class and triggers event: ModalGenericEvent.cs -> SetGenericPicker()
     /// does this for 1, 2 or 3 teams present at the node, immediate outcome window if none present.
@@ -1228,7 +1314,9 @@ public class TeamManager : MonoBehaviour
             EventManager.i.PostNotification(EventType.OpenGenericPicker, this, genericDetails, "TeamManager.cs -> InitialiseGenericPickerRecall");
         }
     }
+    #endregion
 
+    #region InitialiseGenericPickerNeutralise
     /// <summary>
     /// Neutralise Team (Resistance): sets up ModalGenericPicker class and triggers event: ModalGenericEvent.cs -> SetGenericPicker()
     /// does this for 1, 2 or 3 teams present at the node, immediate outcome window if none present.
@@ -1315,7 +1403,9 @@ public class TeamManager : MonoBehaviour
             EventManager.i.PostNotification(EventType.OpenGenericPicker, this, genericDetails, "TeamManager.cs -> InitialiseGenericPickerNeutralise");
         }
     }
+    #endregion
 
+    #region ProcessRecallTeam
     /// <summary>
     /// 'Recall Team' node action. Implements action.
     /// </summary>
@@ -1393,8 +1483,9 @@ public class TeamManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid TeamID (default '-1')"); }
     }
+    #endregion
 
-
+    #region ProcessNeutraliseTeam
     /// <summary>
     /// 'Neutralise Team' Resistance node action. Implements action.
     /// </summary>
@@ -1530,7 +1621,9 @@ public class TeamManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid TeamID (default '-1')"); }
     }
+    #endregion
 
+    #region ProcessTeamEffect
     /// <summary>
     /// Implements PERMANENT team effects (Player/AI) on nodes at completion of teams OnMap Timer.
     /// Node and Team are assumed to be checked for Null by the parent method
@@ -1673,7 +1766,9 @@ public class TeamManager : MonoBehaviour
         if (isError == false && actor != null)
         { actor.Power++; }
     }
+    #endregion
 
+    #region TeamCleanUp
     /// <summary>
     /// Whenever an Authority actor is removed from the map (even if sent to the reserves) run this method to clean up any OnMap or InTransit teams connected with
     /// the actor. They are all placed (instantly) into the Reserve team Pool to prevent errors when accessing actors that are no longer there.
@@ -1752,8 +1847,9 @@ public class TeamManager : MonoBehaviour
         //return number of teams removed and sent to the reserves
         return counter;
     }
+    #endregion
 
-
+    #region AutoRunAssignActors
     /// <summary>
     /// method run when an AI vs AI auto run is complete and control reverts to the Authority side. Need to do so as OnMap and InTransit teams aren't associated with an actor (AI doesn't need to) and
     /// errors will occur otherwise.
@@ -1889,7 +1985,9 @@ public class TeamManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfTeams (Null)"); }
     }
+    #endregion
 
+    #region SendTeamToReserves
     /// <summary>
     /// subMethod for AutoRunAssignActors to handle edge case situations where a team can't be allocated to an actor and needs to be sent to the reserves
     /// </summary>
@@ -1945,13 +2043,17 @@ public class TeamManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid team (Null)"); }
     }
+    #endregion
 
+    #region Utilities...
 
     public List<TeamArc> GetListOfTeamPrioritiesHigh()
     { return listOfTeamPrioritiesHigh; }
 
     public List<TeamArc> GetListOfTeamPrioritiesMed()
     { return listOfTeamPrioritiesMedium; }
+
+    #endregion
 
     //place new method above here
 }

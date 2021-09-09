@@ -326,22 +326,27 @@ public class AIManager : MonoBehaviour
     List<AINodeData> listOfErasureNodes = new List<AINodeData>();
     //other
     List<string> listOfErasureAILog = new List<string>();
+
     #region Save Data Compatible
     List<string> listOfPlayerEffects = new List<string>();
     List<string> listOfPlayerEffectDescriptors = new List<string>();
     #endregion
+    
     //nemesis
     List<AITracker> listOfPlayerActivity = new List<AITracker>();
     //tasks
+
     #region Save Data Compatible
     List<AITask> listOfTasksPotential = new List<AITask>();                                 //doesn't need to be saved but is for debugging purposes
     List<AITask> listOfTasksFinal = new List<AITask>();
     #endregion
+
     List<AITask> listOfSpiderTasks = new List<AITask>();
     List<AITask> listOfErasureTasks = new List<AITask>();
     List<AITask> listOfDecisionTasksNonCritical = new List<AITask>();
     List<AITask> listOfDecisionTasksCritical = new List<AITask>();
     //stats
+
     #region Save Data Compatible
     private int[] arrayOfAITaskTypes;                                                       //used for analysis of which tasks the AI generates (not executes but tracks the ones placed into the pool)
     #endregion
@@ -383,7 +388,7 @@ public class AIManager : MonoBehaviour
         }
     }
 
-    #region Initialise SubMethods
+    #region Initialise SubMethods...
 
     #region SubInitialiseStartSession
     private void SubInitialiseStartSession()

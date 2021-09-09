@@ -411,7 +411,8 @@ public class DebugGUI : MonoBehaviour
                     case 0: debugDisplay = 34; targetToggle = 1; break;
                     case 1: debugDisplay = 35; targetToggle = 2; break;
                     case 2: debugDisplay = 36; targetToggle = 3; break;
-                    case 3: debugDisplay = 0; targetToggle = 0; break;
+                    case 3: debugDisplay = 119; targetToggle = 4; break;
+                    case 4: debugDisplay = 0; targetToggle = 0; break;
                 }
             }
 
@@ -2508,6 +2509,12 @@ public class DebugGUI : MonoBehaviour
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.i.dataScript.DebugDisplayScenarioNews();
                         GUI.Box(new Rect(Screen.width - 1210, 10, 1200, 900), analysis, customBackground);
+                        break;
+                    //Nodes with Targets
+                    case 119:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.i.dataScript.DebugDisplayListOfNodesWithTargets();
+                        GUI.Box(new Rect(Screen.width - 555, 10, 550, 600), analysis, customBackground);
                         break;
                 }
             }

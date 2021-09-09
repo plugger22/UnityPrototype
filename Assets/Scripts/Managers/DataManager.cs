@@ -229,7 +229,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<string, Action> dictOfActions = new Dictionary<string, Action>();                        //Key -> Action.name, Value -> Action
     private Dictionary<string, ManageAction> dictOfManageActions = new Dictionary<string, ManageAction>();      //Key -> ManageAction.name, Value -> ManageAction
     private Dictionary<string, Target> dictOfTargets = new Dictionary<string, Target>();                        //Key -> Target.name, Value -> Target
-    private Dictionary<int, TeamArc> dictOfTeamArcs = new Dictionary<int, TeamArc>();                           //Key -> teamID, Value -> Team
+    private Dictionary<int, TeamArc> dictOfTeamArcs = new Dictionary<int, TeamArc>();                           //Key -> teamArcID, Value -> Team
     private Dictionary<string, int> dictOfLookUpTeamArcs = new Dictionary<string, int>();                       //Key -> teamArc name, Value -> TeamArcID
     private Dictionary<int, Team> dictOfTeams = new Dictionary<int, Team>();                                    //Key -> teamID, Value -> Team
     private Dictionary<string, Gear> dictOfGear = new Dictionary<string, Gear>();                               //Key -> gear.name, Value -> Gear
@@ -3519,11 +3519,13 @@ public class DataManager : MonoBehaviour
 
     #region ClearTargets
     /// <summary>
-    /// loops all nodes and removes all targets and empties listOfNodesWithTargets -> Tutorial purposes
+    /// loops all nodes and removes all targets and empties relevant target lists -> Tutorial purposes
     /// </summary>
     public void ClearTargets()
     {
+        //clear lists
         listOfNodesWithTargets.Clear();
+        targetPoolLive.Clear();
         if (dictOfNodes != null)
         {
             foreach (var node in dictOfNodes)
@@ -3544,7 +3546,7 @@ public class DataManager : MonoBehaviour
                 StringBuilder builder = new StringBuilder();
                 Target target = null;
                 List<string> tempList = new List<string>();
-                builder.AppendFormat(" ArrayOfGenericTargets{0}", "\n");
+                builder.AppendFormat("- ArrayOfGenericTargets{0}", "\n");
                 for (int i = 0; i < arrayOfGenericTargets.Length; i++)
                 {
                     builder.AppendFormat("{0} NodeArc -> {1}{2}", "\n", GetNodeArc(i).name, "\n");
@@ -3582,7 +3584,7 @@ public class DataManager : MonoBehaviour
         if (GameManager.i.optionScript.isTargets == true)
         {
             StringBuilder builder = new StringBuilder();
-        builder.AppendFormat(" Target Pools{0}", "\n");
+        builder.AppendFormat("- Target Pools{0}", "\n");
         builder.AppendFormat("{0} Active Targets{1}", "\n", "\n");
         builder.Append(DebugShowPool(targetPoolActive));
         builder.AppendFormat("{0} Live Targets{1}", "\n", "\n");
@@ -3645,7 +3647,7 @@ public class DataManager : MonoBehaviour
         if (GameManager.i.optionScript.isTargets == true)
         {
             StringBuilder builder = new StringBuilder();
-            builder.AppendFormat(" TargetDictionary{0}{1}", "\n", "\n");
+            builder.AppendFormat("- TargetDictionary{0}{1}", "\n", "\n");
             foreach (var target in dictOfTargets)
             {
                 if (target.Value.followOnTarget != null)
@@ -3684,7 +3686,41 @@ public class DataManager : MonoBehaviour
         }
         else { return "Targets have been disabled"; }
     }
-#endregion
+
+    /// <summary>
+    /// Debug display of listOfNodesWithTargetss
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayListOfNodesWithTargets()
+    {
+        if (GameManager.i.optionScript.isTargets == true)
+        {
+            int count;
+            int nodeID;
+            Node node;
+            StringBuilder builder = new StringBuilder();
+            builder.AppendFormat("- ListOfNodesWithTargets{0}{1}", "\n", "\n");
+            count = listOfNodesWithTargets.Count;
+            if (count > 0)
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    nodeID = listOfNodesWithTargets[i];
+                    if (nodeID > -1)
+                    {
+                        node = GetNode(nodeID);
+                        builder.AppendFormat("{0}, {1}, nodeID {2}{3}", node.nodeName, node.Arc.name, node.nodeID, "\n");
+                    }
+                    else { builder.AppendFormat("Invalid nodeID {0} for listOfNodesWithTargets[{1}]{2}", nodeID, i, "\n"); }
+                }
+            }
+            else { builder.Append("No nodes have targets"); }
+            return builder.ToString();
+        }
+        else { return "Targets have been disabled"; }
+    }
+
+    #endregion
 
     #region Teams...
     //
@@ -3972,6 +4008,25 @@ public class DataManager : MonoBehaviour
         { return dictOfTeams[teamID]; }
         else { Debug.LogWarning(string.Format("TeamID {0} not found in dictOfTeams {1}", teamID, "\n")); }
         return null;
+    }
+
+    /// <summary>
+    /// returns ID of first team member found in dictOfTeams with matching arc type, -1 if none found
+    /// </summary>
+    /// <param name="arc"></param>
+    /// <returns></returns>
+    public int GetTeamID(TeamArc arc)
+    {
+        if (arc != null)
+        {
+            foreach(var team in dictOfTeams)
+            {
+                if (team.Value.arc.TeamArcID == arc.TeamArcID)
+                { return team.Key; }
+            }
+        }
+        else { Debug.LogError("Invalid teamArc (Null)"); }
+        return -1;
     }
 
     /// <summary>

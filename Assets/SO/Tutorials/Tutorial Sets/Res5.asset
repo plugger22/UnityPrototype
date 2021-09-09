@@ -19,11 +19,11 @@ MonoBehaviour:
   actorConfig: {fileID: 11400000, guid: d0f994b65cfc31544abb9fc12bf58368, type: 2}
   targetConfig: {fileID: 11400000, guid: 38998c681209a9b43acbbc5aeac6a026, type: 2}
   listOfFeaturesOff:
-  - {fileID: 11400000, guid: 7e2f496678746a1488d0508fb5ac34ef, type: 2}
+  - {fileID: 11400000, guid: 60b4bacf16a2f574fa7fa81a919e7bbc, type: 2}
   - {fileID: 11400000, guid: 60c5546ae44161c4e96b856a75904210, type: 2}
   - {fileID: 11400000, guid: 70e66f38820226347909bc5dfe71319a, type: 2}
   - {fileID: 11400000, guid: 9ab41dcfbf11bf14f8fbeb9b7522f31a, type: 2}
-  - {fileID: 11400000, guid: 60b4bacf16a2f574fa7fa81a919e7bbc, type: 2}
+  - {fileID: 11400000, guid: 7e2f496678746a1488d0508fb5ac34ef, type: 2}
   listOfGUIOff:
   - {fileID: 11400000, guid: 4ecda8036df900d48b4b25e77b1b6ad0, type: 2}
   - {fileID: 11400000, guid: 7046d4b9b0e864d409b0b2019663b6b2, type: 2}

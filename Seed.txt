@@ -404,3 +404,60 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	
 Dev seed 39613 -> Thursday, 9 September 2021 11:02 AM
 City seed 43917 -> VirtualCity, Eurasia
+
+Dev seed 21025 -> Thursday, 9 September 2021 12:05 PM
+City seed 11928 -> VirtualCity, Eurasia
+
+Dev seed 10337 -> Thursday, 9 September 2021 12:08 PM
+City seed 25472 -> VirtualCity, Eurasia
+
+Dev seed 59567 -> Thursday, 9 September 2021 12:12 PM
+City seed 54646 -> VirtualCity, Eurasia
+
+Dev seed 14236 -> Thursday, 9 September 2021 12:15 PM
+City seed 46653 -> VirtualCity, Eurasia
+
+Dev seed 24368 -> Thursday, 9 September 2021 12:28 PM
+City seed 24986 -> VirtualCity, Eurasia
+
+Dev seed 36316 -> Thursday, 9 September 2021 12:42 PM
+City seed 27162 -> VirtualCity, Eurasia
+
+Dev seed 12551 -> Thursday, 9 September 2021 12:44 PM
+City seed 40839 -> VirtualCity, Eurasia
+
+Dev seed 55764 -> Thursday, 9 September 2021 12:50 PM
+City seed 23624 -> VirtualCity, Eurasia
+
+Dev seed 41677 -> Thursday, 9 September 2021 12:52 PM
+City seed 14388 -> VirtualCity, Eurasia
+
+Dev seed 6568 -> Thursday, 9 September 2021 12:54 PM
+City seed 40064 -> VirtualCity, Eurasia
+
+Dev seed 65194 -> Thursday, 9 September 2021 1:02 PM
+City seed 42886 -> VirtualCity, Eurasia
+
+Dev seed 17497 -> Thursday, 9 September 2021 1:09 PM
+City seed 19458 -> VirtualCity, Eurasia
+
+Dev seed 20334 -> Thursday, 9 September 2021 1:10 PM
+City seed 19487 -> VirtualCity, Eurasia
+
+Dev seed 12064 -> Thursday, 9 September 2021 3:24 PM
+City seed 11172 -> VirtualCity, Eurasia
+
+Dev seed 37639 -> Thursday, 9 September 2021 3:37 PM
+City seed 24973 -> VirtualCity, Eurasia
+
+Dev seed 17776 -> Thursday, 9 September 2021 3:37 PM
+City seed 23776 -> VirtualCity, Eurasia
+
+Dev seed 10056 -> Thursday, 9 September 2021 3:40 PM
+City seed 3264 -> VirtualCity, Eurasia
+
+Dev seed 34921 -> Thursday, 9 September 2021 4:02 PM
+City seed 22737 -> VirtualCity, Eurasia
+
+Dev seed 14284 -> Thursday, 9 September 2021 4:27 PM
+City seed 35579 -> VirtualCity, Eurasia

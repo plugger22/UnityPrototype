@@ -1967,6 +1967,28 @@ public class ValidationManager : MonoBehaviour
                                         //check for duplicates -> NOTE: need to nest within Checklist check as any null will cause error on Select(x => x.name)
                                         listOfNames = set.listOfFeaturesOff.Select(x => x.name).ToList();
                                         CheckListForDuplicates(listOfNames, "TutorialFeature", "SO.name", "listOfFeaturesOff");
+                                        //check target feaure
+                                        TutorialFeature feature;
+                                        bool isTargetsOff = false;
+                                        for (int k = 0; k < set.listOfFeaturesOff.Count; k++)
+                                        {
+                                            feature = set.listOfFeaturesOff[k];
+                                            if (feature.name.Equals("Targets", StringComparison.Ordinal) == true)
+                                            {
+                                                //Targets OFF -> check no targetConfig present
+                                                if (set.targetConfig != null)
+                                                { Debug.LogFormat("{0} Set \"{1}\" has Targets OFF but there is a targetConfig ({2}) present (there should be){3}", tag, set.name, set.targetConfig.name, "\n"); }
+                                                isTargetsOff = true;
+                                                break;
+                                            }
+                                        }
+                                        //Targets ON
+                                        if (isTargetsOff == false)
+                                        {
+                                            //check targetConfig is present
+                                            if (set.targetConfig == null)
+                                            { Debug.LogFormat("{0} Set \"{1}\" has Targets ON but there is no targetConfig present{2}", tag, set.name, "\n"); }
+                                        }
                                     }
                                     //check set -> GUI features lists for null
                                     if (CheckList(set.listOfGUIOff, "listOfGUIOff", tag) == true)
@@ -2556,6 +2578,8 @@ public class ValidationManager : MonoBehaviour
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfTutorialActorConfigs);
         //TutorialPlayerConfigs
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfTutorialPlayerConfigs);
+        //TutorialTeamConfigs
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfTutorialTeamConfigs);
         //Layouts
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfLayouts);
         //GameHelp
