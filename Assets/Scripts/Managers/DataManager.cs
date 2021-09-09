@@ -3517,6 +3517,22 @@ public class DataManager : MonoBehaviour
         else { Debug.LogError("Invalid listOfTargets (Null)"); }
     }
 
+    #region ClearTargets
+    /// <summary>
+    /// loops all nodes and removes all targets and empties listOfNodesWithTargets -> Tutorial purposes
+    /// </summary>
+    public void ClearTargets()
+    {
+        listOfNodesWithTargets.Clear();
+        if (dictOfNodes != null)
+        {
+            foreach (var node in dictOfNodes)
+            { node.Value.targetName = ""; }
+        }
+        else { Debug.LogError("Invalid dictOfNodes (Null)"); }
+    }
+    #endregion
+
     /// <summary>
     /// Debug method to display contents of generic target array
     /// </summary>

@@ -3196,6 +3196,7 @@ public class NodeManager : MonoBehaviour
         }
     }
 
+    #region ProcessNodeCrisis
     /// <summary>
     /// Checks all nodes, checks for datapoints in dangerzone, updates crisis timers and runs crisis checks
     /// </summary>
@@ -3415,7 +3416,9 @@ public class NodeManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid listOfNodes (Null) -> Crisis checks cancelled"); }
     }
+    #endregion
 
+    #region ProcessLoadNodeCrisis
     /// <summary>
     /// start up smoke emitters on crisis nodes when Loading saved game data
     /// </summary>
@@ -3438,7 +3441,9 @@ public class NodeManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfCrisisNodes (Null)"); }
     }
+    #endregion
 
+    #region AddCureNode
     /// <summary>
     /// Add a cure to a node location and handles all admin. isActive sets initial state of Cure (default false). Overriden to true if Resistance is controlled by AI.
     /// </summary>
@@ -3471,7 +3476,9 @@ public class NodeManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid cure (Null)"); }
     }
+    #endregion
 
+    #region RemoveCureNode
     /// <summary>
     /// Removes a specified cure from it's node location and handles all admin
     /// </summary>
@@ -3495,126 +3502,9 @@ public class NodeManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid cure (Null)"); }
     }
+    #endregion
 
-    /*/// <summary>  EDIT: Redundant code, replaced by code below and Dijkstra method, Nov '19
-    /// finds a random node, 'x' distance links away from the Resistance Player's current location (may end up being less), one that doesn't already have a cure. Returns -1 if a problem
-    /// </summary>
-    /// <param name="distance"></param>
-    /// <returns></returns>
-    private int GetCureNodeRandom(Cure cure)
-    {
-        int cureNodeID = -1;
-        int requiredDistance = cure.distance;
-        int furthestDistance = 0;
-        int actualDistance = 0;
-        Debug.Assert(requiredDistance > 0, "Invalid cure.requiredDistance (must be > 0)");
-        if (cure != null)
-        {
-            PathData data = GameManager.instance.dataScript.GetDijkstraPathUnweighted(nodePlayer);
-            if (data != null)
-            {
-                if (data.distanceArray != null)
-                {
-                    int[] arrayOfDistances = data.distanceArray;
-                    //get exclusion list of nodes currently with a cure
-                    List<int> listOfExclusion = new List<int>();
-                    List<Node> listOfCureNodes = GameManager.instance.dataScript.GetListOfCureNodes();
-                    if (listOfCureNodes != null)
-                    {
-                        for (int index = 0; index < listOfCureNodes.Count; index++)
-                        {
-                            if (listOfCureNodes[index] != null)
-                            { listOfExclusion.Add(listOfCureNodes[index].nodeID); }
-                            else { Debug.LogErrorFormat("Invalid node (Null) for listOfCureNodes[{0}]", index); }
-                        }
-                    }
-                    else { Debug.LogError("Invalid listOfCureNodes (Null)"); }
-                    //get max distance possible from Resistance Player's current node
-                    furthestDistance = arrayOfDistances.Max();
-                    //adjust distance required to furthest available (if required in case map size, or player position, doesn't accomodate the requested distance)
-                    actualDistance = Mathf.Min(furthestDistance, requiredDistance);
-                    //loop distance Array and find first node that is that distance, or greater, and one that doesn't currently have a cure location
-                    for (int index = 0; index < arrayOfDistances.Length; index++)
-                    {
-                        if (arrayOfDistances[index] == actualDistance)
-                        {
-                            //not on exclusion list
-                            if (listOfExclusion.Exists(x => x == index) == false)
-                            {
-                                Debug.LogFormat("[Tst] NodeManager.cs -> GetCureNodeRandom: Straight Match for {0} cure, nodeID {1}, distance {2} (actual {3}){4}",
-                                    cure.cureName, index, cure.distance, actualDistance, "\n");
-                                cureNodeID = index;
-                                break;
-                            }
-                        }
-                    }
-                    //if not successful scale up distance until you get a hit. If you max out, scale down distance until you get a hit.
-                    if (cureNodeID < 0)
-                    {
-                        int tempDistance = actualDistance;
-                        if (actualDistance < furthestDistance)
-                        {
-                            //gradually increase distance until you find a suitable node
-                            do
-                            {
-                                tempDistance++;
-                                //search on new distance criteria
-                                for (int index = 0; index < arrayOfDistances.Length; index++)
-                                {
-                                    if (arrayOfDistances[index] == tempDistance)
-                                    {
-                                        //not on exclusion list
-                                        if (listOfExclusion.Exists(x => x == index) == false)
-                                        {
-                                            Debug.LogFormat("[Tst] NodeManager.cs -> GetCureNodeRandom: SCALE UP for {0} cure, nodeID {1}, distance {2} (actual {3}){4}",
-                                                cure.cureName, index, cure.distance, tempDistance, "\n");
-                                            cureNodeID = index;
-                                            break;
-                                        }
-                                    }
-                                }
-                                if (cureNodeID > -1) { break; }
-                            }
-                            while (tempDistance < furthestDistance);
-                        }
-                        //if unsuccessful (or already maxxed out on distance) decrease distance until a suitable node is found
-                        if (cureNodeID < 0)
-                        {
-                            tempDistance = actualDistance;
-                            do
-                            {
-                                tempDistance--;
-                                //search on new distance criteria
-                                for (int index = 0; index < arrayOfDistances.Length; index++)
-                                {
-                                    if (arrayOfDistances[index] == tempDistance)
-                                    {
-                                        //not on exclusion list
-                                        if (listOfExclusion.Exists(x => x == index) == false)
-                                        {
-                                            Debug.LogFormat("[Tst] NodeManager.cs -> GetCureNode: SCALE DOWN for {0} cure, nodeID {1}, distance {2} (actual {3}){4}",
-                                                cure.cureName, index, cure.distance, tempDistance, "\n");
-                                            cureNodeID = index;
-                                            break;
-                                        }
-                                    }
-                                }
-                                if (cureNodeID > -1) { break; }
-                            }
-                            while (tempDistance > 0);
-                        }
-                    }
-                }
-                else { Debug.LogError("Invalid distanceArray (Null)"); }
-            }
-            else { Debug.LogError("Invalid PathData (Null)"); }
-        }
-        else { Debug.LogError("Invalid cure (Null)"); }
-        //return
-        return cureNodeID;
-    }*/
-
-
+    #region GetCureNodeRandom
     /// <summary>
     /// finds a random node, 'x' distance links away from the Resistance Player's current location (may end up being less), one that doesn't already have a cure. Returns -1 if a problem
     /// </summary>
@@ -3653,6 +3543,8 @@ public class NodeManager : MonoBehaviour
         //return
         return cureNodeID;
     }
+#endregion
+
 
 
     //new methods above here

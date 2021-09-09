@@ -349,3 +349,58 @@ City seed 1810 -> VirtualCity, Eurasia
 
 Dev seed 18713 -> Friday, 3 September 2021 5:19 PM
 City seed 551 -> Londus, Eurasia
+
+Dev seed 60856 -> Thursday, 9 September 2021 9:48 AM
+City seed 21988 -> VirtualCity, Eurasia
+
+Dev seed 37615 -> Thursday, 9 September 2021 9:52 AM
+City seed 57461 -> VirtualCity, Eurasia
+
+Dev seed 37154 -> Thursday, 9 September 2021 9:55 AM
+City seed 55771 -> VirtualCity, Eurasia
+
+Dev seed 45470 -> Thursday, 9 September 2021 10:24 AM
+City seed 51275 -> VirtualCity, Eurasia
+WARNING Node Aparo Park, GATED, id 6 NOT assigned target E-Charging Station (Node already has target)
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TargetManager:SetTargetDetails(Target, Node, TargetProfile) (at Assets/Scripts/Managers/TargetManager.cs:957)
+	TargetManager:ConfigureTutorialTargets(TutorialTargetConfig) (at Assets/Scripts/Managers/TargetManager.cs:858)
+	TutorialManager:SetNextSet() (at Assets/Scripts/Managers/TutorialManager.cs:989)
+	TutorialManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TutorialManager.cs:152)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:391)
+	TutorialWidgetRight:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Tutorial/TutorialWidgetRight.cs:22)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Node The Narrows, GOVERNMENT, id 13 NOT assigned target The Gopher (Node already has target)
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TargetManager:SetTargetDetails(Target, Node, TargetProfile) (at Assets/Scripts/Managers/TargetManager.cs:957)
+	TargetManager:ConfigureTutorialTargets(TutorialTargetConfig) (at Assets/Scripts/Managers/TargetManager.cs:858)
+	TutorialManager:SetNextSet() (at Assets/Scripts/Managers/TutorialManager.cs:989)
+	TutorialManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TutorialManager.cs:152)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:391)
+	TutorialWidgetRight:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Tutorial/TutorialWidgetRight.cs:22)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 1801 -> Thursday, 9 September 2021 10:54 AM
+City seed 12299 -> VirtualCity, Eurasia
+WARNING WARNING: nodeID 1 already present in listOfNodesWithTarget
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddNodeToTargetList(Int32) (at Assets/Scripts/Managers/DataManager.cs:3278)
+	TargetManager:SetTargetDetails(Target, Node, TargetProfile) (at Assets/Scripts/Managers/TargetManager.cs:891)
+	TargetManager:ConfigureTutorialTargets(TutorialTargetConfig) (at Assets/Scripts/Managers/TargetManager.cs:858)
+	TutorialManager:SetNextSet() (at Assets/Scripts/Managers/TutorialManager.cs:991)
+	TutorialManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TutorialManager.cs:152)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:391)
+	TutorialWidgetRight:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Tutorial/TutorialWidgetRight.cs:22)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Node City Centre, GOVERNMENT, id 1 NOT assigned target The Stick
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TargetManager:SetTargetDetails(Target, Node, TargetProfile) (at Assets/Scripts/Managers/TargetManager.cs:949)
+	TargetManager:ConfigureTutorialTargets(TutorialTargetConfig) (at Assets/Scripts/Managers/TargetManager.cs:858)
+	TutorialManager:SetNextSet() (at Assets/Scripts/Managers/TutorialManager.cs:991)
+	TutorialManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TutorialManager.cs:152)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:391)
+	TutorialWidgetRight:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Tutorial/TutorialWidgetRight.cs:22)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 39613 -> Thursday, 9 September 2021 11:02 AM
+City seed 43917 -> VirtualCity, Eurasia

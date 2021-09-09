@@ -57,7 +57,7 @@ public class Node : MonoBehaviour
     [HideInInspector] public bool isConnectedNode;           //true if node is in the listMostConnectedNodes
     [HideInInspector] public bool isChokepointNode;          //true if node is a chokepoint (one connection between it and another subgraph)
 
-    [HideInInspector] public string targetName;              //unique name, null indicates no target
+    [HideInInspector] public string targetName;              //unique name, null, or empty, indicates no target
 
     [HideInInspector] public int spiderTimer;           //countdown timer before removed
     [HideInInspector] public int tracerTimer;           //countdown timer before removed
@@ -132,7 +132,7 @@ public class Node : MonoBehaviour
     private int supportTeamEffect = 999;
     private int crisisCityLoyalty = 999;
 
-
+    #region Properties...
     //Properties for backing fields
     public int Security
     {
@@ -213,6 +213,7 @@ public class Node : MonoBehaviour
         get { return _isTargetKnown; }
         set { _isTargetKnown = value; }
     }
+    #endregion
 
     /// <summary>
     /// Initialise SO's for Nodes
@@ -1521,7 +1522,7 @@ public class Node : MonoBehaviour
         }
     }
 
-
+    #region ProcessNodeEffect
     /// <summary>
     /// changes fields and handles ongoing effects. Main method of changing node fields. Adds Value so for subtract you need to provide a negative number
     /// Note: Ongoing effect doesn't affect field, just updates dictOfAdjustments ready for the following turns
@@ -1629,6 +1630,7 @@ public class Node : MonoBehaviour
         }
         else { Debug.LogError("Invalid effectProcess (Null)"); }
     }
+    #endregion
 
     /// <summary>
     /// changes connection security level for all connections leading from the node
@@ -1839,6 +1841,7 @@ public class Node : MonoBehaviour
         return difference;
     }
 
+    #region SetArcType
     /// <summary>
     /// Reconfigure tower objects to be of the required Arc type
     /// </summary>
@@ -1955,6 +1958,8 @@ public class Node : MonoBehaviour
         Debug.Assert(sign1 != null, "Invalid sign1 (Null)");
         Debug.Assert(sign2 != null, "Invalid sign2 (Null)");
     }
+    #endregion
+
 
     /// <summary>
     /// Toggles signage (sign0 component only)

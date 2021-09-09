@@ -225,6 +225,8 @@ public class TutorialManager : MonoBehaviour
         UpdateFeatures(set.listOfFeaturesOff, set.listOfGUIOff);
         //Goals reset
         GameManager.i.dataScript.ClearListOfTutorialGoals();
+        //Nodes reset
+        GameManager.i.dataScript.ClearTargets();
         //Make sure Player is Active
         if (GameManager.i.playerScript.status != ActorStatus.Active)
         {

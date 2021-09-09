@@ -2162,6 +2162,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ad88702123959524fa551d8575fcae68, type: 2}
   arrayOfTutorialTargetConfigs:
   - {fileID: 11400000, guid: 38998c681209a9b43acbbc5aeac6a026, type: 2}
+  - {fileID: 11400000, guid: fded60c6795af5142872ac8bd57a7129, type: 2}
   arrayOfFiveFactorModel:
   - {fileID: 11400000, guid: 456adeff3cd08484bb73dab8396a5d8d, type: 2}
   - {fileID: 11400000, guid: 7acfd5c74d59ce64198cf88e42ca66ff, type: 2}
@@ -5366,6 +5367,7 @@ MonoBehaviour:
   arrayOfTargetsTutorial:
   - {fileID: 11400000, guid: a807c096e67db78438d7b3f42d11356f, type: 2}
   - {fileID: 11400000, guid: c8caaad5b3f94c6429d2961da8846896, type: 2}
+  - {fileID: 11400000, guid: cde22297bdfda604b82c1b57ae8114b3, type: 2}
   arrayOfGearSprites:
   - {fileID: 21300000, guid: d1c114319b9549f46995595d0bc5db8c, type: 3}
   arrayOfGlobalSprites:

@@ -2001,6 +2001,13 @@ public class ValidationManager : MonoBehaviour
                                         if (set.actorConfig.side.level != set.tutorial.side.level)
                                         { Debug.LogFormat("{0} Set \"{1}\", invalid actorConfig (wrong side), \"{2}\"{3}", tag, set.name, set.actorConfig.name, "\n"); }
                                     }
+                                    //check target configs
+                                    if (set.targetConfig != null)
+                                    {
+                                        //check same side
+                                        if (set.targetConfig.side.level != set.tutorial.side.level)
+                                        { Debug.LogFormat("{0} Set \"{1}\", invalid targetConfig (wrong side), \"{2}\"{3}", tag, set.name, set.targetConfig.name, "\n"); }
+                                    }
                                     //
                                     // - - - Tutorial Items
                                     //
@@ -2217,6 +2224,42 @@ public class ValidationManager : MonoBehaviour
             else { Debug.LogError("Invalid arrayOfTutorialActorConfigs (Null)"); }
             #endregion
 
+            #region TutorialTargetConfig
+            TutorialTargetConfig[] arrayOfConfigTargets = GameManager.i.loadScript.arrayOfTutorialTargetConfigs;
+            if (arrayOfConfigTargets != null)
+            {
+                for (int i = 0; i < arrayOfConfigTargets.Length; i++)
+                {
+                    TutorialTargetConfig config = arrayOfConfigTargets[i];
+                    if (config != null)
+                    {
+                        //target list -> should be at least one
+                        count = config.listOfTargets.Count;
+                        if (count > 0)
+                        {
+                            for (int j = 0; j < count; j++)
+                            {
+                                Target target = config.listOfTargets[j];
+                                if (target != null)
+                                {
+                                    //Check tutorial type
+                                    if (target.targetType.name.Equals("Tutorial", StringComparison.Ordinal) == false)
+                                    { Debug.LogFormat("{0} tutorialTargetConfig \"{1}\", target \"{2}\" has invalid targetType \"{3}\" (should be 'Tutorial'){4}", tag, config.name, target.name, target.targetType.name, "\n"); }
+                                    //Check profile
+                                    if (target.profile.name.Equals("Tutorial", StringComparison.Ordinal) == false)
+                                    { Debug.LogFormat("{0} tutorialTargetConfig \"{1}\", target \"{2}\" has invalid profile \"{3}\" (should be 'Tutorial'){4}", tag, config.name, target.name, target.profile.name, "\n"); }
+                                }
+                                else { Debug.LogErrorFormat("Invalid target (Null) for \"{0}\".listOfTargets[{1}]", config.name, j); }
+                            }
+                        }
+                        else
+                        { Debug.LogFormat("{0} Invalid listOfTargets (Empty) for TutorialTargetConfig \"{1}\"", tag, config.name); }
+                    }
+                    else { Debug.LogErrorFormat("Invalid TutorialTargetConfig (Null) in arrayOfConfigTargets[{0}]", i); }
+                }
+            }
+            else { Debug.LogError("Invalid arrayOfConfigTargets (Null)"); }
+            #endregion
         }
         else { Debug.LogError("Invalid arrayOfTutorials (Null)"); }
     }
