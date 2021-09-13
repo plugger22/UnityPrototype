@@ -13,4 +13,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numOfSpiders: 3
   numOfTracers: 3
-  isRandomNodes: 0
+  isRandomSpiderNodes: 1
+  isRandomTracerNodes: 1

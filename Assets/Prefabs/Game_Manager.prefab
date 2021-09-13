@@ -2168,6 +2168,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 93381833d112b5e4ab1d759944dd02f1, type: 2}
   arrayOfTutorialHideConfigs:
   - {fileID: 11400000, guid: 14662a4b869f80245b3a89429e91a8af, type: 2}
+  - {fileID: 11400000, guid: a730b257e434b1148b79a8d046b14694, type: 2}
   arrayOfFiveFactorModel:
   - {fileID: 11400000, guid: 456adeff3cd08484bb73dab8396a5d8d, type: 2}
   - {fileID: 11400000, guid: 7acfd5c74d59ce64198cf88e42ca66ff, type: 2}

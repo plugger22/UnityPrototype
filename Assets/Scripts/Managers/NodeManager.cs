@@ -1221,7 +1221,7 @@ public class NodeManager : MonoBehaviour
             NodeShowFlag = 1;
             //active AlertUI
             if (string.IsNullOrEmpty(displayText) == false)
-            { GameManager.i.alertScript.SetAlertUI(displayText, 999); }
+            { GameManager.i.alertScript.SetAlertUI(displayText); }
         }
         return listOfHighlighted;
     }
@@ -1829,7 +1829,7 @@ public class NodeManager : MonoBehaviour
         }
         //active AlertUI
         if (string.IsNullOrEmpty(displayText) == false)
-        { GameManager.i.alertScript.SetAlertUI(displayText, 999); }
+        { GameManager.i.alertScript.SetAlertUI(displayText); }
         //redraw only if standard node representation
         if (GameManager.i.optionScript.noNodes == false)
         { NodeRedraw = true; }

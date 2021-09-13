@@ -8,7 +8,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9b76fc6caf2bef48b4d7f36c5a96f86, type: 3}
-  m_Name: AI
+  m_Script: {fileID: 11500000, guid: c7e02603f8f55264397533058c7a188e, type: 3}
+  m_Name: tutREShide06
   m_EditorClassIdentifier: 
-  notes: Requires Actions to be active
+  numOfSpiders: 6
+  numOfTracers: 6
+  isRandomSpiderNodes: 0
+  isRandomTracerNodes: 0

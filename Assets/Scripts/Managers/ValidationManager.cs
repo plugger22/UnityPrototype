@@ -1970,16 +1970,27 @@ public class ValidationManager : MonoBehaviour
                                         //check target feaure
                                         TutorialFeature feature;
                                         bool isTargetsOff = false;
+                                        bool isActionsOff = false;
+                                        bool isAIOff = false;
+                                        bool isMainInfoAppOff = false;
+                                        bool isNPCOff = false;
+                                        bool isReviewsOff = false;
                                         for (int k = 0; k < set.listOfFeaturesOff.Count; k++)
                                         {
                                             feature = set.listOfFeaturesOff[k];
-                                            if (feature.name.Equals("Targets", StringComparison.Ordinal) == true)
+                                            switch (feature.name)
                                             {
-                                                //Targets OFF -> check no targetConfig present
-                                                if (set.targetConfig != null)
-                                                { Debug.LogFormat("{0} Set \"{1}\" has Targets OFF but there is a targetConfig ({2}) present (there should be){3}", tag, set.name, set.targetConfig.name, "\n"); }
-                                                isTargetsOff = true;
-                                                break;
+                                                case "Targets":
+                                                    //Targets OFF -> check no targetConfig present
+                                                    if (set.targetConfig != null)
+                                                    { Debug.LogFormat("{0} Set \"{1}\" has Targets OFF but there is a targetConfig ({2}) present (there should be){3}", tag, set.name, set.targetConfig.name, "\n"); }
+                                                    isTargetsOff = true;
+                                                    break;
+                                                case "Actions": isActionsOff = true; break;
+                                                case "MainInfoApp": isMainInfoAppOff = true; break;
+                                                case "NPC": isNPCOff = true; break;
+                                                case "Reviews": isReviewsOff = true; break;
+                                                case "AI": isAIOff = true; break;
                                             }
                                         }
                                         //Targets ON
@@ -1988,6 +1999,34 @@ public class ValidationManager : MonoBehaviour
                                             //check targetConfig is present
                                             if (set.targetConfig == null)
                                             { Debug.LogFormat("{0} Set \"{1}\" has Targets ON but there is no targetConfig present{2}", tag, set.name, "\n"); }
+                                        }
+                                        //AI off
+                                        if (isAIOff == true)
+                                        {
+                                            //Actions should also be Off
+                                            if (isActionsOff == false)
+                                            { Debug.LogFormat("{0} Set \"{1}\" has feature AI OFF and Actions ON (AI should be off if actions are off){2}", tag, set.name, "\n"); }
+                                        }
+                                        //MainInfoApp on
+                                        if (isMainInfoAppOff == false)
+                                        {
+                                            //Actions should also be on
+                                            if (isActionsOff == true)
+                                            { Debug.LogFormat("{0} Set \"{1}\" has feature MainInfoApp ON and Actions OFF (MainInfoApp needs actions to be On){2}", tag, set.name, "\n"); }
+                                        }
+                                        //NPC on
+                                        if (isNPCOff == false)
+                                        {
+                                            //Actions should also be on
+                                            if (isActionsOff == true)
+                                            { Debug.LogFormat("{0} Set \"{1}\" has feature NPC ON and Actions OFF (NPC needs actions to be On){2}", tag, set.name, "\n"); }
+                                        }
+                                        //Reviews on
+                                        if (isReviewsOff == false)
+                                        {
+                                            //Actions should also be on
+                                            if (isActionsOff == true)
+                                            { Debug.LogFormat("{0} Set \"{1}\" has feature Reviews ON and Actions OFF (Reviews needs actions to be On){2}", tag, set.name, "\n"); }
                                         }
                                     }
                                     //check set -> GUI features lists for null

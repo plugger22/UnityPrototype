@@ -19,6 +19,9 @@ MonoBehaviour:
   index: 3
   playerConfig: {fileID: 11400000, guid: 84d000ec40260584bbf2523e2a645935, type: 2}
   actorConfig: {fileID: 11400000, guid: 71c33337e621cc54d9d497433b21eebf, type: 2}
+  targetConfig: {fileID: 0}
+  teamConfig: {fileID: 0}
+  hideConfig: {fileID: 0}
   listOfFeaturesOff:
   - {fileID: 11400000, guid: 7e2f496678746a1488d0508fb5ac34ef, type: 2}
   - {fileID: 11400000, guid: 60c5546ae44161c4e96b856a75904210, type: 2}
@@ -26,6 +29,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9ab41dcfbf11bf14f8fbeb9b7522f31a, type: 2}
   - {fileID: 11400000, guid: e16c959b5f1eac342979baf4a1a9362b, type: 2}
   - {fileID: 11400000, guid: 60b4bacf16a2f574fa7fa81a919e7bbc, type: 2}
+  - {fileID: 11400000, guid: efba9c88561b33140bc3fe102eb154d3, type: 2}
   listOfGUIOff:
   - {fileID: 11400000, guid: 3fc3cf403714826438976deb8559517b, type: 2}
   - {fileID: 11400000, guid: 4ecda8036df900d48b4b25e77b1b6ad0, type: 2}
