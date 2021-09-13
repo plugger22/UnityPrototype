@@ -25,8 +25,10 @@ public class TutorialSet : ScriptableObject
     public TutorialActorConfig actorConfig;
     [Tooltip("Specifies targets for the set (Live). Optional")]
     public TutorialTargetConfig targetConfig;
-    [Tooltip("Specifies teams and spiders OnMap at start of Set. Optional")]
+    [Tooltip("Specifies teams OnMap at start of Set. Optional")]
     public TutorialTeamConfig teamConfig;
+    [Tooltip("Specifies spiders and tracers OnMap at start of Set. Optional")]
+    public TutorialHideConfig hideConfig;
 
     [Header("Features OFF")]
     [Tooltip("List of features switched OFF for this tutorial set")]

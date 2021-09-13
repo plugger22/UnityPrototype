@@ -3070,6 +3070,24 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid listOfNodes (Null)"); }
     }
+
+    /// <summary>
+    /// Tutorial reset between sets to remove all tracers and spiders from nodes
+    /// </summary>
+    public void ResetHideNodes()
+    {
+        Node node;
+        for (int i = 0; i < listOfNodes.Count; i++)
+        {
+            node = listOfNodes[i];
+            if (node != null)
+            {
+                node.RemoveSpider();
+                node.RemoveTracer();
+            }
+            else { Debug.LogErrorFormat("Invalid Node (Null) in listOfNodes[{0}]", i); }
+        }
+    }
 #endregion
 
     #region Connections...

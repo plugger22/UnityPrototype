@@ -136,7 +136,10 @@ public class NodeManager : MonoBehaviour
     private int _nodeShowFlag = 0;                                   //true if a ShowNodes() is active, false otherwise
     private bool _nodeRedraw = false;                                //if true a node redraw is triggered in GameManager.Update
 
-    //properties
+    #region Properties...
+    //
+    // - - - Properties
+    //
     public int NodeShowFlag
     {
         get { return _nodeShowFlag; }
@@ -152,8 +155,9 @@ public class NodeManager : MonoBehaviour
         get { return _nodeRedraw; }
         set { _nodeRedraw = value; }
     }
+    #endregion
 
-
+    #region Awake
     /// <summary>
     /// Self initialisation
     /// </summary>
@@ -163,7 +167,9 @@ public class NodeManager : MonoBehaviour
         nodePrimaryChance = nodePrimaryChance > 0 ? nodePrimaryChance : 10;
         nodeActiveMinimum = nodeActiveMinimum > 2 ? nodeActiveMinimum : 3;
     }
+    #endregion
 
+    #region Initialise
     public void Initialise(GameState state)
     {
         switch (state)
@@ -192,7 +198,7 @@ public class NodeManager : MonoBehaviour
                 break;
         }
     }
-
+    #endregion
 
     #region Initialise SubMethods
 
@@ -315,6 +321,13 @@ public class NodeManager : MonoBehaviour
             }
         }
         else { Debug.LogWarning("Invalid arrayOfEffectOutcome (Null)"); }
+        //tutorial hide (spider/tracer items)
+        if (GameManager.i.inputScript.GameState == GameState.TutorialOptions)
+        {
+            TutorialHideConfig config = GameManager.i.tutorialScript.set.hideConfig;
+            if (config != null)
+            { ConfigureTutorialHideItems(config); }
+        }
         //check all found and assigned
         if (outcomeNodeSecurity == null) { Debug.LogError("Invalid outcomeNodeSecurity (Null)"); }
         if (outcomeNodeStability == null) { Debug.LogError("Invalid outcomeNodeStability (Null)"); }
@@ -328,7 +341,7 @@ public class NodeManager : MonoBehaviour
 
     #endregion
 
-
+    #region OnEvent
     /// <summary>
     /// event handler
     /// </summary>
@@ -446,7 +459,9 @@ public class NodeManager : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
+    #region SetColours
     /// <summary>
     /// Set colour palette for tooltip
     /// </summary>
@@ -466,7 +481,9 @@ public class NodeManager : MonoBehaviour
         colourCancel = GameManager.i.colourScript.GetColour(ColourType.moccasinText);
         colourEnd = GameManager.i.colourScript.GetEndTag();
     }
+    #endregion
 
+    #region OnDisable
     /// <summary>
     /// deregister events
     /// </summary>
@@ -474,7 +491,9 @@ public class NodeManager : MonoBehaviour
     {
         EventManager.i.RemoveEvent(EventType.ShowTargetNodes);
     }
+    #endregion
 
+    #region ResetCounters
     /// <summary>
     /// reset data ready for a new level
     /// </summary>
@@ -484,7 +503,9 @@ public class NodeManager : MonoBehaviour
         nodeIDCounter = 0;
         connIDCounter = 0;
     }
+    #endregion
 
+    #region ToggleNodeHighlight
     /// <summary>
     /// toggles a node on/off as Highlighted, default OFF 
     /// </summary>
@@ -503,7 +524,9 @@ public class NodeManager : MonoBehaviour
             nodeHighlight = -1;
         }
     }
+    #endregion
 
+    #region GetNodeMaterial
     /// <summary>
     /// Return a node Material
     /// </summary>
@@ -511,8 +534,9 @@ public class NodeManager : MonoBehaviour
     /// <returns></returns>
     public Material GetNodeMaterial(NodeColour nodeType)
     { return arrayOfNodeMaterials[(int)nodeType]; }
+    #endregion
 
-
+    #region GetPlayerNodeID
     /// <summary>
     /// Use this for all calls for player nodeID. Handles edge cases and player/AI automatically. Returns -1 if a problem (unlikely)
     /// </summary>
@@ -587,7 +611,9 @@ public class NodeManager : MonoBehaviour
         { Debug.LogWarningFormat("Invalid nodeID {0} for Player status \"{1}\", inactive status \"{2}\"", nodeID, GameManager.i.playerScript.status, GameManager.i.playerScript.inactiveStatus); }
         return nodeID;
     }
+    #endregion
 
+    #region FlashHighlightNodes
     /// <summary>
     /// Master method to flash highlighted nodes
     /// </summary>
@@ -598,6 +624,7 @@ public class NodeManager : MonoBehaviour
         if (listOfNodes.Count > 0)
         { myCoroutine = StartCoroutine("FlashingNodes", listOfNodes); }
     }
+    #endregion
 
     #region ShowNodes
     /// <summary>
@@ -1200,6 +1227,7 @@ public class NodeManager : MonoBehaviour
     }
     #endregion
 
+    #region ShowActiveNodes
     /// <summary>
     /// Show all active nodes (Contacts) for a particular actor. Use actor.slotID (0 to numOfActors)
     /// </summary>
@@ -1247,16 +1275,21 @@ public class NodeManager : MonoBehaviour
         }
         return activeNodes;
     }
+    #endregion
 
+    #region SetShowPlayerNode
     /// <summary>
     /// Sets flag to show player node whenever a node redraw. Normally true but switch off if you want to flash the player node instead
     /// </summary>
     /// <param name="isShown"></param>
     public void SetShowPlayerNode(bool isShown = true)
     { showPlayerNode = isShown; }
+    #endregion
 
+    #region GetShowPlayerNoe
     public bool GetShowPlayerNode()
     { return showPlayerNode; }
+    #endregion
 
     #region RedrawNodes
     /// <summary>
@@ -1716,6 +1749,7 @@ public class NodeManager : MonoBehaviour
     }
     #endregion
 
+    #region SetNodeMaterial
     /// <summary>
     /// Use this to change a node/districts material settings
     /// </summary>
@@ -1750,8 +1784,9 @@ public class NodeManager : MonoBehaviour
             else { node.SetMaterial(material, nodeComponent); }
         }
     }
+    #endregion
 
-
+    #region ShowActivity
     /// <summary>
     /// shows resistance activity in various forms (nodes and connections)
     /// </summary>
@@ -1857,7 +1892,9 @@ public class NodeManager : MonoBehaviour
             else { Debug.LogError("Invalid listOfNodes (Null)"); }
         }
     }
+    #endregion
 
+    #region ShowAllNodes
     /// <summary>
     /// Displays nodeID's on node faces
     /// </summary>
@@ -1890,7 +1927,9 @@ public class NodeManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfNodes (Null)"); }
     }
+    #endregion
 
+    #region ShowAllContacts
     /// <summary>
     /// displays all contacts with the highest contact at the node displaying their effectiveness on the node face. Called by event via ShowNodes (for option.noNodes false, SetDistrictText otherwise)
     /// </summary>
@@ -1926,7 +1965,9 @@ public class NodeManager : MonoBehaviour
             else { Debug.LogWarning(string.Format("Invalid node (Null) for nodeID {0}", node.nodeID)); }
         }
     }
+    #endregion
 
+    #region GetActivityColour
     /// <summary>
     /// returns a colour to display face Text on a node depending on value (which varies depending on activityUI)
     /// </summary>
@@ -1967,7 +2008,9 @@ public class NodeManager : MonoBehaviour
         }
         return color;
     }
+    #endregion
 
+    #region ResetAll
     /// <summary>
     /// resets all nodes and connections back to their default (nodes) or previously saved (connections) states
     /// </summary>
@@ -1991,6 +2034,7 @@ public class NodeManager : MonoBehaviour
             GameManager.i.debugGraphicsScript.SetCentrePane(false);
         }
     }
+    #endregion
 
     #region CreateSpecialNodeMenu
     /// <summary>
@@ -2858,7 +2902,7 @@ public class NodeManager : MonoBehaviour
                         else
                         {
                             //Unsecured connection, no invisibility loss involved
-                            
+
                             /*EventManager.i.PostNotification(EventType.UseAction, this, "Player Move", "NodeManager.cs -> ProcessPlayerMove");*/
 
                             GameManager.i.turnScript.UseAction("PlayerMove");
@@ -2944,6 +2988,7 @@ public class NodeManager : MonoBehaviour
 
     #endregion
 
+    #region RemoveOngoingEffect
     /// <summary>
     /// loops all nodes and removes any ongoing effects that match the specified ID
     /// </summary>
@@ -2962,8 +3007,9 @@ public class NodeManager : MonoBehaviour
         }
         else { Debug.LogError(string.Format("Invalid ongoingID {0} (must be zero or above)", ongoingID)); }
     }
+    #endregion
 
-
+    #region ProcessNodeTimers
     /// <summary>
     /// Decrement all ongoing Effect timers in nodes and delete any that have expired
     /// </summary>
@@ -2980,7 +3026,9 @@ public class NodeManager : MonoBehaviour
             }
         }
     }
+    #endregion
 
+    #region ProcessOngoingEffects
     /// <summary>
     /// Generates messages for 'Effect' tab in InfoApp
     /// </summary>
@@ -3021,7 +3069,9 @@ public class NodeManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfNodes (Null)"); }
     }
+    #endregion
 
+    #region DebugRandomActivityValues
     /// <summary>
     /// Debug method that randomly assigns activity data to nodes and connection for development purposes
     /// </summary>
@@ -3063,7 +3113,9 @@ public class NodeManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfConnections (Null)"); }
     }
+    #endregion
 
+    #region GetAIDelayForMove
     /// <summary>
     /// returns AI delay, in turns, for being notified of rebel player moving through a connection where they lost invisibility doing so.
     /// </summary>
@@ -3085,7 +3137,9 @@ public class NodeManager : MonoBehaviour
         delay = Mathf.Max(0, delay);
         return delay;
     }
+    #endregion
 
+    #region StartFlashingNodes
     /// <summary>
     /// NODES plural -> event driven -> start coroutine
     /// </summary>
@@ -3103,7 +3157,9 @@ public class NodeManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid listOfNodes (Null)"); }
     }
+    #endregion
 
+    #region StopFlashingNodes
     /// <summary>
     /// NODES plural -> event driven -> stop coroutine
     /// </summary>
@@ -3116,7 +3172,9 @@ public class NodeManager : MonoBehaviour
         }
         ResetNodes();
     }
+    #endregion
 
+    #region FlashingNodes
     /// <summary>
     /// coroutine to flash NODES plural
     /// NOTE: listOfNodes checked for null and Empty by calling procedure
@@ -3147,6 +3205,7 @@ public class NodeManager : MonoBehaviour
             }
         }
     }
+    #endregion
 
     #region ProcessNodeCrisis
     /// <summary>
@@ -3495,9 +3554,99 @@ public class NodeManager : MonoBehaviour
         //return
         return cureNodeID;
     }
-#endregion
+    #endregion
 
-
+    #region ConfigureTutorialHideItems
+    /// <summary>
+    /// places spiders and tracers onMap a start of a tutorial set
+    /// </summary>
+    public void ConfigureTutorialHideItems(TutorialHideConfig config)
+    {
+        if (config != null)
+        {
+            int index;
+            Node node;
+            List<Node> listOfAllNodes = GameManager.i.dataScript.GetListOfAllNodes();
+            List<Node> listOfConnected = GameManager.i.dataScript.GetListOfMostConnectedNodes();
+            List<Node> listOfTempNodes;
+            if (listOfAllNodes != null)
+            {
+                if (listOfConnected != null)
+                {
+                    //
+                    // - - - Spiders
+                    //
+                    if (config.numOfSpiders > 0)
+                    {
+                        listOfTempNodes = null;
+                        //placement
+                        if (config.isRandomSpiderNodes == true)
+                        { listOfTempNodes = new List<Node>(listOfAllNodes); }
+                        else
+                        { listOfTempNodes = new List<Node>(listOfConnected); }
+                        if (listOfTempNodes != null)
+                        {
+                            for (int i = 0; i < config.numOfSpiders; i++)
+                            {
+                                index = Random.Range(0, listOfTempNodes.Count);
+                                node = listOfTempNodes[index];
+                                if (node != null)
+                                {
+                                    node.AddSpider();
+                                    //remove from list to prevent dupes
+                                    listOfTempNodes.RemoveAt(index);
+                                    //check list isn't empty -> abort remaining spider placement
+                                    if (listOfTempNodes.Count == 0)
+                                    {
+                                        Debug.LogWarningFormat("No more nodes in listOfTempNodes at loop {0}. Spider placement aborted", i);
+                                        break;
+                                    }
+                                }
+                                else { Debug.LogWarningFormat("Invalid node (Null) for loop {0}", i); }
+                            }
+                        }
+                    }
+                    //
+                    // - - - Tracers
+                    //
+                    if (config.numOfTracers > 0)
+                    {
+                        listOfTempNodes = null;
+                        //placement
+                        if (config.isRandomTracerNodes == true)
+                        { listOfTempNodes = new List<Node>(listOfAllNodes); }
+                        else
+                        { listOfTempNodes = new List<Node>(listOfConnected); }
+                        if (listOfTempNodes != null)
+                        {
+                            for (int i = 0; i < config.numOfTracers; i++)
+                            {
+                                index = Random.Range(0, listOfTempNodes.Count);
+                                node = listOfTempNodes[index];
+                                if (node != null)
+                                {
+                                    node.AddTracer();
+                                    //remove from list to prevent dupes
+                                    listOfTempNodes.RemoveAt(index);
+                                    //check list isn't empty -> abort remaining tracer placement
+                                    if (listOfTempNodes.Count == 0)
+                                    {
+                                        Debug.LogWarningFormat("No more nodes in listOfTempNodes at loop {0}. Tracer placement aborted", i);
+                                        break;
+                                    }
+                                }
+                                else { Debug.LogWarningFormat("Invalid node (Null) for loop {0}", i); }
+                            }
+                        }
+                    }
+                }
+                else { Debug.LogError("Invalid listOfConnected (Null)"); }
+            }
+            else { Debug.LogError("Invalid listOfAllNodes (Null)"); }
+        }
+        else { Debug.LogError("Invalid TutorialHideConfig (Null)"); }
+    }
+    #endregion
 
     //new methods above here
 }

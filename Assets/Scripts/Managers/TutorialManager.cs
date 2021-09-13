@@ -220,7 +220,7 @@ public class TutorialManager : MonoBehaviour
     /// <param name="set"></param>
     private void InitialiseTutorialSet(TutorialSet set)
     {
-        Debug.LogFormat("[Tut] TutorialManager.cs -> InitialiseTutorialSet: set \"{0}\" loaded{1}", set.name, "\n");
+        Debug.LogFormat("[Tut] TutorialManager.cs -> - - - InitialiseTutorialSet: set \"{0}\" loaded{1}", set.name, "\n");
         // Features toggle on/off
         UpdateFeatures(set.listOfFeaturesOff, set.listOfGUIOff);
         //Goals reset
@@ -229,6 +229,8 @@ public class TutorialManager : MonoBehaviour
         GameManager.i.dataScript.ClearTargets();
         //Teams reset
         GameManager.i.teamScript.ResetTeams();
+        //Hide items (spiders/tracers) reset
+        GameManager.i.dataScript.ResetHideNodes();
         //Make sure Player is Active
         if (GameManager.i.playerScript.status != ActorStatus.Active)
         {
@@ -940,6 +942,9 @@ public class TutorialManager : MonoBehaviour
                     //configure teams
                     if (set.teamConfig != null)
                     { GameManager.i.teamScript.ConfigureTutorialTeams(set.teamConfig); }
+                    //configure spiders and tracers
+                    if (set.hideConfig != null)
+                    { GameManager.i.nodeScript.ConfigureTutorialHideItems(set.hideConfig); }
                     //reset nodes and close AlertUI
                     GameManager.i.alertScript.CloseAlertUI(true);
                     //activate tutorialUI
@@ -997,6 +1002,9 @@ public class TutorialManager : MonoBehaviour
                     //configure teams
                     if (set.teamConfig != null)
                     { GameManager.i.teamScript.ConfigureTutorialTeams(set.teamConfig); }
+                    //configure spiders and tracers
+                    if (set.hideConfig != null)
+                    { GameManager.i.nodeScript.ConfigureTutorialHideItems(set.hideConfig); }
                     //reset nodes and close AlertUI
                     GameManager.i.alertScript.CloseAlertUI(true);
                     //activate tutorialUI

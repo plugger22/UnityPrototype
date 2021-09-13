@@ -19,6 +19,7 @@ MonoBehaviour:
   actorConfig: {fileID: 11400000, guid: d0f994b65cfc31544abb9fc12bf58368, type: 2}
   targetConfig: {fileID: 11400000, guid: 38998c681209a9b43acbbc5aeac6a026, type: 2}
   teamConfig: {fileID: 11400000, guid: d95189280bba6414e80bb7d81429ac5f, type: 2}
+  hideConfig: {fileID: 11400000, guid: 14662a4b869f80245b3a89429e91a8af, type: 2}
   listOfFeaturesOff:
   - {fileID: 11400000, guid: 60b4bacf16a2f574fa7fa81a919e7bbc, type: 2}
   - {fileID: 11400000, guid: 60c5546ae44161c4e96b856a75904210, type: 2}

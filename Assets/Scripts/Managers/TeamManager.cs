@@ -847,7 +847,7 @@ public class TeamManager : MonoBehaviour
                                                     };
                                                     //add to actor's personal list
                                                     actor.AddNodeAction(nodeActionData);
-                                                    Debug.LogFormat("[Tst] TeamManager.cs -> MoveTeam: nodeActionData added to {0}, {1}{2}", actor.actorName, actor.arc.name, "\n");
+                                                    /*Debug.LogFormat("[Tst] TeamManager.cs -> MoveTeam: nodeActionData added to {0}, {1}{2}", actor.actorName, actor.arc.name, "\n");*/
                                                 }
                                                 else { Debug.LogWarningFormat("{0} Team, id {1}, NOT Removed from Reserve pool", team.arc.name, team.teamID); }
                                             }

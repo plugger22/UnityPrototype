@@ -645,3 +645,25 @@ UnityEngine.Debug:LogWarning(Object)
 	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:943)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:434)
 	
+Dev seed 35794 -> Monday, 13 September 2021 3:00 PM
+WARNING  LoadManager.cs -> InitialiseStart: No TutorialHideConfigs present
+UnityEngine.Debug:LogWarning(Object)
+	LoadManager:InitialiseStart(GameState) (at Assets/Scripts/Managers/LoadManager.cs:1248)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:943)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:434)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialHideConfig, array 0, assets 1 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialHideConfig[]) (at Assets/Scripts/Managers/ValidationManager.cs:2621)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2584)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:943)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:434)
+	City seed 1175 -> VirtualCity, Eurasia
+
+Dev seed 55111 -> Monday, 13 September 2021 3:13 PM
+City seed 22284 -> VirtualCity, Eurasia
+
+Dev seed 33795 -> Monday, 13 September 2021 3:18 PM
+City seed 46864 -> VirtualCity, Eurasia
+
+Dev seed 61496 -> Monday, 13 September 2021 3:33 PM
+City seed 994 -> VirtualCity, Eurasia
