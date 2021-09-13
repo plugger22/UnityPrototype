@@ -225,8 +225,10 @@ public class TutorialManager : MonoBehaviour
         UpdateFeatures(set.listOfFeaturesOff, set.listOfGUIOff);
         //Goals reset
         GameManager.i.dataScript.ClearListOfTutorialGoals();
-        //Nodes reset
+        //Targets reset
         GameManager.i.dataScript.ClearTargets();
+        //Teams reset
+        GameManager.i.teamScript.ResetTeams();
         //Make sure Player is Active
         if (GameManager.i.playerScript.status != ActorStatus.Active)
         {
@@ -935,6 +937,9 @@ public class TutorialManager : MonoBehaviour
                     //configure targets
                     if (set.targetConfig != null)
                     { GameManager.i.targetScript.ConfigureTutorialTargets(set.targetConfig); }
+                    //configure teams
+                    if (set.teamConfig != null)
+                    { GameManager.i.teamScript.ConfigureTutorialTeams(set.teamConfig); }
                     //reset nodes and close AlertUI
                     GameManager.i.alertScript.CloseAlertUI(true);
                     //activate tutorialUI
@@ -989,6 +994,9 @@ public class TutorialManager : MonoBehaviour
                     //configure targets
                     if (set.targetConfig != null)
                     { GameManager.i.targetScript.ConfigureTutorialTargets(set.targetConfig); }
+                    //configure teams
+                    if (set.teamConfig != null)
+                    { GameManager.i.teamScript.ConfigureTutorialTeams(set.teamConfig); }
                     //reset nodes and close AlertUI
                     GameManager.i.alertScript.CloseAlertUI(true);
                     //activate tutorialUI

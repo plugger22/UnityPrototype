@@ -138,6 +138,13 @@ public class TeamManager : MonoBehaviour
     {
         //needs to be after SubInitialiseSessionStart
         InitialiseTeams();
+        //set up teams if tutorial
+        if (GameManager.i.inputScript.GameState == GameState.TutorialOptions)
+        {
+            TutorialTeamConfig config = GameManager.i.tutorialScript.set.teamConfig;
+            if (config != null)
+            { ConfigureTutorialTeams(config); }
+        }
     }
     #endregion
 
@@ -688,11 +695,14 @@ public class TeamManager : MonoBehaviour
                                     teamID = GameManager.i.dataScript.GetTeamID(arc);
                                     if (teamID > -1)
                                     {
-                                        //get a random Actor
-                                        actorSlotID = Random.Range(0, GameManager.i.actorScript.maxNumOfOnMapActors);
+                                        //get a random Actor -> EDIT: Can overload actor, use sequential actorSlotID instead (assumes Max of 3 teams that could be deployed)
+                                        actorSlotID = i;
                                         //only do so if Actor is present in slot (player might start level with less than full complement of actors)
                                         if (GameManager.i.dataScript.CheckActorSlotStatus(actorSlotID, globalAuthority) == true)
-                                        { MoveTeam(TeamPool.OnMap, teamID, actorSlotID, node); }
+                                        {
+                                            if (MoveTeam(TeamPool.OnMap, teamID, actorSlotID, node) == false)
+                                            { Debug.LogWarningFormat("Invalid team deployment OnMap, {0} teamID {1}, actorSlotID {2}, nodeID {3}", arc.name, teamID, actorSlotID, node.nodeID); }
+                                        }
                                     }
                                     else { Debug.LogErrorFormat("Invalid teamID (-1) for teamArc \"{0}\", for {1}.listOfTeams[{2}]", arc.name, config.name, i); }
                                 }
@@ -712,12 +722,48 @@ public class TeamManager : MonoBehaviour
     }
     #endregion
 
+    #region ResetTeams
+    /// <summary>
+    /// resets any deployed teams in a two stage process prior to any new team setup
+    /// </summary>
+    public void ResetTeams()
+    {
+        //by value as subsequent admin will delete as you go otherwise
+        List<int> teamList = new List<int>(GameManager.i.dataScript.GetTeamPool(TeamPool.OnMap));
+        if (teamList != null)
+        {
+            Team team;
+            Node node;
+            int count = teamList.Count;
+            if (count > 0)
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    team = GameManager.i.dataScript.GetTeam(teamList[i]);
+                    //Move team to InTransit pool
+                    if (team != null)
+                    {
+                        node = GameManager.i.dataScript.GetNode(team.nodeID);
+                        if (MoveTeam(TeamPool.InTransit, team.teamID, team.actorSlotID, node) == true)
+                        {
+                            //Move team to Reserve pool
+                            MoveTeam(TeamPool.Reserve, team.teamID);
+                        }
+                    }
+                    else { Debug.LogWarningFormat("Invalid team (Null) for teamID {0}", teamList[i]); }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid teamList (Null)"); }
+    }
+    #endregion
+
     #region MoveTeam
     /// <summary>
     /// handles all admin for moving a team from one pool to another. Assumed movement direction is 'Reserve -> OnMap -> InTransit -> Reserve'
     /// Takes care of all checks, eg. enough teams present in reserve for one to move to the map
     /// Will check if actor has the ability to handle another team onMap
-    /// only use the node parameter if the team is moving 'OnMap' (it's moving to a specific node)
+    /// only use the node parameter if the team is moving 'OnMap' or 'InTransit' (it's moving to, or from, a specific node)
     /// </summary>
     /// <param name="destinationPool"></param>
     /// <param name="teamID"></param>
@@ -1026,8 +1072,8 @@ public class TeamManager : MonoBehaviour
                                                     };
                                                     //add to actor's personal list
                                                     actor.AddNodeAction(nodeActionData);
-                                                    Debug.LogFormat("[Tst] TeamManager.cs -> MoveTeamAI: nodeActionData added to {0}, {1}, ID {2} for {3} {4}, ID {5}{6}",
-                                                        actor.actorName, actor.arc.name, actor.actorID, team.arc.name, team.teamName, team.teamID, "\n");
+                                                    /*Debug.LogFormat("[Tst] TeamManager.cs -> MoveTeamAI: nodeActionData added to {0}, {1}, ID {2} for {3} {4}, ID {5}{6}",
+                                                        actor.actorName, actor.arc.name, actor.actorID, team.arc.name, team.teamName, team.teamID, "\n");*/
                                                 }
                                                 else { Debug.LogError("Invalid actor (Null) from listOfActors (Active)"); }
                                             }
@@ -1447,7 +1493,8 @@ public class TeamManager : MonoBehaviour
                             };
                             //add to actor's personal list
                             actor.AddNodeAction(nodeActionData);
-                            Debug.LogFormat("[Tst] TeamManager.cs -> MoveTeam: nodeActionData added to {0}, {1}{2}", actor.actorName, actor.arc.name, "\n");
+                            /*Debug.LogFormat("[Tst] TeamManager.cs -> MoveTeam: nodeActionData added to {0}, {1}{2}", actor.actorName, actor.arc.name, "\n");*/
+
                             //message
                             string text = string.Format("{0} {1}, ID {2}, RECALLED from {3}, ID {4}", team.arc.name, team.teamName, team.teamID,
                                 node.nodeName, node.nodeID);
@@ -1569,7 +1616,7 @@ public class TeamManager : MonoBehaviour
                                     };
                                     //add to actor's personal list
                                     actor.AddNodeAction(nodeActionData);
-                                    Debug.LogFormat("[Tst] TeamManager.cs -> ProcessNeutraliseTeam: nodeActionData added to {0}, {1}{2}", actor.actorName, actor.arc.name, "\n");
+                                    /*Debug.LogFormat("[Tst] TeamManager.cs -> ProcessNeutraliseTeam: nodeActionData added to {0}, {1}{2}", actor.actorName, actor.arc.name, "\n");*/
                                 }
                                 else
                                 {
@@ -1584,7 +1631,8 @@ public class TeamManager : MonoBehaviour
                                     };
                                     //add to player's personal list
                                     GameManager.i.playerScript.AddNodeAction(nodeActionData);
-                                    Debug.LogFormat("[Tst] TeamManager.cs -> ProcessNeutraliseTeam: nodeActionData added to {0}, {1}{2}", GameManager.i.playerScript.PlayerName, "Player", "\n");
+                                    /*Debug.LogFormat("[Tst] TeamManager.cs -> ProcessNeutraliseTeam: nodeActionData added to {0}, {1}{2}", GameManager.i.playerScript.PlayerName, "Player", "\n");*/
+
                                     //statistics
                                     GameManager.i.dataScript.StatisticIncrement(StatType.PlayerNodeActions);
                                 }
@@ -1958,7 +2006,7 @@ public class TeamManager : MonoBehaviour
                                             };
                                             //add to actor's personal list
                                             actor.AddNodeAction(nodeActionData);
-                                            Debug.LogFormat("[Tst] TeamManager.cs -> AutoRunAssignActors: nodeActionData added to {0}, {1}{2}", actor.actorName, actor.arc.name, "\n");
+                                            /*Debug.LogFormat("[Tst] TeamManager.cs -> AutoRunAssignActors: nodeActionData added to {0}, {1}{2}", actor.actorName, actor.arc.name, "\n");*/
                                         }
 
                                     }

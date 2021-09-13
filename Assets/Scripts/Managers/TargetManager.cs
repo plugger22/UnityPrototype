@@ -2127,7 +2127,7 @@ public class TargetManager : MonoBehaviour
                         };
                         //add to actor's personal list
                         actor.AddNodeAction(nodeActionData);
-                        Debug.LogFormat("[Tst] TargetManager.cs -> ProcessTargetInfo: nodeActionData added to {0}, {1}{2}", actor.actorName, actor.arc.name, "\n");
+                        /*Debug.LogFormat("[Tst] TargetManager.cs -> ProcessTargetInfo: nodeActionData added to {0}, {1}{2}", actor.actorName, actor.arc.name, "\n");*/
                         GameManager.i.dataScript.StatisticIncrement(StatType.SubordinateNodeActions);
                     }
                     else
@@ -2143,7 +2143,7 @@ public class TargetManager : MonoBehaviour
                         };
                         //add to player's personal list
                         GameManager.i.playerScript.AddNodeAction(nodeActionData);
-                        Debug.LogFormat("[Tst] TargetManager.cs -> ProcessTargetInfo: nodeActionData added to {0}, {1}{2}", GameManager.i.playerScript.PlayerName, "Player", "\n");                        //statistics
+                        /*Debug.LogFormat("[Tst] TargetManager.cs -> ProcessTargetInfo: nodeActionData added to {0}, {1}{2}", GameManager.i.playerScript.PlayerName, "Player", "\n");                        //statistics*/
                         GameManager.i.dataScript.StatisticIncrement(StatType.PlayerNodeActions);
                     }
                     //statistics

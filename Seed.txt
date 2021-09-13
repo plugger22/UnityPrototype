@@ -461,3 +461,179 @@ City seed 22737 -> VirtualCity, Eurasia
 
 Dev seed 14284 -> Thursday, 9 September 2021 4:27 PM
 City seed 35579 -> VirtualCity, Eurasia
+
+Dev seed 62397 -> Monday, 13 September 2021 9:16 AM
+City seed 24042 -> VirtualCity, Eurasia
+
+Dev seed 52962 -> Monday, 13 September 2021 9:33 AM
+City seed 32227 -> VirtualCity, Eurasia
+WARNING Unable to deploy MEDIA Team Alpha to OnMap as Actor ROBOTICS, slotID 0, has insufficient ability
+
+UnityEngine.Debug:LogWarning(Object)
+	TeamManager:MoveTeam(TeamPool, Int32, Int32, Node) (at Assets/Scripts/Managers/TeamManager.cs:824)
+	TeamManager:ConfigureTutorialTeams(TutorialTeamConfig) (at Assets/Scripts/Managers/TeamManager.cs:702)
+	TeamManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/TeamManager.cs:146)
+	TeamManager:Initialise(GameState) (at Assets/Scripts/Managers/TeamManager.cs:70)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:943)
+	GameManager:InitialiseTutorial() (at Assets/Scripts/GameManager.cs:1050)
+	ControlManager:ProcessTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:628)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:95)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:391)
+	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:331)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 51848 -> Monday, 13 September 2021 9:39 AM
+City seed 14679 -> VirtualCity, Eurasia
+
+Dev seed 35454 -> Monday, 13 September 2021 9:51 AM
+City seed 30552 -> VirtualCity, Eurasia
+
+Dev seed 47604 -> Monday, 13 September 2021 10:05 AM
+City seed 6764 -> VirtualCity, Eurasia
+WARNING Unable to deploy PROBE Team Alpha to OnMap as Actor ELITES, slotID 3, has insufficient ability
+
+UnityEngine.Debug:LogWarning(Object)
+	TeamManager:MoveTeam(TeamPool, Int32, Int32, Node) (at Assets/Scripts/Managers/TeamManager.cs:827)
+	TeamManager:ConfigureTutorialTeams(TutorialTeamConfig) (at Assets/Scripts/Managers/TeamManager.cs:703)
+	TeamManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/TeamManager.cs:146)
+	TeamManager:Initialise(GameState) (at Assets/Scripts/Managers/TeamManager.cs:70)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:943)
+	GameManager:InitialiseTutorial() (at Assets/Scripts/GameManager.cs:1050)
+	ControlManager:ProcessTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:628)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:95)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:391)
+	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:331)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid team deployment OnMap, PROBE teamID 8, actorSlotID 3, nodeID 4
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TeamManager:ConfigureTutorialTeams(TutorialTeamConfig) (at Assets/Scripts/Managers/TeamManager.cs:704)
+	TeamManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/TeamManager.cs:146)
+	TeamManager:Initialise(GameState) (at Assets/Scripts/Managers/TeamManager.cs:70)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:943)
+	GameManager:InitialiseTutorial() (at Assets/Scripts/GameManager.cs:1050)
+	ControlManager:ProcessTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:628)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:95)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:391)
+	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:331)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 19963 -> Monday, 13 September 2021 10:08 AM
+City seed 37825 -> VirtualCity, Eurasia
+
+Dev seed 12529 -> Monday, 13 September 2021 10:14 AM
+City seed 52890 -> VirtualCity, Eurasia
+
+Dev seed 28109 -> Monday, 13 September 2021 10:35 AM
+City seed 34489 -> VirtualCity, Eurasia
+ERROR Invalid node (Null) for InTransit -> move Cancelled
+UnityEngine.Debug:LogError(Object)
+	TeamManager:MoveTeam(TeamPool, Int32, Int32, Node) (at Assets/Scripts/Managers/TeamManager.cs:934)
+	TeamManager:ResetTeams() (at Assets/Scripts/Managers/TeamManager.cs:744)
+	TutorialManager:InitialiseTutorialSet(TutorialSet) (at Assets/Scripts/Managers/TutorialManager.cs:231)
+	TutorialManager:SetNextSet() (at Assets/Scripts/Managers/TutorialManager.cs:985)
+	TutorialManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TutorialManager.cs:152)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:391)
+	TutorialWidgetRight:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Tutorial/TutorialWidgetRight.cs:22)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ERROR Invalid node (Null) for InTransit -> move Cancelled
+UnityEngine.Debug:LogError(Object)
+	TeamManager:MoveTeam(TeamPool, Int32, Int32, Node) (at Assets/Scripts/Managers/TeamManager.cs:934)
+	TeamManager:ResetTeams() (at Assets/Scripts/Managers/TeamManager.cs:744)
+	TutorialManager:InitialiseTutorialSet(TutorialSet) (at Assets/Scripts/Managers/TutorialManager.cs:231)
+	TutorialManager:SetNextSet() (at Assets/Scripts/Managers/TutorialManager.cs:985)
+	TutorialManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TutorialManager.cs:152)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:391)
+	TutorialWidgetRight:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Tutorial/TutorialWidgetRight.cs:22)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ERROR Invalid node (Null) for InTransit -> move Cancelled
+UnityEngine.Debug:LogError(Object)
+	TeamManager:MoveTeam(TeamPool, Int32, Int32, Node) (at Assets/Scripts/Managers/TeamManager.cs:934)
+	TeamManager:ResetTeams() (at Assets/Scripts/Managers/TeamManager.cs:744)
+	TutorialManager:InitialiseTutorialSet(TutorialSet) (at Assets/Scripts/Managers/TutorialManager.cs:231)
+	TutorialManager:SetNextSet() (at Assets/Scripts/Managers/TutorialManager.cs:985)
+	TutorialManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TutorialManager.cs:152)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:391)
+	TutorialWidgetRight:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Tutorial/TutorialWidgetRight.cs:22)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 23871 -> Monday, 13 September 2021 10:41 AM
+City seed 23802 -> VirtualCity, Eurasia
+ASSERT ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+System.ThrowHelper.ThrowArgumentOutOfRangeException (System.ExceptionArgument argument, System.ExceptionResource resource) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.ThrowHelper.ThrowArgumentOutOfRangeException () (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Collections.Generic.List`1[T].get_Item (System.Int32 index) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	TeamManager.ResetTeams () (at Assets/Scripts/Managers/TeamManager.cs:741)
+	TutorialManager.InitialiseTutorialSet (TutorialSet set) (at Assets/Scripts/Managers/TutorialManager.cs:231)
+	TutorialManager.SetNextSet () (at Assets/Scripts/Managers/TutorialManager.cs:985)
+	TutorialManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/TutorialManager.cs:152)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:391)
+	TutorialWidgetRight.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/Tutorial/TutorialWidgetRight.cs:22)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 21688 -> Monday, 13 September 2021 10:43 AM
+City seed 45937 -> VirtualCity, Eurasia
+ASSERT ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+System.ThrowHelper.ThrowArgumentOutOfRangeException (System.ExceptionArgument argument, System.ExceptionResource resource) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.ThrowHelper.ThrowArgumentOutOfRangeException () (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Collections.Generic.List`1[T].get_Item (System.Int32 index) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	TeamManager.ResetTeams () (at Assets/Scripts/Managers/TeamManager.cs:741)
+	TutorialManager.InitialiseTutorialSet (TutorialSet set) (at Assets/Scripts/Managers/TutorialManager.cs:231)
+	TutorialManager.SetNextSet () (at Assets/Scripts/Managers/TutorialManager.cs:985)
+	TutorialManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/TutorialManager.cs:152)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:391)
+	TutorialWidgetRight.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/Tutorial/TutorialWidgetRight.cs:22)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 21806 -> Monday, 13 September 2021 10:46 AM
+City seed 28628 -> VirtualCity, Eurasia
+ASSERT ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+System.ThrowHelper.ThrowArgumentOutOfRangeException (System.ExceptionArgument argument, System.ExceptionResource resource) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.ThrowHelper.ThrowArgumentOutOfRangeException () (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Collections.Generic.List`1[T].get_Item (System.Int32 index) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	TeamManager.ResetTeams () (at Assets/Scripts/Managers/TeamManager.cs:741)
+	TutorialManager.InitialiseTutorialSet (TutorialSet set) (at Assets/Scripts/Managers/TutorialManager.cs:231)
+	TutorialManager.SetNextSet () (at Assets/Scripts/Managers/TutorialManager.cs:985)
+	TutorialManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/TutorialManager.cs:152)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:391)
+	TutorialWidgetRight.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/Tutorial/TutorialWidgetRight.cs:22)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 22039 -> Monday, 13 September 2021 10:49 AM
+City seed 28044 -> VirtualCity, Eurasia
+
+Dev seed 59453 -> Monday, 13 September 2021 10:55 AM
+City seed 53995 -> VirtualCity, Eurasia
+
+Dev seed 39760 -> Monday, 13 September 2021 10:57 AM
+City seed 48728 -> VirtualCity, Eurasia
+
+Dev seed 40446 -> Monday, 13 September 2021 10:58 AM
+
+Dev seed 21910 -> Monday, 13 September 2021 10:58 AM
+
+Dev seed 27105 -> Monday, 13 September 2021 10:59 AM
+
+Dev seed 8868 -> Monday, 13 September 2021 10:59 AM
+
+Dev seed 9626 -> Monday, 13 September 2021 11:00 AM
+
+Dev seed 23478 -> Monday, 13 September 2021 11:00 AM
+City seed 39782 -> VirtualCity, Eurasia
+
+Dev seed 50536 -> Monday, 13 September 2021 11:05 AM
+WARNING [Val] ValidateSO: MISMATCH on TutorialTeamConfig, array 1, assets 2 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialTeamConfig[]) (at Assets/Scripts/Managers/ValidationManager.cs:2619)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2582)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:943)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:434)
+	City seed 51499 -> VirtualCity, Eurasia

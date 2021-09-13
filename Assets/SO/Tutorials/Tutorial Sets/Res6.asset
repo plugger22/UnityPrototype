@@ -18,6 +18,7 @@ MonoBehaviour:
   playerConfig: {fileID: 0}
   actorConfig: {fileID: 0}
   targetConfig: {fileID: 11400000, guid: fded60c6795af5142872ac8bd57a7129, type: 2}
+  teamConfig: {fileID: 11400000, guid: 93381833d112b5e4ab1d759944dd02f1, type: 2}
   listOfFeaturesOff:
   - {fileID: 11400000, guid: 7e2f496678746a1488d0508fb5ac34ef, type: 2}
   - {fileID: 11400000, guid: 60c5546ae44161c4e96b856a75904210, type: 2}

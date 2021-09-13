@@ -5932,7 +5932,8 @@ public class ActorManager : MonoBehaviour
                         };
                         //add to player's personal list
                         GameManager.i.playerScript.AddNodeAction(nodeActionData);
-                        Debug.LogFormat("[Tst] ActorManager.cs -> ProcessRecruitChoiceAuthority: nodeActionData added to {0}, {1}{2}", GameManager.i.playerScript.PlayerName, "Player", "\n");
+                        /*Debug.LogFormat("[Tst] ActorManager.cs -> ProcessRecruitChoiceAuthority: nodeActionData added to {0}, {1}{2}", GameManager.i.playerScript.PlayerName, "Player", "\n");*/
+
                         //stats
                         GameManager.i.dataScript.StatisticIncrement(StatType.ActorsRecruited);
                         //reset cached recruit actor flag

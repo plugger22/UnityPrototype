@@ -123,7 +123,7 @@ public class NodeManager : MonoBehaviour
     string colourNormal;
     string colourCyber;
     string colourAlert;
-    string colourHighlight;
+    /*string colourHighlight;*/
     string colourResistance;
     string colourBad;
     string colourNeutral;
@@ -456,7 +456,7 @@ public class NodeManager : MonoBehaviour
         colourNormal = GameManager.i.colourScript.GetColour(ColourType.normalText);
         colourCyber = GameManager.i.colourScript.GetColour(ColourType.cyberText);
         colourAlert = GameManager.i.colourScript.GetColour(ColourType.salmonText);
-        colourHighlight = GameManager.i.colourScript.GetColour(ColourType.neutralText);
+        /*colourHighlight = GameManager.i.colourScript.GetColour(ColourType.neutralText);*/
         colourResistance = GameManager.i.colourScript.GetColour(ColourType.blueText);
         colourBad = GameManager.i.colourScript.GetColour(ColourType.badText);
         colourNeutral = GameManager.i.colourScript.GetColour(ColourType.neutralText);
@@ -599,7 +599,7 @@ public class NodeManager : MonoBehaviour
         { myCoroutine = StartCoroutine("FlashingNodes", listOfNodes); }
     }
 
-
+    #region ShowNodes
     /// <summary>
     /// highlights all nodes depening on the enum NodeUI criteria
     /// </summary>
@@ -907,10 +907,7 @@ public class NodeManager : MonoBehaviour
                     }
                     else { Debug.LogError("Invalid listOfNodes (Null)"); }
                     if (count > 0)
-                    {
-                        displayText = string.Format("{0}{1}{2} {3}{4}{5} {6}district{7}{8}", colourNormal, count, colourEnd,
-                            colourCyber, "Team", colourEnd, colourDefault, count != 1 ? "s" : "", colourEnd);
-                    }
+                    { displayText = string.Format("{0}{1}{2} {3} Team district{4}{5}", colourNormal, count, colourEnd, colourCyber, count != 1 ? "s" : "", colourEnd); }
                     else
                     { displayText = string.Format("{0}There are no Teams present{1}", colourError, colourEnd); }
                 }
@@ -1201,6 +1198,7 @@ public class NodeManager : MonoBehaviour
         }
         return listOfHighlighted;
     }
+    #endregion
 
     /// <summary>
     /// Show all active nodes (Contacts) for a particular actor. Use actor.slotID (0 to numOfActors)
@@ -1249,60 +1247,6 @@ public class NodeManager : MonoBehaviour
         }
         return activeNodes;
     }
-
-    #region ShowActiveNodesArchive
-    /*/// <summary>
-    /// Show all active nodes (Contacts) for a particular actor. Use actor.slotID (0 to numOfActors)
-    /// </summary>
-    /// <param name="slotID"></param>
-    public void ShowActiveNodesArchive(int slotID)
-    {
-        Debug.Assert(slotID > -1 && slotID < GameManager.i.actorScript.maxNumOfOnMapActors, "Invalid slotID");
-        //set all nodes to default colour first
-        ResetNodes();
-        GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
-        List<Node> tempNodeList = GameManager.i.dataScript.GetListOfActorContactNodes(slotID);
-        //Get Actor
-        Actor actor = GameManager.i.dataScript.GetCurrentActor(slotID, GameManager.i.sideScript.PlayerSide);
-        foreach (Node node in tempNodeList)
-        {
-            switch (playerSide.level)
-            {
-                case 1:
-                    //authority - contact status always Active
-                    if (GameManager.i.dataScript.CheckActiveContactAtNode(node.nodeID, playerSide) == true)
-                    {
-                        //change material for selected nodes & change face text to black, full opacity
-                        node.SetActive();
-                    }
-                    break;
-                case 2:
-                    //resistance - contact status can change
-                    if (GameManager.i.dataScript.CheckForActorContactActive(actor, node.nodeID) == true)
-                    {
-                        //change material for selected nodes
-                        node.SetActive();
-                    }
-                    break;
-            }
-        }
-        string displayText;
-        string minionTitle;
-        //work out minion's appropriate title
-        if (GameManager.i.sideScript.PlayerSide.level == globalAuthority.level)
-        { minionTitle = string.Format("{0} of ", GameManager.i.metaScript.GetAuthorityTitle()); }
-        else { minionTitle = "Rebel "; }
-        if (actor != null)
-        {
-            displayText = string.Format("{0}\"{1}\"{2} {3}{4}{5}{6}{7}{8} {9}{10} district{11}{12}", colourHighlight, actor.actorName, colourEnd,
-                colourDefault, minionTitle, colourEnd,
-                colourHighlight, actor.arc.name, colourEnd,
-                colourDefault, tempNodeList.Count, tempNodeList.Count != 1 ? "s" : "", colourEnd);
-            GameManager.i.alertScript.SetAlertUI(displayText);
-            NodeShowFlag = 1;
-        }
-    }*/
-    #endregion
 
     /// <summary>
     /// Sets flag to show player node whenever a node redraw. Normally true but switch off if you want to flash the player node instead
