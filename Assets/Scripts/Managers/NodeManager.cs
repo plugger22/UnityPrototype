@@ -1258,6 +1258,7 @@ public class NodeManager : MonoBehaviour
     public bool GetShowPlayerNode()
     { return showPlayerNode; }
 
+    #region RedrawNodes
     /// <summary>
     /// Redraw any nodes. Show highlighted node, unless it's a non-normal node for the current redraw
     /// </summary>
@@ -1374,6 +1375,7 @@ public class NodeManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfNodes (Null) returned from dataManager in RedrawNodes"); }
     }
+    #endregion
 
     #region RedrawNodesArchive
     /*/// <summary>
@@ -1470,6 +1472,7 @@ public class NodeManager : MonoBehaviour
     }*/
     #endregion
 
+    #region ResetNodes
     /// <summary>
     /// Sets the material colour of all nodes to the default (doesn't change on screen, just sets them up). Call before making any changes to node colours
     /// </summary>
@@ -1512,7 +1515,9 @@ public class NodeManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfNodes (Null) returned from dataManager in ResetNodes"); }
     }
+    #endregion
 
+    #region SetNodeType
     /// <summary>
     /// Sets type of node display (node or district styles) and updates board
     /// </summary>
@@ -1573,7 +1578,9 @@ public class NodeManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfNodes (Null)"); }
     }
+    #endregion
 
+    #region SetDistrictFaceText
     /// <summary>
     /// Set's district face text. 'isTransparent' shows a transparent cylinder (default) to enhance readability
     /// </summary>
@@ -1707,6 +1714,7 @@ public class NodeManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfNodes (Null) returned from dataManager in SetDistrictFaceText"); }
     }
+    #endregion
 
     /// <summary>
     /// Use this to change a node/districts material settings

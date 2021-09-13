@@ -637,3 +637,11 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:943)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:434)
 	City seed 51499 -> VirtualCity, Eurasia
+
+Dev seed 11550 -> Monday, 13 September 2021 12:15 PM
+WARNING  LoadManager.cs -> InitialiseStart: No TutorialHideConfigs present
+UnityEngine.Debug:LogWarning(Object)
+	LoadManager:InitialiseStart(GameState) (at Assets/Scripts/Managers/LoadManager.cs:1248)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:943)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:434)
+	

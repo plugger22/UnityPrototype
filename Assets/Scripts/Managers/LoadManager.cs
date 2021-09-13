@@ -96,6 +96,7 @@ public class LoadManager : MonoBehaviour
     public TutorialPlayerConfig[] arrayOfTutorialPlayerConfigs;
     public TutorialTargetConfig[] arrayOfTutorialTargetConfigs;
     public TutorialTeamConfig[] arrayOfTutorialTeamConfigs;
+    public TutorialHideConfig[] arrayOfTutorialHideConfigs;
 
     [Header("Personality Factors - ORDER MATTERS")]
     public Factor[] arrayOfFiveFactorModel;
@@ -1238,6 +1239,13 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTutorialTeamConfigs has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No TutorialTeamConfigs present"); }
+        //
+        // - - - Tutorial Hide Configurations (not stored in a collection)
+        //
+        numArray = arrayOfTutorialHideConfigs.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTutorialHideConfigs has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No TutorialHideConfigs present"); }
         //
         // - - - Layouts (not stored in a collection)
         //

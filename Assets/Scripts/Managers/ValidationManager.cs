@@ -2580,6 +2580,8 @@ public class ValidationManager : MonoBehaviour
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfTutorialPlayerConfigs);
         //TutorialTeamConfigs
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfTutorialTeamConfigs);
+        //TutorialHideConfigs
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfTutorialHideConfigs);
         //Layouts
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfLayouts);
         //GameHelp
