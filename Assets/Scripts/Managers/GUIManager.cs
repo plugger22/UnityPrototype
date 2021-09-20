@@ -182,6 +182,7 @@ public class GUIManager : MonoBehaviour
     [HideInInspector] public char cityChar;
     [HideInInspector] public char compatibilityChar;
     [HideInInspector] public char alertChar;
+    [HideInInspector] public char searchChar;
     [HideInInspector] public char tutDialogue;
     [HideInInspector] public char tutInfo;
     [HideInInspector] public char tutQuestion;
@@ -304,6 +305,7 @@ public class GUIManager : MonoBehaviour
         cityChar = '\uf64f';
         compatibilityChar = '\uf6ad';
         alertChar = '\uf06a';
+        searchChar = '\uf002';
         arrowRight = '\uf0a9';
         arrowLeft = '\uf0a8';
         tutDialogue = '\uf075';
@@ -312,6 +314,7 @@ public class GUIManager : MonoBehaviour
         tutGoal = '\uf46c';
         tutArrowLeft = '\uf060';
         tutArrowRight = '\uf061';
+        
 
     }
     #endregion

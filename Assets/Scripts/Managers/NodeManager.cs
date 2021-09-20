@@ -76,7 +76,7 @@ public class NodeManager : MonoBehaviour
     private bool showPlayerNode = true;                             //switched off if player node needs to be flashed
 
 
-    private Coroutine myCoroutine;
+    private Coroutine myFlashCoroutine;
 
     //fast access -> outcomes
     [HideInInspector] public EffectOutcome outcomeNodeSecurity;
@@ -610,19 +610,6 @@ public class NodeManager : MonoBehaviour
         if (nodeID < 0)
         { Debug.LogWarningFormat("Invalid nodeID {0} for Player status \"{1}\", inactive status \"{2}\"", nodeID, GameManager.i.playerScript.status, GameManager.i.playerScript.inactiveStatus); }
         return nodeID;
-    }
-    #endregion
-
-    #region FlashHighlightNodes
-    /// <summary>
-    /// Master method to flash highlighted nodes
-    /// </summary>
-    /// <param name="nodeUI"></param>
-    public void FlashHighlightNodes(NodeUI nodeUI)
-    {
-        List<Node> listOfNodes = ShowNodes(nodeUI);
-        if (listOfNodes.Count > 0)
-        { myCoroutine = StartCoroutine("FlashingNodes", listOfNodes); }
     }
     #endregion
 
@@ -1239,6 +1226,7 @@ public class NodeManager : MonoBehaviour
         ResetNodes();
         GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         List<Node> tempNodeList = GameManager.i.dataScript.GetListOfActorContactNodes(slotID);
+        int count = tempNodeList.Count;
         List<Node> activeNodes = new List<Node>();
         //Get Actor
         Actor actor = GameManager.i.dataScript.GetCurrentActor(slotID, GameManager.i.sideScript.PlayerSide);
@@ -1258,19 +1246,15 @@ public class NodeManager : MonoBehaviour
                     break;
             }
         }
-        string displayText;
-        string minionTitle;
-        //work out minion's appropriate title
-        if (GameManager.i.sideScript.PlayerSide.level == globalAuthority.level)
-        { minionTitle = string.Format("{0} of ", GameManager.i.metaScript.GetAuthorityTitle()); }
-        else { minionTitle = "Rebel "; }
         if (actor != null)
         {
-            displayText = string.Format("{0}\"{1}\"{2} {3}{4}{5}{6}{7}{8} {9}{10} district{11}{12}", colourCyber, actor.actorName, colourEnd,
-                colourNormal, minionTitle, colourEnd,
-                colourCyber, actor.arc.name, colourEnd,
-                colourNormal, tempNodeList.Count, tempNodeList.Count != 1 ? "s" : "", colourEnd);
-            GameManager.i.alertScript.SetAlertUI(displayText);
+            string displayText = string.Format("{0}{1}{2} {3}{4} has{5} {6}Contacts{7} {8}in{9} {10}{11}{12} {13}district{14}{15} ", colourNormal, actor.arc.name, colourEnd, 
+                colourCyber, actor.actorName, colourEnd, 
+                colourNormal, colourEnd,
+                colourCyber, colourEnd,
+                colourNormal, count, colourEnd,
+                colourCyber, count != 1 ? "s" : "", colourEnd);
+            GameManager.i.alertScript.SetAlertUI(displayText, 999);
             NodeShowFlag = 1;
         }
         return activeNodes;
@@ -1512,10 +1496,10 @@ public class NodeManager : MonoBehaviour
     public void ResetNodes()
     {
         //stop flashing node coroutine if running
-        if (myCoroutine != null)
+        if (myFlashCoroutine != null)
         {
-            StopCoroutine(myCoroutine);
-            myCoroutine = null;
+            StopCoroutine(myFlashCoroutine);
+            myFlashCoroutine = null;
         }
         //loop and assign
         List<Node> listOfNodes = GameManager.i.dataScript.GetListOfAllNodes();
@@ -3139,6 +3123,24 @@ public class NodeManager : MonoBehaviour
     }
     #endregion
 
+    #region Flashing Nodes...
+    //
+    // - - - Flashing Nodes
+    //
+
+    #region FlashHighlightNodes
+    /// <summary>
+    /// Master method to flash highlighted nodes
+    /// </summary>
+    /// <param name="nodeUI"></param>
+    public void FlashHighlightNodes(NodeUI nodeUI)
+    {
+        List<Node> listOfNodes = ShowNodes(nodeUI);
+        if (listOfNodes.Count > 0)
+        { myFlashCoroutine = StartCoroutine("FlashingNodes", listOfNodes); }
+    }
+    #endregion
+
     #region StartFlashingNodes
     /// <summary>
     /// NODES plural -> event driven -> start coroutine
@@ -3151,7 +3153,7 @@ public class NodeManager : MonoBehaviour
             if (listOfNodes.Count > 0)
             {
                 isFlashOn = false;
-                myCoroutine = StartCoroutine("FlashingNodes", listOfNodes);
+                myFlashCoroutine = StartCoroutine("FlashingNodes", listOfNodes);
             }
             else { Debug.LogWarning("Invalid listOfNodes (Empty)"); }
         }
@@ -3165,11 +3167,15 @@ public class NodeManager : MonoBehaviour
     /// </summary>
     private void StopFlashingNodes()
     {
-        if (myCoroutine != null)
+        if (myFlashCoroutine != null)
         {
-            StopCoroutine(myCoroutine);
-            myCoroutine = null;
+            StopCoroutine(myFlashCoroutine);
+            myFlashCoroutine = null;
         }
+        //alert UI -> turn off if active
+        if (GameManager.i.alertScript.CheckAlertUI() == true)
+        { GameManager.i.alertScript.CloseAlertUI(); }
+        //reset nodes
         ResetNodes();
     }
     #endregion
@@ -3206,6 +3212,22 @@ public class NodeManager : MonoBehaviour
         }
     }
     #endregion
+
+    #region CheckFlashingNodes
+    /// <summary>
+    /// returns true if flashing nodes are active, false otherwise
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckFlashingNodes()
+    { return myFlashCoroutine == null ? false : true; }
+    #endregion
+
+    #endregion
+
+    #region Node Crisis...
+    //
+    // - - - Node Crisis
+    //
 
     #region ProcessNodeCrisis
     /// <summary>
@@ -3454,6 +3476,13 @@ public class NodeManager : MonoBehaviour
     }
     #endregion
 
+    #endregion
+
+    #region CureNodes...
+    //
+    // - - - Cure Nodes
+    //
+
     #region AddCureNode
     /// <summary>
     /// Add a cure to a node location and handles all admin. isActive sets initial state of Cure (default false). Overriden to true if Resistance is controlled by AI.
@@ -3554,6 +3583,8 @@ public class NodeManager : MonoBehaviour
         //return
         return cureNodeID;
     }
+    #endregion
+
     #endregion
 
     #region ConfigureTutorialHideItems

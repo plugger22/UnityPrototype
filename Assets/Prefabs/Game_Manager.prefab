@@ -7015,7 +7015,7 @@ MonoBehaviour:
   increaseScale: 1
   decreaseScale: 1.5
   fadeSpeed: 1
-  alertDefaultTime: 3
+  alertDefaultTime: 3.5
   tooltipDelay: 0.5
   tooltipFade: 0.5
   tooltipOffset: 30

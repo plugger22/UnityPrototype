@@ -109,6 +109,8 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public MetaGameUI metaUIScript;                   //Meta Game UI
     [HideInInspector] public AIDisplayUI aiDisplayScript;               //AI Display UI
     [HideInInspector] public AISideTabUI aiSideTabScript;               //AI SideTab UI
+    [HideInInspector] public FinderUI finderScript;                     //Finder UI
+    [HideInInspector] public FinderSideTabUI finderSideTabScript;       //FinderSideTabUI
     [HideInInspector] public ActorPanelUI actorPanelScript;             //Actor Panel UI
     [HideInInspector] public BasePanelUI basePanelScript;               //Base Panel UI
     [HideInInspector] public DebugGraphics debugGraphicsScript;         //Debug only Graphics
@@ -294,6 +296,8 @@ public class GameManager : MonoBehaviour
         metaUIScript = MetaGameUI.Instance();
         aiDisplayScript = AIDisplayUI.Instance();
         aiSideTabScript = AISideTabUI.Instance();
+        finderScript = FinderUI.Instance();
+        finderSideTabScript = FinderSideTabUI.Instance();
         alertScript = AlertUI.Instance();
         actorPanelScript = ActorPanelUI.Instance();
         basePanelScript = BasePanelUI.Instance();
@@ -387,6 +391,8 @@ public class GameManager : MonoBehaviour
         Debug.Assert(metaUIScript != null, "Invalid metaGameScript (Null)");
         Debug.Assert(aiDisplayScript != null, "Invalid aiDisplayScript (Null)");
         Debug.Assert(aiSideTabScript != null, "Invalid aiSideTabScript (Null)");
+        Debug.Assert(finderScript != null, "Invalid finderScript (Null)");
+        Debug.Assert(finderSideTabScript != null, "Invalid finderSideTabScript (Null)");
         Debug.Assert(alertScript != null, "Invalid alertScript (Null)");
         Debug.Assert(actorPanelScript != null, "Invalid actorPanelScript (Null)");
         Debug.Assert(basePanelScript != null, "Invalid basePanelScript (Null)");

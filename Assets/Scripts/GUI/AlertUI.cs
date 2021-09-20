@@ -100,6 +100,9 @@ public class AlertUI : MonoBehaviour
             {
                 StopCoroutine(myCoroutine);
                 myCoroutine = null;
+                //flashing nodes -> auto stop at same time
+                if (GameManager.i.nodeScript.CheckFlashingNodes() == true)
+                { EventManager.i.PostNotification(EventType.FlashNodesStop, this, null, "AlertUI.cs -> CloseAlertUI"); }
             }
             if (resetFlag == true)
             {
@@ -118,6 +121,13 @@ public class AlertUI : MonoBehaviour
         yield return new WaitForSeconds(timeToDisplay);
         CloseAlertUI();
     }
+
+    /// <summary>
+    /// returns true if AlertUI active, false otherwise
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckAlertUI()
+    { return myCoroutine == null ? false : true; }
 
     //new methods above here
 }
