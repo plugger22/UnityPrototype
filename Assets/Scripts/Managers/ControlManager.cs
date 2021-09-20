@@ -602,7 +602,7 @@ public class ControlManager : MonoBehaviour
         //save existing game state
         gameState = GameManager.i.inputScript.GameState;
         //close MainMenu
-        EventManager.i.PostNotification(EventType.CloseMainMenu, this, null, "ControlManager.cs -> ProcessTutorial");
+        EventManager.i.PostNotification(EventType.CloseMainMenu, this, null, "ControlManager.cs -> ProcessTutorialOptions");
         //toggle on modal block -> after closeMainmenu (it resets block)
         GameManager.i.guiScript.SetIsBlocked(true);
         //set background
@@ -627,7 +627,7 @@ public class ControlManager : MonoBehaviour
         //set up tutorial
         GameManager.i.InitialiseTutorial();
         //toggle off finder UI
-        GameManager.i.finderSideTabScript.ToggleFinder(false);
+        EventManager.i.PostNotification(EventType.FinderSideTabClose, this, null, "ControlManager.cs -> ProcessTutorialOptions");
         //debug
         /*Debug.LogFormat("[Tst] ControlManager.cs -> ProcessTutorialOptions:  number of HQ Workers {0}", GameManager.i.dataScript.CheckHqWorkers());*/
     }

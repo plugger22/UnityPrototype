@@ -22,7 +22,7 @@ public class FinderSideTabMouseUI : MonoBehaviour, IPointerClickHandler
             case PointerEventData.InputButton.Right:
                 if (GameManager.i.guiScript.CheckIsBlocked() == false)
                 {
-                    Debug.Log("FinderSideTabMouseUI tab clicked");
+                    EventManager.i.PostNotification(EventType.FinderOpen, this, null, "FinderSideTabMouseUI.cs -> OnPointerClick");
                 }
                 break;
             default:

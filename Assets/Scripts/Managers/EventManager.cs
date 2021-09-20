@@ -292,6 +292,8 @@ public enum EventType
     //Finder UI
     FinderOpen,
     FinderClose,
+    FinderSideTabOpen,
+    FinderSideTabClose,
     //AI
     Capture,
     /*ReleasePlayer,*/

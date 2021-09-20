@@ -43,30 +43,29 @@ public class FinderSideTabUI : MonoBehaviour
     /// </summary>
     public void Initialise(GameState state)
     {
-        //Resistance player only
-        if (GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideResistance.level)
+        switch (state)
         {
-            switch (state)
-            {
-                case GameState.TutorialOptions:
-                case GameState.NewInitialisation:
-                    SubInitialiseAssert();
-                    SubInitialiseSessionStart();
-                    break;
-                case GameState.LoadAtStart:
-                    SubInitialiseAssert();
-                    SubInitialiseSessionStart();
-                    break;
-                case GameState.LoadGame:
-                    SubInitialiseAssert();
-                    SubInitialiseSessionStart();
-                    break;
-                case GameState.FollowOnInitialisation:
-                    break;
-                default:
-                    Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
-                    break;
-            }
+            case GameState.TutorialOptions:
+            case GameState.NewInitialisation:
+                SubInitialiseAssert();
+                SubInitialiseSessionStart();
+                SubInitialiseEvents();
+                break;
+            case GameState.LoadAtStart:
+                SubInitialiseAssert();
+                SubInitialiseSessionStart();
+                SubInitialiseEvents();
+                break;
+            case GameState.LoadGame:
+                SubInitialiseAssert();
+                SubInitialiseSessionStart();
+                SubInitialiseEvents();
+                break;
+            case GameState.FollowOnInitialisation:
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
+                break;
         }
     }
     #endregion
@@ -102,6 +101,40 @@ public class FinderSideTabUI : MonoBehaviour
     }
     #endregion
 
+    #region SubInitialiseEvents
+    private void SubInitialiseEvents()
+    {
+        //register listener
+        EventManager.i.AddListener(EventType.FinderSideTabOpen, OnEvent, "FinderSideTabUI.cs");
+        EventManager.i.AddListener(EventType.FinderSideTabClose, OnEvent, "FinderSideTabUI.cs");
+    }
+    #endregion
+
+    #endregion
+
+    #region OnEvent
+    /// <summary>
+    /// Event Handler
+    /// </summary>
+    /// <param name="eventType"></param>
+    /// <param name="Sender"></param>
+    /// <param name="Param"></param>
+    public void OnEvent(EventType eventType, Component Sender, object Param = null)
+    {
+        //select event type
+        switch (eventType)
+        {
+            case EventType.FinderSideTabOpen:
+                ToggleFinder(true);
+                break;
+            case EventType.FinderSideTabClose:
+                ToggleFinder(false);
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
+                break;
+        }
+    }
     #endregion
 
     /// <summary>
