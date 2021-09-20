@@ -139,6 +139,16 @@ public class FinderUI : MonoBehaviour
         EventManager.i.PostNotification(EventType.FinderSideTabClose, this, null, "FinderUI.cs -> SetFinder");
         //open finder UI
         finderCanvas.gameObject.SetActive(true);
+        //set modal status
+        GameManager.i.guiScript.SetIsBlocked(true);
+        //turn off any alert message
+        GameManager.i.alertScript.CloseAlertUI(true);
+        //set game state
+        ModalStateData package = new ModalStateData();
+        package.mainState = ModalSubState.InfoDisplay;
+        package.infoState = ModalInfoSubState.Finder;
+        GameManager.i.inputScript.SetModalState(package);
+        Debug.LogFormat("[UI] FinderUI.cs -> SetFinder{0}", "\n");
     }
     #endregion
 
@@ -152,6 +162,11 @@ public class FinderUI : MonoBehaviour
         finderCanvas.gameObject.SetActive(false);
         //toggle on finder UI
         EventManager.i.PostNotification(EventType.FinderSideTabOpen, this, null, "FinderUI.cs -> CloseFinder");
+        //unblock
+        GameManager.i.guiScript.SetIsBlocked(false);
+        //set game state
+        GameManager.i.inputScript.ResetStates();
+        Debug.LogFormat("[UI] FinderUI.cs -> CloseFinder{0}", "\n");
     }
     #endregion
 }
