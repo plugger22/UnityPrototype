@@ -94,7 +94,7 @@ public class AISideTabUI : MonoBehaviour
         Debug.Assert(tooltip != null, "Invalid GenericTooltipUI component tooltip (Null)");
         tooltip.isIgnoreClick = true;
         tooltip.testTag = "AISideTabUI";
-        tooltip.tooltipMain = "We haven't yet broken the AI's Security systems";
+        tooltip.tooltipMain = GameManager.Formatt("We haven't yet broken the AI's Security systems", ColourType.salmonText);
         tooltip.tooltipDetails = "Resistance HQ expect to do so by <b>NEXT TURN</b>";
         //data
         topText.text = "AI";

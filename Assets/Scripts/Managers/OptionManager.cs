@@ -49,6 +49,7 @@ public class OptionManager : MonoBehaviour
     [HideInInspector] public bool isPlayerLeftMenu = true;                          //left click player menu
     [HideInInspector] public bool isPlayerRightMenu = true;                         //right click player menu
     [HideInInspector] public bool isTopWidget = true;                               //top centre widget (turn, actions, support, etc)
+    [HideInInspector] public bool isFinder = true;                                  //if true district finder (RHS tab) displayed
 
     //Backing fields (use underscore)
     private ColourScheme _colourOption;
@@ -86,6 +87,7 @@ public class OptionManager : MonoBehaviour
         isNodeLeftMenu = true;
         isNodeRightMenu = true;
         isTopWidget = true;
+        isFinder = true;
         GameManager.i.widgetTopScript.SetWidget(isTopWidget);
     }
 
@@ -144,6 +146,7 @@ public class OptionManager : MonoBehaviour
             .AppendFormat(" Node Left Click Menu -> {0}{1}", isNodeLeftMenu, "\n")
             .AppendFormat(" Node Right Click Menu -> {0}{1}", isNodeRightMenu, "\n")
             .AppendFormat(" Top Centre Widget -> {0}{1}", isTopWidget, "\n")
+            .AppendFormat(" District Finder -> {0}{1}", isFinder, "\n")
             .ToString();
     }
 

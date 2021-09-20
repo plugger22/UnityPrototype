@@ -881,6 +881,10 @@ public class GameManager : MonoBehaviour
         startMethod.handler = masterHelpScript.Initialise;
         startMethod.className = "ModalHelpUI";
         listOfUIMethods.Add(startMethod);
+        //FinderSideTabUI
+        startMethod.handler = finderSideTabScript.Initialise;
+        startMethod.className = "FinderSideTabUI";
+        listOfUIMethods.Add(startMethod);
         #endregion
 
         #region Debug Methods

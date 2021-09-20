@@ -289,6 +289,9 @@ public enum EventType
     AISendDisplayData,
     AISendHackingData,
     AISendSideData,
+    //Finder UI
+    FinderOpen,
+    FinderClose,
     //AI
     Capture,
     /*ReleasePlayer,*/

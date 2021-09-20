@@ -115,8 +115,7 @@ public class TooltipGeneric : MonoBehaviour
         //to the right
         if (data.screenPos.x + width >= Screen.width)
         {
-            data.screenPos.x -= (width * 2 + data.screenPos.x - Screen.width);
-            /*data.screenPos.x -= (data.screenPos.x + width - Screen.width - width / 4);*/
+            data.screenPos.x -= (width * 1.5f + data.screenPos.x - Screen.width);   //note: changed width * 2 to width * 1.5 as going too far to the left
         }
 
         /*else if (screenPos.x - width <= 0)

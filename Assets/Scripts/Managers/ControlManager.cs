@@ -624,7 +624,7 @@ public class ControlManager : MonoBehaviour
             long timeElapsed = GameManager.i.testScript.StopTimer();
             Debug.LogFormat("[Per] ControlManager.cs -> ProcessTutorialOptions: LOAD TUTORIAL took {0} ms", timeElapsed);
         }
-        //set up first level in campaign
+        //set up tutorial
         GameManager.i.InitialiseTutorial();
 
         //debug
