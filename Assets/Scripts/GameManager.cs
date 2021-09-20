@@ -681,6 +681,7 @@ public class GameManager : MonoBehaviour
         startMethod.className = "AIManager";
         listOfLevelMethods.Add(startMethod);
         listOfLoadMethods.Add(startMethod);
+
         //Campaign Manager -> InitialiseLate (includes NemesisManager.Initialise & CityManager.InitialiseLate) -> after levelScript.Initialise
         startMethod.handler = campaignScript.InitialiseLate;
         startMethod.className = "CampaignManager Late";
@@ -736,9 +737,14 @@ public class GameManager : MonoBehaviour
         startMethod.handler = authorityScript.Initialise;
         startMethod.className = "AuthorityManager";
         listOfLevelMethods.Add(startMethod);
+
         //Player Manager
         startMethod.handler = playerScript.Initialise;
         startMethod.className = "PlayerManager";
+        listOfLevelMethods.Add(startMethod);
+        //Target Manager -> InitialseLate -> after CampaignManager and PlayerManager (specific for tutorials)
+        startMethod.handler = targetScript.InitialiseLate;
+        startMethod.className = "TargetManager";
         listOfLevelMethods.Add(startMethod);
         //Personality Manager -> after Actor/PlayerManager.cs
         startMethod.handler = personScript.Initialise;

@@ -800,3 +800,132 @@ City seed 64103 -> VirtualCity, Eurasia
 
 Dev seed 62914 -> Monday, 20 September 2021 1:02 PM
 City seed 39403 -> VirtualCity, Eurasia
+
+Dev seed 55454 -> Monday, 20 September 2021 2:52 PM
+City seed 11023 -> Londus, Eurasia
+
+Dev seed 27495 -> Monday, 20 September 2021 2:54 PM
+City seed 31487 -> VirtualCity, Eurasia
+City seed 52508 -> Londus, Eurasia
+City seed 43023 -> VirtualCity, Eurasia
+ERROR Invalid player Node (Null)
+UnityEngine.Debug:LogError(Object)
+	TargetManager:ConfigureTutorialTargets(TutorialTargetConfig) (at Assets/Scripts/Managers/TargetManager.cs:835)
+	TargetManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/TargetManager.cs:159)
+	TargetManager:Initialise() (at Assets/Scripts/Managers/TargetManager.cs:98)
+	MissionManager:SubInitialiseAll() (at Assets/Scripts/Managers/MissionManager.cs:81)
+	MissionManager:Initialise() (at Assets/Scripts/Managers/MissionManager.cs:45)
+	CampaignManager:SubInitialiseAllLate() (at Assets/Scripts/Managers/CampaignManager.cs:149)
+	CampaignManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/CampaignManager.cs:78)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:953)
+	GameManager:InitialiseTutorial() (at Assets/Scripts/GameManager.cs:1066)
+	ControlManager:ProcessTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:628)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:95)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:394)
+	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:331)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Gear 'Plastique", is already present in Player inventory
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	PlayerManager:AddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:885)
+	PlayerManager:ConfigureTutorialPlayer(TutorialPlayerConfig) (at Assets/Scripts/Managers/PlayerManager.cs:679)
+	PlayerManager:SubInitialiseSessionStartLate() (at Assets/Scripts/Managers/PlayerManager.cs:386)
+	PlayerManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/PlayerManager.cs:286)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:953)
+	GameManager:InitialiseTutorial() (at Assets/Scripts/GameManager.cs:1066)
+	ControlManager:ProcessTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:628)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:95)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:394)
+	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:331)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 60091 -> Monday, 20 September 2021 3:09 PM
+City seed 61041 -> VirtualCity, Eurasia
+
+Dev seed 21084 -> Monday, 20 September 2021 3:10 PM
+City seed 44770 -> Londus, Eurasia
+City seed 29741 -> VirtualCity, Eurasia
+ERROR Invalid player Node (Null)
+UnityEngine.Debug:LogError(Object)
+	TargetManager:ConfigureTutorialTargets(TutorialTargetConfig) (at Assets/Scripts/Managers/TargetManager.cs:835)
+	TargetManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/TargetManager.cs:159)
+	TargetManager:Initialise() (at Assets/Scripts/Managers/TargetManager.cs:98)
+	MissionManager:SubInitialiseAll() (at Assets/Scripts/Managers/MissionManager.cs:81)
+	MissionManager:Initialise() (at Assets/Scripts/Managers/MissionManager.cs:45)
+	CampaignManager:SubInitialiseAllLate() (at Assets/Scripts/Managers/CampaignManager.cs:149)
+	CampaignManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/CampaignManager.cs:78)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:953)
+	GameManager:InitialiseTutorial() (at Assets/Scripts/GameManager.cs:1066)
+	ControlManager:ProcessTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:628)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:95)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:394)
+	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:331)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 47642 -> Monday, 20 September 2021 3:20 PM
+City seed 16470 -> Londus, Eurasia
+City seed 7078 -> VirtualCity, Eurasia
+
+Dev seed 55245 -> Monday, 20 September 2021 3:22 PM
+City seed 12283 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerManager.SubInitialiseFastAccess () (at Assets/Scripts/Managers/PlayerManager.cs:397)
+	PlayerManager.Initialise (gameAPI.GameState state) (at Assets/Scripts/Managers/PlayerManager.cs:260)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:962)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:1021)
+	ControlManager.ProcessCloseNewGameOptions () (at Assets/Scripts/Managers/ControlManager.cs:195)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:86)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:394)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:349)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:483)
+	
+Dev seed 42022 -> Monday, 20 September 2021 3:23 PM
+City seed 6466 -> Londus, Eurasia
+City seed 5825 -> VirtualCity, Eurasia
+ERROR Invalid player Node (Null)
+UnityEngine.Debug:LogError(Object)
+	TargetManager:ConfigureTutorialTargets(TutorialTargetConfig) (at Assets/Scripts/Managers/TargetManager.cs:835)
+	TargetManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/TargetManager.cs:159)
+	TargetManager:Initialise() (at Assets/Scripts/Managers/TargetManager.cs:98)
+	MissionManager:SubInitialiseAll() (at Assets/Scripts/Managers/MissionManager.cs:81)
+	MissionManager:Initialise() (at Assets/Scripts/Managers/MissionManager.cs:45)
+	CampaignManager:SubInitialiseAllLate() (at Assets/Scripts/Managers/CampaignManager.cs:149)
+	CampaignManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/CampaignManager.cs:78)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:960)
+	GameManager:InitialiseTutorial() (at Assets/Scripts/GameManager.cs:1073)
+	ControlManager:ProcessTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:628)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:95)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:394)
+	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:331)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 43 -> Monday, 20 September 2021 3:39 PM
+
+Dev seed 1906 -> Monday, 20 September 2021 3:40 PM
+City seed 30528 -> Londus, Eurasia
+City seed 24450 -> VirtualCity, Eurasia
+City seed 26578 -> Londus, Eurasia
+
+Dev seed 18555 -> Monday, 20 September 2021 3:49 PM
+City seed 55030 -> VirtualCity, Eurasia
+City seed 64967 -> Londus, Eurasia
+City seed 18748 -> VirtualCity, Eurasia
+
+Dev seed 19148 -> Monday, 20 September 2021 3:52 PM
+City seed 24887 -> VirtualCity, Eurasia
+City seed 15270 -> Londus, Eurasia
+City seed 45539 -> VirtualCity, Eurasia
+
+Dev seed 34567 -> Monday, 20 September 2021 3:55 PM
+City seed 12072 -> VirtualCity, Eurasia
+City seed 59029 -> Londus, Eurasia
+
+Dev seed 20092 -> Monday, 20 September 2021 3:56 PM
+City seed 203 -> VirtualCity, Eurasia
+City seed 4556 -> Londus, Eurasia
+
+Dev seed 31 -> Monday, 20 September 2021 3:58 PM
+City seed 41276 -> VirtualCity, Eurasia
+City seed 17880 -> Londus, Eurasia
+
+Dev seed 54617 -> Monday, 20 September 2021 4:06 PM
+City seed 47895 -> Londus, Eurasia

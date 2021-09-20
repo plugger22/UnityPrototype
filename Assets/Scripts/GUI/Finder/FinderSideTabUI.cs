@@ -92,7 +92,6 @@ public class FinderSideTabUI : MonoBehaviour
             tooltip.testTag = "FinderSideTabUI";
             tooltip.tooltipMain = string.Format("<size=120%>{0}</size>", GameManager.Formatt("District Finder", ColourType.salmonText));
             tooltip.tooltipDetails = "Click to Open";
-            tooltip.x_offset = 100;
         }
         else { Debug.LogError("Invalid tooltip component (Null) for FinderSideTabUI"); }
         //data

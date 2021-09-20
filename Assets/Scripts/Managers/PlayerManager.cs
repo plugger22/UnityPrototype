@@ -287,6 +287,7 @@ public class PlayerManager : MonoBehaviour
                 break;
         }
     }
+
     #endregion
 
     #region Initialise SubMethods...
@@ -466,6 +467,10 @@ public class PlayerManager : MonoBehaviour
     {
         //place Player in a random start location (Sprawl node) -> AFTER Level and Session Initialisation
         InitialisePlayerStartNode();
+        //empty out gear list
+        listOfGear.Clear();
+        //empty out secret list
+        listOfSecrets.Clear();
         //Comes at end AFTER all other initialisations
         Power = 0;
         //assign chosen secret (not at start of tutorial as player will choose a secret during tutorial)

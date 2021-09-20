@@ -626,7 +626,8 @@ public class ControlManager : MonoBehaviour
         }
         //set up tutorial
         GameManager.i.InitialiseTutorial();
-
+        //toggle off finder UI
+        GameManager.i.finderSideTabScript.ToggleFinder(false);
         //debug
         /*Debug.LogFormat("[Tst] ControlManager.cs -> ProcessTutorialOptions:  number of HQ Workers {0}", GameManager.i.dataScript.CheckHqWorkers());*/
     }

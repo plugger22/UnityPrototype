@@ -81,7 +81,8 @@ public class TargetManager : MonoBehaviour
     private string colourTarget;
     private string colourEnd;
 
-    #region Initialise
+    #region Initialise...
+
     /// <summary>
     /// NOTE: Initialise called by MissionManager.cs -> Initialise and higher up by CampaignManager.cs -> Initialise
     /// </summary>
@@ -104,7 +105,31 @@ public class TargetManager : MonoBehaviour
                 break;
         }
     }
+
+    /// <summary>
+    /// NOTE: specific for tutorials. Called directly by GameManager.cs -> sequence issues
+    /// </summary>
+    public void InitialiseLate(GameState state)
+    {
+        switch (GameManager.i.inputScript.GameState)
+        {
+            case GameState.TutorialOptions:
+                SubInitialiseLate();
+                break;
+            case GameState.NewInitialisation:
+            case GameState.FollowOnInitialisation:
+            case GameState.LoadAtStart:
+            case GameState.LoadGame:
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
+                break;
+        }
+    }
+
     #endregion
+
+
 
     #region Initialise SubMethods...
 
@@ -154,12 +179,18 @@ public class TargetManager : MonoBehaviour
         //reset all targets (caters for followOn levels)
         ResetAllTargets();
         InitialiseGenericTargetArray();
-        //tutorial targets if required
-        if (GameManager.i.inputScript.GameState == GameState.TutorialOptions)
-        { ConfigureTutorialTargets(GameManager.i.tutorialScript.set.targetConfig); }
         //set up listOfTargetFactors. Note -> Sequence matters and is the order that the factors will be displayed
         foreach (var factor in Enum.GetValues(typeof(TargetFactors)))
         { listOfFactors.Add((TargetFactors)factor); }
+    }
+    #endregion
+
+    #region SubInitialiseLate
+    private void SubInitialiseLate()
+    {
+        //tutorial targets if required
+        if (GameManager.i.inputScript.GameState == GameState.TutorialOptions)
+        { ConfigureTutorialTargets(GameManager.i.tutorialScript.set.targetConfig); }
     }
     #endregion
 
