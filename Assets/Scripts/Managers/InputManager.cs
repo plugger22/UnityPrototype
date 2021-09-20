@@ -861,6 +861,15 @@ public class InputManager : MonoBehaviour
                                                 EventManager.i.PostNotification(EventType.TabbedPageDown, this, null, string.Format("InputManager.cs -> ProcessKeyInput DayBehind (PageDown) \"{0}\"", Input.inputString.ToUpper()));
                                             }
                                             break;
+                                        #endregion
+
+                                        #region Finder...
+                                        case ModalInfoSubState.Finder:
+                                            if (Input.GetButtonDown("Cancel") == true)
+                                            {
+                                                EventManager.i.PostNotification(EventType.FinderClose, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
+                                            }
+                                            break;
                                             #endregion
                                     }
                                     break;
