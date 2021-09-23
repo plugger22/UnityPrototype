@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 222071900996561498}
   - component: {fileID: 114339533331025270}
   - component: {fileID: 114521892605180038}
+  - component: {fileID: 114848731449180240}
   m_Layer: 5
   m_Name: finderButton
   m_TagString: Untagged
@@ -227,6 +228,17 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &114848731449180240
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1916558502825188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1dd9b4572e21ba4a8936a932a9b86a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!222 &222071900996561498
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -257,7 +269,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 110, y: -20}
+  m_AnchoredPosition: {x: 110, y: -15}
   m_SizeDelta: {x: 220, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224915391212085264

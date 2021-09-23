@@ -1483,6 +1483,19 @@ namespace packageAPI
         public int target1;                         //target value of second data point in order for goal to be achieved
     }
 
+    /// <summary>
+    /// Data for findUI.cs buttons
+    /// </summary>
+    public class FindButtonData
+    {
+        public string descriptor;                   //button text
+        public ColourType colour;                   //text colour
+        public EventType eventType;                 //event that is triggered when button activated
+        public NodeUI nodeType;                     //type of nodes to display. Optional
+        public int data;                            //eg. nodeID. Optional
+
+    }
+
 
     //new classes above here
 }
