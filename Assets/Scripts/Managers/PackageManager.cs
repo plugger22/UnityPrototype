@@ -1484,9 +1484,9 @@ namespace packageAPI
     }
 
     /// <summary>
-    /// Data for findUI.cs buttons
+    /// Data for finderUI.cs buttons
     /// </summary>
-    public class FindButtonData
+    public class FinderButtonData
     {
         public string descriptor;                   //button text
         public ColourType colour;                   //text colour

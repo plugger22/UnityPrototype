@@ -1,6 +1,7 @@
 ﻿using gameAPI;
 using packageAPI;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -29,8 +30,8 @@ public class FinderUI : MonoBehaviour
     private int scrollMaxHighlightIndex = -1;                       //numOfScrollItemsCurrent - 1
 
     //collections
-    List<FindButtonData> listOfStartData = new List<FindButtonData>();          //start menu list
-    List<FindButtonData> listOfDistrictData = new List<FindButtonData>();       //district list
+    List<FinderButtonData> listOfStartData = new List<FinderButtonData>();          //start menu list
+    List<FinderButtonData> listOfNodeData = new List<FinderButtonData>();           //district list
 
 
     #region Static Instance...
@@ -115,6 +116,7 @@ public class FinderUI : MonoBehaviour
         finderObject.SetActive(true);
         finderCanvas.gameObject.SetActive(false);
         //Initialisations
+        maxNumOfScrollItems = listOfButtons.Count;
         InitialiseFinder();
     }
     #endregion
@@ -125,6 +127,8 @@ public class FinderUI : MonoBehaviour
         //register listener
         EventManager.i.AddListener(EventType.FinderOpen, OnEvent, "FinderUI.cs");
         EventManager.i.AddListener(EventType.FinderClose, OnEvent, "FinderUI.cs");
+        EventManager.i.AddListener(EventType.FinderMenu, OnEvent, "FinderUI.cs");
+        EventManager.i.AddListener(EventType.FinderDistricts, OnEvent, "FinderUI.cs");
     }
     #endregion
 
@@ -132,31 +136,61 @@ public class FinderUI : MonoBehaviour
 
     public void InitialiseFinder()
     {
-        //start list
-        listOfStartData.Add(new FindButtonData() { descriptor = "Districts", colour = ColourType.neutralText, eventType = EventType.FinderDistricts});
-        listOfStartData.Add(new FindButtonData()
-        { descriptor = string.Format("{0}   Corporate", GameManager.i.guiScript.corporateChar), colour = ColourType.cyberText, eventType = EventType.NodeDisplay, nodeType = NodeUI.NodeArc0});
-        listOfStartData.Add(new FindButtonData()
-        { descriptor = string.Format("{0}   Gated", GameManager.i.guiScript.gatedChar), colour = ColourType.cyberText, eventType = EventType.NodeDisplay, nodeType = NodeUI.NodeArc1});
-        listOfStartData.Add(new FindButtonData()
-        { descriptor = string.Format("{0}   Government", GameManager.i.guiScript.governmentChar), colour = ColourType.cyberText, eventType = EventType.NodeDisplay, nodeType = NodeUI.NodeArc2});
-        listOfStartData.Add(new FindButtonData()
-        { descriptor = string.Format("{0}   Industrial", GameManager.i.guiScript.industrialChar), colour = ColourType.cyberText, eventType = EventType.NodeDisplay, nodeType = NodeUI.NodeArc3});
-        listOfStartData.Add(new FindButtonData()
-        { descriptor = string.Format("{0}   Research", GameManager.i.guiScript.researchChar), colour = ColourType.cyberText, eventType = EventType.NodeDisplay, nodeType = NodeUI.NodeArc4});
-        listOfStartData.Add(new FindButtonData()
-        { descriptor = string.Format("{0}   Sprawl", GameManager.i.guiScript.sprawlChar), colour = ColourType.cyberText, eventType = EventType.NodeDisplay, nodeType = NodeUI.NodeArc5});
-        listOfStartData.Add(new FindButtonData()
-        { descriptor = string.Format("{0}   Utility", GameManager.i.guiScript.utilityChar), colour = ColourType.cyberText, eventType = EventType.NodeDisplay, nodeType = NodeUI.NodeArc6});
-        listOfStartData.Add(new FindButtonData() { descriptor = "Targets", colour = ColourType.cyberText, eventType = EventType.NodeDisplay, nodeType = NodeUI.ShowTargets});
-        listOfStartData.Add(new FindButtonData() { descriptor = "Spiders", colour = ColourType.cyberText, eventType = EventType.NodeDisplay, nodeType = NodeUI.ShowSpiders});
-        listOfStartData.Add(new FindButtonData() { descriptor = "Tracers", colour = ColourType.cyberText, eventType = EventType.NodeDisplay, nodeType = NodeUI.ShowTracers});
-        listOfStartData.Add(new FindButtonData() { descriptor = "Teams", colour = ColourType.cyberText, eventType = EventType.NodeDisplay, nodeType = NodeUI.ShowTeams});
-        listOfStartData.Add(new FindButtonData() { descriptor = "Contacts", colour = ColourType.cyberText, eventType = EventType.NodeDisplay, nodeType = NodeUI.ShowContacts});
-        listOfStartData.Add(new FindButtonData() { descriptor = "Crisis Districts", colour = ColourType.cyberText, eventType = EventType.NodeDisplay, nodeType = NodeUI.CrisisNodes});
-        listOfStartData.Add(new FindButtonData() { descriptor = "Cures", colour = ColourType.cyberText, eventType = EventType.NodeDisplay, nodeType = NodeUI.CureNodes});
-        listOfStartData.Add(new FindButtonData() { descriptor = "Spotted", colour = ColourType.cyberText, eventType = EventType.NodeDisplay, nodeType = NodeUI.PlayerKnown});
-        //district list
+        //
+        // - - - start list
+        //
+        listOfStartData.Add(new FinderButtonData() { descriptor = "DISTRICTS", colour = ColourType.salmonText, eventType = EventType.FinderDistricts });
+        listOfStartData.Add(new FinderButtonData()
+        { descriptor = string.Format("{0}   Corporate", GameManager.i.guiScript.corporateChar), colour = ColourType.normalText, eventType = EventType.NodeDisplay, nodeType = NodeUI.NodeArc0 });
+        listOfStartData.Add(new FinderButtonData()
+        { descriptor = string.Format("{0}   Gated", GameManager.i.guiScript.gatedChar), colour = ColourType.normalText, eventType = EventType.NodeDisplay, nodeType = NodeUI.NodeArc1 });
+        listOfStartData.Add(new FinderButtonData()
+        { descriptor = string.Format("{0}   Government", GameManager.i.guiScript.governmentChar), colour = ColourType.normalText, eventType = EventType.NodeDisplay, nodeType = NodeUI.NodeArc2 });
+        listOfStartData.Add(new FinderButtonData()
+        { descriptor = string.Format("{0}   Industrial", GameManager.i.guiScript.industrialChar), colour = ColourType.normalText, eventType = EventType.NodeDisplay, nodeType = NodeUI.NodeArc3 });
+        listOfStartData.Add(new FinderButtonData()
+        { descriptor = string.Format("{0}   Research", GameManager.i.guiScript.researchChar), colour = ColourType.normalText, eventType = EventType.NodeDisplay, nodeType = NodeUI.NodeArc4 });
+        listOfStartData.Add(new FinderButtonData()
+        { descriptor = string.Format("{0}   Sprawl", GameManager.i.guiScript.sprawlChar), colour = ColourType.normalText, eventType = EventType.NodeDisplay, nodeType = NodeUI.NodeArc5 });
+        listOfStartData.Add(new FinderButtonData()
+        { descriptor = string.Format("{0}   Utility", GameManager.i.guiScript.utilityChar), colour = ColourType.normalText, eventType = EventType.NodeDisplay, nodeType = NodeUI.NodeArc6 });
+        listOfStartData.Add(new FinderButtonData() { descriptor = "Targets", colour = ColourType.normalText, eventType = EventType.NodeDisplay, nodeType = NodeUI.ShowTargets });
+        listOfStartData.Add(new FinderButtonData() { descriptor = "Spiders", colour = ColourType.normalText, eventType = EventType.NodeDisplay, nodeType = NodeUI.ShowSpiders });
+        listOfStartData.Add(new FinderButtonData() { descriptor = "Tracers", colour = ColourType.normalText, eventType = EventType.NodeDisplay, nodeType = NodeUI.ShowTracers });
+        listOfStartData.Add(new FinderButtonData() { descriptor = "Teams", colour = ColourType.normalText, eventType = EventType.NodeDisplay, nodeType = NodeUI.ShowTeams });
+        listOfStartData.Add(new FinderButtonData() { descriptor = "Contacts", colour = ColourType.normalText, eventType = EventType.NodeDisplay, nodeType = NodeUI.ShowContacts });
+        listOfStartData.Add(new FinderButtonData() { descriptor = "Crisis Districts", colour = ColourType.normalText, eventType = EventType.NodeDisplay, nodeType = NodeUI.CrisisNodes });
+        listOfStartData.Add(new FinderButtonData() { descriptor = "Cures", colour = ColourType.normalText, eventType = EventType.NodeDisplay, nodeType = NodeUI.CureNodes });
+        listOfStartData.Add(new FinderButtonData() { descriptor = "Spotted", colour = ColourType.normalText, eventType = EventType.NodeDisplay, nodeType = NodeUI.PlayerKnown });
+        //
+        // - - - district list
+        //
+        List<Node> listOfNodes = new List<Node>(GameManager.i.dataScript.GetListOfAllNodes());
+        if (listOfNodes != null)
+        {
+            int numOfNodes = listOfNodes.Count;
+            if (numOfNodes > maxNumOfScrollItems)
+            { Debug.LogErrorFormat("Count mismatch: numOfNodes {0}, maxNumOfScrollItems {1}", numOfNodes, maxNumOfScrollItems); }
+            else
+            {
+                //back to start button
+                listOfNodeData.Add(new FinderButtonData() { descriptor = string.Format("<size=120%>{0}</size>", GameManager.i.guiScript.tutArrowLeft), colour = ColourType.moccasinText, eventType = EventType.FinderMenu });
+                //sort alphabetically
+                var sortedList = listOfNodes.OrderBy(o => o.nodeName);
+                listOfNodes = sortedList.ToList();
+                Node node;
+                //add to list
+                for (int i = 0; i < listOfNodes.Count; i++)
+                {
+                    node = listOfNodes[i];
+                    if (node != null)
+                    { listOfNodeData.Add(new FinderButtonData() { descriptor = node.nodeName, colour = ColourType.normalText, eventType = EventType.None }); }
+                    else { Debug.LogErrorFormat("Invalid node (Null) for listOfNodes[{0}]", i); }
+
+                }
+            }
+        }
+        else { Debug.LogError("Invalid listOfNodes (Null)"); }
     }
 
     #region OnEvent
@@ -176,6 +210,12 @@ public class FinderUI : MonoBehaviour
                 break;
             case EventType.FinderClose:
                 CloseFinder();
+                break;
+            case EventType.FinderMenu:
+                SetFinderButtons();
+                break;
+            case EventType.FinderDistricts:
+                SetFinderButtons(false);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -217,40 +257,69 @@ public class FinderUI : MonoBehaviour
     /// </summary>
     private void SetFinderButtons(bool isStart = true)
     {
-        int numOfButtons;
+        FinderButtonData finder;
         if (isStart == true)
         {
             //Start Menu
-            numOfButtons = Mathf.Min(listOfButtons.Count, listOfStartData.Count);
-            for (int i = 0; i < numOfButtons; i++)
+            numOfScrollItemsCurrent = listOfStartData.Count;
+            if (numOfScrollItemsCurrent > maxNumOfScrollItems)
+            { Debug.LogErrorFormat("Count mismatch: numOfScrollItemsCurrent {0}, maxNumOfScrollItems {1}", numOfScrollItemsCurrent, maxNumOfScrollItems); }
+            else
             {
-                listOfInteractions[i].SetButton(listOfStartData[i].eventType);
-                listOfTexts[i].text = string.Format("{0}{1}{2}", GameManager.i.colourScript.GetColour( listOfStartData[i].colour), listOfStartData[i].descriptor, colourEnd);
+                for (int i = 0; i < listOfButtons.Count; i++)
+                {
+                    if (i < numOfScrollItemsCurrent)
+                    {
+                        finder = listOfStartData[i];
+                        if (finder.nodeType != NodeUI.None)
+                        { listOfInteractions[i].SetButton(finder.eventType, (int)finder.nodeType); }
+                        else { listOfInteractions[i].SetButton(finder.eventType); }
+                        listOfTexts[i].text = string.Format("{0}{1}{2}", GameManager.i.colourScript.GetColour(finder.colour), finder.descriptor, colourEnd);
+                        listOfButtons[i].gameObject.SetActive(true);
+                    }
+                    else { listOfButtons[i].gameObject.SetActive(false); }
+                }
             }
         }
         else
         {
             //District menu
-
+            numOfScrollItemsCurrent = listOfNodeData.Count;
+            if (numOfScrollItemsCurrent > maxNumOfScrollItems)
+            { Debug.LogErrorFormat("Count mismatch: numOfScrollItemsCurrent {0}, maxNumOfScrollItems {1}", numOfScrollItemsCurrent, maxNumOfScrollItems); }
+            else
+            {
+                for (int i = 0; i < listOfButtons.Count; i++)
+                {
+                    if (i < numOfScrollItemsCurrent)
+                    {
+                        finder = listOfNodeData[i];
+                        listOfInteractions[i].SetButton(finder.eventType);
+                        listOfTexts[i].text = string.Format("{0}{1}{2}", GameManager.i.colourScript.GetColour(finder.colour), finder.descriptor, colourEnd);
+                        listOfButtons[i].gameObject.SetActive(true);
+                    }
+                    else { listOfButtons[i].gameObject.SetActive(false); }
+                }
+            }
         }
     }
-    #endregion
+#endregion
 
-    #region CloseFinder
-    /// <summary>
-    /// Close Finder UI
-    /// </summary>
-    private void CloseFinder()
-    {
-        //close finder UI
-        finderCanvas.gameObject.SetActive(false);
-        //toggle on finder UI
-        EventManager.i.PostNotification(EventType.FinderSideTabOpen, this, null, "FinderUI.cs -> CloseFinder");
-        //unblock
-        GameManager.i.guiScript.SetIsBlocked(false);
-        //set game state
-        GameManager.i.inputScript.ResetStates();
-        Debug.LogFormat("[UI] FinderUI.cs -> CloseFinder{0}", "\n");
-    }
+#region CloseFinder
+/// <summary>
+/// Close Finder UI
+/// </summary>
+private void CloseFinder()
+{
+    //close finder UI
+    finderCanvas.gameObject.SetActive(false);
+    //toggle on finder UI
+    EventManager.i.PostNotification(EventType.FinderSideTabOpen, this, null, "FinderUI.cs -> CloseFinder");
+    //unblock
+    GameManager.i.guiScript.SetIsBlocked(false);
+    //set game state
+    GameManager.i.inputScript.ResetStates();
+    Debug.LogFormat("[UI] FinderUI.cs -> CloseFinder{0}", "\n");
+}
     #endregion
 }
