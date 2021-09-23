@@ -869,6 +869,14 @@ public class InputManager : MonoBehaviour
                                             {
                                                 EventManager.i.PostNotification(EventType.FinderClose, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
                                             }
+                                            else if (Input.GetButtonDown("Vertical"))
+                                            {
+                                                y_axis = Input.GetAxisRaw("Vertical");
+                                                if (y_axis > 0)
+                                                { EventManager.i.PostNotification(EventType.FinderArrowUp, this, null, "InputManager.cs -> ProcessKeyInput Vertical Up"); }
+                                                else if (y_axis < 0)
+                                                { EventManager.i.PostNotification(EventType.FinderArrowDown, this, null, "InputManager.cs -> ProcessKeyInput Vertical Down"); }
+                                            }
                                             break;
                                             #endregion
                                     }
@@ -1085,6 +1093,12 @@ public class InputManager : MonoBehaviour
                                     { EventManager.i.PostNotification(EventType.TabbedScrollUp, this, null, "InputManager.cs -> ProcessMouseWheelInput Up"); }
                                     else if (change < 0)
                                     { EventManager.i.PostNotification(EventType.TabbedScrollDown, this, null, "InputManager.cs -> ProcessMouseWheelInput Down"); }
+                                    break;
+                                case ModalInfoSubState.Finder:
+                                    if (change > 0)
+                                    { EventManager.i.PostNotification(EventType.FinderScrollUp, this, null, "InputManager.cs -> ProcessMouseWheelInput Up"); }
+                                    else if (change < 0)
+                                    { EventManager.i.PostNotification(EventType.FinderScrollDown, this, null, "InputManager.cs -> ProcessMouseWheelInput Down"); }
                                     break;
                                 case ModalInfoSubState.MasterHelp:
                                     if (change > 0)

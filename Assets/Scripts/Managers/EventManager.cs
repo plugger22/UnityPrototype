@@ -296,6 +296,10 @@ public enum EventType
     FinderSideTabClose,
     FinderDistricts,
     FinderMenu,
+    FinderScrollUp,
+    FinderScrollDown,
+    FinderArrowUp,
+    FinderArrowDown,
     //AI
     Capture,
     /*ReleasePlayer,*/

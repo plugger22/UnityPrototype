@@ -15,6 +15,8 @@ public class FinderUI : MonoBehaviour
     public Canvas finderCanvas;
     public GameObject finderObject;
     public Image finderImage;
+    public ScrollRect finderScrollRect;
+    public Scrollbar finderScrollBar;
     public List<Button> listOfButtons;                              //index linked
     public List<ButtonInteraction> listOfInteractions;              //index linked
     public List<TextMeshProUGUI> listOfTexts;                       //index linked
@@ -97,6 +99,8 @@ public class FinderUI : MonoBehaviour
         Debug.Assert(finderCanvas != null, "Invalid finderCanvas (Null)");
         Debug.Assert(finderObject != null, "Invalid finderCanvas (Null)");
         Debug.Assert(finderImage != null, "Invalid finderImage (Null)");
+        Debug.Assert(finderScrollRect != null, "Invalid scrollRect (Null)");
+        Debug.Assert(finderScrollBar != null, "Invalid scrollBar (Null)");
         Debug.Assert(listOfButtons.Count > 0, "Invalid listOfButtons (Empty)");
         Debug.Assert(listOfInteractions.Count > 0, "Invalid listOfInteractions (Empty)");
         Debug.Assert(listOfTexts.Count > 0, "Invalid listOfTexts (Empty)");
@@ -129,6 +133,10 @@ public class FinderUI : MonoBehaviour
         EventManager.i.AddListener(EventType.FinderClose, OnEvent, "FinderUI.cs");
         EventManager.i.AddListener(EventType.FinderMenu, OnEvent, "FinderUI.cs");
         EventManager.i.AddListener(EventType.FinderDistricts, OnEvent, "FinderUI.cs");
+        EventManager.i.AddListener(EventType.FinderScrollUp, OnEvent, "FinderUI.cs");
+        EventManager.i.AddListener(EventType.FinderScrollDown, OnEvent, "FinderUI.cs");
+        EventManager.i.AddListener(EventType.FinderArrowUp, OnEvent, "FinderUI.cs");
+        EventManager.i.AddListener(EventType.FinderArrowDown, OnEvent, "FinderUI.cs");
     }
     #endregion
 
@@ -139,7 +147,7 @@ public class FinderUI : MonoBehaviour
         //
         // - - - start list
         //
-        listOfStartData.Add(new FinderButtonData() { descriptor = "DISTRICTS", colour = ColourType.salmonText, eventType = EventType.FinderDistricts });
+        listOfStartData.Add(new FinderButtonData() { descriptor = "<b>DISTRICTS</b>", colour = ColourType.normalText, eventType = EventType.FinderDistricts });
         listOfStartData.Add(new FinderButtonData()
         { descriptor = string.Format("{0}   Corporate", GameManager.i.guiScript.corporateChar), colour = ColourType.normalText, eventType = EventType.NodeDisplay, nodeType = NodeUI.NodeArc0 });
         listOfStartData.Add(new FinderButtonData()
@@ -217,6 +225,18 @@ public class FinderUI : MonoBehaviour
             case EventType.FinderDistricts:
                 SetFinderButtons(false);
                 break;
+            case EventType.FinderScrollUp:
+                ExecuteScrollUp();
+                break;
+            case EventType.FinderScrollDown:
+                ExecuteScrollDown();
+                break;
+            case EventType.FinderArrowUp:
+                ExecuteArrowUp();
+                break;
+            case EventType.FinderArrowDown:
+                ExecuteArrowDown();
+                break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
@@ -233,8 +253,9 @@ public class FinderUI : MonoBehaviour
     {
         //toggle off finder UI
         EventManager.i.PostNotification(EventType.FinderSideTabClose, this, null, "FinderUI.cs -> SetFinder");
-        //initialise Buttons
+        //initialise
         SetFinderButtons();
+        SetFinderScroller();
 
         //open finder UI
         finderCanvas.gameObject.SetActive(true);
@@ -257,6 +278,7 @@ public class FinderUI : MonoBehaviour
     /// </summary>
     private void SetFinderButtons(bool isStart = true)
     {
+        scrollHighlightIndex = 0;
         FinderButtonData finder;
         if (isStart == true)
         {
@@ -266,6 +288,7 @@ public class FinderUI : MonoBehaviour
             { Debug.LogErrorFormat("Count mismatch: numOfScrollItemsCurrent {0}, maxNumOfScrollItems {1}", numOfScrollItemsCurrent, maxNumOfScrollItems); }
             else
             {
+                scrollMaxHighlightIndex = Mathf.Min(numOfScrollItemsVisible, numOfScrollItemsCurrent);
                 for (int i = 0; i < listOfButtons.Count; i++)
                 {
                     if (i < numOfScrollItemsCurrent)
@@ -289,6 +312,7 @@ public class FinderUI : MonoBehaviour
             { Debug.LogErrorFormat("Count mismatch: numOfScrollItemsCurrent {0}, maxNumOfScrollItems {1}", numOfScrollItemsCurrent, maxNumOfScrollItems); }
             else
             {
+                scrollMaxHighlightIndex = Mathf.Min(numOfScrollItemsVisible, numOfScrollItemsCurrent);
                 for (int i = 0; i < listOfButtons.Count; i++)
                 {
                     if (i < numOfScrollItemsCurrent)
@@ -303,23 +327,92 @@ public class FinderUI : MonoBehaviour
             }
         }
     }
-#endregion
-
-#region CloseFinder
-/// <summary>
-/// Close Finder UI
-/// </summary>
-private void CloseFinder()
-{
-    //close finder UI
-    finderCanvas.gameObject.SetActive(false);
-    //toggle on finder UI
-    EventManager.i.PostNotification(EventType.FinderSideTabOpen, this, null, "FinderUI.cs -> CloseFinder");
-    //unblock
-    GameManager.i.guiScript.SetIsBlocked(false);
-    //set game state
-    GameManager.i.inputScript.ResetStates();
-    Debug.LogFormat("[UI] FinderUI.cs -> CloseFinder{0}", "\n");
-}
     #endregion
+
+    #region SetFinderScroller
+    /// <summary>
+    /// turns scroll bar on/off and sets to default position if on
+    /// </summary>
+    private void SetFinderScroller()
+    {
+        //scrollRect
+        if (maxNumOfScrollItems > numOfScrollItemsCurrent)
+        {
+            //toggle on
+            finderScrollBar.gameObject.SetActive(true);
+            finderScrollRect.verticalScrollbar = finderScrollBar;
+            //scroll view at default position
+            finderScrollRect.verticalNormalizedPosition = 1.0f;
+        }
+        else
+        {
+            //toggle off
+            finderScrollRect.verticalScrollbar = null;
+            finderScrollBar.gameObject.SetActive(false);
+        }
+    }
+    #endregion
+
+    #region CloseFinder
+    /// <summary>
+    /// Close Finder UI
+    /// </summary>
+    private void CloseFinder()
+    {
+        //close finder UI
+        finderCanvas.gameObject.SetActive(false);
+        //toggle on finder UI
+        EventManager.i.PostNotification(EventType.FinderSideTabOpen, this, null, "FinderUI.cs -> CloseFinder");
+        //unblock
+        GameManager.i.guiScript.SetIsBlocked(false);
+        //set game state
+        GameManager.i.inputScript.ResetStates();
+        Debug.LogFormat("[UI] FinderUI.cs -> CloseFinder{0}", "\n");
+    }
+    #endregion
+
+
+    #region ExecuteScrollUp
+    /// <summary>
+    /// Scroll Mouse UP
+    /// </summary>
+    private void ExecuteScrollUp()
+    {
+        if (scrollHighlightIndex > 0)
+        {
+            scrollHighlightIndex--;
+            if (finderScrollRect.verticalNormalizedPosition != 1.0f)
+            {
+                float scrollPos = 1.0f - (float)scrollHighlightIndex / scrollMaxHighlightIndex;
+                finderScrollRect.verticalNormalizedPosition = scrollPos;
+            }
+        }
+    }
+    #endregion
+
+    #region ExecuteScrollDown
+    /// <summary>
+    /// scroll mouse DOWN
+    /// </summary>
+    private void ExecuteScrollDown()
+    {
+        if (scrollHighlightIndex < scrollMaxHighlightIndex)
+        {
+            scrollHighlightIndex++;
+            float scrollPos = 1.0f - (float)scrollHighlightIndex / scrollMaxHighlightIndex;
+            finderScrollRect.verticalNormalizedPosition = scrollPos;
+        }
+    }
+    #endregion
+
+    #region ExecuteArrowUp
+
+    private void ExecuteArrowUp()
+    {
+
+    }
+    #endregion
+
+
+    //new methods above here
 }
