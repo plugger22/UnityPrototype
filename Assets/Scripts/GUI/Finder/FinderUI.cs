@@ -14,6 +14,13 @@ public class FinderUI : MonoBehaviour
 
     private bool isActive;
 
+    //Scrolling
+    private int maxNumOfScrollItems;                                //max number of items in scrollable list
+    private int numOfScrollItemsVisible = 21;                       //max number of items visible at any one time
+    private int numOfScrollItemsCurrent;                            //number of active items
+    private int scrollHighlightIndex = -1;                          //current highlight index (doesn't matter if shown as highlighted or not)
+    private int scrollMaxHighlightIndex = -1;                       //numOfScrollItemsCurrent - 1
+
     #region Static Instance...
 
     private static FinderUI finderUI;

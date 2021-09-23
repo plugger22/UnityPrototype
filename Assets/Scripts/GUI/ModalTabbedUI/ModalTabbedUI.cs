@@ -258,9 +258,6 @@ public class ModalTabbedUI : MonoBehaviour
     //Input data
     private TabbedUIData inputData;
 
-    //static instance
-    private static ModalTabbedUI modalTabbedUI;
-
     //debug
     /*private bool isAddDebugRecords;                                 //true if a set of debug player history event records have been addeds*/
 
@@ -398,8 +395,11 @@ public class ModalTabbedUI : MonoBehaviour
     #endregion
 
 
+    #region Static Instance...
 
-    #region Instance
+    //static instance
+    private static ModalTabbedUI modalTabbedUI;
+
     /// <summary>
     /// Static instance so the ModalTabbedUI can be accessed from any script
     /// </summary>
@@ -443,8 +443,7 @@ public class ModalTabbedUI : MonoBehaviour
     }
     #endregion
 
-
-    #region Initialise SubMethods
+    #region Initialise SubMethods...
 
     #region SubInitialiseAsserts
     private void SubInitialiseAsserts()
@@ -1218,7 +1217,6 @@ public class ModalTabbedUI : MonoBehaviour
         }
     }
     #endregion
-
 
     #region Initialisation...
 
