@@ -17,6 +17,8 @@ public class FinderUI : MonoBehaviour
     public Image finderImage;
     public ScrollRect finderScrollRect;
     public Scrollbar finderScrollBar;
+    public TextMeshProUGUI finderTabText;
+    public GenericTooltipUI tabTooltip;
     public List<Button> listOfButtons;                              //index linked
     public List<ButtonInteraction> listOfInteractions;              //index linked
     public List<TextMeshProUGUI> listOfTexts;                       //index linked
@@ -101,6 +103,8 @@ public class FinderUI : MonoBehaviour
         Debug.Assert(finderImage != null, "Invalid finderImage (Null)");
         Debug.Assert(finderScrollRect != null, "Invalid scrollRect (Null)");
         Debug.Assert(finderScrollBar != null, "Invalid scrollBar (Null)");
+        Debug.Assert(finderTabText != null, "Invalid finderTabText (Null)");
+        Debug.Assert(tabTooltip != null, "Invalid tabTooltip (Null)");
         Debug.Assert(listOfButtons.Count > 0, "Invalid listOfButtons (Empty)");
         Debug.Assert(listOfInteractions.Count > 0, "Invalid listOfInteractions (Empty)");
         Debug.Assert(listOfTexts.Count > 0, "Invalid listOfTexts (Empty)");
@@ -121,7 +125,10 @@ public class FinderUI : MonoBehaviour
         finderCanvas.gameObject.SetActive(false);
         //Initialisations
         maxNumOfScrollItems = listOfButtons.Count;
-        InitialiseFinder();
+        InitialiseFinderData();
+        InitialiseFinderTooltip();
+        //Side Tab (close)
+        finderTabText.text = string.Format("{0}", GameManager.i.guiScript.tutArrowRight);
     }
     #endregion
 
@@ -142,7 +149,11 @@ public class FinderUI : MonoBehaviour
 
     #endregion
 
-    public void InitialiseFinder()
+    #region InitialiseFinderData
+    /// <summary>
+    /// Hardcoded (apart from districts) data for finder buttons
+    /// </summary>
+    public void InitialiseFinderData()
     {
         //
         // - - - start list
@@ -200,6 +211,26 @@ public class FinderUI : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfNodes (Null)"); }
     }
+    #endregion
+
+    #region InitialiseFinderTooltip
+    /// <summary>
+    /// Sets up tooltips for finderUI
+    /// </summary>
+    private void InitialiseFinderTooltip()
+    {
+        //tab tooltip
+        if (tabTooltip != null)
+        {
+            tabTooltip.isIgnoreClick = true;
+            tabTooltip.x_offset = -300;
+            tabTooltip.testTag = "FinderTabUI";
+            tabTooltip.tooltipMain = string.Format("<size=120%>{0}</size>", GameManager.Formatt("CLOSE FINDER", ColourType.salmonText));
+            tabTooltip.tooltipDetails = "Click to Close";
+        }
+        else { Debug.LogError("Invalid tooltip component (Null) for FinderUI"); }
+    }
+    #endregion
 
     #region OnEvent
     /// <summary>
@@ -232,10 +263,10 @@ public class FinderUI : MonoBehaviour
                 ExecuteScrollDown();
                 break;
             case EventType.FinderArrowUp:
-                ExecuteArrowUp();
+                ExecuteScrollUp();
                 break;
             case EventType.FinderArrowDown:
-                ExecuteArrowDown();
+                ExecuteScrollDown();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -256,12 +287,13 @@ public class FinderUI : MonoBehaviour
         //initialise
         SetFinderButtons();
         SetFinderScroller();
-
+        //active
+        isActive = true;
         //open finder UI
         finderCanvas.gameObject.SetActive(true);
         //set modal status
         GameManager.i.guiScript.SetIsBlocked(true);
-        //turn off any alert message
+        //turn off any alert message and reset nodes
         GameManager.i.alertScript.CloseAlertUI(true);
         //set game state
         ModalStateData package = new ModalStateData();
@@ -361,8 +393,12 @@ public class FinderUI : MonoBehaviour
     {
         //close finder UI
         finderCanvas.gameObject.SetActive(false);
+        //active
+        isActive = false;
         //toggle on finder UI
         EventManager.i.PostNotification(EventType.FinderSideTabOpen, this, null, "FinderUI.cs -> CloseFinder");
+        //turn off any alert message and reset nodes
+        GameManager.i.alertScript.CloseAlertUI(true);
         //unblock
         GameManager.i.guiScript.SetIsBlocked(false);
         //set game state
@@ -402,14 +438,6 @@ public class FinderUI : MonoBehaviour
             float scrollPos = 1.0f - (float)scrollHighlightIndex / scrollMaxHighlightIndex;
             finderScrollRect.verticalNormalizedPosition = scrollPos;
         }
-    }
-    #endregion
-
-    #region ExecuteArrowUp
-
-    private void ExecuteArrowUp()
-    {
-
     }
     #endregion
 

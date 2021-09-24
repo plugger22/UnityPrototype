@@ -1037,3 +1037,45 @@ City seed 18065 -> Londus, Eurasia
 
 Dev seed 42349 -> Thursday, 23 September 2021 4:43 PM
 City seed 38327 -> Londus, Eurasia
+
+Dev seed 57715 -> Friday, 24 September 2021 10:09 AM
+City seed 59054 -> Londus, Eurasia
+
+Dev seed 7486 -> Friday, 24 September 2021 10:20 AM
+City seed 45549 -> Londus, Eurasia
+
+Dev seed 21270 -> Friday, 24 September 2021 10:26 AM
+City seed 45635 -> Londus, Eurasia
+
+Dev seed 1427 -> Friday, 24 September 2021 10:28 AM
+City seed 13332 -> Londus, Eurasia
+
+Dev seed 3778 -> Friday, 24 September 2021 10:37 AM
+City seed 17778 -> Londus, Eurasia
+
+Dev seed 56751 -> Friday, 24 September 2021 10:45 AM
+City seed 29872 -> Londus, Eurasia
+ERROR Invalid tooltip component (Null) for FinderUI
+UnityEngine.Debug:LogError(Object)
+	FinderUI:InitialiseFinderTooltip() (at Assets/Scripts/GUI/Finder/FinderUI.cs:230)
+	FinderUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/Finder/FinderUI.cs:129)
+	FinderUI:Initialise(GameState) (at Assets/Scripts/GUI/Finder/FinderUI.cs:74)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:1023)
+	ControlManager:ProcessCloseNewGameOptions() (at Assets/Scripts/Managers/ControlManager.cs:195)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:86)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:402)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:349)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:483)
+	
+Dev seed 11491 -> Friday, 24 September 2021 10:46 AM
+City seed 42448 -> Londus, Eurasia
+
+Dev seed 6639 -> Friday, 24 September 2021 10:47 AM
+City seed 64612 -> Londus, Eurasia
+
+Dev seed 12298 -> Friday, 24 September 2021 10:47 AM
+City seed 13953 -> Londus, Eurasia
+
+Dev seed 24460 -> Friday, 24 September 2021 10:49 AM
+City seed 49332 -> Londus, Eurasia

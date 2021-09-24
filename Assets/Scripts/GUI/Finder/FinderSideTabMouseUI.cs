@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+/// <summary>
+/// Side tab RHS that opens finder
+/// </summary>
 public class FinderSideTabMouseUI : MonoBehaviour, IPointerClickHandler
 {
 
@@ -12,7 +15,7 @@ public class FinderSideTabMouseUI : MonoBehaviour, IPointerClickHandler
 
 
     /// <summary>
-    /// Mouse click -> Right: Actor Action Menu
+    /// Mouse click -> Right: Left / Right open finderUI
     /// </summary>
     public void OnPointerClick(PointerEventData eventData)
     {
