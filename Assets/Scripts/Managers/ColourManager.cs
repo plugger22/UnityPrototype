@@ -11,7 +11,7 @@ public enum ColourScheme { Normal, ColourBlind, Count }
 public enum ColourType
 {
     dataGood, dataNeutral, dataBad, dataTerrible,
-    normalText, goodText, neutralText, badText, blueText, salmonText, moccasinText, greyText, whiteText, blackText, cyberText,
+    normalText, goodText, neutralText, badText, blueText, salmonText, moccasinText, greyText, whiteText, blackText, cyberText, mintText,
     Count
 }
 
@@ -40,6 +40,7 @@ public class ColourManager : MonoBehaviour
     public Colour[] whiteText;                      //default White text if no colour provided
     public Colour[] blackText;
     public Colour[] cyberText;                      //cyberpunk text colour
+    public Colour[] mintText;                       //cyberpunk minty colour (neon aqua green)
 
 
     private Colour[,] arrayOfColours;               //repositry of colourTypes
@@ -67,7 +68,8 @@ public class ColourManager : MonoBehaviour
             greyText,
             whiteText,
             blackText,
-            cyberText
+            cyberText,
+            mintText
         };
 
         //loop thorugh list and auto populate array

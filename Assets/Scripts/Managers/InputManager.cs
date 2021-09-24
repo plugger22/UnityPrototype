@@ -873,9 +873,15 @@ public class InputManager : MonoBehaviour
                                             {
                                                 y_axis = Input.GetAxisRaw("Vertical");
                                                 if (y_axis > 0)
-                                                { EventManager.i.PostNotification(EventType.FinderArrowUp, this, null, "InputManager.cs -> ProcessKeyInput Vertical Up"); }
+                                                { EventManager.i.PostNotification(EventType.FinderScrollUp, this, null, "InputManager.cs -> ProcessKeyInput Vertical Up"); }
                                                 else if (y_axis < 0)
-                                                { EventManager.i.PostNotification(EventType.FinderArrowDown, this, null, "InputManager.cs -> ProcessKeyInput Vertical Down"); }
+                                                { EventManager.i.PostNotification(EventType.FinderScrollDown, this, null, "InputManager.cs -> ProcessKeyInput Vertical Down"); }
+                                            }
+                                            else if (Input.GetButtonDown("Multipurpose") == true)
+                                            {
+                                                //Space bar to select current button
+                                                EventManager.i.PostNotification(EventType.FinderExecuteButton, this, null, "InputManager.cs -> ProcessKeyInput Multipurpose");
+                                                Input.ResetInputAxes();
                                             }
                                             break;
                                             #endregion

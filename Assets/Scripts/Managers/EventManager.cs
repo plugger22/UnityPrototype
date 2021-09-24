@@ -62,6 +62,7 @@ public enum EventType
     FlashMultipleConnectionsStop,
     //CloseTeamPicker
     ShowTargetNodes,
+    ShowNode,
     NodeDisplay,
     ActivityDisplay,
     //Top Widget
@@ -298,8 +299,7 @@ public enum EventType
     FinderMenu,
     FinderScrollUp,
     FinderScrollDown,
-    FinderArrowUp,
-    FinderArrowDown,
+    FinderExecuteButton,
     //AI
     Capture,
     /*ReleasePlayer,*/

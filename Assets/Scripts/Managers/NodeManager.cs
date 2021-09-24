@@ -263,6 +263,7 @@ public class NodeManager : MonoBehaviour
         EventManager.i.AddListener(EventType.StartTurnLate, OnEvent, "NodeManager");
         EventManager.i.AddListener(EventType.FlashNodesStart, OnEvent, "NodeManager");
         EventManager.i.AddListener(EventType.FlashNodesStop, OnEvent, "NodeManager");
+        EventManager.i.AddListener(EventType.ShowNode, OnEvent, "NodeManager");
     }
     #endregion
 
@@ -395,11 +396,19 @@ public class NodeManager : MonoBehaviour
                             FlashHighlightNodes(nodeUI);
                         }
                         break;
-
                     default:
                         /*Debug.LogError(string.Format("Invalid NodeUI param \"{0}\"{1}", Param.ToString(), "\n"));*/
                         Debug.LogError(string.Format("Invalid NodeUI param \"{0}\"{1}", nodeUI, "\n"));
                         break;
+                }
+                break;
+            case EventType.ShowNode:
+                if (NodeShowFlag > 0)
+                { ResetAll(); }
+                else
+                {
+                    //flash a particular node (FinderUI.cs)
+                    FlashNode((int)Param);
                 }
                 break;
             case EventType.FlashNodesStart:
@@ -483,15 +492,6 @@ public class NodeManager : MonoBehaviour
     }
     #endregion
 
-    #region OnDisable
-    /// <summary>
-    /// deregister events
-    /// </summary>
-    public void OnDisable()
-    {
-        EventManager.i.RemoveEvent(EventType.ShowTargetNodes);
-    }
-    #endregion
 
     #region ResetCounters
     /// <summary>
@@ -3138,6 +3138,24 @@ public class NodeManager : MonoBehaviour
         List<Node> listOfNodes = ShowNodes(nodeUI);
         if (listOfNodes.Count > 0)
         { myFlashCoroutine = StartCoroutine("FlashingNodes", listOfNodes); }
+    }
+
+    /// <summary>
+    /// For showing a single node (FinderUI.cs)
+    /// </summary>
+    /// <param name="nodeID"></param>
+    public void FlashNode(int nodeID)
+    {
+        List<Node> listOfNodes = new List<Node>();
+        Node node = GameManager.i.dataScript.GetNode(nodeID);
+        if (node != null)
+        {
+            listOfNodes.Add(node);
+            ResetNodes();
+            NodeShowFlag = 1;
+            GameManager.i.alertScript.SetAlertUI(node.nodeName);
+            myFlashCoroutine = StartCoroutine("FlashingNodes", listOfNodes);
+        }
     }
     #endregion
 

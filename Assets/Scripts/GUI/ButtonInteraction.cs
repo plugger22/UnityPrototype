@@ -14,7 +14,7 @@ public class ButtonInteraction : MonoBehaviour, IPointerClickHandler
 {
 
     private EventType eventType = EventType.None;               //The  event that is triggered when the button is clicked (get component in code and call SetButton)
-    private int returnData = -1;                                      //optional int data parameter that you can supply (SetButton) which is passed back as a parameter when button clicked
+    private int data = -1;                                      //optional int data parameter that you can supply (SetButton) which is passed back as a parameter when button clicked
 
 
     /// <summary>
@@ -24,11 +24,14 @@ public class ButtonInteraction : MonoBehaviour, IPointerClickHandler
     public void SetButton(EventType type, int returnData = -1)
     {
         eventType = type;
-        this.returnData = returnData;
+        data = returnData;
     }
 
     public EventType GetEvent()
     { return eventType; }
+
+    public int GetData()
+    { return data; }
 
     /// <summary>
     /// Generate event/s when button clicked
@@ -39,7 +42,7 @@ public class ButtonInteraction : MonoBehaviour, IPointerClickHandler
         //event 1
         if (eventType != EventType.None)
         {
-            EventManager.i.PostNotification(eventType, this, returnData, "ButtonInteraction.cs -> OnPointerClick");
+            EventManager.i.PostNotification(eventType, this, data, "ButtonInteraction.cs -> OnPointerClick");
         }
     }
 }

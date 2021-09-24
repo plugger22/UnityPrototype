@@ -150,8 +150,7 @@ public class FinderUI : MonoBehaviour
         EventManager.i.AddListener(EventType.FinderDistricts, OnEvent, "FinderUI.cs");
         EventManager.i.AddListener(EventType.FinderScrollUp, OnEvent, "FinderUI.cs");
         EventManager.i.AddListener(EventType.FinderScrollDown, OnEvent, "FinderUI.cs");
-        EventManager.i.AddListener(EventType.FinderArrowUp, OnEvent, "FinderUI.cs");
-        EventManager.i.AddListener(EventType.FinderArrowDown, OnEvent, "FinderUI.cs");
+        EventManager.i.AddListener(EventType.FinderExecuteButton, OnEvent, "FinderUI.cs");
     }
     #endregion
 
@@ -211,7 +210,7 @@ public class FinderUI : MonoBehaviour
                 {
                     node = listOfNodes[i];
                     if (node != null)
-                    { listOfNodeData.Add(new FinderButtonData() { descriptor = node.nodeName, eventType = EventType.None }); }
+                    { listOfNodeData.Add(new FinderButtonData() { descriptor = node.nodeName, eventType = EventType.ShowNode, data = node.nodeID }); }
                     else { Debug.LogErrorFormat("Invalid node (Null) for listOfNodes[{0}]", i); }
 
                 }
@@ -270,11 +269,8 @@ public class FinderUI : MonoBehaviour
             case EventType.FinderScrollDown:
                 ExecuteScrollDown();
                 break;
-            case EventType.FinderArrowUp:
-                ExecuteScrollUp();
-                break;
-            case EventType.FinderArrowDown:
-                ExecuteScrollDown();
+            case EventType.FinderExecuteButton:
+                ExecuteButton();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -365,7 +361,7 @@ public class FinderUI : MonoBehaviour
                     if (i < numOfScrollItemsCurrent)
                     {
                         finder = listOfNodeData[i];
-                        listOfInteractions[i].SetButton(finder.eventType);
+                        listOfInteractions[i].SetButton(finder.eventType, finder.data);
                         listOfTexts[i].text = finder.descriptor;
                         listOfTexts[i].color = colourDefault;
                         listOfButtons[i].gameObject.SetActive(true);
@@ -462,6 +458,16 @@ public class FinderUI : MonoBehaviour
         }
         SetCurrentButton();
 
+    }
+    #endregion
+
+    #region ExecuteButton
+    /// <summary>
+    /// current button activated via 'Enter'
+    /// </summary>
+    private void ExecuteButton()
+    {
+        EventManager.i.PostNotification(listOfInteractions[currentIndex].GetEvent(), this, listOfInteractions[currentIndex].GetData(), "FinderUI.cs -> ExecuteButton");
     }
     #endregion
 
