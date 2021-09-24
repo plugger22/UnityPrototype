@@ -1489,7 +1489,6 @@ namespace packageAPI
     public class FinderButtonData
     {
         public string descriptor;                   //button text
-        public ColourType colour;                   //text colour
         public EventType eventType;                 //event that is triggered when button activated
         public NodeUI nodeType;                     //type of nodes to display. Optional
         public int data;                            //eg. nodeID. Optional

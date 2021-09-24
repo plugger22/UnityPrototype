@@ -19,12 +19,15 @@ public class FinderUI : MonoBehaviour
     public Scrollbar finderScrollBar;
     public TextMeshProUGUI finderTabText;
     public GenericTooltipUI tabTooltip;
+
     public List<Button> listOfButtons;                              //index linked
     public List<ButtonInteraction> listOfInteractions;              //index linked
     public List<TextMeshProUGUI> listOfTexts;                       //index linked
 
     private bool isActive;
     private string colourEnd;
+    private Color colourDefault;                                     //used for SetCurrentButton
+    private Color colourHighlight;
 
     //Scrolling
     private int maxNumOfScrollItems;                                //max number of items in scrollable list
@@ -32,6 +35,8 @@ public class FinderUI : MonoBehaviour
     private int numOfScrollItemsCurrent;                            //number of active items
     private int scrollHighlightIndex = -1;                          //current highlight index (doesn't matter if shown as highlighted or not)
     private int scrollMaxHighlightIndex = -1;                       //numOfScrollItemsCurrent - 1
+    private int currentIndex;                                       //used to highlight currently selected button
+    private int previousIndex;                                      //previously selected button
 
     //collections
     List<FinderButtonData> listOfStartData = new List<FinderButtonData>();          //start menu list
@@ -123,6 +128,9 @@ public class FinderUI : MonoBehaviour
         finderImage.gameObject.SetActive(true);
         finderObject.SetActive(true);
         finderCanvas.gameObject.SetActive(false);
+        //colours
+        colourDefault = GameManager.i.uiScript.FinderDefault;
+        colourHighlight = GameManager.i.uiScript.FinderHighlight;
         //Initialisations
         maxNumOfScrollItems = listOfButtons.Count;
         InitialiseFinderData();
@@ -158,29 +166,29 @@ public class FinderUI : MonoBehaviour
         //
         // - - - start list
         //
-        listOfStartData.Add(new FinderButtonData() { descriptor = "<b>DISTRICTS</b>", colour = ColourType.normalText, eventType = EventType.FinderDistricts });
+        listOfStartData.Add(new FinderButtonData() { descriptor = "<b>DISTRICTS</b>", eventType = EventType.FinderDistricts });
         listOfStartData.Add(new FinderButtonData()
-        { descriptor = string.Format("{0}   Corporate", GameManager.i.guiScript.corporateChar), colour = ColourType.normalText, eventType = EventType.NodeDisplay, nodeType = NodeUI.NodeArc0 });
+        { descriptor = string.Format("{0}   Corporate", GameManager.i.guiScript.corporateChar), eventType = EventType.NodeDisplay, nodeType = NodeUI.NodeArc0 });
         listOfStartData.Add(new FinderButtonData()
-        { descriptor = string.Format("{0}   Gated", GameManager.i.guiScript.gatedChar), colour = ColourType.normalText, eventType = EventType.NodeDisplay, nodeType = NodeUI.NodeArc1 });
+        { descriptor = string.Format("{0}   Gated", GameManager.i.guiScript.gatedChar), eventType = EventType.NodeDisplay, nodeType = NodeUI.NodeArc1 });
         listOfStartData.Add(new FinderButtonData()
-        { descriptor = string.Format("{0}   Government", GameManager.i.guiScript.governmentChar), colour = ColourType.normalText, eventType = EventType.NodeDisplay, nodeType = NodeUI.NodeArc2 });
+        { descriptor = string.Format("{0}   Government", GameManager.i.guiScript.governmentChar), eventType = EventType.NodeDisplay, nodeType = NodeUI.NodeArc2 });
         listOfStartData.Add(new FinderButtonData()
-        { descriptor = string.Format("{0}   Industrial", GameManager.i.guiScript.industrialChar), colour = ColourType.normalText, eventType = EventType.NodeDisplay, nodeType = NodeUI.NodeArc3 });
+        { descriptor = string.Format("{0}   Industrial", GameManager.i.guiScript.industrialChar), eventType = EventType.NodeDisplay, nodeType = NodeUI.NodeArc3 });
         listOfStartData.Add(new FinderButtonData()
-        { descriptor = string.Format("{0}   Research", GameManager.i.guiScript.researchChar), colour = ColourType.normalText, eventType = EventType.NodeDisplay, nodeType = NodeUI.NodeArc4 });
+        { descriptor = string.Format("{0}   Research", GameManager.i.guiScript.researchChar), eventType = EventType.NodeDisplay, nodeType = NodeUI.NodeArc4 });
         listOfStartData.Add(new FinderButtonData()
-        { descriptor = string.Format("{0}   Sprawl", GameManager.i.guiScript.sprawlChar), colour = ColourType.normalText, eventType = EventType.NodeDisplay, nodeType = NodeUI.NodeArc5 });
+        { descriptor = string.Format("{0}   Sprawl", GameManager.i.guiScript.sprawlChar), eventType = EventType.NodeDisplay, nodeType = NodeUI.NodeArc5 });
         listOfStartData.Add(new FinderButtonData()
-        { descriptor = string.Format("{0}   Utility", GameManager.i.guiScript.utilityChar), colour = ColourType.normalText, eventType = EventType.NodeDisplay, nodeType = NodeUI.NodeArc6 });
-        listOfStartData.Add(new FinderButtonData() { descriptor = "Targets", colour = ColourType.normalText, eventType = EventType.NodeDisplay, nodeType = NodeUI.ShowTargets });
-        listOfStartData.Add(new FinderButtonData() { descriptor = "Spiders", colour = ColourType.normalText, eventType = EventType.NodeDisplay, nodeType = NodeUI.ShowSpiders });
-        listOfStartData.Add(new FinderButtonData() { descriptor = "Tracers", colour = ColourType.normalText, eventType = EventType.NodeDisplay, nodeType = NodeUI.ShowTracers });
-        listOfStartData.Add(new FinderButtonData() { descriptor = "Teams", colour = ColourType.normalText, eventType = EventType.NodeDisplay, nodeType = NodeUI.ShowTeams });
-        listOfStartData.Add(new FinderButtonData() { descriptor = "Contacts", colour = ColourType.normalText, eventType = EventType.NodeDisplay, nodeType = NodeUI.ShowContacts });
-        listOfStartData.Add(new FinderButtonData() { descriptor = "Crisis Districts", colour = ColourType.normalText, eventType = EventType.NodeDisplay, nodeType = NodeUI.CrisisNodes });
-        listOfStartData.Add(new FinderButtonData() { descriptor = "Cures", colour = ColourType.normalText, eventType = EventType.NodeDisplay, nodeType = NodeUI.CureNodes });
-        listOfStartData.Add(new FinderButtonData() { descriptor = "Spotted", colour = ColourType.normalText, eventType = EventType.NodeDisplay, nodeType = NodeUI.PlayerKnown });
+        { descriptor = string.Format("{0}   Utility", GameManager.i.guiScript.utilityChar), eventType = EventType.NodeDisplay, nodeType = NodeUI.NodeArc6 });
+        listOfStartData.Add(new FinderButtonData() { descriptor = "Targets", eventType = EventType.NodeDisplay, nodeType = NodeUI.ShowTargets });
+        listOfStartData.Add(new FinderButtonData() { descriptor = "Spiders", eventType = EventType.NodeDisplay, nodeType = NodeUI.ShowSpiders });
+        listOfStartData.Add(new FinderButtonData() { descriptor = "Tracers", eventType = EventType.NodeDisplay, nodeType = NodeUI.ShowTracers });
+        listOfStartData.Add(new FinderButtonData() { descriptor = "Teams", eventType = EventType.NodeDisplay, nodeType = NodeUI.ShowTeams });
+        listOfStartData.Add(new FinderButtonData() { descriptor = "Contacts", eventType = EventType.NodeDisplay, nodeType = NodeUI.ShowContacts });
+        listOfStartData.Add(new FinderButtonData() { descriptor = "Crisis Districts", eventType = EventType.NodeDisplay, nodeType = NodeUI.CrisisNodes });
+        listOfStartData.Add(new FinderButtonData() { descriptor = "Cures", eventType = EventType.NodeDisplay, nodeType = NodeUI.CureNodes });
+        listOfStartData.Add(new FinderButtonData() { descriptor = "Spotted", eventType = EventType.NodeDisplay, nodeType = NodeUI.PlayerKnown });
         //
         // - - - district list
         //
@@ -193,7 +201,7 @@ public class FinderUI : MonoBehaviour
             else
             {
                 //back to start button
-                listOfNodeData.Add(new FinderButtonData() { descriptor = string.Format("<size=120%>{0}</size>", GameManager.i.guiScript.tutArrowLeft), colour = ColourType.moccasinText, eventType = EventType.FinderMenu });
+                listOfNodeData.Add(new FinderButtonData() { descriptor = string.Format("<size=120%>{0}</size>", GameManager.i.guiScript.tutArrowLeft), eventType = EventType.FinderMenu });
                 //sort alphabetically
                 var sortedList = listOfNodes.OrderBy(o => o.nodeName);
                 listOfNodes = sortedList.ToList();
@@ -203,7 +211,7 @@ public class FinderUI : MonoBehaviour
                 {
                     node = listOfNodes[i];
                     if (node != null)
-                    { listOfNodeData.Add(new FinderButtonData() { descriptor = node.nodeName, colour = ColourType.normalText, eventType = EventType.None }); }
+                    { listOfNodeData.Add(new FinderButtonData() { descriptor = node.nodeName, eventType = EventType.None }); }
                     else { Debug.LogErrorFormat("Invalid node (Null) for listOfNodes[{0}]", i); }
 
                 }
@@ -289,6 +297,10 @@ public class FinderUI : MonoBehaviour
         SetFinderScroller();
         //active
         isActive = true;
+        //indexes
+        currentIndex = 0;
+        previousIndex = 0;
+        SetCurrentButton();
         //open finder UI
         finderCanvas.gameObject.SetActive(true);
         //set modal status
@@ -311,6 +323,8 @@ public class FinderUI : MonoBehaviour
     private void SetFinderButtons(bool isStart = true)
     {
         scrollHighlightIndex = 0;
+        currentIndex = 0;
+        previousIndex = 0;
         FinderButtonData finder;
         if (isStart == true)
         {
@@ -329,7 +343,8 @@ public class FinderUI : MonoBehaviour
                         if (finder.nodeType != NodeUI.None)
                         { listOfInteractions[i].SetButton(finder.eventType, (int)finder.nodeType); }
                         else { listOfInteractions[i].SetButton(finder.eventType); }
-                        listOfTexts[i].text = string.Format("{0}{1}{2}", GameManager.i.colourScript.GetColour(finder.colour), finder.descriptor, colourEnd);
+                        listOfTexts[i].text = finder.descriptor;
+                        listOfTexts[i].color = colourDefault;
                         listOfButtons[i].gameObject.SetActive(true);
                     }
                     else { listOfButtons[i].gameObject.SetActive(false); }
@@ -351,13 +366,15 @@ public class FinderUI : MonoBehaviour
                     {
                         finder = listOfNodeData[i];
                         listOfInteractions[i].SetButton(finder.eventType);
-                        listOfTexts[i].text = string.Format("{0}{1}{2}", GameManager.i.colourScript.GetColour(finder.colour), finder.descriptor, colourEnd);
+                        listOfTexts[i].text = finder.descriptor;
+                        listOfTexts[i].color = colourDefault;
                         listOfButtons[i].gameObject.SetActive(true);
                     }
                     else { listOfButtons[i].gameObject.SetActive(false); }
                 }
             }
         }
+        SetCurrentButton();
     }
     #endregion
 
@@ -417,11 +434,14 @@ public class FinderUI : MonoBehaviour
         if (scrollHighlightIndex > 0)
         {
             scrollHighlightIndex--;
+            previousIndex = currentIndex;
+            currentIndex--;
             if (finderScrollRect.verticalNormalizedPosition != 1.0f)
             {
-                float scrollPos = 1.0f - (float)scrollHighlightIndex / scrollMaxHighlightIndex;
+                float scrollPos = 1.0f - (float)scrollHighlightIndex / numOfScrollItemsCurrent;
                 finderScrollRect.verticalNormalizedPosition = scrollPos;
             }
+            SetCurrentButton();
         }
     }
     #endregion
@@ -432,15 +452,32 @@ public class FinderUI : MonoBehaviour
     /// </summary>
     private void ExecuteScrollDown()
     {
-        if (scrollHighlightIndex < scrollMaxHighlightIndex)
+        if (scrollHighlightIndex < numOfScrollItemsCurrent)
         {
             scrollHighlightIndex++;
-            float scrollPos = 1.0f - (float)scrollHighlightIndex / scrollMaxHighlightIndex;
+            previousIndex = currentIndex;
+            currentIndex++;
+            float scrollPos = 1.0f - (float)scrollHighlightIndex / numOfScrollItemsCurrent;
             finderScrollRect.verticalNormalizedPosition = scrollPos;
         }
+        SetCurrentButton();
+
     }
     #endregion
 
+    #region Utilities...
+
+    /// <summary>
+    /// Highlights current button with a different text colour. Resets text colour on previous button
+    /// </summary>
+    private void SetCurrentButton()
+    {
+        listOfTexts[previousIndex].color = colourDefault;
+        listOfTexts[currentIndex].color = colourHighlight;
+    }
+
+
+    #endregion
 
     //new methods above here
 }

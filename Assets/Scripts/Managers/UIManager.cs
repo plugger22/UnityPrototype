@@ -172,4 +172,12 @@ public class UIManager : MonoBehaviour
     public Color MasterHelpActive;
     #endregion
 
+    #region FinderUI
+    [Header("Finder UI")]
+    [Tooltip("Default text colour for finder buttons")]
+    public Color FinderDefault;
+    [Tooltip("Highlight text colour for finder buttons")]
+    public Color FinderHighlight;
+    #endregion
+
 }

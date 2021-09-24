@@ -6334,6 +6334,7 @@ MonoBehaviour:
   isPlayerLeftMenu: 1
   isPlayerRightMenu: 1
   isTopWidget: 1
+  isFinder: 1
   noNodes: 1
 --- !u!114 &114556544146557144
 MonoBehaviour:
@@ -6989,6 +6990,8 @@ MonoBehaviour:
   TabbedOptionInactive: {r: 0.20392157, g: 0.21176471, b: 0.2, a: 0.49411765}
   MasterHelpInactive: {r: 0.8509804, g: 0.7921569, b: 0.7019608, a: 1}
   MasterHelpActive: {r: 0.9490196, g: 0.9137255, b: 0.30588236, a: 1}
+  FinderDefault: {r: 1, g: 1, b: 0.8784314, a: 1}
+  FinderHighlight: {r: 0.101960786, g: 1, b: 0.8352941, a: 1}
 --- !u!114 &114733366453475614
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7084,6 +7087,7 @@ MonoBehaviour:
   cityChar: 0
   compatibilityChar: 0
   alertChar: 0
+  searchChar: 0
   tutDialogue: 0
   tutInfo: 0
   tutQuestion: 0
@@ -7206,6 +7210,8 @@ MonoBehaviour:
   metaUIScript: {fileID: 0}
   aiDisplayScript: {fileID: 0}
   aiSideTabScript: {fileID: 0}
+  finderScript: {fileID: 0}
+  finderSideTabScript: {fileID: 0}
   actorPanelScript: {fileID: 0}
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}

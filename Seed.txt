@@ -1079,3 +1079,60 @@ City seed 13953 -> Londus, Eurasia
 
 Dev seed 24460 -> Friday, 24 September 2021 10:49 AM
 City seed 49332 -> Londus, Eurasia
+
+Dev seed 34853 -> Friday, 24 September 2021 10:58 AM
+City seed 21950 -> Londus, Eurasia
+
+Dev seed 13083 -> Friday, 24 September 2021 12:16 PM
+City seed 51167 -> Londus, Eurasia
+
+Dev seed 30888 -> Friday, 24 September 2021 12:17 PM
+City seed 29414 -> Londus, Eurasia
+
+Dev seed 4907 -> Friday, 24 September 2021 12:34 PM
+City seed 31231 -> Londus, Eurasia
+WARNING Assets/Scripts/GUI/Finder/FinderUI.cs(27,18): warning CS0414: The private field `FinderUI.isActive' is assigned but its value is never used
+WARNING Assets/Scripts/GUI/Finder/FinderUI.cs(28,20): warning CS0414: The private field `FinderUI.colourEnd' is assigned but its value is never used
+WARNING Assets/Scripts/GUI/Finder/FinderUI.cs(37,17): warning CS0414: The private field `FinderUI.scrollMaxHighlightIndex' is assigned but its value is never used
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:276)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:276)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:276)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalOutcome.OnDisable () (at Assets/Scripts/GUI/ModalOutcome.cs:271)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorManager.OnDisable () (at Assets/Scripts/Managers/ActorManager.cs:680)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+NodeManager.OnDisable () (at Assets/Scripts/Managers/NodeManager.cs:492)
+	
+Dev seed 16096 -> Friday, 24 September 2021 12:37 PM
+City seed 47894 -> Londus, Eurasia
+
+Dev seed 6316 -> Friday, 24 September 2021 12:41 PM
+City seed 44980 -> Londus, Eurasia
+
+Dev seed 23582 -> Friday, 24 September 2021 12:44 PM
+City seed 11313 -> Londus, Eurasia
+
+Dev seed 50923 -> Friday, 24 September 2021 12:48 PM
+City seed 22630 -> Londus, Eurasia
+
+Dev seed 47801 -> Friday, 24 September 2021 12:49 PM
+City seed 27655 -> Londus, Eurasia
+
+Dev seed 48908 -> Friday, 24 September 2021 12:52 PM
+City seed 58321 -> Londus, Eurasia
+
+Dev seed 28443 -> Friday, 24 September 2021 12:57 PM
+City seed 194 -> Londus, Eurasia
+
+Dev seed 21936 -> Friday, 24 September 2021 1:08 PM
+City seed 51253 -> Londus, Eurasia
+
+Dev seed 28860 -> Friday, 24 September 2021 1:11 PM
+City seed 38949 -> Londus, Eurasia
+
+Dev seed 10724 -> Friday, 24 September 2021 1:14 PM
+City seed 52460 -> Londus, Eurasia
