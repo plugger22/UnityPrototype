@@ -438,7 +438,7 @@ public class FinderUI : MonoBehaviour
             currentIndex--;
             if (finderScrollRect.verticalNormalizedPosition != 1.0f)
             {
-                float scrollPos = 1.0f - (float)scrollHighlightIndex / numOfScrollItemsCurrent;
+                float scrollPos = 1.0f - (float)scrollHighlightIndex / (numOfScrollItemsCurrent - 1);
                 finderScrollRect.verticalNormalizedPosition = scrollPos;
             }
             SetCurrentButton();
@@ -452,12 +452,12 @@ public class FinderUI : MonoBehaviour
     /// </summary>
     private void ExecuteScrollDown()
     {
-        if (scrollHighlightIndex < numOfScrollItemsCurrent)
+        if (scrollHighlightIndex < numOfScrollItemsCurrent - 1)
         {
             scrollHighlightIndex++;
             previousIndex = currentIndex;
             currentIndex++;
-            float scrollPos = 1.0f - (float)scrollHighlightIndex / numOfScrollItemsCurrent;
+            float scrollPos = 1.0f - (float)scrollHighlightIndex / (numOfScrollItemsCurrent - 1);
             finderScrollRect.verticalNormalizedPosition = scrollPos;
         }
         SetCurrentButton();

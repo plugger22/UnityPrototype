@@ -1136,3 +1136,21 @@ City seed 38949 -> Londus, Eurasia
 
 Dev seed 10724 -> Friday, 24 September 2021 1:14 PM
 City seed 52460 -> Londus, Eurasia
+
+Dev seed 42114 -> Friday, 24 September 2021 1:21 PM
+City seed 11638 -> Londus, Eurasia
+
+Dev seed 6703 -> Friday, 24 September 2021 1:22 PM
+City seed 11129 -> Londus, Eurasia
+
+Dev seed 8970 -> Friday, 24 September 2021 1:29 PM
+City seed 43342 -> Londus, Eurasia
+
+Dev seed 59593 -> Friday, 24 September 2021 1:32 PM
+City seed 51328 -> Londus, Eurasia
+
+Dev seed 41332 -> Friday, 24 September 2021 2:41 PM
+City seed 32561 -> Londus, Eurasia
+
+Dev seed 7849 -> Friday, 24 September 2021 2:44 PM
+City seed 56170 -> Londus, Eurasia
