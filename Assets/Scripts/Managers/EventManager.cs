@@ -300,6 +300,7 @@ public enum EventType
     FinderScrollUp,
     FinderScrollDown,
     FinderExecuteButton,
+    FinderClick,
     //AI
     Capture,
     /*ReleasePlayer,*/

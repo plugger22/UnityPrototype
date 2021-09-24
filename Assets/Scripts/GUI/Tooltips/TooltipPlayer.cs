@@ -41,6 +41,7 @@ public class TooltipPlayer : MonoBehaviour
     private string colourName;
     private string colourAlert;
     private string colourGrey;
+    private string colourMint;
     private string colourCancel;
     private string colourEnd;
 
@@ -160,6 +161,7 @@ public class TooltipPlayer : MonoBehaviour
         colourName = GameManager.i.colourScript.GetColour(ColourType.normalText);
         colourAlert = GameManager.i.colourScript.GetColour(ColourType.neutralText);
         colourGrey = GameManager.i.colourScript.GetColour(ColourType.greyText);
+        colourMint = GameManager.i.colourScript.GetColour(ColourType.mintText);
         colourCancel = GameManager.i.colourScript.GetColour(ColourType.salmonText);
         colourEnd = GameManager.i.colourScript.GetEndTag();
     }
@@ -340,7 +342,7 @@ public class TooltipPlayer : MonoBehaviour
                 {
                     if (secret.CheckNumOfActorsWhoKnow() > 0)
                     { builderSecrets.AppendFormat("<b>{0}{1}{2}{3}</b>", "\n", colourBad, secret.tag, colourEnd); }
-                    else { builderSecrets.AppendFormat("<b>{0}{1}{2}{3}</b>", "\n", colourGood, secret.tag, colourEnd); }
+                    else { builderSecrets.AppendFormat("<b>{0}{1}{2}{3}</b>", "\n", colourMint, secret.tag, colourEnd); }
                 }
             }
             playerMulti_2.text = builderSecrets.ToString();

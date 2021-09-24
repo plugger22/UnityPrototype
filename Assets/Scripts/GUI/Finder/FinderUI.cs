@@ -22,6 +22,7 @@ public class FinderUI : MonoBehaviour
 
     public List<Button> listOfButtons;                              //index linked
     public List<ButtonInteraction> listOfInteractions;              //index linked
+    public List<FinderButtonClick> listOfClicks;                    //index linked
     public List<TextMeshProUGUI> listOfTexts;                       //index linked
 
     private bool isActive;
@@ -112,8 +113,10 @@ public class FinderUI : MonoBehaviour
         Debug.Assert(tabTooltip != null, "Invalid tabTooltip (Null)");
         Debug.Assert(listOfButtons.Count > 0, "Invalid listOfButtons (Empty)");
         Debug.Assert(listOfInteractions.Count > 0, "Invalid listOfInteractions (Empty)");
+        Debug.Assert(listOfClicks.Count > 0, "Invalid listOfClicks (Empty)");
         Debug.Assert(listOfTexts.Count > 0, "Invalid listOfTexts (Empty)");
         Debug.AssertFormat(listOfButtons.Count == listOfInteractions.Count, "Count Mismatch: listOfButtons {0} records, listOfInteractions {1} records", listOfButtons.Count, listOfInteractions.Count);
+        Debug.AssertFormat(listOfButtons.Count == listOfClicks.Count, "Count Mismatch: listOfButtons {0} records, listOfClicks {1} records", listOfButtons.Count, listOfClicks.Count);
         Debug.AssertFormat(listOfButtons.Count == listOfTexts.Count, "Count Mismatch: listOfButtons {0} records, listOfTexts {1} records", listOfButtons.Count, listOfTexts.Count);
     }
     #endregion
@@ -151,6 +154,7 @@ public class FinderUI : MonoBehaviour
         EventManager.i.AddListener(EventType.FinderScrollUp, OnEvent, "FinderUI.cs");
         EventManager.i.AddListener(EventType.FinderScrollDown, OnEvent, "FinderUI.cs");
         EventManager.i.AddListener(EventType.FinderExecuteButton, OnEvent, "FinderUI.cs");
+        EventManager.i.AddListener(EventType.FinderClick, OnEvent, "FinderUI.cs");
     }
     #endregion
 
@@ -272,6 +276,9 @@ public class FinderUI : MonoBehaviour
             case EventType.FinderExecuteButton:
                 ExecuteButton();
                 break;
+            case EventType.FinderClick:
+                ExecuteClick((int)Param);
+                break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
@@ -342,6 +349,7 @@ public class FinderUI : MonoBehaviour
                         listOfTexts[i].text = finder.descriptor;
                         listOfTexts[i].color = colourDefault;
                         listOfButtons[i].gameObject.SetActive(true);
+                        listOfClicks[i].SetButton(EventType.FinderClick, i);
                     }
                     else { listOfButtons[i].gameObject.SetActive(false); }
                 }
@@ -468,6 +476,19 @@ public class FinderUI : MonoBehaviour
     private void ExecuteButton()
     {
         EventManager.i.PostNotification(listOfInteractions[currentIndex].GetEvent(), this, listOfInteractions[currentIndex].GetData(), "FinderUI.cs -> ExecuteButton");
+    }
+    #endregion
+
+    #region ExecuteClick
+    /// <summary>
+    /// Mouse click a button. Set highlight
+    /// </summary>
+    /// <param name="index"></param>
+    private void ExecuteClick(int index)
+    {
+        previousIndex = currentIndex;
+        currentIndex = index;
+        SetCurrentButton();
     }
     #endregion
 
