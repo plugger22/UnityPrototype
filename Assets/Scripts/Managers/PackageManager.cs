@@ -1492,7 +1492,9 @@ namespace packageAPI
         public EventType eventType;                 //event that is triggered when button activated
         public NodeUI nodeType;                     //type of nodes to display. Optional
         public int data;                            //eg. nodeID. Optional
-
+        public string tooltipTop;                   //top text
+        public string tooltipMiddle;                //middle text
+        public string tooltipBottom;                //bottom text
     }
 
 

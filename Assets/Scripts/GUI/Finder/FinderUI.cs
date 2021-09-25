@@ -24,6 +24,7 @@ public class FinderUI : MonoBehaviour
     public List<ButtonInteraction> listOfInteractions;              //index linked
     public List<FinderButtonClick> listOfClicks;                    //index linked
     public List<TextMeshProUGUI> listOfTexts;                       //index linked
+    public List<GenericTooltipUI> listOfTooltips;
 
     private bool isActive;
     private string colourEnd;
@@ -115,9 +116,11 @@ public class FinderUI : MonoBehaviour
         Debug.Assert(listOfInteractions.Count > 0, "Invalid listOfInteractions (Empty)");
         Debug.Assert(listOfClicks.Count > 0, "Invalid listOfClicks (Empty)");
         Debug.Assert(listOfTexts.Count > 0, "Invalid listOfTexts (Empty)");
+        Debug.Assert(listOfTooltips.Count > 0, "Invalid listOfTooltips (Empty)");
         Debug.AssertFormat(listOfButtons.Count == listOfInteractions.Count, "Count Mismatch: listOfButtons {0} records, listOfInteractions {1} records", listOfButtons.Count, listOfInteractions.Count);
         Debug.AssertFormat(listOfButtons.Count == listOfClicks.Count, "Count Mismatch: listOfButtons {0} records, listOfClicks {1} records", listOfButtons.Count, listOfClicks.Count);
         Debug.AssertFormat(listOfButtons.Count == listOfTexts.Count, "Count Mismatch: listOfButtons {0} records, listOfTexts {1} records", listOfButtons.Count, listOfTexts.Count);
+        Debug.AssertFormat(listOfButtons.Count == listOfTooltips.Count, "Count Mismatch: listOfButtons {0} records, listOfTooltips {1} records", listOfButtons.Count, listOfTooltips.Count);
     }
     #endregion
 
@@ -171,27 +174,140 @@ public class FinderUI : MonoBehaviour
         //
         listOfStartData.Add(new FinderButtonData() { descriptor = "<b>DISTRICTS</b>", eventType = EventType.FinderDistricts });
         listOfStartData.Add(new FinderButtonData()
-        { descriptor = string.Format("{0}   Corporate", GameManager.i.guiScript.corporateChar), eventType = EventType.NodeDisplay, nodeType = NodeUI.NodeArc0 });
+        {
+            descriptor = string.Format("{0}   Corporate", GameManager.i.guiScript.corporateChar),
+            eventType = EventType.NodeDisplay,
+            nodeType = NodeUI.NodeArc0,
+            tooltipTop = "Corporate Districts",
+            tooltipMiddle = "Displays all Corporate districts within city",
+            tooltipBottom = "Shortcut F2"
+        });
         listOfStartData.Add(new FinderButtonData()
-        { descriptor = string.Format("{0}   Gated", GameManager.i.guiScript.gatedChar), eventType = EventType.NodeDisplay, nodeType = NodeUI.NodeArc1 });
+        {
+            descriptor = string.Format("{0}   Gated", GameManager.i.guiScript.gatedChar),
+            eventType = EventType.NodeDisplay,
+            nodeType = NodeUI.NodeArc1,
+            tooltipTop = "Gated Districts",
+            tooltipMiddle = "Displays all exclusive Gated residential districts within city",
+            tooltipBottom = "Shortcut F3"
+        });
         listOfStartData.Add(new FinderButtonData()
-        { descriptor = string.Format("{0}   Government", GameManager.i.guiScript.governmentChar), eventType = EventType.NodeDisplay, nodeType = NodeUI.NodeArc2 });
+        {
+            descriptor = string.Format("{0}   Government", GameManager.i.guiScript.governmentChar),
+            eventType = EventType.NodeDisplay,
+            nodeType = NodeUI.NodeArc2,
+            tooltipTop = "Government Districts",
+            tooltipMiddle = "Displays all Government districts within city",
+            tooltipBottom = "Shortcut F4"
+        });
         listOfStartData.Add(new FinderButtonData()
-        { descriptor = string.Format("{0}   Industrial", GameManager.i.guiScript.industrialChar), eventType = EventType.NodeDisplay, nodeType = NodeUI.NodeArc3 });
+        {
+            descriptor = string.Format("{0}   Industrial", GameManager.i.guiScript.industrialChar),
+            eventType = EventType.NodeDisplay,
+            nodeType = NodeUI.NodeArc3,
+            tooltipTop = "Industrial Districts",
+            tooltipMiddle = "Displays all Industrial districts within city",
+            tooltipBottom = "Shortcut F5"
+        });
         listOfStartData.Add(new FinderButtonData()
-        { descriptor = string.Format("{0}   Research", GameManager.i.guiScript.researchChar), eventType = EventType.NodeDisplay, nodeType = NodeUI.NodeArc4 });
+        {
+            descriptor = string.Format("{0}   Research", GameManager.i.guiScript.researchChar),
+            eventType = EventType.NodeDisplay,
+            nodeType = NodeUI.NodeArc4,
+            tooltipTop = "Research Districts",
+            tooltipMiddle = "Displays all Research districts within city",
+            tooltipBottom = "Shortcut F6"
+        });
         listOfStartData.Add(new FinderButtonData()
-        { descriptor = string.Format("{0}   Sprawl", GameManager.i.guiScript.sprawlChar), eventType = EventType.NodeDisplay, nodeType = NodeUI.NodeArc5 });
+        {
+            descriptor = string.Format("{0}   Sprawl", GameManager.i.guiScript.sprawlChar),
+            eventType = EventType.NodeDisplay,
+            nodeType = NodeUI.NodeArc5,
+            tooltipTop = "Sprawl Districts",
+            tooltipMiddle = "Displays all Sprawl slum districts within city",
+            tooltipBottom = "Shortcut F7"
+        });
         listOfStartData.Add(new FinderButtonData()
-        { descriptor = string.Format("{0}   Utility", GameManager.i.guiScript.utilityChar), eventType = EventType.NodeDisplay, nodeType = NodeUI.NodeArc6 });
-        listOfStartData.Add(new FinderButtonData() { descriptor = "Targets", eventType = EventType.NodeDisplay, nodeType = NodeUI.ShowTargets });
-        listOfStartData.Add(new FinderButtonData() { descriptor = "Spiders", eventType = EventType.NodeDisplay, nodeType = NodeUI.ShowSpiders });
-        listOfStartData.Add(new FinderButtonData() { descriptor = "Tracers", eventType = EventType.NodeDisplay, nodeType = NodeUI.ShowTracers });
-        listOfStartData.Add(new FinderButtonData() { descriptor = "Teams", eventType = EventType.NodeDisplay, nodeType = NodeUI.ShowTeams });
-        listOfStartData.Add(new FinderButtonData() { descriptor = "Contacts", eventType = EventType.NodeDisplay, nodeType = NodeUI.ShowContacts });
-        listOfStartData.Add(new FinderButtonData() { descriptor = "Crisis Districts", eventType = EventType.NodeDisplay, nodeType = NodeUI.CrisisNodes });
-        listOfStartData.Add(new FinderButtonData() { descriptor = "Cures", eventType = EventType.NodeDisplay, nodeType = NodeUI.CureNodes });
-        listOfStartData.Add(new FinderButtonData() { descriptor = "Spotted", eventType = EventType.NodeDisplay, nodeType = NodeUI.PlayerKnown });
+        {
+            descriptor = string.Format("{0}   Utility", GameManager.i.guiScript.utilityChar),
+            eventType = EventType.NodeDisplay,
+            nodeType = NodeUI.NodeArc6,
+            tooltipTop = "Utility Districts",
+            tooltipMiddle = "Displays all Utility districts within city",
+            tooltipBottom = "Shortcut F8"
+        });
+        listOfStartData.Add(new FinderButtonData()
+        {
+            descriptor = "Targets",
+            eventType = EventType.NodeDisplay,
+            nodeType = NodeUI.ShowTargets,
+            tooltipTop = "Target Districts",
+            tooltipMiddle = "Displays all districts with Targets within city",
+            tooltipBottom = "Shortcut T"
+        });
+        listOfStartData.Add(new FinderButtonData()
+        {
+            descriptor = "Spiders",
+            eventType = EventType.NodeDisplay,
+            nodeType = NodeUI.ShowSpiders,
+            tooltipTop = "Spiders",
+            tooltipMiddle = "Displays all districts with known Authority Spiders within city",
+            tooltipBottom = "Shortcut S"
+        });
+        listOfStartData.Add(new FinderButtonData()
+        {
+            descriptor = "Tracers",
+            eventType = EventType.NodeDisplay,
+            nodeType = NodeUI.ShowTracers,
+            tooltipTop = "Tracers",
+            tooltipMiddle = "Displays all districts with Resistance Tracers within city",
+            tooltipBottom = "Shortcut C"
+        });
+        listOfStartData.Add(new FinderButtonData()
+        {
+            descriptor = "Teams",
+            eventType = EventType.NodeDisplay,
+            nodeType = NodeUI.ShowTeams,
+            tooltipTop = "Teams",
+            tooltipMiddle = "Displays all districts with known Authority Teams within city",
+            tooltipBottom = "Shortcut M"
+        });
+        listOfStartData.Add(new FinderButtonData()
+        {
+            descriptor = "Contacts",
+            eventType = EventType.NodeDisplay,
+            nodeType = NodeUI.ShowContacts,
+            tooltipTop = "Contacts",
+            tooltipMiddle = "Displays all districts with Resistance Contacts within city",
+            tooltipBottom = "Shortcut ?"
+        });
+        listOfStartData.Add(new FinderButtonData()
+        {
+            descriptor = "Crisis Districts",
+            eventType = EventType.NodeDisplay,
+            nodeType = NodeUI.CrisisNodes,
+            tooltipTop = "Crisis",
+            tooltipMiddle = "Displays all districts currently undergoing a Crisis within city",
+            tooltipBottom = "Shortcut ?"
+        });
+        listOfStartData.Add(new FinderButtonData()
+        {
+            descriptor = "Cures",
+            eventType = EventType.NodeDisplay,
+            nodeType = NodeUI.CureNodes,
+            tooltipTop = "Cures",
+            tooltipMiddle = "Displays all districts where a Cure can currently be found",
+            tooltipBottom = "Shortcut ?"
+        });
+        listOfStartData.Add(new FinderButtonData()
+        {
+            descriptor = "Spotted",
+            eventType = EventType.NodeDisplay,
+            nodeType = NodeUI.PlayerKnown,
+            tooltipTop = "Spotted",
+            tooltipMiddle = "Displays all districts where Resistance activity is known to the Authority",
+            tooltipBottom = "Shortcut ?"
+        });
         //
         // - - - district list
         //
@@ -293,6 +409,8 @@ public class FinderUI : MonoBehaviour
     /// </summary>
     private void SetFinder()
     {
+        //tooltips off
+        GameManager.i.guiScript.SetTooltipsOff();
         //toggle off finder UI
         EventManager.i.PostNotification(EventType.FinderSideTabClose, this, null, "FinderUI.cs -> SetFinder");
         //initialise
@@ -350,6 +468,11 @@ public class FinderUI : MonoBehaviour
                         listOfTexts[i].color = colourDefault;
                         listOfButtons[i].gameObject.SetActive(true);
                         listOfClicks[i].SetButton(EventType.FinderClick, i);
+                        //tooltips
+                        listOfTooltips[i].tooltipHeader = GameManager.Formatt(finder.tooltipTop, ColourType.salmonText);
+                        listOfTooltips[i].tooltipMain = GameManager.Formatt(finder.tooltipMiddle, ColourType.normalText);
+                        listOfTooltips[i].tooltipDetails = finder.tooltipBottom;
+                        listOfTooltips[i].x_offset = -350;
                     }
                     else { listOfButtons[i].gameObject.SetActive(false); }
                 }

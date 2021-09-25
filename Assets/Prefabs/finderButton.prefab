@@ -41,6 +41,7 @@ GameObject:
   - component: {fileID: 114521892605180038}
   - component: {fileID: 114848731449180240}
   - component: {fileID: 114661553532227684}
+  - component: {fileID: 114226927102394700}
   m_Layer: 5
   m_Name: finderButton
   m_TagString: Untagged
@@ -48,6 +49,27 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &114226927102394700
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1916558502825188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca7d8d72305dd0342acffd3c30b3c77f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  x_offset: 0
+  y_offset: 0
+  nodeID: 0
+  connID: 0
+  testTag: 
+  isIgnoreClick: 0
+  tooltipType: 0
 --- !u!114 &114339533331025270
 MonoBehaviour:
   m_ObjectHideFlags: 1
