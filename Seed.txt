@@ -1539,3 +1539,144 @@ City seed 63342 -> Londus, Eurasia
 
 Dev seed 45304 -> Saturday, 25 September 2021 2:52 PM
 City seed 57338 -> Londus, Eurasia
+
+Dev seed 31255 -> Saturday, 25 September 2021 4:57 PM
+City seed 32829 -> Londus, Eurasia
+ERROR Invalid text (Null)
+UnityEngine.Debug:LogError(Object)
+	GameManager:Formatt(String, ColourType) (at Assets/Scripts/GameManager.cs:1265)
+	FinderUI:SetFinderButtons(Boolean) (at Assets/Scripts/GUI/Finder/FinderUI.cs:482)
+	FinderUI:SetFinder() (at Assets/Scripts/GUI/Finder/FinderUI.cs:427)
+	FinderUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Finder/FinderUI.cs:385)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	FinderSideTabMouseUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Finder/FinderSideTabMouseUI.cs:28)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ERROR Invalid text (Null)
+UnityEngine.Debug:LogError(Object)
+	GameManager:Formatt(String, ColourType) (at Assets/Scripts/GameManager.cs:1265)
+	FinderUI:SetFinderButtons(Boolean) (at Assets/Scripts/GUI/Finder/FinderUI.cs:483)
+	FinderUI:SetFinder() (at Assets/Scripts/GUI/Finder/FinderUI.cs:427)
+	FinderUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Finder/FinderUI.cs:385)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	FinderSideTabMouseUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Finder/FinderSideTabMouseUI.cs:28)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 35648 -> Saturday, 25 September 2021 4:58 PM
+City seed 276 -> Londus, Eurasia
+
+Dev seed 51768 -> Saturday, 25 September 2021 5:02 PM
+City seed 4827 -> Londus, Eurasia
+WARNING Stats Counter Exceeded for node Westminister, CORPORATE
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TooltipNode:SetTooltip(NodeTooltipData) (at Assets/Scripts/GUI/Tooltips/TooltipNode.cs:328)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/Base Classes/Node.cs:618)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 7707 -> Saturday, 25 September 2021 5:03 PM
+City seed 30439 -> Londus, Eurasia
+WARNING Stats Counter Exceeded for node Leicester, SPRAWL
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TooltipNode:SetTooltip(NodeTooltipData) (at Assets/Scripts/GUI/Tooltips/TooltipNode.cs:328)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/Base Classes/Node.cs:618)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Stats Counter Exceeded for node Blackfriars, CORPORATE
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TooltipNode:SetTooltip(NodeTooltipData) (at Assets/Scripts/GUI/Tooltips/TooltipNode.cs:328)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/Base Classes/Node.cs:618)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Stats Counter Exceeded for node Farringdon, UTILITY
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TooltipNode:SetTooltip(NodeTooltipData) (at Assets/Scripts/GUI/Tooltips/TooltipNode.cs:328)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/Base Classes/Node.cs:618)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Stats Counter Exceeded for node East Putney, INDUSTRIAL
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TooltipNode:SetTooltip(NodeTooltipData) (at Assets/Scripts/GUI/Tooltips/TooltipNode.cs:328)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/Base Classes/Node.cs:618)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 53820 -> Saturday, 25 September 2021 5:27 PM
+City seed 45576 -> Londus, Eurasia
+WARNING Stats Counter Exceeded for node Earl's Court, GOVERNMENT
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TooltipNode:SetTooltip(NodeTooltipData) (at Assets/Scripts/GUI/Tooltips/TooltipNode.cs:328)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/Base Classes/Node.cs:618)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Stats Counter Exceeded for node Marble Arch, CORPORATE
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TooltipNode:SetTooltip(NodeTooltipData) (at Assets/Scripts/GUI/Tooltips/TooltipNode.cs:328)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/Base Classes/Node.cs:618)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Stats Counter Exceeded for node Bond Street, INDUSTRIAL
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TooltipNode:SetTooltip(NodeTooltipData) (at Assets/Scripts/GUI/Tooltips/TooltipNode.cs:328)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/Base Classes/Node.cs:618)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Stats Counter Exceeded for node City Centre, GOVERNMENT
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TooltipNode:SetTooltip(NodeTooltipData) (at Assets/Scripts/GUI/Tooltips/TooltipNode.cs:328)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/Base Classes/Node.cs:618)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Stats Counter Exceeded for node City Centre, GOVERNMENT
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TooltipNode:SetTooltip(NodeTooltipData) (at Assets/Scripts/GUI/Tooltips/TooltipNode.cs:328)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/Base Classes/Node.cs:618)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 19549 -> Saturday, 25 September 2021 5:35 PM
+City seed 50119 -> Londus, Eurasia
+ASSERT ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+System.ThrowHelper.ThrowArgumentOutOfRangeException (System.ExceptionArgument argument, System.ExceptionResource resource) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.ThrowHelper.ThrowArgumentOutOfRangeException () (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Collections.Generic.List`1[T].get_Item (System.Int32 index) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	FinderUI.SetCurrentButton () (at Assets/Scripts/GUI/Finder/FinderUI.cs:685)
+	FinderUI.ExecuteScrollDown () (at Assets/Scripts/GUI/Finder/FinderUI.cs:649)
+	FinderUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/Finder/FinderUI.cs:406)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:403)
+	InputManager.ProcessMouseWheelInput (System.Single change) (at Assets/Scripts/Managers/InputManager.cs:1107)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:481)
+	
+Dev seed 46162 -> Saturday, 25 September 2021 5:37 PM
+City seed 9386 -> Londus, Eurasia
+WARNING Stats Counter Exceeded for node Westminister, RESEARCH
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TooltipNode:SetTooltip(NodeTooltipData) (at Assets/Scripts/GUI/Tooltips/TooltipNode.cs:328)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/Base Classes/Node.cs:618)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Stats Counter Exceeded for node Notting Hill Gate, INDUSTRIAL
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TooltipNode:SetTooltip(NodeTooltipData) (at Assets/Scripts/GUI/Tooltips/TooltipNode.cs:328)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/Base Classes/Node.cs:618)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Stats Counter Exceeded for node Parsons Green, CORPORATE
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TooltipNode:SetTooltip(NodeTooltipData) (at Assets/Scripts/GUI/Tooltips/TooltipNode.cs:328)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/Base Classes/Node.cs:618)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Stats Counter Exceeded for node Moorgate, RESEARCH
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TooltipNode:SetTooltip(NodeTooltipData) (at Assets/Scripts/GUI/Tooltips/TooltipNode.cs:328)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/Base Classes/Node.cs:618)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Stats Counter Exceeded for node Parsons Green, CORPORATE
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TooltipNode:SetTooltip(NodeTooltipData) (at Assets/Scripts/GUI/Tooltips/TooltipNode.cs:328)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/Base Classes/Node.cs:618)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Stats Counter Exceeded for node Euston Circus, SPRAWL
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TooltipNode:SetTooltip(NodeTooltipData) (at Assets/Scripts/GUI/Tooltips/TooltipNode.cs:328)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/Base Classes/Node.cs:618)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Stats Counter Exceeded for node St Pauls, INDUSTRIAL
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TooltipNode:SetTooltip(NodeTooltipData) (at Assets/Scripts/GUI/Tooltips/TooltipNode.cs:328)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/Base Classes/Node.cs:618)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Stats Counter Exceeded for node Parsons Green, CORPORATE
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TooltipNode:SetTooltip(NodeTooltipData) (at Assets/Scripts/GUI/Tooltips/TooltipNode.cs:328)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/Base Classes/Node.cs:618)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	

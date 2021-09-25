@@ -1498,5 +1498,19 @@ namespace packageAPI
     }
 
 
+    /// <summary>
+    /// Data for finderUI.cs -> node tooltips
+    /// </summary>
+    public class FinderNodeData
+    {
+        public bool isTarget;
+        public bool isTeam;
+        public bool isContact;
+        public bool isTracer;
+        public bool isSpider;
+        public bool isCrisis;
+        public bool isCure;
+    }
+
     //new classes above here
 }

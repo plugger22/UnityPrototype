@@ -653,6 +653,32 @@ public class Node : MonoBehaviour
         */
     }
 
+    #region GetFinderData
+    /// <summary>
+    /// returns data package for FinderUI.cs node button tooltips. 
+    /// NOTE: done from POV of RESISTANCE
+    /// </summary>
+    /// <returns></returns>
+    public FinderNodeData GetFinderData()
+    {
+        FinderNodeData data = new FinderNodeData();
+        if (string.IsNullOrEmpty(targetName) == false)
+        {
+            Target target = GameManager.i.dataScript.GetTarget(targetName);
+            if (target != null)
+            { data.isTarget = target.targetStatus == Status.Live ? true : false; }
+            else { Debug.LogWarningFormat("Invalid target (Null) for targetName {0}, node {1}, {2}, nodeID {3}", targetName, nodeName, Arc.name, nodeID); }
+        }
+        data.isTeam = isTeamKnown;
+        data.isContact = isContactResistance;
+        data.isTracer = isTracer;
+        data.isSpider = isSpiderKnown;
+        data.isCrisis = crisis != null ? true : false;
+        data.isCure = cure != null ? true : false;
+        return data;
+    }
+    #endregion
+
     //
     // - - - Neighbours
     //
@@ -1694,7 +1720,7 @@ public class Node : MonoBehaviour
     /// //stats are the same for both sides, colours change though in the tooltips
     /// </summary>
     /// <returns></returns>
-    private int[] GetStats()
+    public int[] GetStats()
     {
         int[] arrayOfStats;
         switch (GameManager.i.sideScript.PlayerSide.name)

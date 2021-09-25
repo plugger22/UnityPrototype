@@ -325,7 +325,7 @@ public class TooltipNode : MonoBehaviour
                 builderStats.AppendFormat("{0} {1}<pos=57%>{2}", arrayOfIcons[i], (NodeData)i, GameManager.i.guiScript.GetNormalStars(statData));
                 //idiot check to handle case of being too many stats
                 checkCounter++;
-                if (checkCounter >= 3) { break; }
+                if (checkCounter >= 3) { Debug.LogWarningFormat("Stats Counter Exceeded for node {0}, {1}", data.nodeName, data.type); break; }
             }
             nodeStats.text = builderStats.ToString();
 

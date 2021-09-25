@@ -2,6 +2,7 @@
 using packageAPI;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -30,6 +31,8 @@ public class FinderUI : MonoBehaviour
     private string colourEnd;
     private Color colourDefault;                                     //used for SetCurrentButton
     private Color colourHighlight;
+
+    private string[] arrayOfIcons = new string[3];
 
     //Scrolling
     private int maxNumOfScrollItems;                                //max number of items in scrollable list
@@ -121,6 +124,13 @@ public class FinderUI : MonoBehaviour
         Debug.AssertFormat(listOfButtons.Count == listOfClicks.Count, "Count Mismatch: listOfButtons {0} records, listOfClicks {1} records", listOfButtons.Count, listOfClicks.Count);
         Debug.AssertFormat(listOfButtons.Count == listOfTexts.Count, "Count Mismatch: listOfButtons {0} records, listOfTexts {1} records", listOfButtons.Count, listOfTexts.Count);
         Debug.AssertFormat(listOfButtons.Count == listOfTooltips.Count, "Count Mismatch: listOfButtons {0} records, listOfTooltips {1} records", listOfButtons.Count, listOfTooltips.Count);
+        //Node datapoint Icons
+        arrayOfIcons[0] = GameManager.i.guiScript.stabilityIcon;
+        arrayOfIcons[1] = GameManager.i.guiScript.supportIcon;
+        arrayOfIcons[2] = GameManager.i.guiScript.securityIcon;
+        Debug.Assert(arrayOfIcons[0] != null, "Invalid arrayOfIcons[0], Stability (Null)");
+        Debug.Assert(arrayOfIcons[1] != null, "Invalid arrayOfIcons[1], Support (Null)");
+        Debug.Assert(arrayOfIcons[2] != null, "Invalid arrayOfIcons[2], Security (Null)");
     }
     #endregion
 
@@ -172,7 +182,13 @@ public class FinderUI : MonoBehaviour
         //
         // - - - start list
         //
-        listOfStartData.Add(new FinderButtonData() { descriptor = "<b>DISTRICTS</b>", eventType = EventType.FinderDistricts });
+        listOfStartData.Add(new FinderButtonData()
+        {
+            descriptor = "<b>DISTRICTS</b>",
+            eventType = EventType.FinderDistricts,
+            tooltipTop = "DISTRICTS",
+            tooltipMiddle = "Locate a specific District within the city"
+        });
         listOfStartData.Add(new FinderButtonData()
         {
             descriptor = string.Format("{0}   Corporate", GameManager.i.guiScript.corporateChar),
@@ -487,6 +503,10 @@ public class FinderUI : MonoBehaviour
             else
             {
                 scrollMaxHighlightIndex = Mathf.Min(numOfScrollItemsVisible, numOfScrollItemsCurrent);
+                int[] arrayOfStats;
+                int statData;
+                FinderNodeData data;
+                StringBuilder builder = new StringBuilder();
                 for (int i = 0; i < listOfButtons.Count; i++)
                 {
                     if (i < numOfScrollItemsCurrent)
@@ -496,6 +516,45 @@ public class FinderUI : MonoBehaviour
                         listOfTexts[i].text = finder.descriptor;
                         listOfTexts[i].color = colourDefault;
                         listOfButtons[i].gameObject.SetActive(true);
+                        if (i > 0)
+                        {
+                            //tooltip - dynamic
+                            Node node = GameManager.i.dataScript.GetNode(finder.data);
+                            if (node != null)
+                            {
+                                //name and type -> top
+                                listOfTooltips[i].tooltipHeader = string.Format("{0}{1}<b>{2}</b>", node.nodeName, "\n", GameManager.Formatt(node.Arc.name, ColourType.salmonText));
+                                //stats -> middle
+                                arrayOfStats = node.GetStats();
+                                builder.Clear();
+                                for (int j = 0; j < arrayOfStats.Length; j++)
+                                {
+                                    statData = arrayOfStats[j];
+                                    if (j > 0) { builder.AppendLine(); }
+                                    builder.AppendFormat("{0} {1}<pos=57%>{2}", arrayOfIcons[j], (NodeData)j, GameManager.i.guiScript.GetNormalStars(statData));
+                                }
+                                listOfTooltips[i].tooltipMain = builder.ToString();
+                                //specifics -> bottom
+                                data = node.GetFinderData();
+                                if (data != null)
+                                {
+                                    builder.Clear();
+                                    if (data.isTarget == true) { builder.AppendLine(GameManager.Formatt("TARGET", ColourType.mintText)); }
+                                    if (data.isTeam == true) { builder.AppendLine(GameManager.Formatt("TEAM", ColourType.badText)); }
+                                    if (data.isContact == true) { builder.AppendLine(GameManager.Formatt("CONTACT", ColourType.normalText)); }
+                                    if (data.isTracer == true) { builder.AppendLine(GameManager.Formatt("TRACER", ColourType.mintText)); }
+                                    if (data.isSpider == true) { builder.AppendLine(GameManager.Formatt("SPIDER", ColourType.badText)); }
+                                    if (data.isCrisis == true) { builder.AppendLine(GameManager.Formatt("CRISIS", ColourType.badText)); }
+                                    if (data.isCure == true) { builder.AppendLine(GameManager.Formatt("CURE", ColourType.mintText)); }
+                                    listOfTooltips[i].tooltipDetails = builder.ToString();
+                                }
+                                else { Debug.LogWarningFormat("Invalid nodeFinderData (Null) for {0}, {1}, nodeID {2}", node.nodeName, node.Arc.name, node.nodeID); }
+                                //offset
+                                listOfTooltips[i].x_offset = -350;
+                            }
+                            else { Debug.LogWarningFormat("Invalid node (Null) for finder.data nodeID {0}", finder.data); }
+                        }
+
                     }
                     else { listOfButtons[i].gameObject.SetActive(false); }
                 }
