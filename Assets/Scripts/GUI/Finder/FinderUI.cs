@@ -35,10 +35,8 @@ public class FinderUI : MonoBehaviour
 
     //Scrolling
     private int maxNumOfScrollItems;                                //max number of items in scrollable list
-    private int numOfScrollItemsVisible = 21;                       //max number of items visible at any one time
+    /*private int numOfScrollItemsVisible = 21;                     //max number of items visible at any one time -> Redundant */
     private int numOfScrollItemsCurrent;                            //number of active items
-    private int scrollHighlightIndex = -1;                          //current highlight index (doesn't matter if shown as highlighted or not)
-    private int scrollMaxHighlightIndex = -1;                       //numOfScrollItemsCurrent - 1
     private int currentIndex;                                       //used to highlight currently selected button
     private int previousIndex;                                      //previously selected button
 
@@ -475,7 +473,6 @@ public class FinderUI : MonoBehaviour
     /// </summary>
     private void SetFinderButtons(bool isStart = true)
     {
-        scrollHighlightIndex = 0;
         currentIndex = 0;
         previousIndex = 0;
         FinderButtonData finder;
@@ -487,7 +484,6 @@ public class FinderUI : MonoBehaviour
             { Debug.LogErrorFormat("Count mismatch: numOfScrollItemsCurrent {0}, maxNumOfScrollItems {1}", numOfScrollItemsCurrent, maxNumOfScrollItems); }
             else
             {
-                scrollMaxHighlightIndex = Mathf.Min(numOfScrollItemsVisible, numOfScrollItemsCurrent);
                 for (int i = 0; i < listOfButtons.Count; i++)
                 {
                     if (i < numOfScrollItemsCurrent)
@@ -518,7 +514,6 @@ public class FinderUI : MonoBehaviour
             { Debug.LogErrorFormat("Count mismatch: numOfScrollItemsCurrent {0}, maxNumOfScrollItems {1}", numOfScrollItemsCurrent, maxNumOfScrollItems); }
             else
             {
-                scrollMaxHighlightIndex = Mathf.Min(numOfScrollItemsVisible, numOfScrollItemsCurrent);
                 int[] arrayOfStats;
                 int statData;
                 FinderNodeData data;
@@ -532,9 +527,12 @@ public class FinderUI : MonoBehaviour
                         listOfTexts[i].text = finder.descriptor;
                         listOfTexts[i].color = colourDefault;
                         listOfButtons[i].gameObject.SetActive(true);
+                        listOfClicks[i].SetButton(EventType.FinderClick, i);
                         if (i > 0)
                         {
-                            //tooltip - dynamic
+                            //
+                            // - - - tooltip - dynamic
+                            //
                             Node node = GameManager.i.dataScript.GetNode(finder.data);
                             if (node != null)
                             {
@@ -618,6 +616,8 @@ public class FinderUI : MonoBehaviour
         EventManager.i.PostNotification(EventType.FinderSideTabOpen, this, null, "FinderUI.cs -> CloseFinder");
         //turn off any alert message and reset nodes
         GameManager.i.alertScript.CloseAlertUI(true);
+        //turn off any tooltips associated with finder
+        GameManager.i.tooltipGenericScript.CloseTooltip();
         //unblock
         GameManager.i.guiScript.SetIsBlocked(false);
         //set game state
@@ -633,14 +633,13 @@ public class FinderUI : MonoBehaviour
     /// </summary>
     private void ExecuteScrollUp()
     {
-        if (scrollHighlightIndex > 0)
+        if (currentIndex > 0)
         {
-            scrollHighlightIndex--;
             previousIndex = currentIndex;
             currentIndex--;
             if (finderScrollRect.verticalNormalizedPosition != 1.0f)
             {
-                float scrollPos = 1.0f - (float)scrollHighlightIndex / (numOfScrollItemsCurrent - 1);
+                float scrollPos = 1.0f - (float)currentIndex / (numOfScrollItemsCurrent - 1);
                 finderScrollRect.verticalNormalizedPosition = scrollPos;
             }
             SetCurrentButton();
@@ -654,12 +653,11 @@ public class FinderUI : MonoBehaviour
     /// </summary>
     private void ExecuteScrollDown()
     {
-        if (scrollHighlightIndex < numOfScrollItemsCurrent - 1)
+        if (currentIndex < numOfScrollItemsCurrent - 1)
         {
-            scrollHighlightIndex++;
             previousIndex = currentIndex;
             currentIndex++;
-            float scrollPos = 1.0f - (float)scrollHighlightIndex / (numOfScrollItemsCurrent - 1);
+            float scrollPos = 1.0f - (float)currentIndex / (numOfScrollItemsCurrent - 1);
             finderScrollRect.verticalNormalizedPosition = scrollPos;
         }
         SetCurrentButton();
@@ -669,21 +667,23 @@ public class FinderUI : MonoBehaviour
 
     #region ExecuteButton
     /// <summary>
-    /// current button activated via 'Enter'
+    /// current button activated via 'Enter' (no need to change highlight as already selected)
     /// </summary>
     private void ExecuteButton()
     {
+        /*Debug.LogFormat("[Tst] FinderUI.cs -> ExecuteButton: currentIndex {0}, previousIndex {1}, numOfScrollItemsCurrent {2}{3}", currentIndex, previousIndex, numOfScrollItemsCurrent, "\n");*/
         EventManager.i.PostNotification(listOfInteractions[currentIndex].GetEvent(), this, listOfInteractions[currentIndex].GetData(), "FinderUI.cs -> ExecuteButton");
     }
     #endregion
 
     #region ExecuteClick
     /// <summary>
-    /// Mouse click a button. Set highlight
+    /// Mouse click a button. Set highlight. 
     /// </summary>
     /// <param name="index"></param>
     private void ExecuteClick(int index)
     {
+        /*Debug.LogFormat("[Tst] FinderUI.cs -> ExecuteClick: BEFORE -> index {0}, previousIndex {1} currentIndex {2}, numOfScrollItemsCurrent {3}{4}", index, previousIndex, currentIndex, numOfScrollItemsCurrent, "\n");*/
         previousIndex = currentIndex;
         currentIndex = index;
         SetCurrentButton();
@@ -708,6 +708,7 @@ public class FinderUI : MonoBehaviour
     {
         listOfTexts[previousIndex].color = colourDefault;
         listOfTexts[currentIndex].color = colourHighlight;
+        /*Debug.LogFormat("[Tst] FinderUI.cs -> SetCurrentButton: currentIndex {0}, previousIndex {1}{2}", currentIndex, previousIndex, "\n");*/
     }
 
 

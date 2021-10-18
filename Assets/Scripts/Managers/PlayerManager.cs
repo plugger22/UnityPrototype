@@ -1706,7 +1706,7 @@ public class PlayerManager : MonoBehaviour
         Secret secret = GameManager.i.dataScript.GetSecret(initialSecret);
         if (secret != null)
         {
-            listOfSecrets.Add(secret);
+            AddSecret(secret);
             //check to prevent duplicate messages (eg. player did tutorial then started a game)
             if (startSecret.Equals(initialSecret, StringComparison.Ordinal) == false)
             { Debug.LogFormat("[Sec] PlayerManager.cs -> GetStartingSecret: player choses \"{0}\" secret{1}", secret.tag, "\n"); }

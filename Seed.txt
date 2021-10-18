@@ -1748,3 +1748,96 @@ City seed 38062 -> Londus, Eurasia
 
 Dev seed 58823 -> Monday, 18 October 2021 11:02 AM
 City seed 7581 -> Londus, Eurasia
+
+Dev seed 12737 -> Monday, 18 October 2021 12:03 PM
+City seed 63306 -> Londus, Eurasia
+
+Dev seed 35743 -> Monday, 18 October 2021 12:08 PM
+City seed 61699 -> Londus, Eurasia
+
+Dev seed 58395 -> Monday, 18 October 2021 12:11 PM
+City seed 34838 -> Londus, Eurasia
+
+Dev seed 36583 -> Monday, 18 October 2021 12:16 PM
+City seed 4327 -> Londus, Eurasia
+
+Dev seed 43289 -> Monday, 18 October 2021 12:18 PM
+City seed 57845 -> Londus, Eurasia
+
+Dev seed 29738 -> Monday, 18 October 2021 12:22 PM
+City seed 58969 -> Londus, Eurasia
+WARNING Stats Counter Exceeded for node Waterloo, UTILITY
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TooltipNode:SetTooltip(NodeTooltipData) (at Assets/Scripts/GUI/Tooltips/TooltipNode.cs:328)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/Base Classes/Node.cs:618)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 10379 -> Monday, 18 October 2021 12:25 PM
+City seed 47201 -> Londus, Eurasia
+
+Dev seed 52797 -> Monday, 18 October 2021 2:42 PM
+City seed 38042 -> Londus, Eurasia
+
+Dev seed 38062 -> Monday, 18 October 2021 3:02 PM
+City seed 41225 -> Londus, Eurasia
+
+Dev seed 1052 -> Monday, 18 October 2021 3:08 PM
+City seed 38910 -> Londus, Eurasia
+
+Dev seed 54990 -> Monday, 18 October 2021 3:16 PM
+City seed 22849 -> Londus, Eurasia
+
+Dev seed 60567 -> Monday, 18 October 2021 3:20 PM
+City seed 8324 -> Londus, Eurasia
+WARNING Stats Counter Exceeded for node East Putney, UTILITY
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TooltipNode:SetTooltip(NodeTooltipData) (at Assets/Scripts/GUI/Tooltips/TooltipNode.cs:328)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/Base Classes/Node.cs:618)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 14095 -> Monday, 18 October 2021 3:35 PM
+City seed 46811 -> Londus, Eurasia
+
+Dev seed 20971 -> Monday, 18 October 2021 3:36 PM
+City seed 11489 -> Londus, Eurasia
+
+Dev seed 49370 -> Monday, 18 October 2021 3:48 PM
+City seed 10448 -> Londus, Eurasia
+WARNING Stats Counter Exceeded for node Covent Garden, RESEARCH
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TooltipNode:SetTooltip(NodeTooltipData) (at Assets/Scripts/GUI/Tooltips/TooltipNode.cs:328)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/Base Classes/Node.cs:618)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	City seed 62389 -> Newpolis, Americon
+WARNING Stats Counter Exceeded for node Spanish Harlem, RESEARCH
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TooltipNode:SetTooltip(NodeTooltipData) (at Assets/Scripts/GUI/Tooltips/TooltipNode.cs:328)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/Base Classes/Node.cs:618)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Stats Counter Exceeded for node Fort Hamilton, RESEARCH
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TooltipNode:SetTooltip(NodeTooltipData) (at Assets/Scripts/GUI/Tooltips/TooltipNode.cs:328)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/Base Classes/Node.cs:618)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Stats Counter Exceeded for node City Centre, GOVERNMENT
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TooltipNode:SetTooltip(NodeTooltipData) (at Assets/Scripts/GUI/Tooltips/TooltipNode.cs:328)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/Base Classes/Node.cs:618)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 61188 -> Monday, 18 October 2021 4:02 PM
+City seed 42217 -> Londus, Eurasia
+
+Dev seed 36798 -> Monday, 18 October 2021 4:08 PM
+City seed 26221 -> Londus, Eurasia
+City seed 45217 -> Newpolis, Americon
+
+Dev seed 27778 -> Monday, 18 October 2021 4:21 PM
+City seed 34543 -> Londus, Eurasia
+
+Dev seed 284 -> Monday, 18 October 2021 4:44 PM
+City seed 54510 -> Londus, Eurasia
+
+Dev seed 8534 -> Monday, 18 October 2021 4:45 PM
+City seed 18036 -> Londus, Eurasia
+City seed 58890 -> Newpolis, Americon
