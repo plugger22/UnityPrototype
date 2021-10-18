@@ -798,7 +798,7 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfDelayed (Null)"); }
     }
-#endregion
+    #endregion
 
     #region NodeArcs...
     //
@@ -902,7 +902,7 @@ public class DataManager : MonoBehaviour
         { tempArray[i] = arrayOfNodeArcTotals[0, i]; }
         return tempArray;
     }
-#endregion
+    #endregion
 
     #region Action Related...
     //
@@ -928,7 +928,7 @@ public class DataManager : MonoBehaviour
 
     public Dictionary<string, Action> GetDictOfActions()
     { return dictOfActions; }
-#endregion
+    #endregion
 
     #region Actor Arcs...
     //
@@ -1011,7 +1011,7 @@ public class DataManager : MonoBehaviour
 
     public List<ActorArc> GetListOfResistanceActorArcs()
     { return resistanceActorArcs; }
-#endregion
+    #endregion
 
     #region Actor Breakdowns...
     //
@@ -1037,7 +1037,7 @@ public class DataManager : MonoBehaviour
         else { Debug.LogError("Invalid conflictName (Null or Empty)"); }
         return null;
     }
-#endregion
+    #endregion
 
     #region Traits...
     //
@@ -1180,7 +1180,7 @@ public class DataManager : MonoBehaviour
         }
         return null;
     }
-#endregion
+    #endregion
 
     #region Contacts...
     //
@@ -2340,7 +2340,7 @@ public class DataManager : MonoBehaviour
         }
         return "Unknown";
     }
-#endregion
+    #endregion
 
     #region Nodes...
     //
@@ -3088,7 +3088,32 @@ public class DataManager : MonoBehaviour
             else { Debug.LogErrorFormat("Invalid Node (Null) in listOfNodes[{0}]", i); }
         }
     }
-#endregion
+
+    /// <summary>
+    /// returns a list of all nodes that have subordinate contacts present. Empty list if none.
+    /// </summary>
+    /// <returns></returns>
+    public List<Node> GetListOfContactNodes()
+    {
+        List<Node> tempList = new List<Node>();
+        GlobalSide globalResistance = GameManager.i.globalScript.sideResistance;
+        //loop nodes
+        Node node;
+        for (int i = 0; i < listOfNodes.Count; i++)
+        {
+            node = listOfNodes[i];
+            if (node != null)
+            {
+                //check for contact
+                if (CheckActiveContactAtNode(node.nodeID, globalResistance) == true)
+                { tempList.Add(node); }
+            }
+            else { Debug.LogErrorFormat("Invalid node (Null) for listOfNodes[{0}]", i); }
+        }
+        return tempList;
+    }
+
+    #endregion
 
     #region Connections...
     //
@@ -3143,7 +3168,7 @@ public class DataManager : MonoBehaviour
     {
         return listOfConnections[Random.Range(0, listOfConnections.Count)];
     }
-#endregion
+    #endregion
 
     #region Tiles...
     //
@@ -3182,7 +3207,7 @@ public class DataManager : MonoBehaviour
     public List<Tile> GetListOfTiles()
     { return listOfTiles; }
 
-#endregion
+    #endregion
 
     #region Targets...
     //
@@ -3559,38 +3584,38 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public string DebugDisplayGenericTargets()
     {
-            if (GameManager.i.optionScript.isTargets == true)
+        if (GameManager.i.optionScript.isTargets == true)
+        {
+            StringBuilder builder = new StringBuilder();
+            Target target = null;
+            List<string> tempList = new List<string>();
+            builder.AppendFormat("- ArrayOfGenericTargets{0}", "\n");
+            for (int i = 0; i < arrayOfGenericTargets.Length; i++)
             {
-                StringBuilder builder = new StringBuilder();
-                Target target = null;
-                List<string> tempList = new List<string>();
-                builder.AppendFormat("- ArrayOfGenericTargets{0}", "\n");
-                for (int i = 0; i < arrayOfGenericTargets.Length; i++)
+                builder.AppendFormat("{0} NodeArc -> {1}{2}", "\n", GetNodeArc(i).name, "\n");
+                tempList = arrayOfGenericTargets[i];
+                if (tempList != null)
                 {
-                    builder.AppendFormat("{0} NodeArc -> {1}{2}", "\n", GetNodeArc(i).name, "\n");
-                    tempList = arrayOfGenericTargets[i];
-                    if (tempList != null)
+                    if (tempList.Count > 0)
                     {
-                        if (tempList.Count > 0)
+                        for (int j = 0; j < tempList.Count; j++)
                         {
-                            for (int j = 0; j < tempList.Count; j++)
+                            target = GetTarget(tempList[j]);
+                            if (target != null)
                             {
-                                target = GetTarget(tempList[j]);
-                                if (target != null)
-                                {
-                                    builder.AppendFormat(" {0}, level {1}, act {2}, del {3}, win {4}{5}", target.targetName, target.targetLevel,
-                                        target.profile.activation.name, target.timerDelay, target.timerWindow, "\n");
-                                }
-                                else { builder.AppendFormat(" INVALID Target (Null){0}", "\n"); }
+                                builder.AppendFormat(" {0}, level {1}, act {2}, del {3}, win {4}{5}", target.targetName, target.targetLevel,
+                                    target.profile.activation.name, target.timerDelay, target.timerWindow, "\n");
                             }
+                            else { builder.AppendFormat(" INVALID Target (Null){0}", "\n"); }
                         }
-                        else { builder.AppendFormat(" No Targets present{0}", "\n"); }
                     }
-                    else { builder.AppendFormat(" INVALID List (Null){0}", "\n"); }
+                    else { builder.AppendFormat(" No Targets present{0}", "\n"); }
                 }
-                return builder.ToString();
+                else { builder.AppendFormat(" INVALID List (Null){0}", "\n"); }
             }
-            else { return "Targets have been disabled"; }
+            return builder.ToString();
+        }
+        else { return "Targets have been disabled"; }
     }
 
     /// <summary>
@@ -3602,17 +3627,17 @@ public class DataManager : MonoBehaviour
         if (GameManager.i.optionScript.isTargets == true)
         {
             StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("- Target Pools{0}", "\n");
-        builder.AppendFormat("{0} Active Targets{1}", "\n", "\n");
-        builder.Append(DebugShowPool(targetPoolActive));
-        builder.AppendFormat("{0} Live Targets{1}", "\n", "\n");
-        builder.Append(DebugShowPool(targetPoolLive));
-        builder.AppendFormat("{0} Outstanding Targets{1}", "\n", "\n");
-        builder.Append(DebugShowPool(targetPoolOutstanding));
-        builder.AppendFormat("{0} Done Targets{1}", "\n", "\n");
-        builder.Append(DebugShowPool(targetPoolDone));
-        return builder.ToString();
-    }
+            builder.AppendFormat("- Target Pools{0}", "\n");
+            builder.AppendFormat("{0} Active Targets{1}", "\n", "\n");
+            builder.Append(DebugShowPool(targetPoolActive));
+            builder.AppendFormat("{0} Live Targets{1}", "\n", "\n");
+            builder.Append(DebugShowPool(targetPoolLive));
+            builder.AppendFormat("{0} Outstanding Targets{1}", "\n", "\n");
+            builder.Append(DebugShowPool(targetPoolOutstanding));
+            builder.AppendFormat("{0} Done Targets{1}", "\n", "\n");
+            builder.Append(DebugShowPool(targetPoolDone));
+            return builder.ToString();
+        }
         else { return "Targets have been disabled"; }
     }
 
@@ -4037,7 +4062,7 @@ public class DataManager : MonoBehaviour
     {
         if (arc != null)
         {
-            foreach(var team in dictOfTeams)
+            foreach (var team in dictOfTeams)
             {
                 if (team.Value.arc.TeamArcID == arc.TeamArcID)
                 { return team.Key; }
@@ -4125,7 +4150,7 @@ public class DataManager : MonoBehaviour
         }
         return tempList;
     }
-#endregion
+    #endregion
 
     #region HQs...
     //
@@ -4157,7 +4182,7 @@ public class DataManager : MonoBehaviour
 
     public Dictionary<string, Hq> GetDictOfHQs()
     { return dictOfHQs; }
-#endregion
+    #endregion
 
     #region HQ Actors...
     //
@@ -4430,7 +4455,7 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfHqEvents (Null)"); }
     }
-#endregion
+    #endregion
 
     #region Actors...
     //
@@ -4873,8 +4898,11 @@ public class DataManager : MonoBehaviour
                     break;
             }
         }
-        else { Debug.LogFormat("[Tor] DataManager.cs -> AddActorToReserve: actorID {0}, side {1}, unable to be added to Reserves (OptionManager.isRecruit {2}){3}", 
-            actorID, side.name, GameManager.i.optionScript.isRecruit, "\n"); }
+        else
+        {
+            Debug.LogFormat("[Tor] DataManager.cs -> AddActorToReserve: actorID {0}, side {1}, unable to be added to Reserves (OptionManager.isRecruit {2}){3}",
+         actorID, side.name, GameManager.i.optionScript.isRecruit, "\n");
+        }
         return successFlag;
     }
 
@@ -5115,7 +5143,7 @@ public class DataManager : MonoBehaviour
         int total = GameManager.i.actorScript.maxNumOfOnMapActors;
         Actor[] tempArray = new Actor[total];
         for (int i = 0; i < total; i++)
-        {  tempArray[i] = arrayOfActors[side.level, i]; }
+        { tempArray[i] = arrayOfActors[side.level, i]; }
         return tempArray;
     }
 
@@ -5961,7 +5989,7 @@ public class DataManager : MonoBehaviour
         return builder.ToString();
     }
 
-#endregion
+    #endregion
 
     #region Actor Nodes and Qualities
     //
@@ -6038,7 +6066,7 @@ public class DataManager : MonoBehaviour
 
     public string[,] GetArrayOfStatTags()
     { return arrayOfStatTags; }
-#endregion
+    #endregion
 
     #region Secrets...
     //
@@ -6218,7 +6246,7 @@ public class DataManager : MonoBehaviour
         return builder.ToString();
     }
 
-#endregion
+    #endregion
 
     #region Investigations...
     //
@@ -6252,7 +6280,7 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfInvestigations (Null)"); }
     }
-#endregion
+    #endregion
 
     #region Gear...
     //
@@ -6815,7 +6843,7 @@ public class DataManager : MonoBehaviour
         return builder.ToString();
     }
 
-#endregion
+    #endregion
 
     #region Messages...
     //
@@ -7239,7 +7267,7 @@ public class DataManager : MonoBehaviour
         return builderOverall.ToString();
     }
 
-#endregion
+    #endregion
 
     #region Effects...
     //
@@ -7261,7 +7289,7 @@ public class DataManager : MonoBehaviour
         else { Debug.LogError("Invalid stringName parameter (Null or Empty)"); }
         return effect;
     }
-#endregion
+    #endregion
 
     #region Ongoing Effects...
     //
@@ -7401,7 +7429,7 @@ public class DataManager : MonoBehaviour
     /*public Dictionary<string, Effect> GetDictOfEffects()
     { return dictOfEffects; }*/
 
-#endregion
+    #endregion
 
     #region AI...
     //
@@ -7492,7 +7520,7 @@ public class DataManager : MonoBehaviour
         else { Debug.LogError("Invalid decisionName (Null)"); }
         return null;
     }
-#endregion
+    #endregion
 
     #region ManageActors...
     //
@@ -7582,7 +7610,7 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid tempList (Null)"); }
     }
-#endregion
+    #endregion
 
     #region Cures
     //
@@ -7644,7 +7672,7 @@ public class DataManager : MonoBehaviour
             else { Debug.LogWarning("Invalid cure (Null) in dictOfCures"); }
         }
     }
-#endregion
+    #endregion
 
     #region ManageActions...
     //
@@ -7672,7 +7700,7 @@ public class DataManager : MonoBehaviour
     public Dictionary<string, ManageAction> GetDictOfManageActions()
     { return dictOfManageActions; }
 
-#endregion
+    #endregion
 
     #region Cities...
     //
@@ -7704,7 +7732,7 @@ public class DataManager : MonoBehaviour
     public Dictionary<string, City> GetDictOfCities()
     { return dictOfCities; }
 
-#endregion
+    #endregion
 
     #region Level Analysis...
     //
@@ -7773,7 +7801,7 @@ public class DataManager : MonoBehaviour
         }
         return searchResult;
     }
-#endregion
+    #endregion
 
     #region Objectives...
     //
@@ -7822,7 +7850,7 @@ public class DataManager : MonoBehaviour
     public Dictionary<string, Objective> GetDictOfObjectives()
     { return dictOfObjectives; }
 
-#endregion
+    #endregion
 
     #region Organisations...
 
@@ -8135,7 +8163,7 @@ public class DataManager : MonoBehaviour
         else { builder.AppendFormat("-NULL FILE for {0}", orgType); }
         return builder.ToString();
     }
-#endregion
+    #endregion
 
     #region Mayors...
     //
@@ -8167,7 +8195,7 @@ public class DataManager : MonoBehaviour
         return mayor;
     }
 
-#endregion
+    #endregion
 
     #region Action Adjustments...
     //
@@ -8315,7 +8343,7 @@ public class DataManager : MonoBehaviour
         }
         return builder.ToString();
     }
-#endregion
+    #endregion
 
     #region ActorPanelUI...
     //
@@ -8349,7 +8377,7 @@ public class DataManager : MonoBehaviour
         else { Debug.LogWarningFormat("Not found, tag \"{0}\", in dictOfHelpData {1}", tag, "\n"); }
         return null;
     }
-#endregion
+    #endregion
 
     #region History...
     //
@@ -8484,7 +8512,7 @@ public class DataManager : MonoBehaviour
     public List<string> GetListOfHistoryAutoRun()
     { return listOfHistoryAutoRun; }
 
-#endregion
+    #endregion
 
     #region Debug...
 
@@ -8691,7 +8719,7 @@ public class DataManager : MonoBehaviour
         return builder.ToString();
     }
 
-#endregion
+    #endregion
 
     #region Statistics...
     //
@@ -8784,7 +8812,7 @@ public class DataManager : MonoBehaviour
     public Dictionary<StatType, int> GetDictOfStatisticsCampaign()
     { return dictOfStatisticsCampaign; }
 
-#endregion
+    #endregion
 
     #region Campaigns...
     //
@@ -10529,7 +10557,7 @@ public class DataManager : MonoBehaviour
             int updated = current + amountToChange;
             updated = Mathf.Clamp(updated, 0, 3);
             arrayOfMegaCorpRelations[(int)megaCorp] = updated;
-            Debug.LogFormat("[Meg] DataManager.cs -> UpdateMegaCorpRelations: {0} rel {1}{2} (was {3}, now {4}){5}", 
+            Debug.LogFormat("[Meg] DataManager.cs -> UpdateMegaCorpRelations: {0} rel {1}{2} (was {3}, now {4}){5}",
                 GetMegaCorpName(megaCorp), amountToChange > 0 ? "+" : "", amountToChange, current, updated, "\n");
             //history
             AddMegaCorpHistory(megaCorp, amountToChange, updated, reason, isHighlight);
@@ -10575,7 +10603,7 @@ public class DataManager : MonoBehaviour
             { arrayOfMegaCorpRelations = new int[(int)MegaCorpType.Count]; }
             if (limit != arrayOfMegaCorpRelations.Length)
             {
-                Debug.LogWarningFormat("Invalid saveList dimension (is {0}, should be {1}), changed automatically (if < than required, arrayOfMegaCorpRel's may be incorect)", 
+                Debug.LogWarningFormat("Invalid saveList dimension (is {0}, should be {1}), changed automatically (if < than required, arrayOfMegaCorpRel's may be incorect)",
                     limit, arrayOfMegaCorpRelations.Length);
                 limit = Mathf.Min(limit, arrayOfMegaCorpRelations.Length);
             }
@@ -10637,14 +10665,16 @@ public class DataManager : MonoBehaviour
         builder.AppendFormat("{0}{1}- History", "\n", "\n");
         int count = listOfHistoryMegaCorp.Count;
         if (count > 0)
-        for (int i = 0; i < count; i++)
-        {
+            for (int i = 0; i < count; i++)
+            {
                 HistoryMegaCorp history = listOfHistoryMegaCorp[i];
                 if (history != null)
-                { builder.AppendFormat("{0} t{1}, {2}, {3}, rel {4} ({5}{6}), \"{7}\"", 
-                    "\n", history.turn, GetMegaCorpName(history.megaCorp), history.cityTag, history.relationshipNow, history.change > 0 ? "+" : "", history.change, history.text); }
+                {
+                    builder.AppendFormat("{0} t{1}, {2}, {3}, rel {4} ({5}{6}), \"{7}\"",
+                      "\n", history.turn, GetMegaCorpName(history.megaCorp), history.cityTag, history.relationshipNow, history.change > 0 ? "+" : "", history.change, history.text);
+                }
                 else { builder.AppendFormat("{0} ERROR (Null) for listOfHistoryMegaCorp[{1}]", "\n", i); }
-        }
+            }
         else { builder.Append("No records present"); }
         return builder.ToString();
     }

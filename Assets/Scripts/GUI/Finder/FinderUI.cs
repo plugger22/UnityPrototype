@@ -28,7 +28,6 @@ public class FinderUI : MonoBehaviour
     public List<GenericTooltipUI> listOfTooltips;
 
     private bool isActive;
-    private string colourEnd;
     private Color colourDefault;                                     //used for SetCurrentButton
     private Color colourHighlight;
 
@@ -95,6 +94,7 @@ public class FinderUI : MonoBehaviour
                 SubInitialiseEvents();
                 break;
             case GameState.FollowOnInitialisation:
+                SubInitialiseFollowOn();
                 break;
             default:
                 Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
@@ -137,8 +137,6 @@ public class FinderUI : MonoBehaviour
     #region SubInitialiseSessionStart
     private void SubInitialiseSessionStart()
     {
-        //fast access
-        colourEnd = GameManager.i.colourScript.GetEndTag();
         //set to False
         isActive = false;
         finderImage.gameObject.SetActive(true);
@@ -150,9 +148,17 @@ public class FinderUI : MonoBehaviour
         //Initialisations
         maxNumOfScrollItems = listOfButtons.Count;
         InitialiseFinderData();
+        InitialiseDistrictData();
         InitialiseFinderTooltip();
         //Side Tab (close)
         finderTabText.text = string.Format("{0}", GameManager.i.guiScript.tutArrowRight);
+    }
+    #endregion
+
+    #region SubInitialiseFollowOn
+    private void SubInitialiseFollowOn()
+    {
+        InitialiseDistrictData();
     }
     #endregion
 
@@ -324,6 +330,16 @@ public class FinderUI : MonoBehaviour
             tooltipMiddle = "Displays all districts where Resistance activity is known to the Authority",
             tooltipBottom = "Shortcut ?"
         });
+    }
+    #endregion
+
+    #region InitialiseDistrictData
+    /// <summary>
+    /// Dynamic data for district buttons
+    /// </summary>
+    private void InitialiseDistrictData()
+    {
+        listOfNodeData.Clear();
         //
         // - - - district list
         //
@@ -672,6 +688,15 @@ public class FinderUI : MonoBehaviour
         currentIndex = index;
         SetCurrentButton();
     }
+    #endregion
+
+    #region CheckFinderActive
+    /// <summary>
+    /// returns true if finder currently active
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckFinderActive()
+    { return isActive; }
     #endregion
 
     #region Utilities...

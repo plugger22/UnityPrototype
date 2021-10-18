@@ -620,7 +620,7 @@ public class NodeManager : MonoBehaviour
     public List<Node> ShowNodes(NodeUI nodeUI)
     {
         int data = -1;
-        int counter;
+        int count;
         bool successFlag = true;
         bool nodeTypeFlag = false;
         bool proceedFlag = false;
@@ -672,7 +672,7 @@ public class NodeManager : MonoBehaviour
                         tempList.AddRange(GameManager.i.dataScript.GetTargetPool(Status.Outstanding));
                         if (tempList.Count > 0)
                         {
-                            counter = 0;
+                            count = 0;
                             foreach (Target target in tempList)
                             {
                                 Node nodeTemp = GameManager.i.dataScript.GetNode(target.nodeID);
@@ -685,7 +685,7 @@ public class NodeManager : MonoBehaviour
                                         {
                                             nodeTemp.SetActive();
                                             listOfHighlighted.Add(nodeTemp);
-                                            counter++;
+                                            count++;
                                         }
                                     }
                                     else
@@ -693,12 +693,12 @@ public class NodeManager : MonoBehaviour
                                         //resistance player
                                         nodeTemp.SetActive();
                                         listOfHighlighted.Add(nodeTemp);
-                                        counter++;
+                                        count++;
                                     }
                                 }
                                 else { Debug.LogWarningFormat("Invalid node (Null) for target.nodeID {0}", target.nodeID); }
                             }
-                            displayText = string.Format("{0}{1}{2}{3} Target{4}{5} district{6}{7}", colourNormal, counter, colourEnd, colourCyber, colourEnd,
+                            displayText = string.Format("{0}{1}{2}{3} Target{4}{5} district{6}{7}", colourNormal, count, colourEnd, colourCyber, colourEnd,
                                 colourDefault, tempList.Count != 1 ? "s" : "", colourEnd);
                         }
                         else { displayText = string.Format("{0}{1}{2}", colourError, "No Targets present", colourEnd); }
@@ -755,16 +755,37 @@ public class NodeManager : MonoBehaviour
                 }
                 else { Debug.LogError(string.Format("Invalid node (Null) for NodeID {0}", GetPlayerNodeID())); }
                 break;
-            //show all contacts with effectiveness (highest) on node face
+            //show all districts where at least one contact is present
             case NodeUI.ShowContacts:
-                ShowAllContacts();
+
+                /*ShowAllContacts(); -> Displays node face data*/
+
+                List<Node> listOfContactNodes = GameManager.i.dataScript.GetListOfContactNodes();
+                count = 0;
+                if ( listOfContactNodes.Count > 0)
+                {
+                    foreach(Node node in listOfContactNodes)
+                    {
+                        node.SetActive();
+                        listOfHighlighted.Add(node);
+                        count++;
+                    }
+                }
+                if (count > 0)
+                {
+                    displayText = string.Format("{0}{1}{2} {3}{4}{5} with {6}Contacts{7}{8}", colourNormal, count, colourEnd,
+                        colourDefault, "district", count != 1 ? "s" : "", colourEnd, 
+                        colourCyber,  colourEnd);
+                }
+                else
+                { displayText = string.Format("{0}There are no districts with Contacts{1}", colourError, colourEnd); }
                 break;
             //show all nodes containng a spider
             case NodeUI.ShowSpiders:
                 List<Node> listOfSpiderNodes = GameManager.i.dataScript.GetListOfAllNodes();
                 if (listOfSpiderNodes != null)
                 {
-                    int count = 0;
+                    count = 0;
                     //determine level of visibility
                     switch (GameManager.i.sideScript.PlayerSide.name)
                     {
@@ -819,7 +840,7 @@ public class NodeManager : MonoBehaviour
                 List<Node> listOfTracerNodes = GameManager.i.dataScript.GetListOfAllNodes();
                 if (listOfTracerNodes != null)
                 {
-                    int count = 0;
+                    count = 0;
                     //determine level of visibility
                     switch (GameManager.i.sideScript.PlayerSide.level)
                     {
@@ -875,7 +896,7 @@ public class NodeManager : MonoBehaviour
                 List<int> listOfTeams = GameManager.i.dataScript.GetTeamPool(TeamPool.OnMap);
                 if (listOfTeams != null)
                 {
-                    int count = 0;
+                    count = 0;
                     //determine level of visibility
                     switch (GameManager.i.sideScript.PlayerSide.level)
                     {
@@ -980,7 +1001,7 @@ public class NodeManager : MonoBehaviour
                 break;
             case NodeUI.CureNodes:
                 //NOTE: will only show nodes if a cure is present AND is Active
-                counter = 0;
+                count = 0;
                 List<Node> cureList = GameManager.i.dataScript.GetListOfCureNodes();
                 if (cureList != null)
                 {
@@ -994,12 +1015,12 @@ public class NodeManager : MonoBehaviour
                                 {
                                     node.SetActive();
                                     listOfHighlighted.Add(node);
-                                    counter++;
+                                    count++;
                                 }
                             }
                             else { Debug.LogWarning("Invalid node (Null)"); }
                         }
-                        displayText = string.Format("{0}{1}{2}{3} Cure district{4}{5}", colourNormal, counter, colourEnd, colourCyber, counter != 1 ? "s" : "", colourEnd);
+                        displayText = string.Format("{0}{1}{2}{3} Cure district{4}{5}", colourNormal, count, colourEnd, colourCyber, count != 1 ? "s" : "", colourEnd);
                     }
                     else { displayText = string.Format("{0}{1}{2}", colourError, "0 Cure Districts present", colourEnd); }
                 }
@@ -1105,7 +1126,7 @@ public class NodeManager : MonoBehaviour
                 {
                     if (listOfCentreNodes.Count > 0)
                     {
-                        counter = 0;
+                        count = 0;
                         foreach (Node node in listOfCentreNodes)
                         {
                             if (node != null)
@@ -1114,12 +1135,12 @@ public class NodeManager : MonoBehaviour
                                 {
                                     node.SetActive();
                                     listOfHighlighted.Add(node);
-                                    counter++;
+                                    count++;
                                 }
                             }
                             else { Debug.LogWarning("Invalid node (Null)"); }
                         }
-                        displayText = string.Format("{0}{1}{2}{3} Centred district{4}{5}", colourNormal, counter, colourEnd, colourCyber,
+                        displayText = string.Format("{0}{1}{2}{3} Centred district{4}{5}", colourNormal, count, colourEnd, colourCyber,
                             listOfCentreNodes.Count != 1 ? "s" : "", colourEnd);
                     }
                     else { displayText = string.Format("{0}{1}{2}", colourError, "0 Centre Districts present", colourEnd); }
@@ -1134,8 +1155,8 @@ public class NodeManager : MonoBehaviour
                 List<int> listOfInvisibleNodes = GameManager.i.missionScript.mission.npc.listOfInvisibleNodes;
                 if (listOfInvisibleNodes != null)
                 {
-                    counter = 0;
-                    int count = listOfInvisibleNodes.Count;
+                    int counter = 0;
+                    count = listOfInvisibleNodes.Count;
                     if (count > 0)
                     {
                         for (int i = 0; i < count; i++)
