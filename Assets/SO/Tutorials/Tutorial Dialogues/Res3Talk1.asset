@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Res3Talk1
   m_EditorClassIdentifier: 
   topText: Don't forget that you're the boss. You can change your line up.
-  bottomText: We only let you have four subordinates. You're not THAT important.<br><br>You
+  bottomText: We only let you have <b>4</b> subordinates. You're not THAT important.<br><br>You
     can't activate a new subordinate from the Reserves unless there is a vacant spot
     for them first.
   item: {fileID: 11400000, guid: 80094aae438a56f40989dca381f8c03f, type: 2}

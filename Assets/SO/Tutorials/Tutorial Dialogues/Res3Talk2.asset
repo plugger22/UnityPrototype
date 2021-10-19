@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20d501b51a4f7c44893a54b01e66d52c, type: 3}
+  m_Name: Res3Talk2
+  m_EditorClassIdentifier: 
+  topText: Out with the old, in with the new
+  bottomText: Now there's a vacant spot in your team you can select the candidate
+    of your choice from the Reserves<br><br>Don't feel obliged to have a full line-up
+    of subordinates as you can run light if you wish<br><br>Less people, less problems
+  item: {fileID: 11400000, guid: e66375753c9f6314497433adfdf2dca5, type: 2}

@@ -34,6 +34,7 @@ public class ActionManager : MonoBehaviour
     private string actorReserveTimerHalved;
     private string actorReserveActionDoubled;
 
+    #region Colours...
     //colour palette for Modal Outcome
     private string colourNormal;
     private string colourError;
@@ -46,7 +47,9 @@ public class ActionManager : MonoBehaviour
     private string colourAuthority;
     private string colourGrey;
     private string colourEnd;
+    #endregion
 
+    #region Initialise
     /// <summary>
     /// Not for GameState.Load
     /// </summary>
@@ -70,7 +73,7 @@ public class ActionManager : MonoBehaviour
                 break;
         }
     }
-
+    #endregion
 
     #region Initialise SubMethods
 
@@ -2445,6 +2448,8 @@ public class ActionManager : MonoBehaviour
                     //history
                     actor.AddHistory(new HistoryActor() { text = "Recalled up for Active Duty" });
                     GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = string.Format("Recalled {0}, {1} for active Duty (Reserves)", actor.actorName, actor.arc.name) });
+                    //statistics
+                    GameManager.i.dataScript.StatisticIncrement(StatType.SubordinateActivate);
                     //Authority Actor brings team with them (if space available)
                     if (GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideAuthority.level)
                     {
@@ -2979,6 +2984,7 @@ public class ActionManager : MonoBehaviour
                 builderBottom.AppendFormat("{0}{1}{2}", "\n", "\n", moodText);
                 //statistics
                 GameManager.i.dataScript.StatisticIncrement(StatType.PlayerManageActions);
+                GameManager.i.dataScript.StatisticIncrement(StatType.PlayerManageReserve);
             }
             else
             {
@@ -3014,7 +3020,7 @@ public class ActionManager : MonoBehaviour
 
     #region ProcessDismissActorAction
     /// <summary>
-    /// processes final selection for a Dismiss Actor Action
+    /// processes final selection for a Dismiss (MoveOn) Actor Action
     /// </summary>
     private void ProcessDismissActorAction(GenericReturnData data)
     {
@@ -3162,6 +3168,7 @@ public class ActionManager : MonoBehaviour
             builderBottom.AppendFormat("{0}{1}{2}", "\n", "\n", moodText);
             //statistics
             GameManager.i.dataScript.StatisticIncrement(StatType.PlayerManageActions);
+            GameManager.i.dataScript.StatisticIncrement(StatType.PlayerManageMoveOn);
         }
         else
         {
@@ -3336,6 +3343,7 @@ public class ActionManager : MonoBehaviour
             builderBottom.AppendFormat("{0}{1}{2}", "\n", "\n", moodText);
             //statistics
             GameManager.i.dataScript.StatisticIncrement(StatType.PlayerManageActions);
+            GameManager.i.dataScript.StatisticIncrement(StatType.PlayerManageDispose);
         }
         else
         {

@@ -19,7 +19,7 @@ MonoBehaviour:
   finishTopText: You've moved them to your Reserves
   finishBottomText: You can bring them back later if you wish<br><br>The important
     thing is that you now have a vacant slot on your team (Remember there is a maximum
-    of four subordinates)<br><br>You are now free to activate a replacement
+    of <b>FOUR</b> subordinates)<br><br>You are now free to activate a replacement
   tooltipText: You need to know how to hire 'em but also how to fire 'em
   goal0: {fileID: 11400000, guid: 768ec8211f9e81b49929c99ca262345b, type: 2}
   tracker0Notes: Dismiss a Subordinate

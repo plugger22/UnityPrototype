@@ -521,6 +521,7 @@ public class TutorialManager : MonoBehaviour
                             data1 = GetGoalValue(goalSecondary),
                             target0 = goal.target0,
                             target1 = goal.target1,
+                            eventType = GetGoalEvent(goalPrimary)
                         };
 
                         listOfGoals.Add(tracker);
@@ -594,6 +595,9 @@ public class TutorialManager : MonoBehaviour
                         {
                             Debug.LogFormat("[Tut] TutorialManager.cs -> CheckGoals: Goal \"{0}\" COMPLETED (goal0 {1}, data0 {2}, target0 {3}, goal1 {4}, data1 {5}, target1 {6}){7}",
                                 tracker.goalName, tracker.goal0, tracker.data0, tracker.target0, tracker.goal1, tracker.data1, tracker.target1, "\n");
+                            //activate event (eg. close an underlying UI before showing outcome)
+                            if (tracker.eventType != EventType.None)
+                            { EventManager.i.PostNotification(tracker.eventType, this, null); }
                             //open special outcome window
                             ModalOutcomeDetails details = new ModalOutcomeDetails()
                             {
@@ -644,6 +648,7 @@ public class TutorialManager : MonoBehaviour
                 case "SubordinateNodeAction": goalType = GoalType.SubordinateNodeActions; break;
                 case "SubordinateRecruit": goalType = GoalType.SubordinateRecruit; break;
                 case "SubordinateDismiss": goalType = GoalType.SubordinateDismiss; break;
+                case "SubordinateActivate": goalType = GoalType.SubordinateActivate; break;
                 case "PlayerInvisibility": goalType = GoalType.PlayerInvisibility; break;
                 case "PlayerNodeAction": goalType = GoalType.PlayerNodeActions; break;
                 case "PlayerRecruit": goalType = GoalType.PlayerRecruit; break;
@@ -679,9 +684,17 @@ public class TutorialManager : MonoBehaviour
                 goalValue = GameManager.i.dataScript.StatisticGetLevel(StatType.SubordinateNodeActions);
                 break;
             case GoalType.SubordinateRecruit:
-                //surordinate recruits somebody
+                //subordinate recruits somebody
                 goalValue = GameManager.i.dataScript.StatisticGetLevel(StatType.ActorsRecruited);
                 break;
+            case GoalType.SubordinateDismiss:
+                //subordinate is dismissed from onMap lineUp
+                goalValue = GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerManageReserve);
+                break;
+            case GoalType.SubordinateActivate:
+                //subordinate is activated from Reserves to OnMap
+                goalValue = GameManager.i.dataScript.StatisticGetLevel(StatType.SubordinateActivate);
+                    break;
             case GoalType.PlayerInvisibility:
                 //player lost invisibility
                 goalValue = GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerInvisibilityLost);
@@ -698,6 +711,26 @@ public class TutorialManager : MonoBehaviour
             default: Debug.LogWarningFormat("Unrecognised goalType \"{0}\"", goalType); break;
         }
         return goalValue;
+    }
+    #endregion
+
+    #region GetGoalEvent
+    /// <summary>
+    /// Allows you to specify an event that will run prior to the goal outcome dialogue. Used to close an underlying UI. Defaults to none.
+    /// NOTE: Be careful here. Don't run any events that are going to cause a conflict with ModalOutcome.
+    /// </summary>
+    /// <param name="goalType"></param>
+    /// <returns></returns>
+    private EventType GetGoalEvent(GoalType goalType)
+    {
+        EventType eventType = EventType.None;
+        switch (goalType)
+        {
+              case GoalType.SubordinateActivate:
+                eventType = EventType.InventoryCloseUI;
+                break;
+        }
+        return eventType;
     }
     #endregion
 

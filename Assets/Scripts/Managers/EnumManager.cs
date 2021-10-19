@@ -252,7 +252,7 @@
         None,
         Move, MoveSecurity,
         PlayerInvisibility, PlayerNodeActions, PlayerRecruit,
-        SubordinateRecruit, SubordinateNodeActions, SubordinateDismiss
+        SubordinateRecruit, SubordinateNodeActions, SubordinateDismiss, SubordinateActivate
     }                 
 
     //
@@ -262,9 +262,10 @@
     {
         StressLeaveResistance, StressLeaveAuthority,  
         PlayerBreakdown, PlayerLieLowTimes, PlayerLieLowDays, PlayerCaptured, PlayerCapturedDays, PlayerBetrayed, PlayerTimesStressed, PlayerStressedDays, PlayerSuperStressed, PlayerDoNothing,
-        PlayerNodeActions, PlayerManageActions, PlayerMoveActions, PlayerTargetAttempts, PlayerGiveGear, PlayerAddictedDays, PlayerTimesCured, PlayerDaysOnJob, PlayerInvisibilityLost,
+        PlayerNodeActions, PlayerMoveActions, PlayerTargetAttempts, PlayerGiveGear, PlayerAddictedDays, PlayerTimesCured, PlayerDaysOnJob, PlayerInvisibilityLost,
         PlayerMoveSecureConnections,
-        SubordinateNodeActions,
+        PlayerManageActions, PlayerManageReserve, PlayerManageMoveOn, PlayerManageDispose,
+        SubordinateNodeActions, SubordinateActivate,
         LieLowDaysTotal, GearTotal,
         TargetAttempts, TargetSuccesses,
         ActorsResignedAuthority, ActorsResignedResistance, ActorResistanceTraitors, ActorsRecruited, ActorConflicts, ActorLearntSecret, ActorCompatibilityGood, ActorCompatibilityBad,

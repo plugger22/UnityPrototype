@@ -1473,6 +1473,7 @@ namespace packageAPI
         public string finishBottom;                 //message (bottom text) given to player upon goal completion
         public string goalName;                     //tutorialGoal.name (reference only)
         public int index;                           //tutorialUI.cs index (needed for passing back when goal complete)
+        public EventType eventType;                 //event to be called once goal/s achieved, before outcome shown. eg. close underlying UI (Reserves, etc). Optional
         //primary goal
         public GoalType goal0;                      //type of goal associated with data0 and target0
         public int data0;                           //current value of first data point to be tracked, default -1
@@ -1481,6 +1482,12 @@ namespace packageAPI
         public GoalType goal1;                      //type of goal associated with data1 and target1
         public int data1;                           //current value of second data point to be tracked (if any), default -1
         public int target1;                         //target value of second data point in order for goal to be achieved
+
+        /// <summary>
+        /// default constructor
+        /// </summary>
+        public GoalTracker()
+        { eventType = EventType.None; }
     }
 
     /// <summary>
