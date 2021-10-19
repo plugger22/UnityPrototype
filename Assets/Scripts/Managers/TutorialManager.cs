@@ -643,6 +643,7 @@ public class TutorialManager : MonoBehaviour
                 case "MoveSecurity": goalType = GoalType.MoveSecurity; break;
                 case "SubordinateNodeAction": goalType = GoalType.SubordinateNodeActions; break;
                 case "SubordinateRecruit": goalType = GoalType.SubordinateRecruit; break;
+                case "SubordinateDismiss": goalType = GoalType.SubordinateDismiss; break;
                 case "PlayerInvisibility": goalType = GoalType.PlayerInvisibility; break;
                 case "PlayerNodeAction": goalType = GoalType.PlayerNodeActions; break;
                 case "PlayerRecruit": goalType = GoalType.PlayerRecruit; break;

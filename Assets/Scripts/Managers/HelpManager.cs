@@ -635,25 +635,42 @@ public class HelpManager : MonoBehaviour
         //
         // - - - Reserves UI
         //
-        //Open
+        //Overview
         data = new HelpData();
         data.tag = "reserveInv_0";
         data.header = "Overview";
+        builder = new StringBuilder();
+        builder.AppendFormat("Newly recruited subordinates are placed in the Reserves. To have them {0}join your team{1} you need to select them for Active Duty ({2}Right Click portrait{3}). ",
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        builder.AppendFormat("Existing team members can also be sent to the Reserves to {0}make room{1} for new recruits. The Reserves act as a {2}holding pool{3}",
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //Subordinates
+        data = new HelpData();
+        data.tag = "reserveInv_1";
+        data.header = "Subordinates";
         data.text = string.Format("Subordinates are willing to sit in the Reserves for a while, {0}but not forever{1}. At some point they'll become {2}Unhappy{3} and will eventually take decisive action",
             colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Options
         data = new HelpData();
-        data.tag = "reserveInv_1";
+        data.tag = "reserveInv_2";
         data.header = "Options";
         data.text = string.Format("You can {0}delay{1} a subordinate becoming unhappy by Reassuring or Threatening them, change your mind and {2}get rid of them{3}, or select them for {4}Active Duty{5}",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Quality
         data = new HelpData();
-        data.tag = "reserveInv_2";
+        data.tag = "reserveInv_3";
         data.header = string.Format("{0}Recruiting{1}", colourTip, colourEnd);
         data.text = string.Format("Your {0}RECRUITER{1} will always source {2}better candidates{3} than you can. Aim to source new subordinates with your RECRUITER if possible", colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Reserves
+        data = new HelpData();
+        data.tag = "reserveInv_4";
+        data.header = string.Format("{0}Reserves{1}", colourTip, colourEnd);
+        data.text = string.Format("To {0}view{1} your Reserve Pool and to make any changes, {2}press R{3} (after everything else is closed)", colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
 

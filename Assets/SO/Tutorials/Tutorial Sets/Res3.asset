@@ -32,13 +32,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: efba9c88561b33140bc3fe102eb154d3, type: 2}
   listOfGUIOff:
   - {fileID: 11400000, guid: 3fc3cf403714826438976deb8559517b, type: 2}
-  - {fileID: 11400000, guid: 4ecda8036df900d48b4b25e77b1b6ad0, type: 2}
   listOfTutorialItems:
   - {fileID: 11400000, guid: 6ffd612106e21724e8726b75d49924b3, type: 2}
   - {fileID: 11400000, guid: 168a0cb22f88d7b47a75f838959ad276, type: 2}
-  - {fileID: 11400000, guid: b8f613ae1fd09824786ddb18f57bce01, type: 2}
-  - {fileID: 11400000, guid: c96b889f230661a4fa5dd2ec48b66e3e, type: 2}
-  - {fileID: 11400000, guid: ea57d731bfce875459cb67e57e5b076a, type: 2}
+  - {fileID: 11400000, guid: 33b98f5386dbccc44a0aec04a159edc6, type: 2}
   - {fileID: 11400000, guid: 20ad6e7178774734b99dcbeaa660fcd3, type: 2}
   - {fileID: 11400000, guid: a89bfc17bbe9be44283515df74ec72a0, type: 2}
+  - {fileID: 11400000, guid: ea57d731bfce875459cb67e57e5b076a, type: 2}
+  - {fileID: 11400000, guid: faa053c12d6f4f04190b3146cd1f2f9e, type: 2}
+  - {fileID: 11400000, guid: 7036abe577d66114f9480b143806cf60, type: 2}
+  - {fileID: 11400000, guid: b8f613ae1fd09824786ddb18f57bce01, type: 2}
   - {fileID: 11400000, guid: d3fa740fb45290048977eb7bde966e90, type: 2}

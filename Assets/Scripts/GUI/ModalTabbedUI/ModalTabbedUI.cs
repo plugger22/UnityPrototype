@@ -3686,7 +3686,7 @@ public class ModalTabbedUI : MonoBehaviour
                 break;
             case ActorStatus.Reserve:
                 descriptor = "Awaiting Assignment";
-                listOfHelpData = GameManager.i.helpScript.GetHelpData("reserveInv_0", "reserveInv_1");
+                listOfHelpData = GameManager.i.helpScript.GetHelpData("reserveInv_1", "reserveInv_2", "reserveInv_4");
                 break;
             case ActorStatus.HQ:
                 descriptor = "At HQ";
@@ -3951,7 +3951,7 @@ public class ModalTabbedUI : MonoBehaviour
                 listOfHelpData = GameManager.i.helpScript.GetHelpData("tagged_0", "tagged_1", "tagged_2");
                 break;
             case "UNHAPPY":
-                listOfHelpData = GameManager.i.helpScript.GetHelpData("reserveInv_0", "reserveInv_1");
+                listOfHelpData = GameManager.i.helpScript.GetHelpData("reserveInv_1", "reserveInv_2", "reserveInv_4");
                 break;
             case "WOUNDED":
                 listOfHelpData = GameManager.i.helpScript.GetHelpData("wounded_0", "wounded_1");

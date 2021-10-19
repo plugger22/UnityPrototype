@@ -5402,6 +5402,7 @@ public class ActorManager : MonoBehaviour
                 data.help0 = "reserveInv_0";
                 data.help1 = "reserveInv_1";
                 data.help2 = "reserveInv_2";
+                data.help3 = "reserveInv_3";
                 //Loop Actor list and populate arrays
                 List<int> listOfActors = GameManager.i.dataScript.GetActorList(data.side, ActorList.Reserve);
                 if (listOfActors != null)

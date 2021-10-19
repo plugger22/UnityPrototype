@@ -1841,3 +1841,263 @@ City seed 54510 -> Londus, Eurasia
 Dev seed 8534 -> Monday, 18 October 2021 4:45 PM
 City seed 18036 -> Londus, Eurasia
 City seed 58890 -> Newpolis, Americon
+
+Dev seed 31180 -> Tuesday, 19 October 2021 10:07 AM
+City seed 16597 -> VirtualCity, Eurasia
+
+Dev seed 5649 -> Tuesday, 19 October 2021 10:32 AM
+City seed 27409 -> VirtualCity, Eurasia
+WARNING Can't assign targets as optionManager.isTargets FALSE
+UnityEngine.Debug:LogWarning(Object)
+	TargetManager:ConfigureTutorialTargets(TutorialTargetConfig) (at Assets/Scripts/Managers/TargetManager.cs:872)
+	TargetManager:SubInitialiseLate() (at Assets/Scripts/Managers/TargetManager.cs:193)
+	TargetManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/TargetManager.cs:117)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:InitialiseTutorial() (at Assets/Scripts/GameManager.cs:1070)
+	ControlManager:ProcessTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:628)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:95)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:331)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 24463 -> Tuesday, 19 October 2021 10:53 AM
+WARNING [Val] ValidateSO: MISMATCH on TutorialItem, array 34, assets 35 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialItem[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2597)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialDialogue, array 9, assets 10 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialDialogue[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2603)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	City seed 48244 -> VirtualCity, Eurasia
+WARNING Can't assign targets as optionManager.isTargets FALSE
+UnityEngine.Debug:LogWarning(Object)
+	TargetManager:ConfigureTutorialTargets(TutorialTargetConfig) (at Assets/Scripts/Managers/TargetManager.cs:872)
+	TargetManager:SubInitialiseLate() (at Assets/Scripts/Managers/TargetManager.cs:193)
+	TargetManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/TargetManager.cs:117)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:InitialiseTutorial() (at Assets/Scripts/GameManager.cs:1070)
+	ControlManager:ProcessTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:628)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:95)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:331)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 34275 -> Tuesday, 19 October 2021 11:10 AM
+WARNING [Val] ValidateSO: MISMATCH on TutorialItem, array 34, assets 36 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialItem[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2597)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialDialogue, array 9, assets 11 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialDialogue[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2603)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	City seed 9934 -> VirtualCity, Eurasia
+WARNING Can't assign targets as optionManager.isTargets FALSE
+UnityEngine.Debug:LogWarning(Object)
+	TargetManager:ConfigureTutorialTargets(TutorialTargetConfig) (at Assets/Scripts/Managers/TargetManager.cs:872)
+	TargetManager:SubInitialiseLate() (at Assets/Scripts/Managers/TargetManager.cs:193)
+	TargetManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/TargetManager.cs:117)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:InitialiseTutorial() (at Assets/Scripts/GameManager.cs:1070)
+	ControlManager:ProcessTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:628)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:95)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:331)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Can't start a new Modal Outcome as an instance is already active
+UnityEngine.Debug:LogWarning(Object)
+	ModalOutcome:SetModalOutcomeSpecial(ModalOutcomeDetails) (at Assets/Scripts/GUI/ModalOutcome.cs:492)
+	ModalOutcome:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalOutcome.cs:246)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	TutorialManager:CheckGoals() (at Assets/Scripts/Managers/TutorialManager.cs:608)
+	TurnManager:UseAction(String) (at Assets/Scripts/Managers/TurnManager.cs:754)
+	ModalOutcome:CloseModalOutcome() (at Assets/Scripts/GUI/ModalOutcome.cs:664)
+	ModalOutcome:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalOutcome.cs:252)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:544)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:483)
+	
+Dev seed 21928 -> Tuesday, 19 October 2021 12:12 PM
+WARNING [Val] ValidateSO: MISMATCH on TutorialItem, array 34, assets 36 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialItem[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2597)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialDialogue, array 9, assets 11 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialDialogue[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2603)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	City seed 28186 -> VirtualCity, Eurasia
+WARNING Can't assign targets as optionManager.isTargets FALSE
+UnityEngine.Debug:LogWarning(Object)
+	TargetManager:ConfigureTutorialTargets(TutorialTargetConfig) (at Assets/Scripts/Managers/TargetManager.cs:872)
+	TargetManager:SubInitialiseLate() (at Assets/Scripts/Managers/TargetManager.cs:193)
+	TargetManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/TargetManager.cs:117)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:InitialiseTutorial() (at Assets/Scripts/GameManager.cs:1070)
+	ControlManager:ProcessTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:628)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:95)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:331)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:118)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 47917 -> Tuesday, 19 October 2021 12:18 PM
+WARNING [Val] ValidateSO: MISMATCH on TutorialItem, array 34, assets 36 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialItem[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2597)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialDialogue, array 9, assets 11 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialDialogue[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2603)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	City seed 9196 -> VirtualCity, Eurasia
+WARNING Can't assign targets as optionManager.isTargets FALSE
+UnityEngine.Debug:LogWarning(Object)
+	TargetManager:ConfigureTutorialTargets(TutorialTargetConfig) (at Assets/Scripts/Managers/TargetManager.cs:872)
+	TargetManager:SubInitialiseLate() (at Assets/Scripts/Managers/TargetManager.cs:193)
+	TargetManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/TargetManager.cs:117)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:InitialiseTutorial() (at Assets/Scripts/GameManager.cs:1070)
+	ControlManager:ProcessTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:628)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:95)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:331)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 61805 -> Tuesday, 19 October 2021 12:22 PM
+WARNING [Val] ValidateSO: MISMATCH on TutorialItem, array 34, assets 36 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialItem[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2597)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialDialogue, array 9, assets 11 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialDialogue[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2603)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	City seed 29430 -> VirtualCity, Eurasia
+WARNING Can't assign targets as optionManager.isTargets FALSE
+UnityEngine.Debug:LogWarning(Object)
+	TargetManager:ConfigureTutorialTargets(TutorialTargetConfig) (at Assets/Scripts/Managers/TargetManager.cs:872)
+	TargetManager:SubInitialiseLate() (at Assets/Scripts/Managers/TargetManager.cs:193)
+	TargetManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/TargetManager.cs:117)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:InitialiseTutorial() (at Assets/Scripts/GameManager.cs:1070)
+	ControlManager:ProcessTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:628)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:95)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:331)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 54393 -> Tuesday, 19 October 2021 12:43 PM
+WARNING [Val] ValidateSO: MISMATCH on TutorialItem, array 34, assets 37 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialItem[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2597)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialDialogue, array 9, assets 11 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialDialogue[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2603)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialGoal, array 7, assets 8 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialGoal[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2605)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialGoalType, array 9, assets 10 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialGoalType[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2607)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	City seed 12101 -> VirtualCity, Eurasia
+WARNING Can't assign targets as optionManager.isTargets FALSE
+UnityEngine.Debug:LogWarning(Object)
+	TargetManager:ConfigureTutorialTargets(TutorialTargetConfig) (at Assets/Scripts/Managers/TargetManager.cs:872)
+	TargetManager:SubInitialiseLate() (at Assets/Scripts/Managers/TargetManager.cs:193)
+	TargetManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/TargetManager.cs:117)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:InitialiseTutorial() (at Assets/Scripts/GameManager.cs:1070)
+	ControlManager:ProcessTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:628)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:95)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:331)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised goal "SubordinateDismiss (TutorialGoalType)"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TutorialManager:GetGoalType(TutorialGoalType) (at Assets/Scripts/Managers/TutorialManager.cs:649)
+	TutorialManager:UpdateGoal(TutorialGoal, Int32) (at Assets/Scripts/Managers/TutorialManager.cs:493)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:429)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:271)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:45)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid goalType (GoalType.None)
+UnityEngine.Debug:LogWarning(Object)
+	TutorialManager:UpdateGoal(TutorialGoal, Int32) (at Assets/Scripts/Managers/TutorialManager.cs:543)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:429)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:271)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:45)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised goal "SubordinateDismiss (TutorialGoalType)"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TutorialManager:GetGoalType(TutorialGoalType) (at Assets/Scripts/Managers/TutorialManager.cs:649)
+	TutorialManager:UpdateGoal(TutorialGoal, Int32) (at Assets/Scripts/Managers/TutorialManager.cs:493)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:429)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:271)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:45)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid goalType (GoalType.None)
+UnityEngine.Debug:LogWarning(Object)
+	TutorialManager:UpdateGoal(TutorialGoal, Int32) (at Assets/Scripts/Managers/TutorialManager.cs:543)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:429)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:271)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:45)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised goal "SubordinateDismiss (TutorialGoalType)"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TutorialManager:GetGoalType(TutorialGoalType) (at Assets/Scripts/Managers/TutorialManager.cs:649)
+	TutorialManager:UpdateGoal(TutorialGoal, Int32) (at Assets/Scripts/Managers/TutorialManager.cs:493)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:429)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:271)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:45)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid goalType (GoalType.None)
+UnityEngine.Debug:LogWarning(Object)
+	TutorialManager:UpdateGoal(TutorialGoal, Int32) (at Assets/Scripts/Managers/TutorialManager.cs:543)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:429)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:271)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:45)
+	UnityEngine.EventSystems.EventSystem:Update()
+	

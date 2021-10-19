@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14ce46f3171943c4288c53f60de62339, type: 3}
+  m_Name: SubordinateDismiss
+  m_EditorClassIdentifier: 
+  notes: Dismiss an onMap Subordinate
+  startTopText: Dismiss a Subordinate
+  startBottomText: Don't like 'em? Get rid of 'em<br><br>Select a subordinate and
+    <b>Right Click</b> their portrait. Choose <b>MANAGE</b> and then one of the options
+    in <b>RESERVES</b>
+  finishTopText: You've moved them to your Reserves
+  finishBottomText: You can bring them back later if you wish<br><br>The important
+    thing is that you now have a vacant slot on your team (Remember there is a maximum
+    of four subordinates)<br><br>You are now free to activate a replacement
+  tooltipText: You need to know how to hire 'em but also how to fire 'em
+  goal0: {fileID: 11400000, guid: 768ec8211f9e81b49929c99ca262345b, type: 2}
+  tracker0Notes: Dismiss a Subordinate
+  target0: 1
+  goal1: {fileID: 0}
+  tracker1Notes: 
+  target1: -1

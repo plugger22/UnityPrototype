@@ -252,7 +252,7 @@
         None,
         Move, MoveSecurity,
         PlayerInvisibility, PlayerNodeActions, PlayerRecruit,
-        SubordinateRecruit, SubordinateNodeActions
+        SubordinateRecruit, SubordinateNodeActions, SubordinateDismiss
     }                 
 
     //
