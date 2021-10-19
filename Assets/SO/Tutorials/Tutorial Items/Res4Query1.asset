@@ -9,12 +9,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 609e6bfe7fdf18e4281f5e96c5f710d0, type: 3}
-  m_Name: Res3Query1
+  m_Name: Res4Query1
   m_EditorClassIdentifier: 
   tutorialType: {fileID: 11400000, guid: 8b2847a7a246595458eee2b6a64e9b06, type: 2}
-  tag: Your Pet's name
-  set: {fileID: 11400000, guid: 3fda11eb21af8364585415c15df70f78, type: 2}
+  tag: Your darkest secret
+  set: {fileID: 11400000, guid: d890cee1da59bf948a3aed36ab19edf3, type: 2}
   dialogue: {fileID: 0}
   gameHelp: {fileID: 0}
   goal: {fileID: 0}
-  query: {fileID: 11400000, guid: fdb9f2e1320def44197151ab623e0a79, type: 2}
+  query: {fileID: 11400000, guid: ab2ed5c1c274d14488957dd58e1a2f61, type: 2}
