@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Res4Talk1
   m_EditorClassIdentifier: 
   tutorialType: {fileID: 11400000, guid: 6af73092ead59e34f89fadf31d6d355c, type: 2}
-  tag: test
+  tag: The Moody Blues
   set: {fileID: 11400000, guid: d890cee1da59bf948a3aed36ab19edf3, type: 2}
   dialogue: {fileID: 11400000, guid: 5a33aa2746bd03742be2e8526c5c4b69, type: 2}
   gameHelp: {fileID: 0}

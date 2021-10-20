@@ -32,4 +32,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 262a2750ea2c48041a39b611630cb536, type: 2}
   listOfTutorialItems:
   - {fileID: 11400000, guid: d52c843496f953846ab188ecf33ebf11, type: 2}
-  - {fileID: 11400000, guid: 55b2e5eed833a824d81f6c88410cbac5, type: 2}
+  - {fileID: 11400000, guid: 168a0cb22f88d7b47a75f838959ad276, type: 2}
+  - {fileID: 11400000, guid: c96b889f230661a4fa5dd2ec48b66e3e, type: 2}

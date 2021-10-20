@@ -11,6 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20d501b51a4f7c44893a54b01e66d52c, type: 3}
   m_Name: Res4Talk2
   m_EditorClassIdentifier: 
-  topText: Let
-  bottomText: 'HQ '
-  item: {fileID: 11400000, guid: 33b98f5386dbccc44a0aec04a159edc6, type: 2}
+  topText: Did I say it was going to be easy doing your job? No, I don't recall that
+    I did.
+  bottomText: There are going to be times when it gets to you<br><br>That's when the
+    Stress hits<br><br>I can't tell whether you're a screamer or crier...
+  item: {fileID: 11400000, guid: 75d3d763e302f65499448eaebaa0ca76, type: 2}

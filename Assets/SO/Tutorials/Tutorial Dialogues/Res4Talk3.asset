@@ -11,6 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20d501b51a4f7c44893a54b01e66d52c, type: 3}
   m_Name: Res4Talk3
   m_EditorClassIdentifier: 
-  topText: Let
-  bottomText: 'HQ '
-  item: {fileID: 11400000, guid: 33b98f5386dbccc44a0aec04a159edc6, type: 2}
+  topText: You're managing people here. Part of the job. Perhaps they like you, perhaps
+    they don't
+  bottomText: Either way you've got to find a way to make it work<br><br>Your subordinates
+    will have an Opinion of you<br><br>It's bound to change but try and keep things
+    civil if you can
+  item: {fileID: 11400000, guid: 88bef0edf4fbcd046904973d6b8f582f, type: 2}

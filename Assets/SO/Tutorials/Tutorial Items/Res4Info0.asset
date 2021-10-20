@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Res4Info0
   m_EditorClassIdentifier: 
   tutorialType: {fileID: 11400000, guid: 716ea073e009ff84381f714833572864, type: 2}
-  tag: test
+  tag: Your Personality
   set: {fileID: 11400000, guid: d890cee1da59bf948a3aed36ab19edf3, type: 2}
   dialogue: {fileID: 0}
   gameHelp: {fileID: 11400000, guid: bca530f25eda0c64b9592461345360c5, type: 2}

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   topText: Subordinates, huh?
   bottomText: Love 'em or hate 'em, you need to know how to deal with them
-  item: {fileID: 11400000, guid: 6ffd612106e21724e8726b75d49924b3, type: 2}
+  item: {fileID: 11400000, guid: e7c0b31498af7ff41a630acdbf35eca0, type: 2}

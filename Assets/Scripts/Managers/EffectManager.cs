@@ -4232,7 +4232,8 @@ public class EffectManager : MonoBehaviour
                 GameManager.i.playerScript.GetPersonality().SetPersonalityDone();
                 //tmessage
                 effectResolve.topText = string.Format("{0}We've determined your Personality", colourAlert, GameManager.i.playerScript.pet, colourEnd);
-                effectResolve.bottomText = string.Format("Our Psychiatrist has been busy<br><br>{0}They took your input into account{1}", colourNeutral, colourEnd);
+                effectResolve.bottomText = string.Format("Our Psychiatrist has been busy. They took your input into account<br><br>{0}Left Click your portrait and choose the 'Person' tab to view{1}", 
+                    colourNeutral, colourEnd);
                 break;
             case "Name":
                 //Male/Female name

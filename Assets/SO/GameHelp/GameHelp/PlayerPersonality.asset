@@ -15,4 +15,4 @@ MonoBehaviour:
   header: Player Personality
   isHomePage: 0
   layout: {fileID: 11400000, guid: f86e231ef3f7d1b40a9c086b0d0da6bd, type: 2}
-  sprite0: {fileID: 21300000, guid: 8fd880ed681d5e342becc9e8f65dd0a4, type: 3}
+  sprite0: {fileID: 21300000, guid: 5ab8e81fa25c5434490d590cbdf1888f, type: 3}

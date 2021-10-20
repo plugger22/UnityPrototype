@@ -11,6 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20d501b51a4f7c44893a54b01e66d52c, type: 3}
   m_Name: Res4Talk0
   m_EditorClassIdentifier: 
-  topText: Let
-  bottomText: 'HQ '
-  item: {fileID: 11400000, guid: 33b98f5386dbccc44a0aec04a159edc6, type: 2}
+  topText: You're a special individual. Sure you are...
+  bottomText: Your personality determines what your beliefs are. You DO believe in
+    something, don't you?<br><br>It also has a big impact on how you get along with
+    other people, like your subordinates and HQ<br><br>I love you to bits regardless
+  item: {fileID: 11400000, guid: ef197ba6d2c4a3141b7cbccbb7fedca2, type: 2}

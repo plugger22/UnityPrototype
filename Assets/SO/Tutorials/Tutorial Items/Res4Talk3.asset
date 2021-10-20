@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Res4Talk3
   m_EditorClassIdentifier: 
   tutorialType: {fileID: 11400000, guid: 6af73092ead59e34f89fadf31d6d355c, type: 2}
-  tag: test
+  tag: Getting Along with Others
   set: {fileID: 11400000, guid: d890cee1da59bf948a3aed36ab19edf3, type: 2}
   dialogue: {fileID: 11400000, guid: c041d4d159cf3944f9daa3c976fe7322, type: 2}
   gameHelp: {fileID: 0}

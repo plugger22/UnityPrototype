@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Res4Info1
   m_EditorClassIdentifier: 
   tutorialType: {fileID: 11400000, guid: 716ea073e009ff84381f714833572864, type: 2}
-  tag: test
+  tag: Mood
   set: {fileID: 11400000, guid: d890cee1da59bf948a3aed36ab19edf3, type: 2}
   dialogue: {fileID: 0}
   gameHelp: {fileID: 11400000, guid: 039b03d2b5bb91c4c9a485a4ce905c76, type: 2}

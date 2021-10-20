@@ -190,7 +190,11 @@ public class TargetManager : MonoBehaviour
     {
         //tutorial targets if required
         if (GameManager.i.inputScript.GameState == GameState.TutorialOptions)
-        { ConfigureTutorialTargets(GameManager.i.tutorialScript.set.targetConfig); }
+        {
+            TutorialTargetConfig config = GameManager.i.tutorialScript.set.targetConfig;
+            if (config != null)
+            { ConfigureTutorialTargets(config); }
+        }
     }
     #endregion
 

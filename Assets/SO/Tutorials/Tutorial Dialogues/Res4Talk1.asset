@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20d501b51a4f7c44893a54b01e66d52c, type: 3}
   m_Name: Res4Talk1
   m_EditorClassIdentifier: 
-  topText: Let
-  bottomText: 'HQ '
-  item: {fileID: 11400000, guid: 33b98f5386dbccc44a0aec04a159edc6, type: 2}
+  topText: Somedays are up and somedays are down<br><br>That's moods, baby. MOODS
+  bottomText: Whenever you make a decision or do something in line, or against, your
+    beliefs, your mood may change<br><br>It's a topsy turvy world and stuff happens
+  item: {fileID: 11400000, guid: d065051804b6e34409c8422c617c6129, type: 2}
