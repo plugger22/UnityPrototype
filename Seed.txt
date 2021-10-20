@@ -2394,3 +2394,65 @@ UnityEngine.Debug:LogWarning(Object)
 	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:331)
 	UnityEngine.EventSystems.EventSystem:Update()
 	
+Dev seed 47270 -> Wednesday, 20 October 2021 10:25 AM
+City seed 46595 -> VirtualCity, Eurasia
+WARNING Can't assign targets as optionManager.isTargets FALSE
+UnityEngine.Debug:LogWarning(Object)
+	TargetManager:ConfigureTutorialTargets(TutorialTargetConfig) (at Assets/Scripts/Managers/TargetManager.cs:872)
+	TargetManager:SubInitialiseLate() (at Assets/Scripts/Managers/TargetManager.cs:193)
+	TargetManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/TargetManager.cs:117)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:InitialiseTutorial() (at Assets/Scripts/GameManager.cs:1070)
+	ControlManager:ProcessTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:628)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:95)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:331)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 19988 -> Wednesday, 20 October 2021 10:30 AM
+City seed 2314 -> VirtualCity, Eurasia
+WARNING Can't assign targets as optionManager.isTargets FALSE
+UnityEngine.Debug:LogWarning(Object)
+	TargetManager:ConfigureTutorialTargets(TutorialTargetConfig) (at Assets/Scripts/Managers/TargetManager.cs:872)
+	TargetManager:SubInitialiseLate() (at Assets/Scripts/Managers/TargetManager.cs:193)
+	TargetManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/TargetManager.cs:117)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:InitialiseTutorial() (at Assets/Scripts/GameManager.cs:1070)
+	ControlManager:ProcessTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:628)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:95)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:331)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 1811 -> Wednesday, 20 October 2021 10:33 AM
+City seed 1326 -> VirtualCity, Eurasia
+WARNING Can't assign targets as optionManager.isTargets FALSE
+UnityEngine.Debug:LogWarning(Object)
+	TargetManager:ConfigureTutorialTargets(TutorialTargetConfig) (at Assets/Scripts/Managers/TargetManager.cs:872)
+	TargetManager:SubInitialiseLate() (at Assets/Scripts/Managers/TargetManager.cs:193)
+	TargetManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/TargetManager.cs:117)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:InitialiseTutorial() (at Assets/Scripts/GameManager.cs:1070)
+	ControlManager:ProcessTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:628)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:95)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:331)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 8120 -> Wednesday, 20 October 2021 10:47 AM
+City seed 26430 -> VirtualCity, Eurasia
+WARNING Can't assign targets as optionManager.isTargets FALSE
+UnityEngine.Debug:LogWarning(Object)
+	TargetManager:ConfigureTutorialTargets(TutorialTargetConfig) (at Assets/Scripts/Managers/TargetManager.cs:872)
+	TargetManager:SubInitialiseLate() (at Assets/Scripts/Managers/TargetManager.cs:193)
+	TargetManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/TargetManager.cs:117)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:InitialiseTutorial() (at Assets/Scripts/GameManager.cs:1070)
+	ControlManager:ProcessTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:628)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:95)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:331)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 49435 -> Wednesday, 20 October 2021 10:49 AM
+City seed 29512 -> Londus, Eurasia

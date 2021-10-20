@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Name: TutRESq5_13
   m_EditorClassIdentifier: 
   tag: Steady
-  text: Straight and steady to the core, that's me
+  text: I hold the line when others don't
   query: {fileID: 11400000, guid: c5344b572ff1d43448b13f0ab2372855, type: 2}

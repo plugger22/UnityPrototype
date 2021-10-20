@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Res3Talk1
   m_EditorClassIdentifier: 
   tutorialType: {fileID: 11400000, guid: 6af73092ead59e34f89fadf31d6d355c, type: 2}
-  tag: Replacements
+  tag: Changing Subordinates
   set: {fileID: 11400000, guid: 3fda11eb21af8364585415c15df70f78, type: 2}
   dialogue: {fileID: 11400000, guid: f4bfeb129d86757478ed018ab14d4dfc, type: 2}
   gameHelp: {fileID: 0}
