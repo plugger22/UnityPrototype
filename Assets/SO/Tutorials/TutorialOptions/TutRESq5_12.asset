@@ -11,6 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef9551e8460d46240b2ea11acbd0350e, type: 3}
   m_Name: TutRESq5_12
   m_EditorClassIdentifier: 
-  tag: Perfect
-  text: Who said that I was perfect? I did
-  query: {fileID: 11400000, guid: c5344b572ff1d43448b13f0ab2372855, type: 2}
+  tag: Liberty
+  text: Liberty or Death!
+  query: {fileID: 11400000, guid: 55b2e5eed833a824d81f6c88410cbac5, type: 2}

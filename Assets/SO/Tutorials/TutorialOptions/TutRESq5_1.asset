@@ -11,6 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef9551e8460d46240b2ea11acbd0350e, type: 3}
   m_Name: TutRESq5_1
   m_EditorClassIdentifier: 
-  tag: Openness High
-  text: I'm independent and filled with curiousity
-  query: {fileID: 11400000, guid: c5344b572ff1d43448b13f0ab2372855, type: 2}
+  tag: Prestige
+  text: I like being somebody Important
+  query: {fileID: 11400000, guid: 55b2e5eed833a824d81f6c88410cbac5, type: 2}

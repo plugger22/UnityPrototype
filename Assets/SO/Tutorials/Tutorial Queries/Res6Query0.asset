@@ -11,27 +11,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8ad4beabba4b3f418b499700208beb6, type: 3}
   m_Name: Res6Query0
   m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: 55b2e5eed833a824d81f6c88410cbac5, type: 2}
-  queryType: {fileID: 11400000, guid: 7b363de65e409b740a5375f42cfc853b, type: 2}
-  queryHeader: Motivation
-  queryText: Could you tell us <b>why</b> you chose to join the Resistance?<br><br>We
-    like to know what motivates our recruits
+  item: {fileID: 11400000, guid: 168a0cb22f88d7b47a75f838959ad276, type: 2}
+  queryType: {fileID: 11400000, guid: c7542b1ce5b968144ae5f8dc93c4280c, type: 2}
+  queryHeader: Your Favourite Pet
+  queryText: Everybody has a pet in their past. Their favourite.<br><br><b>What type
+    was yours?</b>
   isRandomOptions: 1
   listOfOptions:
-  - {fileID: 11400000, guid: c6ff0c9488c441942a0b3f3901bd3460, type: 2}
-  - {fileID: 11400000, guid: bcc0e605a78fce946837af2543a135fa, type: 2}
-  - {fileID: 11400000, guid: 9825a3efc498aa34b8c7a3ad4dbe2e2a, type: 2}
-  - {fileID: 11400000, guid: 5ce735fbfd6bcd8498a0089d938ba28c, type: 2}
-  - {fileID: 11400000, guid: 5b963c317af54574aa1c816b48b33a03, type: 2}
-  - {fileID: 11400000, guid: 8fe77d7a56c951c40bb46372351aae2c, type: 2}
-  - {fileID: 11400000, guid: 81cb1949ef1ace24bbad7722cfccc6aa, type: 2}
-  - {fileID: 11400000, guid: 5260a03b4963cfd49bd7cacf5c93e555, type: 2}
-  - {fileID: 11400000, guid: 37624d5ba87299c43847b178db2a8099, type: 2}
-  - {fileID: 11400000, guid: e8cd5e73561ec844f9d2165a774e8778, type: 2}
-  - {fileID: 11400000, guid: 9e3c06b29f7263f4bad5f385754defca, type: 2}
-  - {fileID: 11400000, guid: 706ff5311e419b6449ead88f33ce1724, type: 2}
-  - {fileID: 11400000, guid: 1284d611b46740441a51679e009bff26, type: 2}
+  - {fileID: 11400000, guid: 91d092559a364ad4080c37f116345049, type: 2}
+  - {fileID: 11400000, guid: b247f9f26438cef41877c4589d6c8fe2, type: 2}
+  - {fileID: 11400000, guid: 8e72fb33e05730a488d2113ddfd9eea1, type: 2}
+  - {fileID: 11400000, guid: 67ea586a014b65040b58a3a14790909d, type: 2}
+  - {fileID: 11400000, guid: 56482d7fa38cb444eaa78fc10a4b9ab3, type: 2}
+  - {fileID: 11400000, guid: 70367320909612040ba858bed7a5faf1, type: 2}
+  - {fileID: 11400000, guid: bbe4df28170a73d469cadbcc1b0b0f28, type: 2}
+  - {fileID: 11400000, guid: 4a8a823d8a7fb3248931a4082d8086fb, type: 2}
+  - {fileID: 11400000, guid: 709ccc02c94d0084ca0d73a74bec5bee, type: 2}
+  - {fileID: 11400000, guid: a5c3ea63d5a478546aadd1f260d45ec4, type: 2}
+  - {fileID: 11400000, guid: 4d052c95e3df2ff419dee2ae7a82c8f9, type: 2}
+  - {fileID: 11400000, guid: cfd3fb94007941649a2140c17be68263, type: 2}
+  - {fileID: 11400000, guid: 3c63de6101060d146b8a1201eb4b6a50, type: 2}
+  - {fileID: 11400000, guid: e444625042c0f4947941db93cfdfa44e, type: 2}
+  - {fileID: 11400000, guid: d3e38717f5cc997438ead5197c2c81b1, type: 2}
+  - {fileID: 11400000, guid: f2694562223d34b4cb0f889045b0c96a, type: 2}
+  - {fileID: 11400000, guid: 242007796e56a204e904224ecac94bbe, type: 2}
+  - {fileID: 11400000, guid: 44a99330241d63247b0ff65d2210a7a9, type: 2}
+  - {fileID: 11400000, guid: 17966df8475c9144e8326805c7cbd3f8, type: 2}
+  - {fileID: 11400000, guid: 5a3e17fa18259504bb56dee927a23441, type: 2}
   listOfIgnoreOptions:
-  - {fileID: 11400000, guid: 37624d5ba87299c43847b178db2a8099, type: 2}
+  - {fileID: 11400000, guid: a5c3ea63d5a478546aadd1f260d45ec4, type: 2}
   listOfOptionsAlt: []
   listOfIgnoreOptionsAlt: []

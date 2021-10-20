@@ -11,6 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef9551e8460d46240b2ea11acbd0350e, type: 3}
   m_Name: TutRESq4_6
   m_EditorClassIdentifier: 
-  tag: Masturbator
-  text: Life is stressful. I have ways of dealing with it
-  query: {fileID: 11400000, guid: bfcc5d0e48b852248b63eb92bfd8a09a, type: 2}
+  tag: Agreeableness Low
+  text: I might be suspicious but I'm still breathing
+  query: {fileID: 11400000, guid: c5344b572ff1d43448b13f0ab2372855, type: 2}

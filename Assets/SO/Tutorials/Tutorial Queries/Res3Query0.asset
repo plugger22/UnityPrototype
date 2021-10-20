@@ -11,34 +11,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8ad4beabba4b3f418b499700208beb6, type: 3}
   m_Name: Res3Query0
   m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: 168a0cb22f88d7b47a75f838959ad276, type: 2}
-  queryType: {fileID: 11400000, guid: c7542b1ce5b968144ae5f8dc93c4280c, type: 2}
-  queryHeader: Your Favourite Pet
-  queryText: Everybody has a pet in their past. Their favourite.<br><br><b>What type
-    was yours?</b>
+  item: {fileID: 11400000, guid: bfcc5d0e48b852248b63eb92bfd8a09a, type: 2}
+  queryType: {fileID: 11400000, guid: 1624c3733acc2b448b49f3040e1ac7e1, type: 2}
+  queryHeader: Your darkest Secret
+  queryText: Everybody has a skeleton in the closet<br><br>What's your secret?<br><br>Don't
+    worry, I'll tell <b>NOBODY</b>
   isRandomOptions: 1
   listOfOptions:
-  - {fileID: 11400000, guid: 91d092559a364ad4080c37f116345049, type: 2}
-  - {fileID: 11400000, guid: b247f9f26438cef41877c4589d6c8fe2, type: 2}
-  - {fileID: 11400000, guid: 8e72fb33e05730a488d2113ddfd9eea1, type: 2}
-  - {fileID: 11400000, guid: 67ea586a014b65040b58a3a14790909d, type: 2}
-  - {fileID: 11400000, guid: 56482d7fa38cb444eaa78fc10a4b9ab3, type: 2}
-  - {fileID: 11400000, guid: 70367320909612040ba858bed7a5faf1, type: 2}
-  - {fileID: 11400000, guid: bbe4df28170a73d469cadbcc1b0b0f28, type: 2}
-  - {fileID: 11400000, guid: 4a8a823d8a7fb3248931a4082d8086fb, type: 2}
-  - {fileID: 11400000, guid: 709ccc02c94d0084ca0d73a74bec5bee, type: 2}
-  - {fileID: 11400000, guid: a5c3ea63d5a478546aadd1f260d45ec4, type: 2}
-  - {fileID: 11400000, guid: 4d052c95e3df2ff419dee2ae7a82c8f9, type: 2}
-  - {fileID: 11400000, guid: cfd3fb94007941649a2140c17be68263, type: 2}
-  - {fileID: 11400000, guid: 3c63de6101060d146b8a1201eb4b6a50, type: 2}
-  - {fileID: 11400000, guid: e444625042c0f4947941db93cfdfa44e, type: 2}
-  - {fileID: 11400000, guid: d3e38717f5cc997438ead5197c2c81b1, type: 2}
-  - {fileID: 11400000, guid: f2694562223d34b4cb0f889045b0c96a, type: 2}
-  - {fileID: 11400000, guid: 242007796e56a204e904224ecac94bbe, type: 2}
-  - {fileID: 11400000, guid: 44a99330241d63247b0ff65d2210a7a9, type: 2}
-  - {fileID: 11400000, guid: 17966df8475c9144e8326805c7cbd3f8, type: 2}
-  - {fileID: 11400000, guid: 5a3e17fa18259504bb56dee927a23441, type: 2}
+  - {fileID: 11400000, guid: d41d3012d9c8ec042a9322aa4616101f, type: 2}
+  - {fileID: 11400000, guid: a66e9b21c9dc75440a4474f85b312807, type: 2}
+  - {fileID: 11400000, guid: aa7827a88d89b9f46957ca1e23c47fbc, type: 2}
+  - {fileID: 11400000, guid: 4294cd3d095ed314d84f552091a25551, type: 2}
+  - {fileID: 11400000, guid: 2e1ff48abdc297b46acb47f1c8c02aee, type: 2}
+  - {fileID: 11400000, guid: e54687cd0fe1c9d46ab4df809d0c45e6, type: 2}
+  - {fileID: 11400000, guid: e70a2d07ec0859941846479582d22c56, type: 2}
+  - {fileID: 11400000, guid: 6974fd2e1789536408ab19ab4b2270c7, type: 2}
+  - {fileID: 11400000, guid: b5cbcfa620e0b314da57384da05f2cc7, type: 2}
+  - {fileID: 11400000, guid: 15b14958e504edf47817d51acff90791, type: 2}
   listOfIgnoreOptions:
-  - {fileID: 11400000, guid: a5c3ea63d5a478546aadd1f260d45ec4, type: 2}
+  - {fileID: 11400000, guid: a66e9b21c9dc75440a4474f85b312807, type: 2}
   listOfOptionsAlt: []
   listOfIgnoreOptionsAlt: []

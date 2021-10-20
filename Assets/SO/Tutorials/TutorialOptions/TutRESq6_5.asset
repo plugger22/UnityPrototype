@@ -11,6 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef9551e8460d46240b2ea11acbd0350e, type: 3}
   m_Name: TutRESq6_5
   m_EditorClassIdentifier: 
-  tag: Travel
-  text: I'd like to travel
-  query: {fileID: 11400000, guid: 55b2e5eed833a824d81f6c88410cbac5, type: 2}
+  tag: Snake
+  text: A pet Rattlesnake
+  query: {fileID: 11400000, guid: 168a0cb22f88d7b47a75f838959ad276, type: 2}

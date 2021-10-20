@@ -11,6 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef9551e8460d46240b2ea11acbd0350e, type: 3}
   m_Name: TutRESq3_0
   m_EditorClassIdentifier: 
-  tag: Dog
-  text: A large, ferocious, beast of a Dog
-  query: {fileID: 11400000, guid: 168a0cb22f88d7b47a75f838959ad276, type: 2}
+  tag: Bedwetter
+  text: I'm a serial Bedwetter
+  query: {fileID: 11400000, guid: bfcc5d0e48b852248b63eb92bfd8a09a, type: 2}

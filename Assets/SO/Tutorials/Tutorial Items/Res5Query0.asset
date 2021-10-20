@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Name: Res5Query0
   m_EditorClassIdentifier: 
   tutorialType: {fileID: 11400000, guid: 8b2847a7a246595458eee2b6a64e9b06, type: 2}
-  tag: Your Personality
+  tag: Your Motivation
   set: {fileID: 11400000, guid: 0d38225fe60cd4d43bc3e10405fe9d83, type: 2}
   dialogue: {fileID: 0}
   gameHelp: {fileID: 0}
   goal: {fileID: 0}
-  query: {fileID: 11400000, guid: 835a76de2570ec5498eb4ba862f7b570, type: 2}
+  query: {fileID: 11400000, guid: b91528910925b124ca16c56ce5f5e313, type: 2}

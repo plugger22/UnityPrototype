@@ -11,34 +11,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8ad4beabba4b3f418b499700208beb6, type: 3}
   m_Name: Res4Query0
   m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: c96b889f230661a4fa5dd2ec48b66e3e, type: 2}
-  queryType: {fileID: 11400000, guid: 3540874f40e7d614a91705f2135b9c17, type: 2}
-  queryHeader: Name of your Pet
-  queryText: A name is a very personal thing. It reflects the nature of the owner<br><br><b>What
-    did you name your pet?</b>
+  item: {fileID: 11400000, guid: c5344b572ff1d43448b13f0ab2372855, type: 2}
+  queryType: {fileID: 11400000, guid: 40531188e4fb0c144ba85206d10abd54, type: 2}
+  queryHeader: Your Personality
+  queryText: We'd like to get a sense of who you are<br><br>Choose an option that
+    you <b>identify with the most</b><br><br>Don't like any of them? We'll choose
+    for you
   isRandomOptions: 1
   listOfOptions:
-  - {fileID: 11400000, guid: 6e0a457303dba9d40a9c799ac1885257, type: 2}
-  - {fileID: 11400000, guid: 4284fdf44cc0ba54da4b69b4a88b435f, type: 2}
-  - {fileID: 11400000, guid: aad46ae37a845b749a520fac8f08e7e5, type: 2}
-  - {fileID: 11400000, guid: 5b0460ff24b71dd42a6148d4870430bb, type: 2}
-  - {fileID: 11400000, guid: 1a6db89c97333f84f81ce35b580fb01f, type: 2}
-  - {fileID: 11400000, guid: 42caa92ab56697c47927f3b68a331289, type: 2}
-  - {fileID: 11400000, guid: fb7c9b0839ea1c345aade263e0513322, type: 2}
-  - {fileID: 11400000, guid: f3ffcb597fac5454aa477573c99fac71, type: 2}
-  - {fileID: 11400000, guid: 2f904efb668f66e47a65cae9346853f6, type: 2}
-  - {fileID: 11400000, guid: 5ac00a0633a837e479ffa607432a36ae, type: 2}
-  - {fileID: 11400000, guid: 928281bf3d4c8e949867e38398272e82, type: 2}
-  - {fileID: 11400000, guid: e0b16806ae8f12c4e8b241a60394e4fa, type: 2}
-  - {fileID: 11400000, guid: e74e58784d39d6143870de1636173f1a, type: 2}
-  - {fileID: 11400000, guid: afc99a908bf2eef4baeb07773b9364e0, type: 2}
-  - {fileID: 11400000, guid: 693261dedc6337e4a9503d19c778957c, type: 2}
-  - {fileID: 11400000, guid: 3ed4e1d44ca4ad3438ead1e5ac3ddc14, type: 2}
-  - {fileID: 11400000, guid: d6f5c207c1b6e794eade7d2ab8b531dd, type: 2}
-  - {fileID: 11400000, guid: d110eeff662877e48ac8520ccd7eef7e, type: 2}
-  - {fileID: 11400000, guid: f62b08330d5ac9047a60c5e43f8ccee0, type: 2}
-  - {fileID: 11400000, guid: 9bc3a59fa8cfb9d4d8dc04ec490b44d2, type: 2}
+  - {fileID: 11400000, guid: 6af5d5cacad3f2a46a71aee00e9a858b, type: 2}
+  - {fileID: 11400000, guid: ee80f696992f87b4b9aaf7c80715c697, type: 2}
+  - {fileID: 11400000, guid: 0495c7223a9b09d448b0e62cf1989e40, type: 2}
+  - {fileID: 11400000, guid: a1e615724208f894296bb5700f6ef7ce, type: 2}
+  - {fileID: 11400000, guid: bd3c84cae0fbfc94ab7555377a644b2b, type: 2}
+  - {fileID: 11400000, guid: e26f41aa73266a946b21be2f975b3fae, type: 2}
+  - {fileID: 11400000, guid: fb15d2a8dc470984ba6c25a5f7dde492, type: 2}
+  - {fileID: 11400000, guid: c6965b0607fd4784085f26fe47fbaaac, type: 2}
+  - {fileID: 11400000, guid: e01815f5fb3c2da47b241e6ee6133cde, type: 2}
+  - {fileID: 11400000, guid: 237303ff37cbf2b4284cd198fceb303d, type: 2}
+  - {fileID: 11400000, guid: e6602592beb14f946b1d2ebc82931ea0, type: 2}
+  - {fileID: 11400000, guid: 824ad64f8288763489e1977f8cc4178c, type: 2}
+  - {fileID: 11400000, guid: 163d27ecb74041e47bde297756d592ea, type: 2}
+  - {fileID: 11400000, guid: d26eb503396ff1b4fb0441412c909244, type: 2}
+  - {fileID: 11400000, guid: 6ead51f523ea0944eb581565f42d4a36, type: 2}
   listOfIgnoreOptions:
-  - {fileID: 11400000, guid: 9bc3a59fa8cfb9d4d8dc04ec490b44d2, type: 2}
+  - {fileID: 11400000, guid: 237303ff37cbf2b4284cd198fceb303d, type: 2}
   listOfOptionsAlt: []
   listOfIgnoreOptionsAlt: []

@@ -33,8 +33,8 @@ MonoBehaviour:
   listOfGUIOff:
   - {fileID: 11400000, guid: 3fc3cf403714826438976deb8559517b, type: 2}
   listOfTutorialItems:
-  - {fileID: 11400000, guid: 6ffd612106e21724e8726b75d49924b3, type: 2}
-  - {fileID: 11400000, guid: 168a0cb22f88d7b47a75f838959ad276, type: 2}
+  - {fileID: 11400000, guid: e7c0b31498af7ff41a630acdbf35eca0, type: 2}
+  - {fileID: 11400000, guid: bfcc5d0e48b852248b63eb92bfd8a09a, type: 2}
   - {fileID: 11400000, guid: 33b98f5386dbccc44a0aec04a159edc6, type: 2}
   - {fileID: 11400000, guid: 20ad6e7178774734b99dcbeaa660fcd3, type: 2}
   - {fileID: 11400000, guid: a89bfc17bbe9be44283515df74ec72a0, type: 2}

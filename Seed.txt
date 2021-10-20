@@ -2456,3 +2456,19 @@ UnityEngine.Debug:LogWarning(Object)
 	
 Dev seed 49435 -> Wednesday, 20 October 2021 10:49 AM
 City seed 29512 -> Londus, Eurasia
+
+Dev seed 57365 -> Wednesday, 20 October 2021 12:28 PM
+City seed 39932 -> VirtualCity, Eurasia
+WARNING Can't assign targets as optionManager.isTargets FALSE
+UnityEngine.Debug:LogWarning(Object)
+	TargetManager:ConfigureTutorialTargets(TutorialTargetConfig) (at Assets/Scripts/Managers/TargetManager.cs:872)
+	TargetManager:SubInitialiseLate() (at Assets/Scripts/Managers/TargetManager.cs:193)
+	TargetManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/TargetManager.cs:117)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:InitialiseTutorial() (at Assets/Scripts/GameManager.cs:1070)
+	ControlManager:ProcessTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:628)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:95)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:331)
+	UnityEngine.EventSystems.EventSystem:Update()
+	

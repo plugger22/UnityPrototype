@@ -11,6 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef9551e8460d46240b2ea11acbd0350e, type: 3}
   m_Name: TutRESq4_4
   m_EditorClassIdentifier: 
-  tag: Pyromaniac
-  text: I like flames. Lots of FLAMES
-  query: {fileID: 11400000, guid: bfcc5d0e48b852248b63eb92bfd8a09a, type: 2}
+  tag: Extroversion Low
+  text: I seek out peace and quiet
+  query: {fileID: 11400000, guid: c5344b572ff1d43448b13f0ab2372855, type: 2}

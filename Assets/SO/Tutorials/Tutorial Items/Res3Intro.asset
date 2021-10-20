@@ -15,15 +15,6 @@ MonoBehaviour:
   tag: Introduction
   set: {fileID: 11400000, guid: 3fda11eb21af8364585415c15df70f78, type: 2}
   dialogue: {fileID: 11400000, guid: 99cf5372e4a30634f8379386da9eb3fd, type: 2}
-  topText: Fred again, Tutorial Set 3
-  bottomText: How are things going?
   gameHelp: {fileID: 0}
   goal: {fileID: 0}
-  queryType: {fileID: 0}
-  queryHeader: 
-  queryText: 
-  isRandomOptions: 0
-  listOfOptions: []
-  listOfIgnoreOptions: []
-  listOfOptionsAlt: []
-  listOfIgnoreOptionsAlt: []
+  query: {fileID: 0}
