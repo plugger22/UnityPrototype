@@ -45,7 +45,7 @@ public class ModalActionMenu : MonoBehaviour
     private RectTransform rectTransform;
     private int offset;
     private int modalLevel;                                 //modal level of menu, passed in by ModalPanelDetails in SetActionMenu
-    private ModalSubState modalState;                          //modal state to return to if action panel closed
+    private ModalSubState modalState;                       //modal state to return to if action panel closed
 
     //colour palette
     /*private string colourEffects;
@@ -141,8 +141,8 @@ public class ModalActionMenu : MonoBehaviour
         GameManager.i.inputScript.SetModalState(package);
         //close all tooltips
         GameManager.i.guiScript.SetTooltipsOff();
-        //check enough actions
-        if (GameManager.i.turnScript.CheckRemainingActions() == true)
+        //check enough actions, or tutorial mode
+        if (GameManager.i.turnScript.CheckRemainingActions() == true || GameManager.i.inputScript.GameState == GameState.Tutorial)
         {
             //modalActionObject.SetActive(true);
             menuCanvas.gameObject.SetActive(true);
@@ -298,6 +298,15 @@ public class ModalActionMenu : MonoBehaviour
         GameManager.i.inputScript.ResetStates(modalState);
         Debug.LogFormat("[UI] ModalActionMenu.cs -> CloseActionMenu{0}", "\n");
     }
+    #endregion
+
+    #region CheckActionMenu
+    /// <summary>
+    /// returns true if action menu active, false otherwise
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckActionMenu()
+    { return menuCanvas.gameObject.activeSelf; }
     #endregion
 
 }

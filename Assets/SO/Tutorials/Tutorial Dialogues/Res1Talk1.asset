@@ -9,9 +9,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 20d501b51a4f7c44893a54b01e66d52c, type: 3}
-  m_Name: Res5Intro
+  m_Name: Res1Talk1
   m_EditorClassIdentifier: 
-  topText: Fred again, how are you managing?
-  bottomText: Want something to eat?<br><br>Catering isn't pulling it's weight. Rat
-    burgers aren't the best but it's <b>real meat</b><br><br>Something to savour
-  item: {fileID: 11400000, guid: 6f3cbdb1c657d1743a58c3a55af229df, type: 2}
+  topText: It's the Erasure teams you want to worry about
+  bottomText: They are the hunter killer teams sent to find you<br><br>They move into
+    a district and tear it apart
+  item: {fileID: 11400000, guid: b669a3f619e9ac347992ab4d8f4d2948, type: 2}

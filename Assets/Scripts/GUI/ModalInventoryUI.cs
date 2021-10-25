@@ -452,6 +452,9 @@ public class ModalInventoryUI : MonoBehaviour
         GameManager.i.tooltipGenericScript.CloseTooltip("ModalInventoryUI.cs -> CloseInventory");
         //close help tooltip
         GameManager.i.tooltipHelpScript.CloseTooltip("ModalInventoryUI.cs -> CloseInventory");
+        //close action menu if open
+        if (GameManager.i.actionMenuScript.CheckActionMenu() == true)
+        { GameManager.i.actionMenuScript.CloseActionMenu(); }
         //set game state
         GameManager.i.inputScript.ResetStates();
         Debug.LogFormat("[UI] ModalInventoryUI.cs -> CloseInventoryUI{0}", "\n");

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Res6
   m_EditorClassIdentifier: 
   tutorial: {fileID: 11400000, guid: c050560a8867a3a4c806544632dda679, type: 2}
-  descriptor: Test
+  descriptor: Targets
   notes: 
   index: 6
   playerConfig: {fileID: 0}

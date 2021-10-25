@@ -496,7 +496,7 @@ public class TutorialManager : MonoBehaviour
                     //check TutorialGoal not already present
                     if (listOfGoals.Exists(x => x.goalName.Equals(goal.name, StringComparison.Ordinal)) == true)
                     {
-                        Debug.LogWarningFormat("TutorialManager.cs -> UpdateGoal: Can't add goal \"{0}\",  as already present in listOfGoals{1}", goal.name, "\n");
+                        Debug.LogWarningFormat("TutorialManager.cs -> UpdateGoal: Can't add goal \"{0}\",  as already present in listOfGoals -> INFO only{1}", goal.name, "\n");
                         //warning message
                         GameManager.i.guiScript.SetAlertMessageModalOne(AlertType.TutorialGoal);
                     }
@@ -649,6 +649,7 @@ public class TutorialManager : MonoBehaviour
                 case "SubordinateRecruit": goalType = GoalType.SubordinateRecruit; break;
                 case "SubordinateDismiss": goalType = GoalType.SubordinateDismiss; break;
                 case "SubordinateActivate": goalType = GoalType.SubordinateActivate; break;
+                case "SubordinateGear": goalType = GoalType.SubordinateGear; break;
                 case "PlayerInvisibility": goalType = GoalType.PlayerInvisibility; break;
                 case "PlayerNodeAction": goalType = GoalType.PlayerNodeActions; break;
                 case "PlayerRecruit": goalType = GoalType.PlayerRecruit; break;
@@ -686,6 +687,10 @@ public class TutorialManager : MonoBehaviour
             case GoalType.SubordinateRecruit:
                 //subordinate recruits somebody
                 goalValue = GameManager.i.dataScript.StatisticGetLevel(StatType.ActorsRecruited);
+                break;
+            case GoalType.SubordinateGear:
+                //subordinate sources gear
+                goalValue = GameManager.i.dataScript.StatisticGetLevel(StatType.GearTotal);
                 break;
             case GoalType.SubordinateDismiss:
                 //subordinate is dismissed from onMap lineUp

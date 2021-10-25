@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14ce46f3171943c4288c53f60de62339, type: 3}
+  m_Name: SubordinateGear
+  m_EditorClassIdentifier: 
+  notes: Subordinate fixer sources an item of gear
+  startTopText: Source new Gear
+  startBottomText: You could get the gear yourself but your FIXER has access to the
+    good stuff<br><br>Left Click on a district where your FIXER has a contact (mouse
+    over their image to find)<br><br>Select <b>OBTAIN GEAR</b> from the menu and choose
+    what you'd like
+  finishTopText: Your gear is in your inventory ready for use
+  finishBottomText: Inspect your Gear Inventory at any time by pressing <b>G</b> (wait
+    till this is closed)<br><br>Mouseover tooltips will let you know what the gear
+    can be used for
+  tooltipText: Click on your any district with a contact (mouseover FIXER image to
+    see) and select <b>Obtain Gear</b>. Choose the gear of your choice
+  goal0: {fileID: 11400000, guid: 4f53032f67aaac043b096fda8981628d, type: 2}
+  tracker0Notes: FIXER gets gear
+  target0: 1
+  goal1: {fileID: 0}
+  tracker1Notes: 
+  target1: -1

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Res5
   m_EditorClassIdentifier: 
   tutorial: {fileID: 11400000, guid: c050560a8867a3a4c806544632dda679, type: 2}
-  descriptor: Targets
+  descriptor: Gear
   notes: Targets
   index: 5
   playerConfig: {fileID: 11400000, guid: ad88702123959524fa551d8575fcae68, type: 2}
@@ -29,7 +29,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: efba9c88561b33140bc3fe102eb154d3, type: 2}
   listOfGUIOff:
   - {fileID: 11400000, guid: 4ecda8036df900d48b4b25e77b1b6ad0, type: 2}
-  - {fileID: 11400000, guid: 7046d4b9b0e864d409b0b2019663b6b2, type: 2}
   listOfTutorialItems:
   - {fileID: 11400000, guid: 6f3cbdb1c657d1743a58c3a55af229df, type: 2}
   - {fileID: 11400000, guid: 55b2e5eed833a824d81f6c88410cbac5, type: 2}
+  - {fileID: 11400000, guid: ac15836162de3ee4fa01a1b9db2a4cdd, type: 2}
+  - {fileID: 11400000, guid: 778234595d40d7f499a7ab1ec074d64c, type: 2}
+  - {fileID: 11400000, guid: ccd7698962e69fa4587c98314611524f, type: 2}

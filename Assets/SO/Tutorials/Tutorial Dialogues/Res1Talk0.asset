@@ -9,9 +9,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 20d501b51a4f7c44893a54b01e66d52c, type: 3}
-  m_Name: Res5Intro
+  m_Name: Res1Talk0
   m_EditorClassIdentifier: 
-  topText: Fred again, how are you managing?
-  bottomText: Want something to eat?<br><br>Catering isn't pulling it's weight. Rat
-    burgers aren't the best but it's <b>real meat</b><br><br>Something to savour
-  item: {fileID: 11400000, guid: 6f3cbdb1c657d1743a58c3a55af229df, type: 2}
+  topText: It's not all roses and sunshine<br><br>Let me tell you the bad news
+  bottomText: The Authority. They're out to get you<br><br>They have many ways to
+    make your life difficult<br><br>They want you dead
+  item: {fileID: 11400000, guid: c24f5a4b333446b4d8e41c03e91203b7, type: 2}

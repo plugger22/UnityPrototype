@@ -17,6 +17,9 @@ MonoBehaviour:
   index: 1
   playerConfig: {fileID: 0}
   actorConfig: {fileID: 0}
+  targetConfig: {fileID: 0}
+  teamConfig: {fileID: 0}
+  hideConfig: {fileID: 0}
   listOfFeaturesOff:
   - {fileID: 11400000, guid: 60b4bacf16a2f574fa7fa81a919e7bbc, type: 2}
   - {fileID: 11400000, guid: 7e2f496678746a1488d0508fb5ac34ef, type: 2}
@@ -35,7 +38,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2b429498342b10042847ad6b6e67d783, type: 2}
   - {fileID: 11400000, guid: 4ecda8036df900d48b4b25e77b1b6ad0, type: 2}
   - {fileID: 11400000, guid: 7046d4b9b0e864d409b0b2019663b6b2, type: 2}
-  - {fileID: 11400000, guid: b624e75a5ef516045a64c1b6b4c72e16, type: 2}
   - {fileID: 11400000, guid: a0a472708aaecea4bb36070d6e449bc2, type: 2}
   listOfTutorialItems:
   - {fileID: 11400000, guid: 8daec609db5c94d4c808e9a92441f9fe, type: 2}
@@ -44,3 +46,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 703089c631d223f4682010296de1cfca, type: 2}
   - {fileID: 11400000, guid: 10a7a61b1d0482c41aa8fde11c8f9eaf, type: 2}
   - {fileID: 11400000, guid: da4deed10b85c874d856e2c1353fba57, type: 2}
+  - {fileID: 11400000, guid: c24f5a4b333446b4d8e41c03e91203b7, type: 2}
+  - {fileID: 11400000, guid: 1a5cc8fb9cd14a34987eb1e1a4173a2d, type: 2}
+  - {fileID: 11400000, guid: b669a3f619e9ac347992ab4d8f4d2948, type: 2}
+  - {fileID: 11400000, guid: 4aa17260936cc204fb1fe4fe237891e9, type: 2}

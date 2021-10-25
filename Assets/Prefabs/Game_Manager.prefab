@@ -1967,6 +1967,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d52c843496f953846ab188ecf33ebf11, type: 2}
   - {fileID: 11400000, guid: 168a0cb22f88d7b47a75f838959ad276, type: 2}
   - {fileID: 11400000, guid: c96b889f230661a4fa5dd2ec48b66e3e, type: 2}
+  - {fileID: 11400000, guid: 1a5cc8fb9cd14a34987eb1e1a4173a2d, type: 2}
+  - {fileID: 11400000, guid: c24f5a4b333446b4d8e41c03e91203b7, type: 2}
+  - {fileID: 11400000, guid: b669a3f619e9ac347992ab4d8f4d2948, type: 2}
+  - {fileID: 11400000, guid: 4aa17260936cc204fb1fe4fe237891e9, type: 2}
   arrayOfTutorialTypes:
   - {fileID: 11400000, guid: 6af73092ead59e34f89fadf31d6d355c, type: 2}
   - {fileID: 11400000, guid: 3ea5e079678bd114896744e070740f21, type: 2}
@@ -2008,6 +2012,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c041d4d159cf3944f9daa3c976fe7322, type: 2}
   - {fileID: 11400000, guid: 09b7eeb167c5a1744bf3177e47e8b9ac, type: 2}
   - {fileID: 11400000, guid: fb44a5561c4b0a3489104fcac0246d1e, type: 2}
+  - {fileID: 11400000, guid: bb9224d65481e8f4db8beab936d6c4da, type: 2}
+  - {fileID: 11400000, guid: a01b2254b4e83d84baadbfc3d959a1a3, type: 2}
+  - {fileID: 11400000, guid: ab4616073d2226247b95214ae15182e3, type: 2}
   arrayOfTutorialOptions:
   - {fileID: 11400000, guid: 9607f2b746acf41469bf8c88f98ba671, type: 2}
   - {fileID: 11400000, guid: d98cf6dba71922b4cbb316498b31255f, type: 2}
@@ -7251,7 +7258,7 @@ MonoBehaviour:
   seedDev: 0
   autoRunTurns: 0
   scenarioStartLevel: 0
-  tutorialStartLevel: 4
+  tutorialStartLevel: 5
   isPerformanceLog: 1
   isDataValidation: 1
   isValidateSO: 1

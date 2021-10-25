@@ -1160,6 +1160,8 @@ public class InputManager : MonoBehaviour
         builder.AppendFormat(" ModalPicker -> {0}{1}", ModalGenericPickerState, "\n");
         builder.AppendFormat(" ModalInventory -> {0}{1}", ModalInventoryState, "\n");
         builder.AppendFormat(" isBlocked -> {0}{1}", GameManager.i.guiScript.CheckIsBlocked(modalLevel), "\n");
+        builder.AppendFormat(" Modal0 -> {0}, M1 -> {1}, M2 -> {2}{3}", GameManager.i.modalGUIScript.modal0.activeSelf, GameManager.i.modalGUIScript.modal1.activeSelf,
+            GameManager.i.modalGUIScript.modal2.activeSelf, "\n");
         builder.AppendFormat(" NodeShowFlag -> {0}{1}", GameManager.i.nodeScript.NodeShowFlag, "\n");
         builder.AppendFormat(" ResetConnections -> {0}{1}", GameManager.i.connScript.resetConnections, "\n");
         builder.AppendFormat(" isHaltExecution -> {0}{1}", GameManager.i.turnScript.haltExecution, "\n");
