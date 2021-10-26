@@ -139,7 +139,8 @@ public class ModalGUI : MonoBehaviour
                 Debug.LogError(string.Format("Invalid modalLevel {0}", modalLevel));
                 break;
         }
-        Debug.LogFormat("[Inp] ModalGUI.cs -> SetModalMasks: modal0 {0}, modal1 {1}, modal2 {2}, level {3}{4}", modal0.activeSelf, modal1.activeSelf, modal2.activeSelf, modalLevel, "\n");
+        Debug.LogFormat("[Inp] ModalGUI.cs -> SetModalMasks: isBlocked {0}, modal0 {1}, modal1 {2}, modal2 {3}, level {4}{5}", 
+            isBlocked, modal0.activeSelf, modal1.activeSelf, modal2.activeSelf, modalLevel, "\n");
     }
     #endregion
 

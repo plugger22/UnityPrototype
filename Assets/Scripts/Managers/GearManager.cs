@@ -75,6 +75,7 @@ public class GearManager : MonoBehaviour
     private GlobalSide globalResistance;
     private GlobalSide globalAuthority;
 
+    #region Colours
     private string colourGood;
     private string colourNeutral;
     private string colourBad;
@@ -85,8 +86,9 @@ public class GearManager : MonoBehaviour
     private string colourNormal;
     private string colourAlert;
     private string colourEnd;
+    #endregion
 
-
+    #region Initialise
     /// <summary>
     /// Initialisation. Not for GameState.LoadGame
     /// </summary>
@@ -118,7 +120,7 @@ public class GearManager : MonoBehaviour
                 break;
         }
     }
-
+    #endregion
 
     #region Initialise SubMethods
 
@@ -289,8 +291,7 @@ public class GearManager : MonoBehaviour
 
     #endregion
 
-
-
+    #region OnEvent
     /// <summary>
     /// Called when an event happens
     /// </summary>
@@ -328,8 +329,9 @@ public class GearManager : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
-
+    #region SetColours
     /// <summary>
     /// set colour palette for modal Outcome Window
     /// </summary>
@@ -346,7 +348,9 @@ public class GearManager : MonoBehaviour
         colourAlert = GameManager.i.colourScript.GetColour(ColourType.salmonText);
         colourEnd = GameManager.i.colourScript.GetEndTag();
     }
+    #endregion
 
+    #region EndTurnEarly
     /// <summary>
     /// End turn final events
     /// </summary>
@@ -355,6 +359,7 @@ public class GearManager : MonoBehaviour
         CheckForCompromisedGear();
         CheckActorGear();
     }
+    #endregion
 
     #region CheckForCompromisedGear
     /// <summary>
@@ -1020,6 +1025,7 @@ public class GearManager : MonoBehaviour
     }
     #endregion
 
+    #region RefreshGearInventory
     /// <summary>
     /// Called as a delegate method -> Recalculates option data in InventoryUI after an action has been taken
     /// </summary>
@@ -1089,7 +1095,9 @@ public class GearManager : MonoBehaviour
         }
         return data;
     }
+    #endregion
 
+    #region ProcessCompromisedGear
     /// <summary>
     /// Process end of turn Compromised Gear choices (Player gear only)
     /// </summary>
@@ -1167,7 +1175,9 @@ public class GearManager : MonoBehaviour
             EventManager.i.PostNotification(EventType.OutcomeOpen, this, details, "GearManager.cs -> ProcessCompromisedGear");
         }
     }
+    #endregion
 
+    #region ProcessGearChoice
     /// <summary>
     /// Processes choice of Gear
     /// </summary>
@@ -1332,7 +1342,9 @@ public class GearManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid gear (Null or Empty)"); }
     }
+    #endregion
 
+    #region GetChanceOfCompromise
     /// <summary>
     /// returns chance of gear being compromised. Depends on gear rarity (Same for all). Returns '0' is a problem.
     /// </summary>
@@ -1371,7 +1383,9 @@ public class GearManager : MonoBehaviour
         }
         return chance;
     }
+    #endregion
 
+    #region SetGearUsed
     /// <summary>
     /// call this whenever gear is used
     /// </summary>
@@ -1394,25 +1408,9 @@ public class GearManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid gear (Null)"); }
     }
+    #endregion
 
-    /*/// <summary>
-    /// subMethod to handle admin for Player Power expenditure
-    /// </summary>
-    /// <param name="amount"></param>
-    /// <returns></returns>
-    public string PowerUsed(Gear gear, Node node, int amount)
-    {
-        //update player power
-        int power = GameManager.instance.playerScript.Power;
-        power -= amount;
-        GameManager.instance.playerScript.Power = power;
-        //message
-        string textMsg = string.Format("{0}, ID {1} has been compromised. Saved by using {2} Power.", gear.tag, gear.gearID, amount);
-        GameManager.instance.messageScript.PowerUsedPlayer(textMsg, string.Format("save {0} gear", gear.tag), amount, gear.gearID, node.nodeID);
-        //return text string for builder
-        return string.Format("{0}{1}{2}Gear saved, Power -{3}{4}", "\n", "\n", colourBad, amount, colourEnd);
-    }*/
-
+    #region GetGearTooltip
     /// <summary>
     /// returns a data package of 3 formatted strings ready to slot into a gear tooltip. Null if a problem.
     /// </summary>
@@ -1445,10 +1443,12 @@ public class GearManager : MonoBehaviour
                 case "Hacking":
                 case "Kinetic":
                 case "Persuasion":
-                    builderHeader.AppendFormat("{0}<size=90%>District use{1}", colourAlert, colourEnd);
+                    /*builderHeader.AppendFormat("{0}<size=90%>District use{1}", colourAlert, colourEnd);*/
+                    builderHeader.AppendFormat("{0}<size=95%>District use{1}", colourAlert, colourEnd);
                     break;
                 default:
-                    builderHeader.AppendFormat("{0}<size=90%>District use{1}", colourGrey, colourEnd);
+                    /*builderHeader.AppendFormat("{0}<size=90%>District use{1}", colourGrey, colourEnd);*/
+                    builderHeader.AppendFormat("{0}<size=95%>District use{1}", colourGrey, colourEnd);
                     break;
             }
             //personal use
@@ -1507,7 +1507,9 @@ public class GearManager : MonoBehaviour
         }
         return details;
     }
+    #endregion
 
+    #region GetCompromisedGearTooltip
     /// <summary>
     /// returns a data package of 3 formatted strings ready to slot into a gear tooltip. Null if a problem. For gear that has been used and Compromised.
     /// </summary>
@@ -1550,8 +1552,9 @@ public class GearManager : MonoBehaviour
         }
         return details;
     }
+    #endregion
 
-
+    #region GetUsedGearTooltip
     /// <summary>
     /// returns a data package of 3 formatted strings. Null if a problem. For gear that has been used but Not Compromised
     /// </summary>
@@ -1592,7 +1595,9 @@ public class GearManager : MonoBehaviour
         }
         return details;
     }
+    #endregion
 
+    #region Stub Methods...
 
     public int GetGearSaveCurrentCost()
     { return gearSaveCurrentCost; }
@@ -1603,6 +1608,9 @@ public class GearManager : MonoBehaviour
     public List<string> GetListOfCompromisedGear()
     { return listOfCompromisedGear; }
 
+    #endregion
+
+    #region SetListOfCompromisedGear
     /// <summary>
     /// clear and copy new data to listOfCompromisedGear (for Load saved game)
     /// </summary>
@@ -1616,6 +1624,7 @@ public class GearManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid tempList (Null)"); }
     }
+    #endregion
 
     //new methods above here
 }
