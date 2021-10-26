@@ -133,12 +133,13 @@ namespace modalAPI
         public bool isAction;               //true if an action has been used
         public bool isSpecial;              //Special outcome (expanding black bars), default false, optional
         public bool isSpecialGood;          //Special outcome, if true highlight uses good outcome colour, otherwise bad outcome colour (default true, used for target outcomes to differentiate between success and failure)
+        public bool isTutorial;             //true if a tutorial dialogue, ignore otherwise
         public string reason;               //short text giving reason for outcome window, eg. "Select Gear" (used for debugging)
         public MsgPipelineType type;        //used for start of turn messages in message Queue (ignore for messages displayed during turn)
         public string help0;                //if help0 specified a help icon will auto appear, otherwise invisible
         public string help1;                //optional
         public string help2;                //optional
-        public string help3;                //optional      
+        public string help3;                //optional    
         //ShowMe
         public List<Node> listOfNodes;      //optional -> if valid then a 'Show Me' button will appear (replaces Confirm until used)
         public EventType hideEvent;         //only if underlying UI element and a possible ShowMe use. Event to call when ShowMe pressed in Outcome window to hide underlying UI 

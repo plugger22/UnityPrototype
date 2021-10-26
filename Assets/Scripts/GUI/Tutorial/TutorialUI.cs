@@ -54,6 +54,7 @@ public class TutorialUI : MonoBehaviour
 
     //assorted
     private int numOfItems;                                                         //number of active items/buttons for this set
+    private int index;                                                              //current item index
     private TutorialItem currentItem;                                               //currently selected tutorial item
     private GenericTooltipUI progressTooltip;
 
@@ -388,26 +389,25 @@ public class TutorialUI : MonoBehaviour
     /// Tutorial button on RHS clicked, open up relevant tutorial UI based on supplied item
     /// </summary>
     /// <param name="item"></param>
-    private void OpenTutorialItem(int index = -1)
+    private void OpenTutorialItem(int newIndex = -1)
     {
         //flush input buffer
         Input.ResetInputAxes();
         if (GameManager.i.inputScript.ModalState == ModalState.Normal)
         {
-            if (index > -1)
+            if (newIndex > -1)
             {
                 //get tutorialItem
-                if (index < listOfSetItems.Count)
+                if (newIndex < listOfSetItems.Count)
                 {
-                    currentItem = listOfSetItems[index];
+                    //indexes
+                    currentItem = listOfSetItems[newIndex];
+                    index = newIndex;
+                    //arrow -> Set to item clicked on
+                    SetArrow(false);
+
                     if (currentItem != null)
                     {
-                        //switch off all arrows
-                        for (int i = 0; i < numOfItems; i++)
-                        { listOfInteractions[i].arrowImage.gameObject.SetActive(false); }
-                        //display arrow next to selected + 1 tutorial button (shows the next one you need to click on)
-                        if (index + 1 < numOfItems)
-                        { listOfInteractions[index + 1].arrowImage.gameObject.SetActive(true); }
                         //what type of item
                         switch (currentItem.tutorialType.name)
                         {
@@ -421,19 +421,20 @@ public class TutorialUI : MonoBehaviour
                                     sprite = GameManager.i.tutorialScript.tutorial.sprite,
                                     isAction = false,
                                     isSpecial = true,
-                                    isSpecialGood = true
+                                    isSpecialGood = true,
+                                    isTutorial = true
                                 };
                                 EventManager.i.PostNotification(EventType.OutcomeOpen, this, details);
                                 break;
                             case "Goal":
-                                GameManager.i.tutorialScript.UpdateGoal(currentItem.goal, index);
+                                GameManager.i.tutorialScript.UpdateGoal(currentItem.goal, newIndex);
                                 //change colour to completed (indicates that you're currently doing the goal)
-                                ColorBlock goalColours = listOfButtons[index].colors;
+                                ColorBlock goalColours = listOfButtons[newIndex].colors;
                                 goalColours.normalColor = colourActiveGoal;
-                                listOfButtons[index].colors = goalColours;
+                                listOfButtons[newIndex].colors = goalColours;
                                 //update goal tooltip to reflect an active goal (let's player see what their goal is if they forget)
                                 string mainText = GameManager.Formatt(currentItem.goal.tooltipText, ColourType.neutralText);
-                                UpdateGoalTooltip(index, "Active Goal", mainText);
+                                UpdateGoalTooltip(newIndex, "Active Goal", mainText);
                                 break;
                             case "Information":
                                 EventManager.i.PostNotification(EventType.GameHelpOpen, this, currentItem.gameHelp);
@@ -488,10 +489,30 @@ public class TutorialUI : MonoBehaviour
                     }
                     else { Debug.LogWarningFormat("Invalid currentItem (tutorial) (Null)"); }
                 }
-                else { Debug.LogWarningFormat("Invalid index (is {0}, listOfSetItems.Count is {1})", index, listOfSetItems.Count); }
+                else { Debug.LogWarningFormat("Invalid index (is {0}, listOfSetItems.Count is {1})", newIndex, listOfSetItems.Count); }
             }
             else { Debug.LogWarning("Invalid index (button.buttonInteraction.returnValue (-1)"); }
         }
+    }
+    #endregion
+
+    #region SetArrow
+    /// <summary>
+    /// Moves arrow to next item in list. 'isMoveArrowToNextItem' moves arrow to next item in list if true (default) and to item clicked on if falses
+    /// </summary>
+    /// <param name="newIndex"></param>
+    public void SetArrow(bool isMoveArrowToNextItem = true)
+    {
+        //switch off all arrows
+        for (int i = 0; i < numOfItems; i++)
+        { listOfInteractions[i].arrowImage.gameObject.SetActive(false); }
+        if (isMoveArrowToNextItem == true)
+        {
+            //display arrow next to selected + 1 tutorial button (shows the next one you need to click on)
+            if (index + 1 < numOfItems)
+            { listOfInteractions[index + 1].arrowImage.gameObject.SetActive(true); }
+        }
+        else { listOfInteractions[index].arrowImage.gameObject.SetActive(true); }
     }
     #endregion
 

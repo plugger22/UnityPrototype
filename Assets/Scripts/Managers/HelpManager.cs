@@ -2859,15 +2859,15 @@ public class HelpManager : MonoBehaviour
                     .AppendLine()
                     .AppendFormat("{0}Personal use{1} indicates gear with a personal dimension. Right Click on your portrait{2}", colourAlert, colourEnd, "\n")
                     .AppendLine()
-                    .AppendFormat("{0}AI use{1} provides a benefit when hacking the AI. Use the Left Hand side tab{2}", colourAlert, colourEnd, "\n")
+                    .AppendFormat("{0}AI use{1} provides a benefit when hacking the AI. Automatic{2}", colourAlert, colourEnd, "\n")
                     .AppendLine()
                     .AppendFormat("{0}Movement{1} allows you to negate different levels of Connection security when moving between districts{2}", colourAlert, colourEnd, "\n")
                     .AppendLine()
-                    .AppendFormat("{0}Invisibility{1} prevents detection whenever you do a district action{2}", colourAlert, colourEnd, "\n")
+                    .AppendFormat("{0}Invisibility{1} prevents detection whenever you do a district action. Automatic{2}", colourAlert, colourEnd, "\n")
                     .AppendLine()
-                    .AppendFormat("{0}Target Use{1} can be used on ANY target. Other gear may be usable on specific targets{2}", colourAlert, colourEnd, "\n")
+                    .AppendFormat("{0}Target Use{1} can be used on ANY target. Other gear may be usable on specific targets. Automatic{2}", colourAlert, colourEnd, "\n")
                     .AppendLine()
-                    .AppendFormat("{0}Can be Gifted{1} ALL gear can be gifted to a subordinate. Right Click subordinate's portrait{2}", colourAlert, colourEnd, "\n")
+                    .AppendFormat("{0}Can be Gifted{1} ALL gear can be gifted to a subordinate. Right Click subordinate's portrait{2}{3}", colourAlert, colourEnd, "\n", "\n")
                     .ToString();
         listOfHelp.Add(data);
         //Rarity

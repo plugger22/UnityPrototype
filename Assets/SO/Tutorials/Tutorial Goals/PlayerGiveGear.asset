@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14ce46f3171943c4288c53f60de62339, type: 3}
+  m_Name: PlayerGiveGear
+  m_EditorClassIdentifier: 
+  notes: Player gives gear to a subordinate
+  startTopText: Give an item of Gear to a subordinate
+  startBottomText: Subordinates can only have one piece of gear at a time<br><br>Open
+    the Gear Inventory ('G') and Right click an item to access the menu<br><br>Or
+    you could Right click your subordinate (portrait) to access the menu
+  finishTopText: They have your gear
+  finishBottomText: You can't use the gear (but they can) while they have it<br><br>You
+    can ask for it back after a short interval if you have space in your inventory
+  tooltipText: Open Gear Inventory ('G') and right click gear item for menu<br><br>Or
+    right click the subordinate who you wish to receive the gear
+  goal0: {fileID: 11400000, guid: 1e3e6b3b90b29a244a7c3dd80a80f4cd, type: 2}
+  tracker0Notes: Player gives gear
+  target0: 1
+  goal1: {fileID: 0}
+  tracker1Notes: 
+  target1: -1

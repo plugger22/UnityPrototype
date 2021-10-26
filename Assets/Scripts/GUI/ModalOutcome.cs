@@ -54,6 +54,7 @@ public class ModalOutcome : MonoBehaviour
     private EventType triggerEvent;                     //optional event that triggers when Outcome Window closes
     private bool isAction;                              //triggers 'UseAction' event on confirmation button click if true (passed in to method by ModalOutcomeDetails)
     private bool isSpecial;                             //true if a special outcome
+    private bool isTutorial;                            //true if a tutorial dialogue (one that, when closed, moves the RHS arrow)
     private float specialWidth = -1.0f;
     private float blackBarTimeGrow;                     //time span to grow black bars
     private float blackBarTimeShrink;
@@ -298,6 +299,7 @@ public class ModalOutcome : MonoBehaviour
                 GameManager.i.tooltipHelpScript.CloseTooltip("ModalOutcome.cs -> SetModalOutcome");
                 reason = details.reason;
                 triggerEvent = details.triggerEvent;
+                isTutorial = details.isTutorial;
                 //set help
                 List<HelpData> listOfHelpData = GameManager.i.helpScript.GetHelpData(details.help0, details.help1, details.help2, details.help3);
                 if (listOfHelpData != null && listOfHelpData.Count > 0)
@@ -313,37 +315,6 @@ public class ModalOutcome : MonoBehaviour
                 canvasSpecial.gameObject.SetActive(false);
                 //register action status
                 isAction = details.isAction;
-
-                /*
-                //set confirm button image and sprite states
-                switch (details.side.name)
-                {
-                    case "Authority":
-                        //set button sprites
-                        confirmButton.GetComponent<Image>().sprite = GameManager.i.sideScript.button_Authority;
-                        //set sprite transitions
-                        SpriteState spriteStateAuthority = new SpriteState();
-                        spriteStateAuthority.highlightedSprite = GameManager.i.sideScript.button_highlight_Authority;
-                        spriteStateAuthority.pressedSprite = GameManager.i.sideScript.button_Click;
-                        confirmButton.spriteState = spriteStateAuthority;
-                        break;
-                    case "Resistance":
-                        //set button sprites
-                        confirmButton.GetComponent<Image>().sprite = GameManager.i.sideScript.button_Resistance;
-                        //set sprite transitions
-                        SpriteState spriteStateRebel = new SpriteState();
-                        spriteStateRebel.highlightedSprite = GameManager.i.sideScript.button_highlight_Resistance;
-                        spriteStateRebel.pressedSprite = GameManager.i.sideScript.button_Click;
-                        confirmButton.spriteState = spriteStateRebel;
-                        break;
-                    default:
-                        Debug.LogError(string.Format("Invalid side \"{0}\"", details.side));
-                        break;
-                }
-                //set transition
-                confirmButton.transition = Selectable.Transition.SpriteSwap;
-                */
-
                 //Show Me
                 if (details.listOfNodes != null && details.listOfNodes.Count > 0)
                 {
@@ -399,6 +370,7 @@ public class ModalOutcome : MonoBehaviour
     }
     #endregion
 
+    #region Black Bars (special) ...
 
     #region SetModalOutcomeSpecial
     /// <summary>
@@ -423,6 +395,7 @@ public class ModalOutcome : MonoBehaviour
                     GameManager.i.tooltipHelpScript.CloseTooltip("ModalOutcome.cs -> SetModalOutcomeSpecial");
                     reason = details.reason;
                     triggerEvent = details.triggerEvent;
+                    isTutorial = details.isTutorial;
                     //set modal true
                     GameManager.i.guiScript.SetIsBlocked(true, details.modalLevel);
                     //toggle panels
@@ -496,6 +469,7 @@ public class ModalOutcome : MonoBehaviour
     }
     #endregion
 
+    #region GrowBlackBars
     /// <summary>
     /// Extend black bars (behind Special Outcome) to full screen width
     /// </summary>
@@ -510,7 +484,9 @@ public class ModalOutcome : MonoBehaviour
             yield return null;
         }
     }
+    #endregion
 
+    #region ShrinkBlackBars
     /// <summary>
     /// Shrink black bars (behind Special Outcome) to width of Special Outcome panel. Used when closing
     /// </summary>
@@ -525,7 +501,9 @@ public class ModalOutcome : MonoBehaviour
             yield return null;
         }
     }
+    #endregion
 
+    #region RunHighlights
     /// <summary>
     /// grow/shrink coloured line highlights along black bars behind the specialOutcome panel
     /// </summary>
@@ -564,7 +542,9 @@ public class ModalOutcome : MonoBehaviour
             yield return null;
         }
     }
+    #endregion
 
+    #region FadeHighlights
     /// <summary>
     /// Fade out highlight on close
     /// </summary>
@@ -580,6 +560,37 @@ public class ModalOutcome : MonoBehaviour
             yield return null;
         }
     }
+    #endregion
+
+    #region RunCloseSequence
+    /// <summary>
+    /// Close sequence for outcome special (shrinks black bars first)
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator RunCloseSequence()
+    {
+        //deal with highlights first
+        if (myCoroutineHighlights != null)
+        {
+            //stop highlight animation
+            StopCoroutine(myCoroutineHighlights);
+            //fade out highlights
+            myCoroutineFadeHighlights = StartCoroutine("FadeHighlights");
+            /*yield return myCoroutineFadeHighlights;*/
+        }
+        //shrink black bars
+        myCoroutineBarShrink = StartCoroutine("ShrinkBlackBar");
+        yield return myCoroutineBarShrink;
+        //failsafe
+        if (myCoroutineFadeHighlights != null)
+        { StopCoroutine(myCoroutineFadeHighlights); }
+        //close main panel
+        CloseModalOutcome();
+        yield break;
+    }
+    #endregion
+
+    #endregion
 
     /*/// <summary>
     /// fade in tooltip over time
@@ -607,31 +618,7 @@ public class ModalOutcome : MonoBehaviour
     }
     #endregion
 
-    /// <summary>
-    /// Close sequence for outcome special (shrinks black bars first)
-    /// </summary>
-    /// <returns></returns>
-    IEnumerator RunCloseSequence()
-    {
-        //deal with highlights first
-        if (myCoroutineHighlights != null)
-        {
-            //stop highlight animation
-            StopCoroutine(myCoroutineHighlights);
-            //fade out highlights
-            myCoroutineFadeHighlights = StartCoroutine("FadeHighlights");
-            /*yield return myCoroutineFadeHighlights;*/
-        }
-        //shrink black bars
-        myCoroutineBarShrink = StartCoroutine("ShrinkBlackBar");
-        yield return myCoroutineBarShrink;
-        //failsafe
-        if (myCoroutineFadeHighlights != null)
-        { StopCoroutine(myCoroutineFadeHighlights); }
-        //close main panel
-        CloseModalOutcome();
-        yield break;
-    }
+
 
     #region CloseModalOutcome
     /// <summary>
@@ -658,11 +645,10 @@ public class ModalOutcome : MonoBehaviour
         outcomeCanvas.gameObject.SetActive(false);
         //end of turn check
         if (isAction == true)
-        {
-            /*EventManager.i.PostNotification(EventType.UseAction, this, reason, "ModalOutcome.cs -> CloseModalOutcome");*/
-
-            GameManager.i.turnScript.UseAction(reason);
-        }
+        { GameManager.i.turnScript.UseAction(reason); }
+        //tutorial outcome -> need to shift arrow
+        if (isTutorial == true)
+        { GameManager.i.tutorialUIScript.SetArrow(); }
         //auto set haltExecution to false (in case execution halted at end of turn, waiting on Compromised Gear Outcome dialogue to be sorted)
         GameManager.i.turnScript.haltExecution = false;
         //auto set waitUntilDone for InfoPipeline (waiting on a message in the pipeline to be done)

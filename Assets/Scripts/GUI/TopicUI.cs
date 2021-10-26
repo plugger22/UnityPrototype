@@ -1271,6 +1271,8 @@ public class TopicUI : MonoBehaviour
         {
             GameManager.i.guiScript.SetIsBlocked(false); //needs to be BEFORE ResetStates in order to return modal level to 0
             GameManager.i.inputScript.ResetStates(ModalSubState.None);
+            //arrow
+            GameManager.i.tutorialUIScript.SetArrow();
         }
 
         //set waitUntilDone false to continue with pipeline only if there is no outcome from the topic option selected

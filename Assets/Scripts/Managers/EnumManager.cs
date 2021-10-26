@@ -251,7 +251,7 @@
     {
         None,
         Move, MoveSecurity,
-        PlayerInvisibility, PlayerNodeActions, PlayerRecruit,
+        PlayerInvisibility, PlayerNodeActions, PlayerRecruit, PlayerGiveGear,
         SubordinateRecruit, SubordinateNodeActions, SubordinateDismiss, SubordinateActivate, SubordinateGear
     }                 
 

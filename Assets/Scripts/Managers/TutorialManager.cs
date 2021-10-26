@@ -607,7 +607,8 @@ public class TutorialManager : MonoBehaviour
                                 sprite = GameManager.i.tutorialScript.tutorial.sprite,
                                 isAction = false,
                                 isSpecial = true,
-                                isSpecialGood = true
+                                isSpecialGood = true,
+                                isTutorial = true
                             };
                             EventManager.i.PostNotification(EventType.OutcomeOpen, this, details);
                             //update tutorial item on RHS
@@ -653,6 +654,7 @@ public class TutorialManager : MonoBehaviour
                 case "PlayerInvisibility": goalType = GoalType.PlayerInvisibility; break;
                 case "PlayerNodeAction": goalType = GoalType.PlayerNodeActions; break;
                 case "PlayerRecruit": goalType = GoalType.PlayerRecruit; break;
+                case "GiveGear": goalType = GoalType.PlayerGiveGear; break;
                 default: Debug.LogWarningFormat("Unrecognised goal \"{0}\"", goal); break;
             }
         }
@@ -699,7 +701,7 @@ public class TutorialManager : MonoBehaviour
             case GoalType.SubordinateActivate:
                 //subordinate is activated from Reserves to OnMap
                 goalValue = GameManager.i.dataScript.StatisticGetLevel(StatType.SubordinateActivate);
-                    break;
+                break;
             case GoalType.PlayerInvisibility:
                 //player lost invisibility
                 goalValue = GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerInvisibilityLost);
@@ -711,6 +713,10 @@ public class TutorialManager : MonoBehaviour
             case GoalType.PlayerRecruit:
                 //player recruits somebody
                 goalValue = GameManager.i.dataScript.StatisticGetLevel(StatType.ActorsRecruited);
+                break;
+            case GoalType.PlayerGiveGear:
+                //player gives gear to a subordinate
+                goalValue = GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerGiveGear);
                 break;
             case GoalType.None: break;
             default: Debug.LogWarningFormat("Unrecognised goalType \"{0}\"", goalType); break;
@@ -731,7 +737,8 @@ public class TutorialManager : MonoBehaviour
         EventType eventType = EventType.None;
         switch (goalType)
         {
-              case GoalType.SubordinateActivate:
+            case GoalType.SubordinateActivate:
+            case GoalType.PlayerGiveGear:
                 eventType = EventType.InventoryCloseUI;
                 break;
         }
@@ -1207,8 +1214,6 @@ public class TutorialManager : MonoBehaviour
     public int GetNumberOfSets()
     { return tutorial.listOfSets.Count; }
     #endregion
-
-
 
     #endregion
 

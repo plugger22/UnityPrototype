@@ -186,12 +186,10 @@ public class GameHelpUI : MonoBehaviour
     private void CloseGameHelp()
     {
         Debug.LogFormat("[UI] GameHelp.cs -> CloseGameHelp{0}", "\n");
-
-        /*//set modal false
-        GameManager.i.guiScript.SetIsBlocked(false, modalLevel);
-        //set game state
-        GameManager.i.inputScript.ResetStates(modalState);*/
-
+        //Check if tutorial mode -> move arrow
+        if(GameManager.i.inputScript.GameState == GameState.Tutorial)
+        { GameManager.i.tutorialUIScript.SetArrow(); }
+        //Modal
         GameManager.i.guiScript.SetIsBlocked(false);
         GameManager.i.inputScript.ResetStates();
         //switch off canvas
