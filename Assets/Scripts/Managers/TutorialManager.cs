@@ -650,10 +650,12 @@ public class TutorialManager : MonoBehaviour
                 case "SubordinateRecruit": goalType = GoalType.SubordinateRecruit; break;
                 case "SubordinateDismiss": goalType = GoalType.SubordinateDismiss; break;
                 case "SubordinateActivate": goalType = GoalType.SubordinateActivate; break;
+                case "PlannerInfo": goalType = GoalType.SubordinatePlanner; break;
                 case "SubordinateGear": goalType = GoalType.SubordinateGear; break;
                 case "PlayerInvisibility": goalType = GoalType.PlayerInvisibility; break;
                 case "PlayerNodeAction": goalType = GoalType.PlayerNodeActions; break;
                 case "PlayerRecruit": goalType = GoalType.PlayerRecruit; break;
+                case "PlayerTarget": goalType = GoalType.PlayerTarget; break;
                 case "GiveGear": goalType = GoalType.PlayerGiveGear; break;
                 default: Debug.LogWarningFormat("Unrecognised goal \"{0}\"", goal); break;
             }
@@ -702,6 +704,10 @@ public class TutorialManager : MonoBehaviour
                 //subordinate is activated from Reserves to OnMap
                 goalValue = GameManager.i.dataScript.StatisticGetLevel(StatType.SubordinateActivate);
                 break;
+            case GoalType.SubordinatePlanner:
+                //planner gains target info
+                goalValue = GameManager.i.dataScript.StatisticGetLevel(StatType.TargetInfo);
+                break;
             case GoalType.PlayerInvisibility:
                 //player lost invisibility
                 goalValue = GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerInvisibilityLost);
@@ -717,6 +723,10 @@ public class TutorialManager : MonoBehaviour
             case GoalType.PlayerGiveGear:
                 //player gives gear to a subordinate
                 goalValue = GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerGiveGear);
+                break;
+            case GoalType.PlayerTarget:
+                //player attempts target
+                goalValue = GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerTargetAttempts);
                 break;
             case GoalType.None: break;
             default: Debug.LogWarningFormat("Unrecognised goalType \"{0}\"", goalType); break;

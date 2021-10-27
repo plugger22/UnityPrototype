@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Name: TutRESq6_10
   m_EditorClassIdentifier: 
   tag: Fish
-  text: A colourful pet fish
+  text: A colourful, affectionate fish
   query: {fileID: 11400000, guid: 168a0cb22f88d7b47a75f838959ad276, type: 2}

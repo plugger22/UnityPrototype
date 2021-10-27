@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14ce46f3171943c4288c53f60de62339, type: 3}
+  m_Name: PlayerTarget
+  m_EditorClassIdentifier: 
+  notes: Player attempts a target
+  startTopText: Attempt a Target
+  startBottomText: Move to the district with the target (press 'T' after closing this)<br><br>Left
+    click the district and mouseover ATTEMPT TARGET<br><br>Take note of the tooltip
+    then click to attempt
+  finishTopText: Did you find the Stick?
+  finishBottomText: Doesn't matter if you didn't, you can always attempt it again<br><br>Be
+    mindful though, that targets won't hang around forever<br><br>You've only got
+    a short window of time to tackle them
+  tooltipText: Move to the district with the Target (press 'T'). Once there, Left
+    click on the district and mouseover ATTEMPT TARGET to see your chances. Then click
+    the button to find the Stick
+  goal0: {fileID: 11400000, guid: 509fc5a5b2259044193a32f280d91181, type: 2}
+  tracker0Notes: Player Target
+  target0: 1
+  goal1: {fileID: 0}
+  tracker1Notes: 
+  target1: -1

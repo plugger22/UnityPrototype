@@ -251,8 +251,8 @@
     {
         None,
         Move, MoveSecurity,
-        PlayerInvisibility, PlayerNodeActions, PlayerRecruit, PlayerGiveGear,
-        SubordinateRecruit, SubordinateNodeActions, SubordinateDismiss, SubordinateActivate, SubordinateGear
+        PlayerInvisibility, PlayerNodeActions, PlayerRecruit, PlayerGiveGear, PlayerTarget,
+        SubordinateRecruit, SubordinateNodeActions, SubordinateDismiss, SubordinateActivate, SubordinateGear, SubordinatePlanner
     }                 
 
     //
@@ -267,7 +267,7 @@
         PlayerManageActions, PlayerManageReserve, PlayerManageMoveOn, PlayerManageDispose,
         SubordinateNodeActions, SubordinateActivate,
         LieLowDaysTotal, GearTotal,
-        TargetAttempts, TargetSuccesses,
+        TargetAttempts, TargetSuccesses, TargetInfo,
         ActorsResignedAuthority, ActorsResignedResistance, ActorResistanceTraitors, ActorsRecruited, ActorConflicts, ActorLearntSecret, ActorCompatibilityGood, ActorCompatibilityBad,
         NodeCrisis, NodeCrisisExplodes, NodeActionsResistance,
         TopicsGood, TopicsBad, TopicsIgnored,

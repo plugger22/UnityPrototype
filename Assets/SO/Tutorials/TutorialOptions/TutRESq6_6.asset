@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Name: TutRESq6_6
   m_EditorClassIdentifier: 
   tag: Alligator
-  text: A toothy, mini-Alligator
+  text: A toothy, extroverted Alligator
   query: {fileID: 11400000, guid: 168a0cb22f88d7b47a75f838959ad276, type: 2}

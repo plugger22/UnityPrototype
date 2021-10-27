@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20d501b51a4f7c44893a54b01e66d52c, type: 3}
   m_Name: Res6Intro
   m_EditorClassIdentifier: 
-  topText: Fred again, Tutorial Set 6
-  bottomText: Getting towards the end, hang in there
+  topText: Fred here. You're still digesting that rat burger?
+  bottomText: There's a few more things to cover before we let you lose<br><br>Hang
+    in there, we're almost done
   item: {fileID: 11400000, guid: d52c843496f953846ab188ecf33ebf11, type: 2}

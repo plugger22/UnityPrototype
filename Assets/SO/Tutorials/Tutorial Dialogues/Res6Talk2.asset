@@ -9,9 +9,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 20d501b51a4f7c44893a54b01e66d52c, type: 3}
-  m_Name: Res5Talk1
+  m_Name: Res6Talk2
   m_EditorClassIdentifier: 
-  topText: You don't have magic pockets<br><br>3 pieces of gear is all you can handle
-  bottomText: But there are ways around the gear limit if you're smart<br><br>You
-    can give gear to your subordinates for temporary safekeeping
-  item: {fileID: 11400000, guid: eb64bba3558465248a0e7f8d1b7db1b9, type: 2}
+  topText: O.K, get to work. Find the Stick
+  bottomText: Do it yourself. Targets can give good rewards (Power)<br><br>Do you
+    want those to go to your subordinates?
+  item: {fileID: 11400000, guid: 1d202c8cf6e0ccc40b364f3d29d57780, type: 2}

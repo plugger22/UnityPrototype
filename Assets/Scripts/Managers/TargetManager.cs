@@ -2115,6 +2115,8 @@ public class TargetManager : MonoBehaviour
                     //message
                     Debug.LogFormat("[Tar] TargetManager.cs -> ProcessTargetInfo: {0} at {1}, {2}, id {3}, Intel +{4}, now {5} (PLANNER action){6}", target.targetName,
                         node.nodeName, node.Arc.name, node.nodeID, target.intelGain, target.intel, "\n");
+                    //stats
+                    GameManager.i.dataScript.StatisticIncrement(StatType.TargetInfo);
                     //Process any other effects, if acquisition was successfull, ignore otherwise
                     Action action = actor.arc.nodeAction;
                     EffectDataInput dataInput = new EffectDataInput();

@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Name: TutRESq6_13
   m_EditorClassIdentifier: 
   tag: Iguana
-  text: A sleepy reptilian Iguana
+  text: A nasty, bad tempered Iguana
   query: {fileID: 11400000, guid: 168a0cb22f88d7b47a75f838959ad276, type: 2}

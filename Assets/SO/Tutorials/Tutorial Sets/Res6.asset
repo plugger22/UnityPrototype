@@ -15,22 +15,26 @@ MonoBehaviour:
   descriptor: Targets
   notes: 
   index: 6
-  playerConfig: {fileID: 0}
-  actorConfig: {fileID: 0}
+  playerConfig: {fileID: 11400000, guid: b6844e236baea784ebf3b4ccee77896f, type: 2}
+  actorConfig: {fileID: 11400000, guid: 7a0954355ffe1a742a6824f203861bd9, type: 2}
   targetConfig: {fileID: 11400000, guid: fded60c6795af5142872ac8bd57a7129, type: 2}
-  teamConfig: {fileID: 11400000, guid: 93381833d112b5e4ab1d759944dd02f1, type: 2}
+  teamConfig: {fileID: 0}
   hideConfig: {fileID: 11400000, guid: a730b257e434b1148b79a8d046b14694, type: 2}
   listOfFeaturesOff:
   - {fileID: 11400000, guid: 7e2f496678746a1488d0508fb5ac34ef, type: 2}
   - {fileID: 11400000, guid: 60c5546ae44161c4e96b856a75904210, type: 2}
   - {fileID: 11400000, guid: 70e66f38820226347909bc5dfe71319a, type: 2}
-  - {fileID: 11400000, guid: 60b4bacf16a2f574fa7fa81a919e7bbc, type: 2}
-  - {fileID: 11400000, guid: 9ab41dcfbf11bf14f8fbeb9b7522f31a, type: 2}
   - {fileID: 11400000, guid: efba9c88561b33140bc3fe102eb154d3, type: 2}
-  listOfGUIOff:
-  - {fileID: 11400000, guid: 4ecda8036df900d48b4b25e77b1b6ad0, type: 2}
-  - {fileID: 11400000, guid: 262a2750ea2c48041a39b611630cb536, type: 2}
+  - {fileID: 11400000, guid: 9ab41dcfbf11bf14f8fbeb9b7522f31a, type: 2}
+  listOfGUIOff: []
   listOfTutorialItems:
   - {fileID: 11400000, guid: d52c843496f953846ab188ecf33ebf11, type: 2}
   - {fileID: 11400000, guid: 168a0cb22f88d7b47a75f838959ad276, type: 2}
+  - {fileID: 11400000, guid: 1472399a0a5fa7e40a130e425cb4e5ee, type: 2}
+  - {fileID: 11400000, guid: a8c96231c6f779a4b8af1ba627dda144, type: 2}
+  - {fileID: 11400000, guid: c0a76fe0fda69794c8e43845fdff466b, type: 2}
+  - {fileID: 11400000, guid: e5b7f27e3b09ae74abec8ce3c0a650ce, type: 2}
   - {fileID: 11400000, guid: c96b889f230661a4fa5dd2ec48b66e3e, type: 2}
+  - {fileID: 11400000, guid: 1d202c8cf6e0ccc40b364f3d29d57780, type: 2}
+  - {fileID: 11400000, guid: e6021282235e8a84dbe46db5a9ebb4ff, type: 2}
+  - {fileID: 11400000, guid: f113972fb19d9e040b1127123c4a9e96, type: 2}

@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Name: TutRESq5_2
   m_EditorClassIdentifier: 
   tag: Doing Good
-  text: I wanted to make a difference
+  text: I want to make a difference
   query: {fileID: 11400000, guid: 55b2e5eed833a824d81f6c88410cbac5, type: 2}

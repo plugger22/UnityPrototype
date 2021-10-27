@@ -17,8 +17,8 @@ MonoBehaviour:
     the Gear Inventory ('G') and Right click an item to access the menu<br><br>Or
     you could Right click your subordinate (portrait) to access the menu
   finishTopText: They have your gear
-  finishBottomText: You can't use the gear (but they can) while they have it<br><br>You
-    can ask for it back after a short interval if you have space in your inventory
+  finishBottomText: You can't use the gear (they can)<br><br>You can ask for it back
+    after a short interval when you have space in your inventory
   tooltipText: Open Gear Inventory ('G') and right click gear item for menu<br><br>Or
     right click the subordinate who you wish to receive the gear
   goal0: {fileID: 11400000, guid: 1e3e6b3b90b29a244a7c3dd80a80f4cd, type: 2}

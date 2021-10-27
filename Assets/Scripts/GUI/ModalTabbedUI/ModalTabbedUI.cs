@@ -2741,6 +2741,19 @@ public class ModalTabbedUI : MonoBehaviour
                                     builder.Clear();
                                     builder.Append(GameManager.Formatt("Gear Uses", ColourType.neutralText));
                                     builder.Append("<size=85%>");
+                                    //district use
+                                    builder.AppendLine();
+                                    switch (gear.type.name)
+                                    {
+                                        case "Hacking":
+                                        case "Kinetic":
+                                        case "Persuasion":
+                                            builder.Append(GameManager.Formatt("District use", ColourType.salmonText));
+                                            break;
+                                        default:
+                                            builder.Append(GameManager.Formatt("District use - No", ColourType.greyText));
+                                            break;
+                                    }
                                     //personal use
                                     builder.AppendLine();
                                     if (gear.listOfPersonalEffects != null && gear.listOfPersonalEffects.Count > 0)
@@ -2771,12 +2784,14 @@ public class ModalTabbedUI : MonoBehaviour
                                     { builder.Append(GameManager.Formatt("Targets - ALL", ColourType.salmonText)); }
                                     else
                                     { builder.Append(GameManager.Formatt("Targets - Some", ColourType.salmonText)); }
+                                    /* -> No space
                                     //has been used this turn
                                     if (gear.timesUsed > 0)
                                     {
                                         builder.AppendLine();
                                         builder.Append(GameManager.Formatt("Already USED this Turn", ColourType.badText));
                                     }
+                                    */
                                     builder.Append("</size>");
                                     interactGear.uses.text = builder.ToString();
                                     // - - - Stats

@@ -2374,9 +2374,9 @@ public class ActorManager : MonoBehaviour
                                         }
                                         else
                                         {
-                                            //actor has no connections at node
+                                            //actor has no contacts at node
                                             if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                            infoBuilder.AppendFormat("{0} has no connections", actor.arc.name);
+                                            infoBuilder.AppendFormat("{0} has no contacts", actor.arc.name);
                                             proceedFlag = false;
                                         }
                                     }

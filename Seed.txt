@@ -4108,3 +4108,407 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
 	City seed 5817 -> VirtualCity, Eurasia
+
+Dev seed 35519 -> Tuesday, 26 October 2021 5:26 PM
+WARNING [Val] ValidateSO: MISMATCH on TutorialItem, array 49, assets 55 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialItem[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2597)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialDialogue, array 19, assets 21 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialDialogue[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2603)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialGoal, array 9, assets 11 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialGoal[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2605)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialGoalType, array 9, assets 11 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialGoalType[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2607)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	City seed 6553 -> VirtualCity, Eurasia
+
+Dev seed 13662 -> Tuesday, 26 October 2021 5:35 PM
+City seed 3662 -> VirtualCity, Eurasia
+
+Dev seed 5625 -> Wednesday, 27 October 2021 10:03 AM
+City seed 59136 -> VirtualCity, Eurasia
+
+Dev seed 23209 -> Wednesday, 27 October 2021 10:09 AM
+City seed 60333 -> VirtualCity, Eurasia
+
+Dev seed 4883 -> Wednesday, 27 October 2021 10:10 AM
+City seed 64821 -> Londus, Eurasia
+
+Dev seed 64878 -> Wednesday, 27 October 2021 10:11 AM
+City seed 4305 -> VirtualCity, Eurasia
+
+Dev seed 61776 -> Wednesday, 27 October 2021 10:21 AM
+City seed 11715 -> VirtualCity, Eurasia
+
+Dev seed 46789 -> Wednesday, 27 October 2021 10:23 AM
+City seed 31453 -> VirtualCity, Eurasia
+
+Dev seed 27107 -> Wednesday, 27 October 2021 10:24 AM
+City seed 25906 -> VirtualCity, Eurasia
+
+Dev seed 55180 -> Wednesday, 27 October 2021 1:55 PM
+City seed 45178 -> VirtualCity, Eurasia
+
+Dev seed 16588 -> Wednesday, 27 October 2021 1:58 PM
+City seed 62680 -> VirtualCity, Eurasia
+
+Dev seed 20167 -> Wednesday, 27 October 2021 2:05 PM
+WARNING [Val] ValidateSO: MISMATCH on TutorialActorConfig, array 4, assets 5 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialActorConfig[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2617)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialPlayerConfig, array 2, assets 3 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialPlayerConfig[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2619)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	City seed 28401 -> VirtualCity, Eurasia
+
+Dev seed 25480 -> Wednesday, 27 October 2021 2:50 PM
+WARNING [Val] ValidateSO: MISMATCH on TutorialItem, array 55, assets 62 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialItem[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2597)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialDialogue, array 21, assets 24 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialDialogue[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2603)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialGoal, array 11, assets 13 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialGoal[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2605)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialGoalType, array 11, assets 13 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialGoalType[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2607)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialActorConfig, array 4, assets 5 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialActorConfig[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2617)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialPlayerConfig, array 2, assets 3 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialPlayerConfig[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2619)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	City seed 46970 -> VirtualCity, Eurasia
+
+Dev seed 10954 -> Wednesday, 27 October 2021 3:07 PM
+WARNING [Val] ValidateSO: MISMATCH on TutorialItem, array 55, assets 62 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialItem[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2597)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialDialogue, array 21, assets 24 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialDialogue[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2603)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialGoal, array 11, assets 13 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialGoal[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2605)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialGoalType, array 11, assets 13 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialGoalType[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2607)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialActorConfig, array 4, assets 5 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialActorConfig[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2617)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialPlayerConfig, array 2, assets 3 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialPlayerConfig[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2619)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	City seed 65523 -> VirtualCity, Eurasia
+
+Dev seed 4611 -> Wednesday, 27 October 2021 3:21 PM
+WARNING [Val] ValidateSO: MISMATCH on TutorialItem, array 55, assets 62 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialItem[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2597)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialDialogue, array 21, assets 24 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialDialogue[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2603)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialGoal, array 11, assets 13 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialGoal[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2605)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialGoalType, array 11, assets 13 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialGoalType[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2607)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialActorConfig, array 4, assets 5 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialActorConfig[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2617)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialPlayerConfig, array 2, assets 3 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialPlayerConfig[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2619)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	City seed 32980 -> VirtualCity, Eurasia
+
+Dev seed 11677 -> Wednesday, 27 October 2021 3:30 PM
+WARNING [Val] ValidateSO: MISMATCH on TutorialItem, array 55, assets 62 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialItem[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2597)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialDialogue, array 21, assets 24 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialDialogue[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2603)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialGoal, array 11, assets 13 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialGoal[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2605)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialGoalType, array 11, assets 13 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialGoalType[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2607)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialActorConfig, array 4, assets 5 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialActorConfig[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2617)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialPlayerConfig, array 2, assets 3 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialPlayerConfig[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2619)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	City seed 17733 -> VirtualCity, Eurasia
+
+Dev seed 45072 -> Wednesday, 27 October 2021 3:52 PM
+WARNING [Val] ValidateSO: MISMATCH on TutorialItem, array 55, assets 62 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialItem[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2597)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialDialogue, array 21, assets 24 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialDialogue[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2603)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialGoal, array 11, assets 13 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialGoal[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2605)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialGoalType, array 11, assets 13 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialGoalType[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2607)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialActorConfig, array 4, assets 5 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialActorConfig[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2617)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialPlayerConfig, array 2, assets 3 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialPlayerConfig[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2619)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	City seed 53649 -> VirtualCity, Eurasia
+ERROR _actionsTotal exceeded by _actionsCurrent
+UnityEngine.Debug:LogError(Object)
+	TurnManager:UseAction(String) (at Assets/Scripts/Managers/TurnManager.cs:743)
+	ModalOutcome:CloseModalOutcome() (at Assets/Scripts/GUI/ModalOutcome.cs:648)
+	<RunCloseSequence>c__Iterator4:MoveNext() (at Assets/Scripts/GUI/ModalOutcome.cs:588)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 8135 -> Wednesday, 27 October 2021 4:10 PM
+WARNING [Val] ValidateSO: MISMATCH on TutorialItem, array 55, assets 62 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialItem[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2597)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialDialogue, array 21, assets 24 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialDialogue[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2603)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialGoal, array 11, assets 13 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialGoal[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2605)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialGoalType, array 11, assets 13 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialGoalType[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2607)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialActorConfig, array 4, assets 5 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialActorConfig[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2617)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialPlayerConfig, array 2, assets 3 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialPlayerConfig[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2619)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	City seed 38716 -> VirtualCity, Eurasia
+ERROR _actionsTotal exceeded by _actionsCurrent
+UnityEngine.Debug:LogError(Object)
+	TurnManager:UseAction(String) (at Assets/Scripts/Managers/TurnManager.cs:743)
+	ModalOutcome:CloseModalOutcome() (at Assets/Scripts/GUI/ModalOutcome.cs:648)
+	<RunCloseSequence>c__Iterator4:MoveNext() (at Assets/Scripts/GUI/ModalOutcome.cs:588)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 20375 -> Wednesday, 27 October 2021 4:20 PM
+WARNING [Val] ValidateSO: MISMATCH on TutorialItem, array 55, assets 62 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialItem[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2597)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialDialogue, array 21, assets 24 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialDialogue[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2603)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialGoal, array 11, assets 13 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialGoal[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2605)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialGoalType, array 11, assets 13 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialGoalType[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2607)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialActorConfig, array 4, assets 5 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialActorConfig[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2617)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialPlayerConfig, array 2, assets 3 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialPlayerConfig[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2619)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	City seed 4361 -> VirtualCity, Eurasia
+ERROR _actionsTotal exceeded by _actionsCurrent
+UnityEngine.Debug:LogError(Object)
+	TurnManager:UseAction(String) (at Assets/Scripts/Managers/TurnManager.cs:743)
+	NodeManager:ProcessPlayerMove(ModalMoveDetails) (at Assets/Scripts/Managers/NodeManager.cs:2913)
+	NodeManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/NodeManager.cs:452)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	<CreateMoveMenu>c__AnonStorey7:<>m__0() (at Assets/Scripts/Managers/NodeManager.cs:2735)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 40373 -> Wednesday, 27 October 2021 4:26 PM
+WARNING [Val] ValidateSO: MISMATCH on TutorialItem, array 55, assets 62 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialItem[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2597)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialDialogue, array 21, assets 24 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialDialogue[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2603)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialGoal, array 11, assets 13 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialGoal[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2605)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialGoalType, array 11, assets 13 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialGoalType[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2607)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialActorConfig, array 4, assets 5 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialActorConfig[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2617)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialPlayerConfig, array 2, assets 3 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialPlayerConfig[]) (at Assets/Scripts/Managers/ValidationManager.cs:2660)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2619)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	City seed 32907 -> VirtualCity, Eurasia

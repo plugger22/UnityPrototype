@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14ce46f3171943c4288c53f60de62339, type: 3}
+  m_Name: PlannerInfo
+  m_EditorClassIdentifier: 
+  notes: Planner gains target info
+  startTopText: Gain intel on a target
+  startBottomText: There's a target out there - Find the Stick (press T after you
+    close this)<br><br>Use your PLANNER and their contacts<br><br>Use their contact
+    closest to the target. They have the best intel
+  finishTopText: You don't need intel but it'll improve your chances to, in this case,
+    find the Stick
+  finishBottomText: Every time you attempt a target and fail there is a chance that
+    the Authority will know<br><br>The last thing you want to be doing is to be standing
+    underneath a flashing <b>COME AND GET ME</b> sign
+  tooltipText: Mouse over your PLANNER. Left click on a district where they have contacts
+    (use the closest one to the target) and select <b>'Gain Target Info'</b>
+  goal0: {fileID: 11400000, guid: e7dd08cbd7fc9fe4e904e1ac421bb44c, type: 2}
+  tracker0Notes: Planner Info
+  target0: 1
+  goal1: {fileID: 0}
+  tracker1Notes: 
+  target1: -1

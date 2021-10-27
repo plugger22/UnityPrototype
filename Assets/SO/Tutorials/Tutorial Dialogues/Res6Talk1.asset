@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20d501b51a4f7c44893a54b01e66d52c, type: 3}
+  m_Name: Res6Talk1
+  m_EditorClassIdentifier: 
+  topText: You can scurry around the city causing trouble but if you want to really
+    make an impact you aim for the TARGETS
+  bottomText: These could be anything. They pop up in different districts over time<br><br>If
+    you're going to tackle a target it helps to have some <b>Intel</b>
+  item: {fileID: 11400000, guid: c0a76fe0fda69794c8e43845fdff466b, type: 2}

@@ -9,16 +9,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc49b46e8d124ff4685a6dadef6ead5b, type: 3}
-  m_Name: tutTarget01
+  m_Name: tutTarget0
   m_EditorClassIdentifier: 
-  targetName: E-Charging Station
-  descriptorResistance: Blow up station
+  targetName: The Stick
+  descriptorResistance: Contact the Stick
   descriptorAuthority: Possible Security flaw
-  reasonText: blown charging station
-  rumourText: blow up a charging station
-  targetLevel: 1
-  actorArc: {fileID: 11400000, guid: 585f6ebe97311aa4396d0c79f6faf1df, type: 2}
-  gear: {fileID: 11400000, guid: 11c5f192680724a4c96f53aec300aead, type: 2}
+  reasonText: Stick being found
+  rumourText: find the Stick
+  targetLevel: 2
+  actorArc: {fileID: 11400000, guid: 263a792d486e45c479c3e25c59a47157, type: 2}
+  gear: {fileID: 11400000, guid: 37fa744a3cca2c641840caf14360a4db, type: 2}
   sprite: {fileID: 21300000, guid: ea98f5a4562f99b4e8684a4232b3c6e4, type: 3}
   targetType: {fileID: 11400000, guid: 1eb39f640a9ec734ea82d5e1e880f603, type: 2}
   nodeArc: {fileID: 0}
@@ -34,15 +34,15 @@ MonoBehaviour:
   profileBase: {fileID: 11400000, guid: 99aa47a7d7107424a9070623c2307990, type: 2}
   isSuccessNeeded: 1
   followOnTarget: {fileID: 0}
-  profile: {fileID: 11400000, guid: 3cac112efe0822249b012aabfba261d5, type: 2}
+  profile: {fileID: 11400000, guid: 99aa47a7d7107424a9070623c2307990, type: 2}
   targetStatus: 2
-  intel: 0
+  intel: 1
   ongoingID: -1
   isKnownByAI: 0
-  nodeID: 11
-  distance: 0
-  newIntel: 0
-  intelGain: 0
+  nodeID: 12
+  distance: 6
+  newIntel: 1
+  intelGain: 1
   turnSuccess: -1
   turnDone: -1
   numOfAttempts: 0

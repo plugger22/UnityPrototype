@@ -141,8 +141,8 @@ public class ModalActionMenu : MonoBehaviour
         GameManager.i.inputScript.SetModalState(package);
         //close all tooltips
         GameManager.i.guiScript.SetTooltipsOff();
-        //check enough actions, or tutorial mode
-        if (GameManager.i.turnScript.CheckRemainingActions() == true || GameManager.i.inputScript.GameState == GameState.Tutorial)
+        //check enough actions, or tutorial mode with isActions switched off
+        if (GameManager.i.turnScript.CheckRemainingActions() == true || (GameManager.i.optionScript.isActions == false && GameManager.i.inputScript.GameState == GameState.Tutorial))
         {
             //modalActionObject.SetActive(true);
             menuCanvas.gameObject.SetActive(true);
