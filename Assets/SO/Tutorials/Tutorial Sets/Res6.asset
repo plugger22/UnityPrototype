@@ -26,6 +26,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 70e66f38820226347909bc5dfe71319a, type: 2}
   - {fileID: 11400000, guid: efba9c88561b33140bc3fe102eb154d3, type: 2}
   - {fileID: 11400000, guid: 9ab41dcfbf11bf14f8fbeb9b7522f31a, type: 2}
+  - {fileID: 11400000, guid: 60af24f1ab6cad24784d77e56f88cc75, type: 2}
   listOfGUIOff: []
   listOfTutorialItems:
   - {fileID: 11400000, guid: d52c843496f953846ab188ecf33ebf11, type: 2}
