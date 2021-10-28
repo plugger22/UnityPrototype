@@ -1974,9 +1974,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 55b2e5eed833a824d81f6c88410cbac5, type: 2}
   - {fileID: 11400000, guid: ac15836162de3ee4fa01a1b9db2a4cdd, type: 2}
   - {fileID: 11400000, guid: eb64bba3558465248a0e7f8d1b7db1b9, type: 2}
+  - {fileID: 11400000, guid: e5b7f27e3b09ae74abec8ce3c0a650ce, type: 2}
+  - {fileID: 11400000, guid: e6021282235e8a84dbe46db5a9ebb4ff, type: 2}
+  - {fileID: 11400000, guid: a8c96231c6f779a4b8af1ba627dda144, type: 2}
+  - {fileID: 11400000, guid: f113972fb19d9e040b1127123c4a9e96, type: 2}
   - {fileID: 11400000, guid: d52c843496f953846ab188ecf33ebf11, type: 2}
   - {fileID: 11400000, guid: 168a0cb22f88d7b47a75f838959ad276, type: 2}
   - {fileID: 11400000, guid: c96b889f230661a4fa5dd2ec48b66e3e, type: 2}
+  - {fileID: 11400000, guid: 1472399a0a5fa7e40a130e425cb4e5ee, type: 2}
+  - {fileID: 11400000, guid: c0a76fe0fda69794c8e43845fdff466b, type: 2}
+  - {fileID: 11400000, guid: 1d202c8cf6e0ccc40b364f3d29d57780, type: 2}
   arrayOfTutorialTypes:
   - {fileID: 11400000, guid: 6af73092ead59e34f89fadf31d6d355c, type: 2}
   - {fileID: 11400000, guid: 3ea5e079678bd114896744e070740f21, type: 2}
@@ -1988,8 +1995,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ac9f60d65a658db4eb63cad394c0f21e, type: 2}
   - {fileID: 11400000, guid: 6bd85dc23dcd92c40b888438e05b1696, type: 2}
   - {fileID: 11400000, guid: 6a36492cc9066d14b8e2c284a1702562, type: 2}
+  - {fileID: 11400000, guid: 92898b7ee3925164484754b74473cf80, type: 2}
   - {fileID: 11400000, guid: ffe24dfdbc2b1db49b69cdd0d4c6fb86, type: 2}
   - {fileID: 11400000, guid: e74254c1ca4e3e04fa5fe18dbe313eca, type: 2}
+  - {fileID: 11400000, guid: 291a2de8862ace64a9785dec06dc1475, type: 2}
   - {fileID: 11400000, guid: 63d9c9a35b4db4b48b12dd12050860c2, type: 2}
   - {fileID: 11400000, guid: 2e29e8f6fe93b97409dac553ec5a6d72, type: 2}
   - {fileID: 11400000, guid: b387e5a7c2f48074a985a015915beada, type: 2}
@@ -2025,6 +2034,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1bd8ecb3a35af0c4eba99f6467c3f876, type: 2}
   - {fileID: 11400000, guid: 5a327affc1ad6c443adba0a37d5aae41, type: 2}
   - {fileID: 11400000, guid: fb44a5561c4b0a3489104fcac0246d1e, type: 2}
+  - {fileID: 11400000, guid: 8327c477d42acd74a8dc3837e52b3976, type: 2}
+  - {fileID: 11400000, guid: 832a3b57ac91a5b4baf1f7d8b6dad54f, type: 2}
+  - {fileID: 11400000, guid: 825cf8b981bcb8440bed181ec9c07803, type: 2}
   arrayOfTutorialOptions:
   - {fileID: 11400000, guid: 9607f2b746acf41469bf8c88f98ba671, type: 2}
   - {fileID: 11400000, guid: d98cf6dba71922b4cbb316498b31255f, type: 2}
@@ -2141,9 +2153,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1e3e6b3b90b29a244a7c3dd80a80f4cd, type: 2}
   - {fileID: 11400000, guid: 5237bc6f2db221e4cbec1efa3fbd5e9a, type: 2}
   - {fileID: 11400000, guid: 138ab00f643f349409c32bebe2cb7424, type: 2}
+  - {fileID: 11400000, guid: e7dd08cbd7fc9fe4e904e1ac421bb44c, type: 2}
   - {fileID: 11400000, guid: f27c634cef5cfff42972926acb1a4400, type: 2}
   - {fileID: 11400000, guid: d4a26b5bdf1c4ce4ba8a2645f57ff6ab, type: 2}
   - {fileID: 11400000, guid: d3a9943fbeab66f4d8ce942ff77118e9, type: 2}
+  - {fileID: 11400000, guid: 509fc5a5b2259044193a32f280d91181, type: 2}
   - {fileID: 11400000, guid: ca6fb2e20086e1e4b9c1ed423d20e7a1, type: 2}
   - {fileID: 11400000, guid: 768ec8211f9e81b49929c99ca262345b, type: 2}
   - {fileID: 11400000, guid: 4f53032f67aaac043b096fda8981628d, type: 2}
@@ -2199,9 +2213,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 71c33337e621cc54d9d497433b21eebf, type: 2}
   - {fileID: 11400000, guid: 01183d9023211c744ac43b91c959c912, type: 2}
   - {fileID: 11400000, guid: d0f994b65cfc31544abb9fc12bf58368, type: 2}
+  - {fileID: 11400000, guid: 7a0954355ffe1a742a6824f203861bd9, type: 2}
   arrayOfTutorialPlayerConfigs:
   - {fileID: 11400000, guid: 84d000ec40260584bbf2523e2a645935, type: 2}
   - {fileID: 11400000, guid: ad88702123959524fa551d8575fcae68, type: 2}
+  - {fileID: 11400000, guid: b6844e236baea784ebf3b4ccee77896f, type: 2}
   arrayOfTutorialTargetConfigs:
   - {fileID: 11400000, guid: 38998c681209a9b43acbbc5aeac6a026, type: 2}
   - {fileID: 11400000, guid: fded60c6795af5142872ac8bd57a7129, type: 2}
@@ -7270,7 +7286,7 @@ MonoBehaviour:
   seedDev: 0
   autoRunTurns: 0
   scenarioStartLevel: 0
-  tutorialStartLevel: 6
+  tutorialStartLevel: 7
   isPerformanceLog: 1
   isDataValidation: 1
   isValidateSO: 1

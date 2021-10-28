@@ -37,6 +37,7 @@ public class CityManager : MonoBehaviour
 
     private City city;
 
+    #region colours
     private string colourRebel;
     private string colourAuthority;
     private string colourNeutral;
@@ -47,7 +48,12 @@ public class CityManager : MonoBehaviour
     private string colourAlert;
     private string colourSide;
     private string colourEnd;
+    #endregion
 
+    #region CityLoyalty
+    /// <summary>
+    /// City loyalty property
+    /// </summary>
     public int CityLoyalty
     {
         get { return _cityLoyalty; }
@@ -60,6 +66,7 @@ public class CityManager : MonoBehaviour
             EventManager.i.PostNotification(EventType.ChangeCityBar, this, _cityLoyalty, "CityManager.cs -> CityLoyalty");
         }
     }
+    #endregion
 
     /// <summary>
     /// need to do BEFORE levelManager.cs -> Initialise. 
@@ -70,6 +77,8 @@ public class CityManager : MonoBehaviour
         switch (GameManager.i.inputScript.GameState)
         {
             case GameState.TutorialOptions:
+                //not called
+                break;
             case GameState.NewInitialisation:
                 SubInitialiseAllEarly(mayor);
                 SubInitialiseEvents();
@@ -128,12 +137,11 @@ public class CityManager : MonoBehaviour
         //use a random city if GameManager dev option set true, uses Scenario specified city otherwise
         if (GameManager.i.isRandomCity == true && GameManager.i.inputScript.GameState == GameState.NewInitialisation)
         { city = GameManager.i.dataScript.GetRandomCity(); }
-
+        //loyalty
         isLoyaltyCheckedThisTurn = false;
         loyaltyMinTimer = 0;
         loyaltyMaxTimer = 0;
-
-        //Placeholder -> do early so factionManager.cs can have data in start sequence
+        //mayor
         city.mayor = mayor;
         if (city.mayor != null)
         { Debug.LogFormat("[Cit] CityManager.cs -> City {0}, {1},  Trait {2}{3}", city.tag, city.mayor.mayorName, city.mayor.trait.tag, "\n"); }
@@ -170,8 +178,28 @@ public class CityManager : MonoBehaviour
     }
     #endregion
 
+    #region InitialiseTutorial
+    /// <summary>
+    /// Called directly from TutorialManager.cs -> InitialiseTutorial
+    /// </summary>
+    /// <param name="scenario"></param>
+    public void InitialiseTutorial(Scenario scenario)
+    {
+        //loyalty
+        isLoyaltyCheckedThisTurn = false;
+        loyaltyMinTimer = 0;
+        loyaltyMaxTimer = 0;
+        //mayor
+        city.mayor = scenario.leaderAuthority;
+        if (city.mayor != null)
+        { Debug.LogFormat("[Cit] CityManager.cs -> City {0}, {1},  Trait {2}{3}", city.tag, city.mayor.mayorName, city.mayor.trait.tag, "\n"); }
+        else { Debug.LogError("Invalid city Mayor (Null) -> Issues with authority faction not initialising"); }
+    }
     #endregion
 
+    #endregion
+
+    #region OnEvent
     /// <summary>
     /// Event Handler
     /// </summary>
@@ -194,8 +222,9 @@ public class CityManager : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
-
+    #region SetColours
     /// <summary>
     /// set colour palette for modal Outcome Window
     /// </summary>
@@ -215,7 +244,9 @@ public class CityManager : MonoBehaviour
         { colourSide = colourAuthority; }
         else { colourSide = colourRebel; }
     }
+    #endregion
 
+    #region EndTurnLate
     /// <summary>
     /// End turn late event
     /// </summary>
@@ -224,6 +255,7 @@ public class CityManager : MonoBehaviour
         //reset flag ready for next turn
         isLoyaltyCheckedThisTurn = false;
     }
+    #endregion
 
     /// <summary>
     /// gets current city, null if none
@@ -276,6 +308,7 @@ public class CityManager : MonoBehaviour
         else { return "Unknown"; }
     }
 
+    #region GetCityDetails
     /// <summary>
     /// Used for top Widget city Icon and city Bar tooltips if city loyalty critical. 'isBarTooltip' true, show default message, ignore for city icon tooltip
     /// </summary>
@@ -329,6 +362,7 @@ public class CityManager : MonoBehaviour
         }
         return text;
     }
+    #endregion
 
     /// <summary>
     /// Returns name of city in next scenario (one after the current scenario). If on last scenario in campaign will return 'Unknown' as there is no next
@@ -455,6 +489,7 @@ public class CityManager : MonoBehaviour
          return builder.ToString();
      }*/
 
+    #region CheckCityLoyaltyAtLimit
     /// <summary>
     /// checks city loyalty once per turn for min and max conditions, sets timers, gives outcomes. Checks for both sides, depending on who is player
     /// </summary>
@@ -591,6 +626,7 @@ public class CityManager : MonoBehaviour
             loyaltyMaxTimer = 0;
         }
     }
+    #endregion
 
     /// <summary>
     /// returns name set for the city. Null if a problem
@@ -599,7 +635,7 @@ public class CityManager : MonoBehaviour
     public NameSet GetNameSet()
     { return city.nameSet; }
 
-
+    #region DebugSetLoyalty
     /// <summary>
     /// Set city loyalty to a new value (Debug Action Menu). Auto clamps value to allowable limits
     /// </summary>
@@ -619,6 +655,7 @@ public class CityManager : MonoBehaviour
         reply = $"City Loyalty is now {_cityLoyalty} (DEBUG)";
         return reply;
     }
+    #endregion
 
     //new methods above here
 }

@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d228a6c97b1decc4c97b0bf3ead188bc, type: 3}
+  m_Name: Res7
+  m_EditorClassIdentifier: 
+  tutorial: {fileID: 11400000, guid: c050560a8867a3a4c806544632dda679, type: 2}
+  descriptor: Qualifier
+  notes: Small practice sandbox
+  index: 7
+  playerConfig: {fileID: 11400000, guid: dcb1799616035cb4b81351dd481291df, type: 2}
+  actorConfig: {fileID: 11400000, guid: c37185e0afcf08248be1b8469b0ca001, type: 2}
+  targetConfig: {fileID: 11400000, guid: bf2423828b9a1e348a14a7f89c468271, type: 2}
+  teamConfig: {fileID: 0}
+  hideConfig: {fileID: 11400000, guid: a730b257e434b1148b79a8d046b14694, type: 2}
+  listOfFeaturesOff:
+  - {fileID: 11400000, guid: 9ab41dcfbf11bf14f8fbeb9b7522f31a, type: 2}
+  - {fileID: 11400000, guid: 60c5546ae44161c4e96b856a75904210, type: 2}
+  - {fileID: 11400000, guid: efba9c88561b33140bc3fe102eb154d3, type: 2}
+  listOfGUIOff: []
+  listOfTutorialItems:
+  - {fileID: 11400000, guid: 74b0a41f472bdb84ea6bd012b4e4d589, type: 2}
+  - {fileID: 11400000, guid: e148415021bf6744c96f03127571b34e, type: 2}
+  - {fileID: 11400000, guid: 6cbdd59db5c0e794a99547c1808a04e5, type: 2}

@@ -182,6 +182,8 @@ public class TutorialManager : MonoBehaviour
                 //set city
                 GameManager.i.cityScript.SetCity(tutorial.scenario.city);
                 Debug.LogFormat("[Tut] TutorialManager.cs -> InitialiseTutorial: city \"{0}\" loaded{1}", tutorial.scenario.city.tag, "\n");
+                //set mayor
+                GameManager.i.cityScript.InitialiseTutorial(tutorial.scenario);
                 //get index
                 if (GameManager.i.tutorialStartLevel > -1)
                 {
@@ -657,6 +659,8 @@ public class TutorialManager : MonoBehaviour
                 case "PlayerRecruit": goalType = GoalType.PlayerRecruit; break;
                 case "PlayerTarget": goalType = GoalType.PlayerTarget; break;
                 case "GiveGear": goalType = GoalType.PlayerGiveGear; break;
+                case "SandboxRescue": goalType = GoalType.SandboxRescue; break;
+                case "SandboxEvacuate": goalType = GoalType.SandboxEvacuate; break;
                 default: Debug.LogWarningFormat("Unrecognised goal \"{0}\"", goal); break;
             }
         }
@@ -727,6 +731,14 @@ public class TutorialManager : MonoBehaviour
             case GoalType.PlayerTarget:
                 //player attempts target
                 goalValue = GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerTargetAttempts);
+                break;
+            case GoalType.SandboxRescue:
+                //player attempts first sandbox goal target (only 1 target on map)
+                goalValue = GameManager.i.dataScript.StatisticGetLevel(StatType.TargetSuccesses);
+                break;
+            case GoalType.SandboxEvacuate:
+                //player attempts second sandbox goal target (only 1 target on map)
+                goalValue = GameManager.i.dataScript.StatisticGetLevel(StatType.TargetSuccesses);
                 break;
             case GoalType.None: break;
             default: Debug.LogWarningFormat("Unrecognised goalType \"{0}\"", goalType); break;

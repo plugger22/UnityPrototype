@@ -11,13 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc49b46e8d124ff4685a6dadef6ead5b, type: 3}
   m_Name: tutTarget2
   m_EditorClassIdentifier: 
-  targetName: The Gopher
-  descriptorResistance: Contact the Gopher
-  descriptorAuthority: Possible Security flaw
-  reasonText: Gopher being found
-  rumourText: find the Gopher
-  targetLevel: 1
-  actorArc: {fileID: 11400000, guid: 33cfb0c161a7cde409d27df1080bd2c8, type: 2}
+  targetName: Evacuate the Stick
+  descriptorResistance: Get the Stick to safety
+  descriptorAuthority: Prisoner on the loose
+  reasonText: The Stick on the run
+  rumourText: get the Stick out of town
+  targetLevel: 2
+  actorArc: {fileID: 11400000, guid: 263a792d486e45c479c3e25c59a47157, type: 2}
   gear: {fileID: 11400000, guid: e8011a067725d9e46bc9a30e85ee9700, type: 2}
   sprite: {fileID: 21300000, guid: ea98f5a4562f99b4e8684a4232b3c6e4, type: 3}
   targetType: {fileID: 11400000, guid: 1eb39f640a9ec734ea82d5e1e880f603, type: 2}
@@ -31,23 +31,23 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}
   moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   ongoingEffect: {fileID: 0}
-  profileBase: {fileID: 11400000, guid: 99aa47a7d7107424a9070623c2307990, type: 2}
+  profileBase: {fileID: 11400000, guid: f0e6ac92966e32a4dbb95df0acb9b0d0, type: 2}
   isSuccessNeeded: 1
   followOnTarget: {fileID: 0}
   profile: {fileID: 11400000, guid: 99aa47a7d7107424a9070623c2307990, type: 2}
-  targetStatus: 0
-  intel: 0
+  targetStatus: 4
+  intel: 3
   ongoingID: -1
   isKnownByAI: 0
   nodeID: -1
   distance: 0
-  newIntel: 0
-  intelGain: 0
-  turnSuccess: -1
-  turnDone: -1
-  numOfAttempts: 0
-  turnsWindow: 10
+  newIntel: 3
+  intelGain: 3
+  turnSuccess: 14
+  turnDone: 14
+  numOfAttempts: 3
+  turnsWindow: 20
   timerDelay: 0
   timerHardLimit: 0
-  timerWindow: 10
+  timerWindow: 11
   listOfRumourContacts: 

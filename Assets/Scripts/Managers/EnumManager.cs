@@ -251,6 +251,7 @@
     {
         None,
         Move, MoveSecurity,
+        SandboxRescue, SandboxEvacuate,
         PlayerInvisibility, PlayerNodeActions, PlayerRecruit, PlayerGiveGear, PlayerTarget,
         SubordinateRecruit, SubordinateNodeActions, SubordinateDismiss, SubordinateActivate, SubordinateGear, SubordinatePlanner
     }                 

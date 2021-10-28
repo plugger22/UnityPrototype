@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14ce46f3171943c4288c53f60de62339, type: 3}
+  m_Name: SandboxRescue
+  m_EditorClassIdentifier: 
+  notes: Rescue the stick while in sandbox mode
+  startTopText: Rescue the Stick
+  startBottomText: They've got the Stick!<br><br>Find out where they are being held
+    (press 'T') and go get 'em<br><br>Move carefully, they're looking for you...
+  finishTopText: You've got the Stick!<br><br>Well done
+  finishBottomText: It's imperative that you get the Stick to safety<br><br>We're
+    trying to organise something as we speak<br><br>Stay tuned
+  tooltipText: Press 'T' and find the Rescue the Stick target. Successfully attempt
+    the target
+  goal0: {fileID: 11400000, guid: 1808839bec0eb7d40a377dd178a20501, type: 2}
+  tracker0Notes: Rescue the Stick
+  target0: 1
+  goal1: {fileID: 0}
+  tracker1Notes: 
+  target1: -1
