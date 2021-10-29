@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Res7Intro
   m_EditorClassIdentifier: 
   topText: Well, this is it<br><br>Here's where I see if you qualify or not
-  bottomText: Save the Stick. We'll give you twenty days (turns) to do it<br><br>Get
-    caught or found by your Nemesis (did I mention the Cyber Hound?) and you fail<br><br>Come
+  bottomText: Save the Stick. We'll give you twenty turns to do it<br><br>Get caught
+    or found by your Nemesis (did I mention the Cyber Hound?) and you fail<br><br>Come
     back here if you want to restart
   item: {fileID: 11400000, guid: 74b0a41f472bdb84ea6bd012b4e4d589, type: 2}

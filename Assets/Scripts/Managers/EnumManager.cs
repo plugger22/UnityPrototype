@@ -293,7 +293,14 @@
     // - - - Messages - - -
     //
     //start of turn message pipeline (used for determining order messages are displayed ->  shown in enum order, make sure Compromised Gear is kept first as it's interactive)
-    public enum MsgPipelineType { None, CompromisedGear, Npc, ReleasePlayer, Nemesis, CapturePlayer, CaptureActor, SecretRevealed, InvestigationLaunched, InvestigationCompleted, WinLoseLevel, WinLoseCampaign, DebugTopic} //see notes above
+    public enum MsgPipelineType {
+        None,
+        CompromisedGear,            //needs to be first
+        Npc, ReleasePlayer, Nemesis,
+        CapturePlayer, CaptureActor, SecretRevealed,
+        InvestigationLaunched, InvestigationCompleted,
+        Tutorial, TutorialFail, TutorialSucceed,
+        WinLoseLevel, WinLoseCampaign, DebugTopic} //see notes above
     public enum MessageCategory { None, Current, Pending, Archive, AI, Nemesis }
     public enum MessageType { None, PLAYER, TEAM, AI, GEAR, ACTOR, TARGET, ACTIVE, ONGOING, DECISION, HQ, CITY, NODE, GENERAL, CONTACT, OBJECTIVE, TOPIC, ORGANISATION, NPC, INVESTIGATION }
     public enum MessageSubType

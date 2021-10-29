@@ -1569,6 +1569,9 @@ public class NemesisManager : MonoBehaviour
                 //end of turn outcome window which needs to overlay ontop of InfoAPP and requires a different than normal modal setting
                 if (GameManager.i.guiScript.InfoPipelineAdd(outcomeDetails) == false)
                 { Debug.LogWarningFormat("Nemesis Damage infoPipeline message FAILED to be added to dictOfPipeline"); }
+                //Sandbox tutorial
+                if (GameManager.i.inputScript.GameState == GameState.Tutorial && GameManager.i.tutorialScript.CheckIfSandbox() == true)
+                { GameManager.i.tutorialScript.FailSandboxOutcome("So that Cyber Hound bit you on the rear end, did it?"); }
             }
         }
         else { Debug.LogWarning("Invalid damage (Null)"); }

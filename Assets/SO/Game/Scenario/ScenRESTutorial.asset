@@ -31,6 +31,6 @@ MonoBehaviour:
   missionAuthority: {fileID: 0}
   challengeResistance: {fileID: 11400000, guid: f49eada5905cc6e4dbd50b2b5650dea1,
     type: 2}
-  timer: 100
+  timer: 20
   newsPool:
   - {fileID: 11400000, guid: 48959fed19857a8498ef7fbb8dff8207, type: 2}

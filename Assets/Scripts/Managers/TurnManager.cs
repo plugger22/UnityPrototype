@@ -1217,23 +1217,29 @@ public class TurnManager : MonoBehaviour
         string topText, bottomText;
         if (_turn == scenarioTimer)
         {
-            topText = string.Format("Your Mission timer ({0}{1} turns{2}) has EXPIRED", colourNeutral, scenarioTimer, colourEnd);
-            //level win state achieved
-            switch (GameManager.i.scenarioScript.scenario.missionResistance.side.level)
+            //tutorial sandbox
+            if (GameManager.i.inputScript.GameState == GameState.Tutorial && GameManager.i.tutorialScript.CheckIfSandbox() == true)
+            { GameManager.i.tutorialScript.FailSandboxOutcome("You've run out of time"); }
+            else
             {
-                case 1:
-                    //Authority mission, timer expired so Resistance wins
-                    bottomText = string.Format("{0}The Resistance wins{1}", colourBad, colourEnd);
-                    SetWinStateLevel(WinStateLevel.Resistance, WinReasonLevel.MissionTimerMin, topText, bottomText);
-                    break;
-                case 2:
-                    //Resistance mission, timer expired so Authority wins
-                    bottomText = string.Format("{0}The Authority wins{1}", colourBad, colourEnd);
-                    SetWinStateLevel(WinStateLevel.Authority, WinReasonLevel.MissionTimerMin, topText, bottomText);
-                    break;
-                default:
-                    Debug.LogErrorFormat("Invalid mission side, {0}", GameManager.i.scenarioScript.scenario.missionResistance.side.name);
-                    break;
+                topText = string.Format("Your Mission timer ({0}{1} turns{2}) has EXPIRED", colourNeutral, scenarioTimer, colourEnd);
+                //level win state achieved
+                switch (GameManager.i.scenarioScript.scenario.missionResistance.side.level)
+                {
+                    case 1:
+                        //Authority mission, timer expired so Resistance wins
+                        bottomText = string.Format("{0}The Resistance wins{1}", colourBad, colourEnd);
+                        SetWinStateLevel(WinStateLevel.Resistance, WinReasonLevel.MissionTimerMin, topText, bottomText);
+                        break;
+                    case 2:
+                        //Resistance mission, timer expired so Authority wins
+                        bottomText = string.Format("{0}The Authority wins{1}", colourBad, colourEnd);
+                        SetWinStateLevel(WinStateLevel.Authority, WinReasonLevel.MissionTimerMin, topText, bottomText);
+                        break;
+                    default:
+                        Debug.LogErrorFormat("Invalid mission side, {0}", GameManager.i.scenarioScript.scenario.missionResistance.side.name);
+                        break;
+                }
             }
         }
         else if (_turn + warningPeriod > scenarioTimer)

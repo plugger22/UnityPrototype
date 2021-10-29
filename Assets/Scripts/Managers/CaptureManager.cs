@@ -264,8 +264,9 @@ public class CaptureManager : MonoBehaviour
             };
             if (GameManager.i.guiScript.InfoPipelineAdd(outcomeDetails) == false)
             { Debug.LogWarningFormat("Player Captured infoPipeline message FAILED to be added to dictOfPipeline"); }
-
-            /*EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "CaptureManager.cs -> CapturePlayer"); NO NEED AS IN INFOPIPELINE ALREADY */
+            //Sandbox tutorial
+            if (GameManager.i.inputScript.GameState == GameState.Tutorial && GameManager.i.tutorialScript.CheckIfSandbox() == true)
+            { GameManager.i.tutorialScript.FailSandboxOutcome("They got you. That's a worry"); }
         }
         else
         {

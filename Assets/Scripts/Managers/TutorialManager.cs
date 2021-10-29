@@ -35,6 +35,7 @@ public class TutorialManager : MonoBehaviour
     [HideInInspector] public Tutorial tutorial;
     [HideInInspector] public TutorialSet set;
     [HideInInspector] public int index;                         //index that tracks player's progress (set #) through current tutorial
+    [HideInInspector] public bool isSandbox;                    //true if sandbox mode applies -> last set
     #endregion
 
     #region Other...
@@ -987,13 +988,76 @@ public class TutorialManager : MonoBehaviour
             switch (condition.name)
             {
                 case "Sandbox":
-                    Debug.LogFormat("[Tst] SetTutorialCondition -> SANDBOX");
+                    //NOTE: set manually, don't use SetSandbox otherwise you'll trigger a reset
+                    isSandbox = true;
+                    Debug.LogFormat("[Tst] SetTutorialCondition -> SANDBOX (isSandbox true)");
                     break;
                 default: Debug.LogWarningFormat("Unrecognised condition \"{0}\"", condition.name); break;
             }
         }
         else { Debug.LogError("Invalid condition (Null)"); }
     }
+    #endregion
+
+    #region Sandbox...
+    //
+    // - - - Tutorial Sandbox
+    //
+
+    #region CheckIfSandbox
+    /// <summary>
+    /// returns true if tutorial sandbox mode applies, eg. last set
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckIfSandbox()
+    { return isSandbox; }
+    #endregion
+
+    #region SetSandbox
+    /// <summary>
+    /// Set isSandbox to a new value
+    /// </summary>
+    /// <param name="sandbox"></param>
+    public void SetSandbox(bool sandbox)
+    {
+        isSandbox = sandbox;
+        if (isSandbox == false)
+        {
+            //reset tutorial
+            InitialiseTutorialSet(set);
+        }
+        Debug.LogFormat("[Tut] TutorialManager.cs -> SetSandbox: isSandbox {0}{1}", isSandbox, "\n");
+    }
+    #endregion
+
+
+    #region FailTutorialOutcome
+    /// <summary>
+    /// Fail state message for tutorialSandbox. Customise with top text. Appears in infoPipeline (if multiple fails in same turn only the first will show) 
+    /// </summary>
+    /// <param name="topText"></param>
+    public void FailSandboxOutcome(string topText)
+    {
+        //player failed sandbox tutorial
+        GameManager.i.tutorialScript.SetSandbox(false);
+        //dialogue
+        ModalOutcomeDetails outcomeTutorial = new ModalOutcomeDetails
+        {
+            textTop = GameManager.Formatt(topText, ColourType.moccasinText),
+            textBottom = "That's a fail<br><br>This isn't real so I'll let you try again<br><br>Or you can go live. We're desperately short of people",
+            sprite = GameManager.i.tutorialScript.tutorial.sprite,
+            isAction = false,
+            side = GameManager.i.globalScript.sideResistance,
+            isSpecial = true,
+            isSpecialGood = false,
+            type = MsgPipelineType.TutorialFail
+        };
+        //end of turn outcome window which needs to overlay ontop of InfoAPP and requires a different than normal modal setting
+        if (GameManager.i.guiScript.InfoPipelineAdd(outcomeTutorial) == false)
+        { Debug.LogWarningFormat("Fail Tutorial infoPipeline message FAILED to be added to dictOfPipeline"); }
+    }
+    #endregion
+
     #endregion
 
     #region Widget Interaction...
@@ -1178,6 +1242,7 @@ public class TutorialManager : MonoBehaviour
             builder.AppendFormat("tutorial: {0}{1}", tutorial.name, "\n");
             builder.AppendFormat("tutorialSet: {0}{1}", set.name, "\n");
             builder.AppendFormat("index: {0}{1}", index, "\n");
+            builder.AppendFormat("isSandbox: {0}{1}", isSandbox, "\n");
 
             //current tutorialSet -> Features Off
             builder.AppendFormat("{0}-features OFF for \"{1}\"{2}", "\n", set.name, "\n");
