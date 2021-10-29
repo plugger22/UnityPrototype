@@ -1024,7 +1024,7 @@ public class TutorialManager : MonoBehaviour
         if (isSandbox == false)
         {
             //reset tutorial
-            InitialiseTutorialSet(set);
+            UpdateNewSet();
         }
         Debug.LogFormat("[Tut] TutorialManager.cs -> SetSandbox: isSandbox {0}{1}", isSandbox, "\n");
     }
@@ -1080,6 +1080,9 @@ public class TutorialManager : MonoBehaviour
                 set = tutorial.listOfSets[index];
                 if (set != null)
                 {
+                    UpdateNewSet();
+
+                    /*
                     InitialiseTutorialSet(set);
                     //reset contact dictionaries
                     GameManager.i.dataScript.TutorialResetContacts();
@@ -1102,6 +1105,7 @@ public class TutorialManager : MonoBehaviour
                     GameManager.i.alertScript.CloseAlertUI(true);
                     //activate tutorialUI
                     EventManager.i.PostNotification(EventType.TutorialOpenUI, this, set, "TutorialManager.cs -> SetPreviousSet");
+                    */
                 }
                 else { Debug.LogErrorFormat("Invalid set (Null) for tutorial \"{0}\" listOfSets[{1}]", tutorial.name, index); }
             }
@@ -1140,6 +1144,9 @@ public class TutorialManager : MonoBehaviour
                 set = tutorial.listOfSets[index];
                 if (set != null)
                 {
+                    UpdateNewSet();
+
+                    /*
                     InitialiseTutorialSet(set);
                     //reset contact dictionaries
                     GameManager.i.dataScript.TutorialResetContacts();
@@ -1162,6 +1169,8 @@ public class TutorialManager : MonoBehaviour
                     GameManager.i.alertScript.CloseAlertUI(true);
                     //activate tutorialUI
                     EventManager.i.PostNotification(EventType.TutorialOpenUI, this, set, "TutorialManager.cs -> SetNextSet");
+                    */
+
                 }
                 else { Debug.LogErrorFormat("Invalid set (Null) for tutorial \"{0}\" listOfSets[{1}]", tutorial.name, index); }
             }
@@ -1185,7 +1194,38 @@ public class TutorialManager : MonoBehaviour
     }
     #endregion
 
+    #region UpdateNewSet
+    /// <summary>
+    /// Handles all new set admin
+    /// </summary>
+    private void UpdateNewSet()
+    {
+        InitialiseTutorialSet(set);
+        //reset contact dictionaries
+        GameManager.i.dataScript.TutorialResetContacts();
+        //configure player
+        GameManager.i.playerScript.ResetTutorialPlayer();
+        if (set.playerConfig != null)
+        { GameManager.i.playerScript.ConfigureTutorialPlayer(set.playerConfig); }
+        //configure actors
+        GameManager.i.actorScript.ConfigureTutorialActors(true);
+        //configure targets
+        if (set.targetConfig != null)
+        { GameManager.i.targetScript.ConfigureTutorialTargets(set.targetConfig); }
+        //configure teams
+        if (set.teamConfig != null)
+        { GameManager.i.teamScript.ConfigureTutorialTeams(set.teamConfig); }
+        //configure spiders and tracers
+        if (set.hideConfig != null)
+        { GameManager.i.nodeScript.ConfigureTutorialHideItems(set.hideConfig); }
+        //reset nodes and close AlertUI
+        GameManager.i.alertScript.CloseAlertUI(true);
+        //activate tutorialUI
+        EventManager.i.PostNotification(EventType.TutorialOpenUI, this, set, "TutorialManager.cs -> UpdateNewSet");
+    }
     #endregion
+
+#endregion
 
     #region Utilities
     //
