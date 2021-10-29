@@ -2305,10 +2305,12 @@ public class ValidationManager : MonoBehaviour
                                 {
                                     //Check tutorial type
                                     if (target.targetType.name.Equals("Tutorial", StringComparison.Ordinal) == false)
-                                    { Debug.LogFormat("{0} tutorialTargetConfig \"{1}\", target \"{2}\" has invalid targetType \"{3}\" (should be 'Tutorial'){4}", tag, config.name, target.name, target.targetType.name, "\n"); }
-                                    //Check profile
-                                    if (target.profile.name.Equals("Tutorial", StringComparison.Ordinal) == false)
-                                    { Debug.LogFormat("{0} tutorialTargetConfig \"{1}\", target \"{2}\" has invalid profile \"{3}\" (should be 'Tutorial'){4}", tag, config.name, target.name, target.profile.name, "\n"); }
+                                    { Debug.LogFormat("{0} tutorialTargetConfig \"{1}\", target \"{2}\" has invalid targetType \"{3}\" (should be 'Tutorial'){4}", 
+                                        tag, config.name, target.name, target.targetType.name, "\n"); }
+                                    //Check profile -> tutorialLive/tutorialActive
+                                    if (target.profile.name.Equals("TutorialLive", StringComparison.Ordinal) == false && target.profile.name.Equals("TutorialActive", StringComparison.Ordinal) == false)
+                                    { Debug.LogFormat("{0} tutorialTargetConfig \"{1}\", target \"{2}\" has invalid profile \"{3}\" (should be 'TutorialLive' or 'TutorialActive'){4}", 
+                                        tag, config.name, target.name, target.profile.name, "\n"); }
                                 }
                                 else { Debug.LogErrorFormat("Invalid target (Null) for \"{0}\".listOfTargets[{1}]", config.name, j); }
                             }
@@ -2609,6 +2611,8 @@ public class ValidationManager : MonoBehaviour
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfTutorialQueryTypes);
         //TutorialOptions
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfTutorialOptions);
+        //TutorialConditions
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfTutorialConditions);
         //TutorialGUIFeatures
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfTutorialGUIFeatures);
         //TutorialActorTypes

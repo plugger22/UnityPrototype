@@ -2172,6 +2172,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1624c3733acc2b448b49f3040e1ac7e1, type: 2}
   - {fileID: 11400000, guid: 40531188e4fb0c144ba85206d10abd54, type: 2}
   - {fileID: 11400000, guid: 7b363de65e409b740a5375f42cfc853b, type: 2}
+  arrayOfTutorialConditions:
+  - {fileID: 11400000, guid: d4efbd3a8f9340946af957e1a77f6cab, type: 2}
   arrayOfTutorialGUIFeatures:
   - {fileID: 11400000, guid: 2b429498342b10042847ad6b6e67d783, type: 2}
   - {fileID: 11400000, guid: 4ecda8036df900d48b4b25e77b1b6ad0, type: 2}

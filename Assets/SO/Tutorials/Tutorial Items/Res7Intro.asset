@@ -18,3 +18,4 @@ MonoBehaviour:
   gameHelp: {fileID: 0}
   goal: {fileID: 0}
   query: {fileID: 0}
+  condition: {fileID: 11400000, guid: d4efbd3a8f9340946af957e1a77f6cab, type: 2}

@@ -31,6 +31,10 @@ public class TutorialItem : ScriptableObject
     [Header("Query")]
     public TutorialQuery query;
 
+    [Header("Condition")]
+    [Tooltip("Special condition that activates when item is triggered. Optional")]
+    public TutorialCondition condition;
+
 
     /*[HideInInspector] public bool isQueryDone;*/
 

@@ -975,6 +975,27 @@ public class TutorialManager : MonoBehaviour
 
     #endregion
 
+    #region SetTutorialCondition
+    /// <summary>
+    /// Sets up a condition (could be anything you can do via code) activated when item is triggered
+    /// </summary>
+    /// <param name="condition"></param>
+    public void SetTutorialCondition(TutorialCondition condition)
+    {
+        if (condition != null)
+        {
+            switch (condition.name)
+            {
+                case "Sandbox":
+                    Debug.LogFormat("[Tst] SetTutorialCondition -> SANDBOX");
+                    break;
+                default: Debug.LogWarningFormat("Unrecognised condition \"{0}\"", condition.name); break;
+            }
+        }
+        else { Debug.LogError("Invalid condition (Null)"); }
+    }
+    #endregion
+
     #region Widget Interaction...
 
     #region SetPreviousSet

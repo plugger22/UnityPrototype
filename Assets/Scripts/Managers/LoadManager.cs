@@ -90,6 +90,7 @@ public class LoadManager : MonoBehaviour
     public TutorialOption[] arrayOfTutorialOptions;
     public TutorialGoalType[] arrayOfTutorialGoalTypes;
     public TutorialQueryType[] arrayOfTutorialQueryTypes;
+    public TutorialCondition[] arrayOfTutorialConditions;
     public TutorialGUIFeature[] arrayOfTutorialGUIFeatures;
     public TutorialActorType[] arrayOfTutorialActorTypes;
     public TutorialActorConfig[] arrayOfTutorialActorConfigs;
@@ -1197,6 +1198,13 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTutorialQueryTypes has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No TutorialQueryTypes present"); }
+        //
+        // - - - Tutorial Conditions (not stored in a collection)
+        //
+        numArray = arrayOfTutorialConditions.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTutorialConditions has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No TutorialConditions present"); }
         //
         // - - - Tutorial GUI Features (not stored in a collection)
         //

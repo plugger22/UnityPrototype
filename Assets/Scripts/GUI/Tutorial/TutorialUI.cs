@@ -408,6 +408,9 @@ public class TutorialUI : MonoBehaviour
 
                     if (currentItem != null)
                     {
+                        //special condition
+                        if (currentItem.condition != null)
+                        { GameManager.i.tutorialScript.SetTutorialCondition(currentItem.condition); }
                         //what type of item
                         switch (currentItem.tutorialType.name)
                         {

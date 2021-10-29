@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b75efcd146b11ff49b6e05dbc6248f10, type: 3}
-  m_Name: Tutorial
+  m_Name: VirtualCity
   m_EditorClassIdentifier: 
   tag: VirtualCity
   realLife: Tutorlal
@@ -25,5 +25,5 @@ MonoBehaviour:
   cityPoolAuthority: {fileID: 11400000, guid: d19d7870e5c903346b181c8414ce242d, type: 2}
   nameSet: {fileID: 11400000, guid: 854ab7ac874cecd418818e40bda1e9bf, type: 2}
   isTestOff: 0
-  mayor: {fileID: 11400000, guid: d1858bef418cc7b49bd4d7f1cf133dbc, type: 2}
+  mayor: {fileID: 11400000, guid: d6c92273355a3c44999005b17358e428, type: 2}
   faction: {fileID: 0}

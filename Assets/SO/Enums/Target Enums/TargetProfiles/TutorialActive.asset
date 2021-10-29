@@ -14,7 +14,7 @@ MonoBehaviour:
   descriptor: Active tutorial target profile
   trigger: {fileID: 11400000, guid: 82ae80a91c839fa48b5292e9c4fde55e, type: 2}
   delay: 1
-  activation: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  activation: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
   window: 15
   isRepeat: 0
   isRepeatSameNode: 0
