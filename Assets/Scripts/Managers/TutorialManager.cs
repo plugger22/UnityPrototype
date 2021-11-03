@@ -1030,7 +1030,6 @@ public class TutorialManager : MonoBehaviour
     }
     #endregion
 
-
     #region FailTutorialOutcome
     /// <summary>
     /// Fail state message for tutorialSandbox. Customise with top text. Appears in infoPipeline (if multiple fails in same turn only the first will show) 
@@ -1055,6 +1054,34 @@ public class TutorialManager : MonoBehaviour
         //end of turn outcome window which needs to overlay ontop of InfoAPP and requires a different than normal modal setting
         if (GameManager.i.guiScript.InfoPipelineAdd(outcomeTutorial) == false)
         { Debug.LogWarningFormat("Fail Tutorial infoPipeline message FAILED to be added to dictOfPipeline"); }
+    }
+    #endregion
+
+    #region ProcessSandboxMessage
+    /// <summary>
+    /// provides a context sensitive tutorial message from Fred, your trainer, during the sandbox provided no other tutorial message is present (which would be a win or fail state message)
+    /// </summary>
+    public void ProcessSandboxMessage()
+    {
+        //ignore message if already a tutorial related win/fail one in the queue
+        if (GameManager.i.guiScript.CheckInfoPipeline(MsgPipelineType.TutorialSucceed) == false && GameManager.i.guiScript.CheckInfoPipeline(MsgPipelineType.TutorialFail) == false)
+        {
+            //dialogue
+            ModalOutcomeDetails outcomeTutorial = new ModalOutcomeDetails
+            {
+                textTop = GameManager.Formatt("Hi, I'm here to give you tips", ColourType.moccasinText),
+                textBottom = "What can I say? Do you best and wear clean underpants",
+                sprite = GameManager.i.tutorialScript.tutorial.sprite,
+                isAction = false,
+                side = GameManager.i.globalScript.sideResistance,
+                isSpecial = true,
+                isSpecialGood = true,
+                type = MsgPipelineType.Tutorial
+            };
+            //end of turn outcome window which needs to overlay ontop of InfoAPP and requires a different than normal modal setting
+            if (GameManager.i.guiScript.InfoPipelineAdd(outcomeTutorial) == false)
+            { Debug.LogWarningFormat("Tutorial infoPipeline message FAILED to be added to dictOfPipeline"); }
+        }
     }
     #endregion
 

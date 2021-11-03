@@ -82,6 +82,7 @@ public class TurnManager : MonoBehaviour
     private string colourAlert;
     private string colourEnd;
 
+    #region Properties..
 
     public int Turn
     {
@@ -92,13 +93,17 @@ public class TurnManager : MonoBehaviour
             Debug.LogFormat("TurnManager: Turn {0}{1}", _turn, "\n");
         }
     }
+    #endregion
 
+    #region ResetTurn
     /// <summary>
     /// new Level
     /// </summary>
     public void ResetTurn()
     { _turn = 0; }
+    #endregion
 
+    #region Initialise
     /// <summary>
     /// Initialisation
     /// </summary>
@@ -127,7 +132,7 @@ public class TurnManager : MonoBehaviour
                 break;
         }
     }
-
+    #endregion
 
     #region Initialise SubMethods
 
@@ -174,7 +179,7 @@ public class TurnManager : MonoBehaviour
 
     #endregion
 
-
+    #region OnEvent
     /// <summary>
     /// Called when an event happens
     /// </summary>
@@ -203,7 +208,9 @@ public class TurnManager : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
+    #region SetColours
     /// <summary>
     /// set colour palette for modal Outcome Window
     /// </summary>
@@ -223,7 +230,9 @@ public class TurnManager : MonoBehaviour
         { colourSide = colourAuthority; }
         else { colourSide = colourRebel; }*/
     }
+    #endregion
 
+    #region SetAutoRun
     /// <summary>
     /// Autoruns game for specified number of turns with the current AI/Player settings
     /// </summary>
@@ -276,27 +285,35 @@ public class TurnManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid autoTurns (must be > 0)"); }
     }
+    #endregion
 
+    #region AllowNewTurn
     /// <summary>
     /// toggles flag allowing a new turn (blocked if true while existing new turn processing completes)
     /// </summary>
     public void AllowNewTurn()
     { isNewTurn = false; }
+    #endregion
 
+    #region CheckNewTurnBlocked
     /// <summary>
     /// returns true if new Turn blocked (already processing one), false if O.K for a new turn. Used by InputManager.cs  to prevent certain actions during new turn processing
     /// </summary>
     /// <returns></returns>
     public bool CheckNewTurnBlocked()
     { return isNewTurn; }
+    #endregion
 
+    #region CheckIsAutoRun
     /// <summary>
     /// autorun active or not
     /// </summary>
     /// <returns></returns>
     public bool CheckIsAutoRun()
     { return isAutoRun; }
+    #endregion
 
+    #region ProcessNewTurn
     /// <summary>
     /// master method that handles sequence for ending a turn and commencing a new one
     /// </summary>
@@ -354,6 +371,9 @@ public class TurnManager : MonoBehaviour
                                 GameManager.i.topicScript.SelectTopic(playerSide);
                             }
                         }
+                        //tutorial sandbox
+                        if (GameManager.i.inputScript.GameState == GameState.Tutorial && GameManager.i.tutorialScript.isSandbox == true)
+                        { GameManager.i.tutorialScript.ProcessSandboxMessage(); }
                         //turn on info App (only if not autorunning)
                         if (isAutoRun == false)
                         {
@@ -418,7 +438,7 @@ public class TurnManager : MonoBehaviour
         }
         else { Debug.LogFormat("[Tst] TurnManager.cs -> ProcessNewTurn: New Turn event cancelled as already processing a new turn{0}", "\n"); }
     }
-
+    #endregion
 
     #region DebugCreatePipelineMessages
     /// <summary>
@@ -462,7 +482,7 @@ public class TurnManager : MonoBehaviour
     }
     #endregion
 
-
+    #region StartPipeline
     /// <summary>
     /// Coroutine to wait until Compromised Gear interactive dialogue is complete
     /// </summary>
@@ -474,7 +494,9 @@ public class TurnManager : MonoBehaviour
         GameManager.i.guiScript.InfoPipelineStart(playerSide);
         yield return null;
     }
+    #endregion
 
+    #region ProcessLevelOver
     /// <summary>
     /// Level has been won or lost
     /// </summary>
@@ -500,7 +522,9 @@ public class TurnManager : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
+    #region ProcessCampaignOver
     /// <summary>
     /// Campaign has been won or lost
     /// </summary>
@@ -527,8 +551,9 @@ public class TurnManager : MonoBehaviour
         //end level campaign data
         GameManager.i.dataScript.SetCampaignHistoryEnd();
     }
+    #endregion
 
-
+    #region StartTurnEarly
     /// <summary>
     /// all pre-start matters are handled here
     /// </summary>
@@ -550,7 +575,9 @@ public class TurnManager : MonoBehaviour
         //check Scenario timer (winstate if expires)
         CheckScenarioTimer();
     }
+    #endregion
 
+    #region StartTurnLate
     /// <summary>
     /// all general post-start matters are handled here
     /// </summary>
@@ -561,8 +588,9 @@ public class TurnManager : MonoBehaviour
         EventManager.i.PostNotification(EventType.StartTurnLate, this, null, "TurnManager.cs -> StartTurnLate");
         UpdateStates();
     }
+    #endregion
 
-
+    #region EndTurnAI
     /// <summary>
     /// all AI end of turn matters are handled here
     /// </summary>
@@ -608,7 +636,9 @@ public class TurnManager : MonoBehaviour
         //Ongoing effects from AI Decisions
         GameManager.i.aiScript.ProcessOngoingEffects();
     }
+    #endregion
 
+    #region EndTurnEarly
     /// <summary>
     /// all general end of turn early matters are handled here
     /// </summary>
@@ -623,7 +653,9 @@ public class TurnManager : MonoBehaviour
         //broadcast event
         EventManager.i.PostNotification(EventType.EndTurnEarly, this, null, "TurnManager.cs -> StartTurnLate");
     }
+    #endregion
 
+    #region EndTurnLate
     /// <summary>
     /// all general end of turn matters are handled here
     /// </summary>
@@ -638,7 +670,9 @@ public class TurnManager : MonoBehaviour
         Debug.LogFormat("TurnManager: - - - EndTurnLate - - - turn {0}{1}", _turn, "\n");
         EventManager.i.PostNotification(EventType.EndTurnLate, this, null, "TurnManager.cs -> EndTurnLate");
     }
+    #endregion
 
+    #region SetActionsForNewTurn
     /// <summary>
     /// Used to initialise Player actions at start of a new turn
     /// </summary>
@@ -662,7 +696,9 @@ public class TurnManager : MonoBehaviour
         //update widget
         EventManager.i.PostNotification(EventType.ChangeActionPoints, this, _actionsTotal, "TurnManager.cs -> SetActionsforNewTurn");
     }
+    #endregion
 
+    #region SetActionsRecovery
     /// <summary>
     /// Assigns a set number of actions to player NOTE: used ONLY for when recovering from Lying Low (1 action) ->  NOT for anything else
     /// </summary>
@@ -682,15 +718,17 @@ public class TurnManager : MonoBehaviour
         }
         else { Debug.LogWarningFormat("Invalid numOfActions \"{0}\"", numOfActions); }
     }
+    #endregion
 
-
-
+    #region ChangeSide
     public void ChangeSide(GlobalSide side)
     {
         UpdateActionsLimit(side);
         currentSide = side;
     }
+    #endregion
 
+    #region UpdateActionsLimit
     /// <summary>
     /// sub-method to set up action limit based on player's current side. Run at game start and whenever change sides or action effect applied.
     /// To force and update and retain current actions value, input the current action value, otherwise leave as default zero
@@ -711,7 +749,9 @@ public class TurnManager : MonoBehaviour
         //update widget
         EventManager.i.PostNotification(EventType.ChangeActionPoints, this, _actionsTotal, "TurnManager.cs -> UpdateActionsLimit");
     }
+    #endregion
 
+    #region UseAction
     /// <summary>
     /// call this method everytime an action is expended by the Player. Triggers new turn if action limit reached, error if exceeded
     /// </summary>
@@ -753,24 +793,32 @@ public class TurnManager : MonoBehaviour
         if (GameManager.i.inputScript.GameState == GameState.Tutorial)
         { GameManager.i.tutorialScript.CheckGoals(); }
     }
+    #endregion
 
+    #region GetActionsCurrent
     /// <summary>
     /// returns the number of actions the player has currently used
     /// </summary>
     /// <returns></returns>
     public int GetActionsCurrent()
     { return _actionsCurrent; }
+    #endregion
 
+    #region GetActionsAvailable
     /// <summary>
     /// returns the number of remaining actions currently available to the player for this turn
     /// </summary>
     /// <returns></returns>
     public int GetActionsAvailable()
     { return _actionsTotal - _actionsCurrent; }
+    #endregion
 
+    #region GetActionsTotal
     public int GetActionsTotal()
     { return _actionsTotal; }
+    #endregion
 
+    #region GetActionsTooltip
     /// <summary>
     /// returns a  colour string in format "1 or 2 Actions available"
     /// </summary>
@@ -780,7 +828,9 @@ public class TurnManager : MonoBehaviour
         return string.Format("{0}{1}{2}{3} of {4}<b>{5}</b>{6} Actions available{7}", colourNeutral, GetActionsAvailable(), colourEnd, colourNormal, colourEnd,
           _actionsTotal, colourNormal, colourEnd);
     }
+    #endregion
 
+    #region CheckRemainingActions
     /// <summary>
     /// Returns true if the player has at least one remaining action, otherwise false
     /// </summary>
@@ -791,7 +841,9 @@ public class TurnManager : MonoBehaviour
         { return true; }
         return false;
     }
+    #endregion
 
+    #region SetActionsToZero
     /// <summary>
     /// Zeros out actions and ends turn. Used for Capture situations
     /// </summary>
@@ -803,14 +855,18 @@ public class TurnManager : MonoBehaviour
         //new turn
         ProcessNewTurn();
     }
+    #endregion
 
+    #region CheckPlayerWounded
     /// <summary>
     /// returns true if Player wounded (in TurnManager.cs because all set up with cached 'conditionWounded')
     /// </summary>
     /// <returns></returns>
     public bool CheckPlayerWounded()
     { return GameManager.i.playerScript.CheckConditionPresent(conditionWounded, GameManager.i.sideScript.PlayerSide); }
+    #endregion
 
+    #region GetActionAdjustmentTooltip
     /// <summary>
     /// returns a colour formatted string detailing action adjustments (if any) for the action tooltips (details). Null if none.
     /// </summary>
@@ -848,14 +904,18 @@ public class TurnManager : MonoBehaviour
         }
         return builder.ToString();
     }
+    #endregion
 
+    #region GetTurnTooltip
     /// <summary>
     /// returns a colour string in format "Turn 2", oversized, for topWidget display
     /// </summary>
     /// <returns></returns>
     public string GetTurnTooltip()
     { return string.Format("<size=120%>Day {0}{1}{2}</size>", colourNeutral, _turn, colourEnd); }
+    #endregion
 
+    #region GetTurnRemainingTip
     /// <summary>
     /// returns a colour string in format "You have 38 turns remaining to complete you mission
     /// </summary>
@@ -865,14 +925,18 @@ public class TurnManager : MonoBehaviour
         int turnsRemaining = GameManager.i.scenarioScript.scenario.timer - Turn;
         return string.Format("You have {0}{1}{2} day{3} remaining to complete your mission", colourAlert, turnsRemaining, colourEnd, turnsRemaining != 1 ? "s" : "");
     }
+    #endregion
 
+    #region GetTurnInfoTip
     /// <summary>
     /// returns a colour string for the turn tooltip details info tip
     /// </summary>
     /// <returns></returns>
     public string GetTurnInfoTip()
     { return string.Format("Press {0}ENTER{1} for a new Day when ready", colourAlert, colourEnd); }
+    #endregion
 
+    #region GetSecurityMeasureTooltip
     /// <summary>
     /// returns a colour formatted string detailing info on any Security Measures
     /// </summary>
@@ -957,7 +1021,7 @@ public class TurnManager : MonoBehaviour
         }
         return builder.ToString();
     }
-
+    #endregion
 
     #region DebugRandomOpinions
     /// <summary>
@@ -1071,7 +1135,7 @@ public class TurnManager : MonoBehaviour
     }
     #endregion
 
-
+    #region UpdateStates
     /// <summary>
     /// Run in Event.StartTurnLate to update Authority/Resistance States when required
     /// </summary>
@@ -1113,7 +1177,9 @@ public class TurnManager : MonoBehaviour
             }
         }
     }
+    #endregion
 
+    #region SetWinStateLevel
     /// <summary>
     /// called by any method whenever a win state is triggered. Used by ProcessNewTurn to populate an appropriate outcome message
     /// </summary>
@@ -1155,7 +1221,9 @@ public class TurnManager : MonoBehaviour
         }
         else { Debug.LogErrorFormat("Invalid winState \"{0}\"", win); }
     }
+    #endregion
 
+    #region SetWinStateCampaign
     /// <summary>
     /// Set campaign win State, auto assigns appropriate level win states (same side and reason 'CampaignResult') at same time
     /// </summary>
@@ -1208,7 +1276,9 @@ public class TurnManager : MonoBehaviour
         }
         else { Debug.LogErrorFormat("Invalid winState \"{0}\"", win); }
     }
+    #endregion
 
+    #region CheckScenarioTimer
     /// <summary>
     /// Checks scenario timer every turn to see if it has expired
     /// </summary>
@@ -1254,12 +1324,14 @@ public class TurnManager : MonoBehaviour
             GameManager.i.messageScript.GeneralWarning(text, itemText, topText, reason, warning);
         }
     }
+    #endregion
 
-
+    #region GetWinStateLevel
     public WinStateLevel GetWinStateLevel()
     { return winStateLevel; }
+    #endregion
 
-
+    #region Quit
     /// <summary>
     /// Quit 
     /// </summary>
@@ -1279,8 +1351,9 @@ public class TurnManager : MonoBehaviour
             //Application.CancelQuit();
         }
     }
+    #endregion
 
-
+    #region DelayedQuit
     /// <summary>
     /// display splash screen for a short while before quitting
     /// </summary>
@@ -1297,12 +1370,14 @@ public class TurnManager : MonoBehaviour
             Application.Quit();
 #endif
     }
+    #endregion
 
-
+    #region Save/Load...
     //
     // - - - Save / Load
     //
 
+    #region LoadWriteData
     /// <summary>
     /// copy data over to fileManager.cs for serialization
     /// </summary>
@@ -1329,7 +1404,9 @@ public class TurnManager : MonoBehaviour
         }
         return turnData;
     }
+    #endregion
 
+    #region LoadReadData
     /// <summary>
     /// copy across loaded save game data
     /// </summary>
@@ -1346,6 +1423,9 @@ public class TurnManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid TurnActionData (Null)"); }
     }
+    #endregion
+
+    #endregion
 
 
     //new methods above here

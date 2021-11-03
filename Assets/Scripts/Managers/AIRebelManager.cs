@@ -353,7 +353,8 @@ public class AIRebelManager : MonoBehaviour
         aiPlayerStartNodeID = GameManager.i.nodeScript.GetPlayerNodeID();
         status = ActorStatus.Active;
         inactiveStatus = ActorInactive.None;
-        GameManager.i.playerScript.Invisibility = GameManager.i.actorScript.maxStatValue;
+        if (GameManager.i.inputScript.GameState != GameState.TutorialOptions)
+        { GameManager.i.playerScript.Invisibility = GameManager.i.actorScript.maxStatValue; }
         //set AI resource levels
         GameManager.i.dataScript.SetAIResources(globalResistance, GameManager.i.scenarioScript.scenario.leaderResistance.resourcesStarting);
         //autoRun test

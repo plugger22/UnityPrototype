@@ -325,6 +325,8 @@ public class DataManager : MonoBehaviour
                 SubInitialiseNewGame();
                 SubInitialiseReset();
                 SubInitialiseAll();
+                if (GameManager.i.isSession == false)
+                { SubInitialiseStartSession(); }
                 break;
             case GameState.NewInitialisation:
                 SubInitialiseNewGame();
@@ -465,6 +467,12 @@ public class DataManager : MonoBehaviour
         //Node Crisis placed into pick lists
         if (dictOfNodeCrisis != null)
         {
+            
+            //empty lists (fail safe)
+            listOfCrisisSecurity.Clear();
+            listOfCrisisStability.Clear();
+            listOfCrisisSupport.Clear();
+            //populate lists
             foreach (var crisis in dictOfNodeCrisis)
             {
                 if (crisis.Value != null)
@@ -2978,6 +2986,7 @@ public class DataManager : MonoBehaviour
                         count = listOfCrisisStability.Count;
                         if (count > 0)
                         { crisis = listOfCrisisStability[Random.Range(0, count)]; }
+                        else { Debug.LogWarningFormat("Invalid listOfCrisisStability (Empty)"); }
                     }
                     else { Debug.LogWarning("Invalid listOfCrisisStability (Null)"); }
                     break;
@@ -2988,6 +2997,7 @@ public class DataManager : MonoBehaviour
                         count = listOfCrisisSupport.Count;
                         if (count > 0)
                         { crisis = listOfCrisisSupport[Random.Range(0, count)]; }
+                        else { Debug.LogWarningFormat("Invalid listOfCrisisSupport (Empty)"); }
                     }
                     else { Debug.LogWarning("Invalid listOfCrisisSupport (Null)"); }
                     break;
@@ -2998,6 +3008,7 @@ public class DataManager : MonoBehaviour
                         count = listOfCrisisSecurity.Count;
                         if (count > 0)
                         { crisis = listOfCrisisSecurity[Random.Range(0, count)]; }
+                        else { Debug.LogWarningFormat("Invalid listOfCrisisSecurity (Empty)"); }
                     }
                     else { Debug.LogWarning("Invalid listOfCrisisSecurity (Null)"); }
                     break;
