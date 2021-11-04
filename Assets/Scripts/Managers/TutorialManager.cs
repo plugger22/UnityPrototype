@@ -497,12 +497,17 @@ public class TutorialManager : MonoBehaviour
     private void UpdateDictOfGoals()
     {
         dictOfGoals.Clear();
+        TutorialItem item;
         //loop items
-        foreach(TutorialItem item in set.listOfTutorialItems)
+        for (int i = 0; i < set.listOfTutorialItems.Count; i++)
         {
-            //check if goal
-            if (item.tutorialType == goalType)
-            { AddGoalToDict(item); }
+            item = set.listOfTutorialItems[i];
+            if (item != null)
+            {
+                if (item.tutorialType == goalType)
+                { AddGoalToDict(item, i); }
+            }
+            else { Debug.LogErrorFormat("Invalid item (Null) for set \"{0}\".listOfTutorialItems[{1}]", set.name, i); }
         }
     }
     #endregion
@@ -512,10 +517,10 @@ public class TutorialManager : MonoBehaviour
     /// submethod to add a goal to the dictOfGoals
     /// </summary>
     /// <param name="item"></param>
-    private void AddGoalToDict(TutorialItem item)
+    private void AddGoalToDict(TutorialItem item, int itemIndex)
     {
         try
-        { dictOfGoals.Add(item.name, new GoalStatus() { isDone = false, tag = item.tag }); }
+        { dictOfGoals.Add(item.goal.name, new GoalStatus() { index = itemIndex, isDone = false, tag = item.tag }); }
         catch (ArgumentNullException)
         { Debug.LogError("Invalid tutorialItem (Null)"); }
         catch (ArgumentException)
@@ -526,70 +531,116 @@ public class TutorialManager : MonoBehaviour
     #region UpdateGoal
     /// <summary>
     /// Convert and Load a player selected goal (they've clicked on a tutorial goal button, RHS) from the current TutorialSet into DM -> listOfCurrentGoals
+    /// Returns item index if goal has a prerequisite and it hasn't been met (index is of prereq goal to enable arrow to shift). Otherwise index returns -1
     /// </summary>
-    public void UpdateGoal(TutorialGoal goal, int index)
+    public int UpdateGoal(TutorialItem item, int index)
     {
-        if (goal != null)
+        int prereqIndex = -1;
+        string tag = "Unknown";
+        if (item != null)
         {
-            List<GoalTracker> listOfGoals = GameManager.i.dataScript.GetListOfTutorialGoals();
-            if (listOfGoals != null)
+            TutorialGoal goal = item.goal;
+            if (goal != null)
             {
-                GoalType goalPrimary = GetGoalType(goal.goal0);
-                if (goalPrimary != GoalType.None)
+                bool isProceed = true;
+                GoalStatus goalStatus;
+                //check Prerequisite goal -> optional
+                if (goal.prereq != null)
                 {
-                    //check TutorialGoal not already present
-                    if (listOfGoals.Exists(x => x.goalName.Equals(goal.name, StringComparison.Ordinal)) == true)
+                    goalStatus = FindGoalStatus(goal.prereq.name);
+                    if (goalStatus != null)
                     {
-                        Debug.LogWarningFormat("TutorialManager.cs -> UpdateGoal: Can't add goal \"{0}\",  as already present in listOfGoals -> INFO only{1}", goal.name, "\n");
-                        //warning message
-                        GameManager.i.guiScript.SetAlertMessageModalOne(AlertType.TutorialGoal);
-                    }
-                    else
-                    {
-                        //secondary goal (optional)
-                        GoalType goalSecondary = GoalType.None;
-                        if (goal.goal1 != null)
-                        { GetGoalType(goal.goal1); }
-                        //Convert to a GoalTracker
-                        GoalTracker tracker = new GoalTracker()
+                        if (goalStatus.isDone == false)
                         {
-                            startTop = goal.startTopText,
-                            startBottom = goal.startBottomText,
-                            finishTop = goal.finishTopText,
-                            finishBottom = goal.finishBottomText,
-                            index = index,
-                            goalName = goal.name,
-                            goal0 = goalPrimary,
-                            goal1 = goalSecondary,
-                            data0 = GetGoalValue(goalPrimary),
-                            data1 = GetGoalValue(goalSecondary),
-                            target0 = goal.target0,
-                            target1 = goal.target1,
-                            eventType = GetGoalEvent(goalPrimary)
-                        };
-
-                        listOfGoals.Add(tracker);
-                        Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateGoals: goal \"{0}\" added to list (goal0 {1}, data0 {2}, target0 {3} goal1 {4} -> data1 {5}, target1 {6}){7}", tracker.goalName,
-                            tracker.goal0, tracker.data0, tracker.target0, tracker.goal1, tracker.data1, tracker.target1, "\n");
-                        //open special outcome window
-                        ModalOutcomeDetails details = new ModalOutcomeDetails()
-                        {
-                            side = GameManager.i.sideScript.PlayerSide,
-                            textTop = GameManager.Formatt(goal.startTopText, ColourType.moccasinText),
-                            textBottom = goal.startBottomText,
-                            sprite = GameManager.i.tutorialScript.tutorial.sprite,
-                            isAction = false,
-                            isSpecial = true,
-                            isSpecialGood = true
-                        };
-                        EventManager.i.PostNotification(EventType.OutcomeOpen, this, details);
+                            tag = goalStatus.tag;
+                            prereqIndex = goalStatus.index;
+                            //can't proceed with message. Dialogue to player
+                            isProceed = false;
+                        }
                     }
+                    else { Debug.LogWarningFormat("Invalid goalStatus (Null) for goal \"{0}\"", goal.name); }
                 }
-                else { Debug.LogWarning("Invalid goalType (GoalType.None)"); }
+                if (isProceed == true)
+                {
+                    List<GoalTracker> listOfGoals = GameManager.i.dataScript.GetListOfTutorialGoals();
+                    if (listOfGoals != null)
+                    {
+                        GoalType goalPrimary = GetGoalType(goal.goal0);
+                        if (goalPrimary != GoalType.None)
+                        {
+                            //check TutorialGoal not already present
+                            if (listOfGoals.Exists(x => x.goalName.Equals(goal.name, StringComparison.Ordinal)) == true)
+                            {
+                                Debug.LogWarningFormat("TutorialManager.cs -> UpdateGoal: Can't add goal \"{0}\",  as already present in listOfGoals -> INFO only{1}", goal.name, "\n");
+                                //warning message
+                                GameManager.i.guiScript.SetAlertMessageModalOne(AlertType.TutorialGoal);
+                            }
+                            else
+                            {
+                                //secondary goal (optional)
+                                GoalType goalSecondary = GoalType.None;
+                                if (goal.goal1 != null)
+                                { GetGoalType(goal.goal1); }
+                                //Convert to a GoalTracker
+                                GoalTracker tracker = new GoalTracker()
+                                {
+                                    startTop = goal.startTopText,
+                                    startBottom = goal.startBottomText,
+                                    finishTop = goal.finishTopText,
+                                    finishBottom = goal.finishBottomText,
+                                    index = index,
+                                    goalName = goal.name,
+                                    itemName = item.name,
+                                    goal0 = goalPrimary,
+                                    goal1 = goalSecondary,
+                                    data0 = GetGoalValue(goalPrimary),
+                                    data1 = GetGoalValue(goalSecondary),
+                                    target0 = goal.target0,
+                                    target1 = goal.target1,
+                                    eventType = GetGoalEvent(goalPrimary)
+                                };
+
+                                listOfGoals.Add(tracker);
+                                Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateGoals: goal \"{0}\" added to list (goal0 {1}, data0 {2}, target0 {3} goal1 {4} -> data1 {5}, target1 {6}){7}", tracker.goalName,
+                                    tracker.goal0, tracker.data0, tracker.target0, tracker.goal1, tracker.data1, tracker.target1, "\n");
+                                //open special outcome window
+                                ModalOutcomeDetails details = new ModalOutcomeDetails()
+                                {
+                                    side = GameManager.i.sideScript.PlayerSide,
+                                    textTop = GameManager.Formatt(goal.startTopText, ColourType.moccasinText),
+                                    textBottom = goal.startBottomText,
+                                    sprite = GameManager.i.tutorialScript.tutorial.sprite,
+                                    isAction = false,
+                                    isSpecial = true,
+                                    isSpecialGood = true
+                                };
+                                EventManager.i.PostNotification(EventType.OutcomeOpen, this, details);
+                            }
+                        }
+                        else { Debug.LogWarning("Invalid goalType (GoalType.None)"); }
+                    }
+                    else { Debug.LogError("Invalid listOfTutorialGoals (Null)"); }
+                }
+                else
+                {
+                    //prerequisite goal present and hasn't been completed -> dialogue telling player why
+                    ModalOutcomeDetails details = new ModalOutcomeDetails()
+                    {
+                        side = GameManager.i.sideScript.PlayerSide,
+                        textTop = GameManager.Formatt("Whoa there, you've jumped the gun", ColourType.moccasinText),
+                        textBottom = string.Format("You must complete the<br><br><b>{0}</b><br><br>goal first", tag),
+                        sprite = GameManager.i.tutorialScript.tutorial.sprite,
+                        isAction = false,
+                        isSpecial = true,
+                        isSpecialGood = false
+                    };
+                    EventManager.i.PostNotification(EventType.OutcomeOpen, this, details);
+                }
             }
-            else { Debug.LogError("Invalid listOfTutorialGoals (Null)"); }
+            else { Debug.LogError("Invalid (Tutorial) goal (Null)"); }
         }
-        else { Debug.LogError("Invalid (Tutorial) goal (Null)"); }
+        else { Debug.LogError("Invalid TutorialItem (Null)"); }
+        return prereqIndex;
     }
     #endregion
 
@@ -637,6 +688,8 @@ public class TutorialManager : MonoBehaviour
                         //goal achieved
                         if (isGoalAchieved == true)
                         {
+                            //set goal done in dictOfGoals
+                            SetGoalComplete(tracker.goalName);
                             Debug.LogFormat("[Tut] TutorialManager.cs -> CheckGoals: Goal \"{0}\" COMPLETED (goal0 {1}, data0 {2}, target0 {3}, goal1 {4}, data1 {5}, target1 {6}){7}",
                                 tracker.goalName, tracker.goal0, tracker.data0, tracker.target0, tracker.goal1, tracker.data1, tracker.target1, "\n");
                             //activate event (eg. close an underlying UI before showing outcome)
@@ -663,8 +716,8 @@ public class TutorialManager : MonoBehaviour
                         }
                         else
                         {
-                            Debug.LogFormat("[Tut] TutorialManager.cs -> CheckGoals: Goal \"{0}\" In Progress (goal0 {1}, data0 {2}, target0 {3}, goal1 {4}, data1 {5}, target1 {6}){7}",
-                                tracker.goalName, tracker.goal0, tracker.data0, tracker.target0, tracker.goal1, tracker.data1, tracker.target1, "\n");
+                            /*Debug.LogFormat("[Tut] TutorialManager.cs -> CheckGoals: Goal \"{0}\" In Progress (goal0 {1}, data0 {2}, target0 {3}, goal1 {4}, data1 {5}, target1 {6}){7}",
+                                tracker.goalName, tracker.goal0, tracker.data0, tracker.target0, tracker.goal1, tracker.data1, tracker.target1, "\n");*/
                         }
                     }
                     else { Debug.LogWarningFormat("Invalid goalTracker (Null) in listOfGoals[{0}]", i); }
@@ -807,6 +860,43 @@ public class TutorialManager : MonoBehaviour
                 break;
         }
         return eventType;
+    }
+    #endregion
+
+    #region FindGoalStatus
+    /// <summary>
+    /// private subMethod for UpdateGoal to get prerequisite goal status. Returns null if a problem
+    /// </summary>
+    /// <param name="goalName"></param>
+    /// <returns></returns>
+    private GoalStatus FindGoalStatus(string goalName)
+    {
+        GoalStatus status = null;
+        if (string.IsNullOrEmpty(goalName) == false)
+        {
+            if (dictOfGoals.ContainsKey(goalName) == true)
+            { status = dictOfGoals[goalName]; }
+        }
+        else { Debug.LogError("Invalid goalName (Null or Empty)"); }
+        return status;
+    }
+    #endregion
+
+    #region SetGoalComplete
+    /// <summary>
+    /// subMethod for CheckGoals to update dictOfGoals goal.isDone to true
+    /// </summary>
+    /// <param name="itemName"></param>
+    private void SetGoalComplete(string itemName)
+    {
+        if (string.IsNullOrEmpty(itemName) == false)
+        {
+            GoalStatus status = FindGoalStatus(itemName);
+            if (status != null)
+            { status.isDone = true; }
+            else { Debug.LogErrorFormat("Invalid status (Null) for itemTag \"{0}\"", itemName); }
+        }
+        else { Debug.LogError("Invalid itemTag (Null or Empty)"); }
     }
     #endregion
 
@@ -1293,7 +1383,7 @@ public class TutorialManager : MonoBehaviour
     }
     #endregion
 
-#endregion
+    #endregion
 
     #region Utilities
     //
@@ -1424,7 +1514,7 @@ public class TutorialManager : MonoBehaviour
                 if (dictOfGoals.Count > 0)
                 {
                     foreach (var item in dictOfGoals)
-                    { builder.AppendFormat(" {0} -> isDone {1}, tag \"{2}\"{3}", item.Key, item.Value.isDone, item.Value.tag, "\n"); }
+                    { builder.AppendFormat(" {0} -> isDone {1}, tag \"{2}\", index {3}{4}", item.Key, item.Value.isDone, item.Value.tag, item.Value.index, "\n"); }
                 }
                 else { builder.AppendLine("No records present"); }
             }

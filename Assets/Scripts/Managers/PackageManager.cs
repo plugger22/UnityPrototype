@@ -1472,6 +1472,7 @@ namespace packageAPI
         public string finishTop;                    //message (top text) given to player upon goal completion
         public string finishBottom;                 //message (bottom text) given to player upon goal completion
         public string goalName;                     //tutorialGoal.name (reference only)
+        public string itemName;                     //tutorialItem name (used for prerequisite code)
         public int index;                           //tutorialUI.cs index (needed for passing back when goal complete)
         public EventType eventType;                 //event to be called once goal/s achieved, before outcome shown. eg. close underlying UI (Reserves, etc). Optional
         //primary goal
@@ -1495,6 +1496,7 @@ namespace packageAPI
     /// </summary>
     public class GoalStatus
     {
+        public int index;                        //item index
         public string tag;                          //item tag for goal (used in dialogue)
         public bool isDone;                         //true if goal completed
     }

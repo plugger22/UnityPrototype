@@ -2490,7 +2490,7 @@ public class DebugGUI : MonoBehaviour
                     case 115:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.i.tutorialScript.DebugDisplayTutorialData();
-                        GUI.Box(new Rect(Screen.width - 410, 10, 400, 700), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 460, 10, 450, 700), analysis, customBackground);
                         break;
                     //Actors with contacts at Nodes data
                     case 116:

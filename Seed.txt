@@ -6085,3 +6085,318 @@ City seed 39609 -> VirtualCity, Eurasia
 
 Dev seed 53389 -> Thursday, 4 November 2021 12:25 PM
 City seed 28340 -> VirtualCity, Eurasia
+
+Dev seed 54492 -> Thursday, 4 November 2021 3:20 PM
+City seed 12507 -> VirtualCity, Eurasia
+WARNING TutorialManager.cs -> UpdateGoal: Can't add goal "SandboxEvacuate",  as already present in listOfGoals -> INFO only
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TutorialManager:UpdateGoal(TutorialGoal, Int32) (at Assets/Scripts/Managers/TutorialManager.cs:554)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:433)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:272)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:45)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 54575 -> Thursday, 4 November 2021 3:21 PM
+City seed 10231 -> VirtualCity, Eurasia
+
+Dev seed 37047 -> Thursday, 4 November 2021 3:23 PM
+City seed 2381 -> VirtualCity, Eurasia
+
+Dev seed 59514 -> Thursday, 4 November 2021 3:26 PM
+City seed 19073 -> VirtualCity, Eurasia
+
+Dev seed 59315 -> Thursday, 4 November 2021 3:27 PM
+City seed 14490 -> VirtualCity, Eurasia
+
+Dev seed 8175 -> Thursday, 4 November 2021 3:46 PM
+City seed 7843 -> VirtualCity, Eurasia
+
+Dev seed 4850 -> Thursday, 4 November 2021 3:48 PM
+City seed 40372 -> VirtualCity, Eurasia
+
+Dev seed 43726 -> Thursday, 4 November 2021 3:50 PM
+City seed 4042 -> VirtualCity, Eurasia
+
+Dev seed 36588 -> Thursday, 4 November 2021 3:53 PM
+City seed 24717 -> VirtualCity, Eurasia
+
+Dev seed 43676 -> Thursday, 4 November 2021 4:05 PM
+
+Dev seed 35521 -> Thursday, 4 November 2021 4:22 PM
+City seed 29220 -> VirtualCity, Eurasia
+
+Dev seed 20305 -> Thursday, 4 November 2021 4:28 PM
+City seed 45576 -> VirtualCity, Eurasia
+
+Dev seed 8807 -> Thursday, 4 November 2021 4:33 PM
+City seed 61286 -> VirtualCity, Eurasia
+
+Dev seed 14 -> Thursday, 4 November 2021 4:35 PM
+City seed 64762 -> VirtualCity, Eurasia
+
+Dev seed 23786 -> Thursday, 4 November 2021 4:37 PM
+City seed 32539 -> VirtualCity, Eurasia
+ASSERT ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+System.ThrowHelper.ThrowArgumentOutOfRangeException (System.ExceptionArgument argument, System.ExceptionResource resource) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.ThrowHelper.ThrowArgumentOutOfRangeException () (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Collections.Generic.List`1[T].get_Item (System.Int32 index) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	TutorialUI.OpenTutorialItem (System.Int32 newIndex) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:447)
+	TutorialUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:272)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:403)
+	ButtonInteraction.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:45)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 60955 -> Thursday, 4 November 2021 4:42 PM
+City seed 2941 -> VirtualCity, Eurasia
+ASSERT ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+System.ThrowHelper.ThrowArgumentOutOfRangeException (System.ExceptionArgument argument, System.ExceptionResource resource) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.ThrowHelper.ThrowArgumentOutOfRangeException () (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Collections.Generic.List`1[T].get_Item (System.Int32 index) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	TutorialUI.OpenTutorialItem (System.Int32 newIndex) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:447)
+	TutorialUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:272)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:403)
+	ButtonInteraction.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:45)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 30241 -> Thursday, 4 November 2021 4:44 PM
+City seed 25968 -> VirtualCity, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+TutorialManager.SetGoalDone (System.String itemTag) (at Assets/Scripts/Managers/TutorialManager.cs:895)
+	TutorialManager.CheckGoals () (at Assets/Scripts/Managers/TutorialManager.cs:692)
+	TurnManager.UseAction (System.String text) (at Assets/Scripts/Managers/TurnManager.cs:794)
+	ModalOutcome.CloseModalOutcome () (at Assets/Scripts/GUI/ModalOutcome.cs:648)
+	ModalOutcome+<RunCloseSequence>c__Iterator4.MoveNext () (at Assets/Scripts/GUI/ModalOutcome.cs:588)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	
+Dev seed 22292 -> Thursday, 4 November 2021 4:53 PM
+City seed 38763 -> VirtualCity, Eurasia
+ERROR Invalid status (Null) for itemTag "Rescue the Stick"
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	TutorialManager:SetGoalComplete(String) (at Assets/Scripts/Managers/TutorialManager.cs:897)
+	TutorialManager:CheckGoals() (at Assets/Scripts/Managers/TutorialManager.cs:692)
+	TurnManager:UseAction(String) (at Assets/Scripts/Managers/TurnManager.cs:794)
+	ModalOutcome:CloseModalOutcome() (at Assets/Scripts/GUI/ModalOutcome.cs:648)
+	<RunCloseSequence>c__Iterator4:MoveNext() (at Assets/Scripts/GUI/ModalOutcome.cs:588)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 57687 -> Thursday, 4 November 2021 5:00 PM
+City seed 53751 -> VirtualCity, Eurasia
+ERROR Invalid status (Null) for itemTag "Res7Goal0"
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	TutorialManager:SetGoalComplete(String) (at Assets/Scripts/Managers/TutorialManager.cs:897)
+	TutorialManager:CheckGoals() (at Assets/Scripts/Managers/TutorialManager.cs:692)
+	TurnManager:UseAction(String) (at Assets/Scripts/Managers/TurnManager.cs:794)
+	ModalOutcome:CloseModalOutcome() (at Assets/Scripts/GUI/ModalOutcome.cs:648)
+	<RunCloseSequence>c__Iterator4:MoveNext() (at Assets/Scripts/GUI/ModalOutcome.cs:588)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 23297 -> Thursday, 4 November 2021 5:02 PM
+City seed 21754 -> VirtualCity, Eurasia
+
+Dev seed 5875 -> Thursday, 4 November 2021 5:03 PM
+City seed 58293 -> VirtualCity, Eurasia
+ERROR Invalid actor slotID "-1"
+UnityEngine.Debug:LogError(Object)
+	TeamManager:MoveTeam(TeamPool, Int32, Int32, Node) (at Assets/Scripts/Managers/TeamManager.cs:956)
+	TeamManager:ResetTeams() (at Assets/Scripts/Managers/TeamManager.cs:747)
+	TutorialManager:InitialiseTutorialSet(TutorialSet) (at Assets/Scripts/Managers/TutorialManager.cs:242)
+	TutorialManager:UpdateNewSet() (at Assets/Scripts/Managers/TutorialManager.cs:1361)
+	TutorialManager:SetSandbox(Boolean) (at Assets/Scripts/Managers/TutorialManager.cs:1158)
+	TutorialManager:FailSandboxOutcome(String) (at Assets/Scripts/Managers/TutorialManager.cs:1172)
+	NemesisManager:ProcessPlayerDamage() (at Assets/Scripts/Managers/NemesisManager.cs:1574)
+	NemesisManager:ProcessPlayerInteraction(Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:1134)
+	NemesisManager:ProcessNemesisMove(Int32, Int32) (at Assets/Scripts/Managers/NemesisManager.cs:1051)
+	NemesisManager:ProcessNemesisGoal() (at Assets/Scripts/Managers/NemesisManager.cs:913)
+	NemesisManager:ProcessNemesisActivity(AITracker, Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:548)
+	NemesisManager:ProcessNemesis(AITracker, Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:294)
+	AIManager:ProcessNemesis() (at Assets/Scripts/Managers/AIManager.cs:696)
+	AIManager:ProcessAISideAuthority() (at Assets/Scripts/Managers/AIManager.cs:682)
+	TurnManager:EndTurnAI() (at Assets/Scripts/Managers/TurnManager.cs:629)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:356)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:195)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	NewTurnUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/NewTurnUI.cs:179)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ERROR Invalid actor slotID "-1"
+UnityEngine.Debug:LogError(Object)
+	TeamManager:MoveTeam(TeamPool, Int32, Int32, Node) (at Assets/Scripts/Managers/TeamManager.cs:956)
+	TeamManager:ResetTeams() (at Assets/Scripts/Managers/TeamManager.cs:747)
+	TutorialManager:InitialiseTutorialSet(TutorialSet) (at Assets/Scripts/Managers/TutorialManager.cs:242)
+	TutorialManager:UpdateNewSet() (at Assets/Scripts/Managers/TutorialManager.cs:1361)
+	TutorialManager:SetSandbox(Boolean) (at Assets/Scripts/Managers/TutorialManager.cs:1158)
+	TutorialManager:FailSandboxOutcome(String) (at Assets/Scripts/Managers/TutorialManager.cs:1172)
+	NemesisManager:ProcessPlayerDamage() (at Assets/Scripts/Managers/NemesisManager.cs:1574)
+	NemesisManager:ProcessPlayerInteraction(Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:1134)
+	NemesisManager:ProcessNemesisMove(Int32, Int32) (at Assets/Scripts/Managers/NemesisManager.cs:1051)
+	NemesisManager:ProcessNemesisGoal() (at Assets/Scripts/Managers/NemesisManager.cs:913)
+	NemesisManager:ProcessNemesisActivity(AITracker, Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:548)
+	NemesisManager:ProcessNemesis(AITracker, Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:294)
+	AIManager:ProcessNemesis() (at Assets/Scripts/Managers/AIManager.cs:696)
+	AIManager:ProcessAISideAuthority() (at Assets/Scripts/Managers/AIManager.cs:682)
+	TurnManager:EndTurnAI() (at Assets/Scripts/Managers/TurnManager.cs:629)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:356)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:195)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	NewTurnUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/NewTurnUI.cs:179)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ERROR Invalid actor slotID "-1"
+UnityEngine.Debug:LogError(Object)
+	TeamManager:MoveTeam(TeamPool, Int32, Int32, Node) (at Assets/Scripts/Managers/TeamManager.cs:956)
+	TeamManager:ResetTeams() (at Assets/Scripts/Managers/TeamManager.cs:747)
+	TutorialManager:InitialiseTutorialSet(TutorialSet) (at Assets/Scripts/Managers/TutorialManager.cs:242)
+	TutorialManager:UpdateNewSet() (at Assets/Scripts/Managers/TutorialManager.cs:1361)
+	TutorialManager:SetSandbox(Boolean) (at Assets/Scripts/Managers/TutorialManager.cs:1158)
+	TutorialManager:FailSandboxOutcome(String) (at Assets/Scripts/Managers/TutorialManager.cs:1172)
+	NemesisManager:ProcessPlayerDamage() (at Assets/Scripts/Managers/NemesisManager.cs:1574)
+	NemesisManager:ProcessPlayerInteraction(Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:1134)
+	NemesisManager:ProcessNemesisMove(Int32, Int32) (at Assets/Scripts/Managers/NemesisManager.cs:1051)
+	NemesisManager:ProcessNemesisGoal() (at Assets/Scripts/Managers/NemesisManager.cs:913)
+	NemesisManager:ProcessNemesisActivity(AITracker, Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:548)
+	NemesisManager:ProcessNemesis(AITracker, Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:294)
+	AIManager:ProcessNemesis() (at Assets/Scripts/Managers/AIManager.cs:696)
+	AIManager:ProcessAISideAuthority() (at Assets/Scripts/Managers/AIManager.cs:682)
+	TurnManager:EndTurnAI() (at Assets/Scripts/Managers/TurnManager.cs:629)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:356)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:195)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	NewTurnUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/NewTurnUI.cs:179)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 31172 -> Thursday, 4 November 2021 5:06 PM
+City seed 43578 -> VirtualCity, Eurasia
+ERROR Invalid actor slotID "-1"
+UnityEngine.Debug:LogError(Object)
+	TeamManager:MoveTeam(TeamPool, Int32, Int32, Node) (at Assets/Scripts/Managers/TeamManager.cs:956)
+	TeamManager:ResetTeams() (at Assets/Scripts/Managers/TeamManager.cs:747)
+	TutorialManager:InitialiseTutorialSet(TutorialSet) (at Assets/Scripts/Managers/TutorialManager.cs:242)
+	TutorialManager:UpdateNewSet() (at Assets/Scripts/Managers/TutorialManager.cs:1361)
+	TutorialManager:SetSandbox(Boolean) (at Assets/Scripts/Managers/TutorialManager.cs:1158)
+	TutorialManager:FailSandboxOutcome(String) (at Assets/Scripts/Managers/TutorialManager.cs:1172)
+	NemesisManager:ProcessPlayerDamage() (at Assets/Scripts/Managers/NemesisManager.cs:1574)
+	NemesisManager:ProcessPlayerInteraction(Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:1134)
+	NemesisManager:ProcessNemesisMove(Int32, Int32) (at Assets/Scripts/Managers/NemesisManager.cs:1051)
+	NemesisManager:ProcessNemesisGoal() (at Assets/Scripts/Managers/NemesisManager.cs:913)
+	NemesisManager:ProcessNemesisActivity(AITracker, Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:548)
+	NemesisManager:ProcessNemesis(AITracker, Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:294)
+	AIManager:ProcessNemesis() (at Assets/Scripts/Managers/AIManager.cs:696)
+	AIManager:ProcessAISideAuthority() (at Assets/Scripts/Managers/AIManager.cs:682)
+	TurnManager:EndTurnAI() (at Assets/Scripts/Managers/TurnManager.cs:629)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:356)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:195)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	NewTurnUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/NewTurnUI.cs:179)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ERROR Invalid actor slotID "-1"
+UnityEngine.Debug:LogError(Object)
+	TeamManager:MoveTeam(TeamPool, Int32, Int32, Node) (at Assets/Scripts/Managers/TeamManager.cs:956)
+	TeamManager:ResetTeams() (at Assets/Scripts/Managers/TeamManager.cs:747)
+	TutorialManager:InitialiseTutorialSet(TutorialSet) (at Assets/Scripts/Managers/TutorialManager.cs:242)
+	TutorialManager:UpdateNewSet() (at Assets/Scripts/Managers/TutorialManager.cs:1361)
+	TutorialManager:SetSandbox(Boolean) (at Assets/Scripts/Managers/TutorialManager.cs:1158)
+	TutorialManager:FailSandboxOutcome(String) (at Assets/Scripts/Managers/TutorialManager.cs:1172)
+	NemesisManager:ProcessPlayerDamage() (at Assets/Scripts/Managers/NemesisManager.cs:1574)
+	NemesisManager:ProcessPlayerInteraction(Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:1134)
+	NemesisManager:ProcessNemesisMove(Int32, Int32) (at Assets/Scripts/Managers/NemesisManager.cs:1051)
+	NemesisManager:ProcessNemesisGoal() (at Assets/Scripts/Managers/NemesisManager.cs:913)
+	NemesisManager:ProcessNemesisActivity(AITracker, Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:548)
+	NemesisManager:ProcessNemesis(AITracker, Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:294)
+	AIManager:ProcessNemesis() (at Assets/Scripts/Managers/AIManager.cs:696)
+	AIManager:ProcessAISideAuthority() (at Assets/Scripts/Managers/AIManager.cs:682)
+	TurnManager:EndTurnAI() (at Assets/Scripts/Managers/TurnManager.cs:629)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:356)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:195)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	NewTurnUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/NewTurnUI.cs:179)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ERROR Invalid actor slotID "-1"
+UnityEngine.Debug:LogError(Object)
+	TeamManager:MoveTeam(TeamPool, Int32, Int32, Node) (at Assets/Scripts/Managers/TeamManager.cs:956)
+	TeamManager:ResetTeams() (at Assets/Scripts/Managers/TeamManager.cs:747)
+	TutorialManager:InitialiseTutorialSet(TutorialSet) (at Assets/Scripts/Managers/TutorialManager.cs:242)
+	TutorialManager:UpdateNewSet() (at Assets/Scripts/Managers/TutorialManager.cs:1361)
+	TutorialManager:SetSandbox(Boolean) (at Assets/Scripts/Managers/TutorialManager.cs:1158)
+	TutorialManager:FailSandboxOutcome(String) (at Assets/Scripts/Managers/TutorialManager.cs:1172)
+	NemesisManager:ProcessPlayerDamage() (at Assets/Scripts/Managers/NemesisManager.cs:1574)
+	NemesisManager:ProcessPlayerInteraction(Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:1134)
+	NemesisManager:ProcessNemesisMove(Int32, Int32) (at Assets/Scripts/Managers/NemesisManager.cs:1051)
+	NemesisManager:ProcessNemesisGoal() (at Assets/Scripts/Managers/NemesisManager.cs:913)
+	NemesisManager:ProcessNemesisActivity(AITracker, Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:548)
+	NemesisManager:ProcessNemesis(AITracker, Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:294)
+	AIManager:ProcessNemesis() (at Assets/Scripts/Managers/AIManager.cs:696)
+	AIManager:ProcessAISideAuthority() (at Assets/Scripts/Managers/AIManager.cs:682)
+	TurnManager:EndTurnAI() (at Assets/Scripts/Managers/TurnManager.cs:629)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:356)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:195)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	NewTurnUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/NewTurnUI.cs:179)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ERROR Invalid actor slotID "-1"
+UnityEngine.Debug:LogError(Object)
+	TeamManager:MoveTeam(TeamPool, Int32, Int32, Node) (at Assets/Scripts/Managers/TeamManager.cs:956)
+	TeamManager:ResetTeams() (at Assets/Scripts/Managers/TeamManager.cs:747)
+	TutorialManager:InitialiseTutorialSet(TutorialSet) (at Assets/Scripts/Managers/TutorialManager.cs:242)
+	TutorialManager:UpdateNewSet() (at Assets/Scripts/Managers/TutorialManager.cs:1361)
+	TutorialManager:SetSandbox(Boolean) (at Assets/Scripts/Managers/TutorialManager.cs:1158)
+	TutorialManager:FailSandboxOutcome(String) (at Assets/Scripts/Managers/TutorialManager.cs:1172)
+	NemesisManager:ProcessPlayerDamage() (at Assets/Scripts/Managers/NemesisManager.cs:1574)
+	NemesisManager:ProcessPlayerInteraction(Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:1134)
+	NemesisManager:ProcessNemesisMove(Int32, Int32) (at Assets/Scripts/Managers/NemesisManager.cs:1051)
+	NemesisManager:ProcessNemesisGoal() (at Assets/Scripts/Managers/NemesisManager.cs:913)
+	NemesisManager:ProcessNemesisActivity(AITracker, Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:548)
+	NemesisManager:ProcessNemesis(AITracker, Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:294)
+	AIManager:ProcessNemesis() (at Assets/Scripts/Managers/AIManager.cs:696)
+	AIManager:ProcessAISideAuthority() (at Assets/Scripts/Managers/AIManager.cs:682)
+	TurnManager:EndTurnAI() (at Assets/Scripts/Managers/TurnManager.cs:629)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:356)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:195)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	NewTurnUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/NewTurnUI.cs:179)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 5129 -> Thursday, 4 November 2021 5:10 PM
+City seed 13833 -> VirtualCity, Eurasia
+ERROR Invalid actor slotID "-1"
+UnityEngine.Debug:LogError(Object)
+	TeamManager:MoveTeam(TeamPool, Int32, Int32, Node) (at Assets/Scripts/Managers/TeamManager.cs:956)
+	TeamManager:ResetTeams() (at Assets/Scripts/Managers/TeamManager.cs:747)
+	TutorialManager:InitialiseTutorialSet(TutorialSet) (at Assets/Scripts/Managers/TutorialManager.cs:242)
+	TutorialManager:UpdateNewSet() (at Assets/Scripts/Managers/TutorialManager.cs:1361)
+	TutorialManager:SetSandbox(Boolean) (at Assets/Scripts/Managers/TutorialManager.cs:1158)
+	TutorialManager:FailSandboxOutcome(String) (at Assets/Scripts/Managers/TutorialManager.cs:1172)
+	NemesisManager:ProcessPlayerDamage() (at Assets/Scripts/Managers/NemesisManager.cs:1574)
+	NemesisManager:ProcessPlayerInteraction(Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:1134)
+	NemesisManager:CheckNemesisAtPlayerNode(Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:1465)
+	NodeManager:ProcessMoveOutcome(MoveReturnData) (at Assets/Scripts/Managers/NodeManager.cs:2989)
+	NodeManager:ProcessPlayerMove(ModalMoveDetails) (at Assets/Scripts/Managers/NodeManager.cs:2905)
+	NodeManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/NodeManager.cs:452)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	<CreateMoveMenu>c__AnonStorey7:<>m__0() (at Assets/Scripts/Managers/NodeManager.cs:2735)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ERROR Invalid actor slotID "-1"
+UnityEngine.Debug:LogError(Object)
+	TeamManager:MoveTeam(TeamPool, Int32, Int32, Node) (at Assets/Scripts/Managers/TeamManager.cs:956)
+	TeamManager:ResetTeams() (at Assets/Scripts/Managers/TeamManager.cs:747)
+	TutorialManager:InitialiseTutorialSet(TutorialSet) (at Assets/Scripts/Managers/TutorialManager.cs:242)
+	TutorialManager:UpdateNewSet() (at Assets/Scripts/Managers/TutorialManager.cs:1361)
+	TutorialManager:SetSandbox(Boolean) (at Assets/Scripts/Managers/TutorialManager.cs:1158)
+	TutorialManager:FailSandboxOutcome(String) (at Assets/Scripts/Managers/TutorialManager.cs:1172)
+	NemesisManager:ProcessPlayerDamage() (at Assets/Scripts/Managers/NemesisManager.cs:1574)
+	NemesisManager:ProcessPlayerInteraction(Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:1134)
+	NemesisManager:CheckNemesisAtPlayerNode(Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:1465)
+	NodeManager:ProcessMoveOutcome(MoveReturnData) (at Assets/Scripts/Managers/NodeManager.cs:2989)
+	NodeManager:ProcessPlayerMove(ModalMoveDetails) (at Assets/Scripts/Managers/NodeManager.cs:2905)
+	NodeManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/NodeManager.cs:452)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	<CreateMoveMenu>c__AnonStorey7:<>m__0() (at Assets/Scripts/Managers/NodeManager.cs:2735)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 17817 -> Thursday, 4 November 2021 5:11 PM
+City seed 39530 -> VirtualCity, Eurasia

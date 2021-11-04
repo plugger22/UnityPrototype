@@ -430,14 +430,25 @@ public class TutorialUI : MonoBehaviour
                                 EventManager.i.PostNotification(EventType.OutcomeOpen, this, details);
                                 break;
                             case "Goal":
-                                GameManager.i.tutorialScript.UpdateGoal(currentItem.goal, newIndex);
-                                //change colour to completed (indicates that you're currently doing the goal)
-                                ColorBlock goalColours = listOfButtons[newIndex].colors;
-                                goalColours.normalColor = colourActiveGoal;
-                                listOfButtons[newIndex].colors = goalColours;
-                                //update goal tooltip to reflect an active goal (let's player see what their goal is if they forget)
-                                string mainText = GameManager.Formatt(currentItem.goal.tooltipText, ColourType.neutralText);
-                                UpdateGoalTooltip(newIndex, "Active Goal", mainText);
+                                int prereqIndex = GameManager.i.tutorialScript.UpdateGoal(currentItem, newIndex);
+                                if (prereqIndex < 0)
+                                {
+                                    //change colour to completed (indicates that you're currently doing the goal)
+                                    ColorBlock goalColours = listOfButtons[newIndex].colors;
+                                    goalColours.normalColor = colourActiveGoal;
+                                    listOfButtons[newIndex].colors = goalColours;
+                                    //update goal tooltip to reflect an active goal (let's player see what their goal is if they forget)
+                                    string mainText = GameManager.Formatt(currentItem.goal.tooltipText, ColourType.neutralText);
+                                    UpdateGoalTooltip(newIndex, "Active Goal", mainText);
+                                }
+                                else
+                                {
+                                    //move arrow to prerequisite goal
+                                    currentItem = listOfSetItems[prereqIndex];
+                                    index = prereqIndex;
+                                    //arrow -> Set to item clicked on
+                                    SetArrow(false);
+                                }
                                 break;
                             case "Information":
                                 EventManager.i.PostNotification(EventType.GameHelpOpen, this, currentItem.gameHelp);
@@ -501,7 +512,7 @@ public class TutorialUI : MonoBehaviour
 
     #region SetArrow
     /// <summary>
-    /// Moves arrow to next item in list. 'isMoveArrowToNextItem' moves arrow to next item in list if true (default) and to item clicked on if falses
+    /// Moves arrow to index position (usually next item in list). 'isMoveArrowToNextItem' moves arrow to next item in list if true (default) and to item clicked on if false
     /// </summary>
     /// <param name="newIndex"></param>
     public void SetArrow(bool isMoveArrowToNextItem = true)
