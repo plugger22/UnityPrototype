@@ -22,6 +22,10 @@ public class TutorialGoal : ScriptableObject
     [Tooltip("Tooltip text displayed once goal activated. Keep short and self contained. Explain what is required to achieve goal")]
     [TextArea(2, 3)] public string tooltipText;
 
+    [Header("Dependency")]
+    [Tooltip("TutorialGoal that must be completed before this one can be done. Optional")]
+    public TutorialGoal prereq;
+
     [Header("Primary Goal")]
     [Tooltip("enum.SO that is used in code to look up the primary, tracker0 goal. Required")]
     public TutorialGoalType goal0;

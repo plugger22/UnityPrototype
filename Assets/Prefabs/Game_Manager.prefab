@@ -6355,6 +6355,7 @@ MonoBehaviour:
   queryOptionTooltipChance: 25
   textListGeneric: {fileID: 11400000, guid: bb07f8636828f564faa134abdbad837a, type: 2}
   textListJob: {fileID: 11400000, guid: 77da817c0d61f5d4cb968b30ce6512c1, type: 2}
+  goalType: {fileID: 11400000, guid: 3ea5e079678bd114896744e070740f21, type: 2}
   tutorial: {fileID: 0}
   set: {fileID: 0}
   index: 0

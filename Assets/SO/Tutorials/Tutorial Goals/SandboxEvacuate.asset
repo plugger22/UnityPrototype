@@ -17,6 +17,7 @@ MonoBehaviour:
   finishTopText: d
   finishBottomText: d
   tooltipText: d
+  prereq: {fileID: 11400000, guid: d529217edd010184f9f43845ef1d9d14, type: 2}
   goal0: {fileID: 11400000, guid: 28e7cb27a2bed474f911749d63ce0357, type: 2}
   tracker0Notes: Evacuate the Stick
   target0: 1

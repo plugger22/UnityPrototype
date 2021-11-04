@@ -1491,6 +1491,15 @@ namespace packageAPI
     }
 
     /// <summary>
+    /// Used to track goal status (done/not done) and prerequisites
+    /// </summary>
+    public class GoalStatus
+    {
+        public string tag;                          //item tag for goal (used in dialogue)
+        public bool isDone;                         //true if goal completed
+    }
+
+    /// <summary>
     /// Data for finderUI.cs buttons
     /// </summary>
     public class FinderButtonData

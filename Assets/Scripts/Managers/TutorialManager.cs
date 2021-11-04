@@ -31,6 +31,10 @@ public class TutorialManager : MonoBehaviour
     public TextList textListGeneric;
     public TextList textListJob;
 
+    [Header("Goals")]
+    [Tooltip("TutorialType that is a goal. Used by code for identifying goal items")]
+    public TutorialType goalType;
+
     #region save data compatibile
     [HideInInspector] public Tutorial tutorial;
     [HideInInspector] public TutorialSet set;
@@ -47,6 +51,8 @@ public class TutorialManager : MonoBehaviour
     [HideInInspector] public string option3Tag;
     [HideInInspector] public string optionIgnoreTag;
     [HideInInspector] public TutorialQueryType queryType;
+
+    private Dictionary<string, GoalStatus> dictOfGoals = new Dictionary<string, GoalStatus>();
 
     #endregion
 
@@ -84,6 +90,7 @@ public class TutorialManager : MonoBehaviour
     {
         Debug.Assert(textListGeneric != null, "Invalid textListName (Null)");
         Debug.Assert(textListJob != null, "Invalid textListJob (Null)");
+        Debug.Assert(goalType != null, "Invalid goalType (Null)");
     }
     #endregion
 
@@ -228,6 +235,7 @@ public class TutorialManager : MonoBehaviour
         UpdateFeatures(set.listOfFeaturesOff, set.listOfGUIOff);
         //Goals reset
         GameManager.i.dataScript.ClearListOfTutorialGoals();
+        UpdateDictOfGoals();
         //Targets reset
         GameManager.i.dataScript.ClearTargets();
         //Teams reset
@@ -481,6 +489,39 @@ public class TutorialManager : MonoBehaviour
     #endregion
 
     #region Goals...
+
+    #region UpdateDictOfGoals
+    /// <summary>
+    /// At start of a set, populate dictionary with all goals and set to isDone false
+    /// </summary>
+    private void UpdateDictOfGoals()
+    {
+        dictOfGoals.Clear();
+        //loop items
+        foreach(TutorialItem item in set.listOfTutorialItems)
+        {
+            //check if goal
+            if (item.tutorialType == goalType)
+            { AddGoalToDict(item); }
+        }
+    }
+    #endregion
+
+    #region AddGoalToDict
+    /// <summary>
+    /// submethod to add a goal to the dictOfGoals
+    /// </summary>
+    /// <param name="item"></param>
+    private void AddGoalToDict(TutorialItem item)
+    {
+        try
+        { dictOfGoals.Add(item.name, new GoalStatus() { isDone = false, tag = item.tag }); }
+        catch (ArgumentNullException)
+        { Debug.LogError("Invalid tutorialItem (Null)"); }
+        catch (ArgumentException)
+        { Debug.LogErrorFormat("Invalid tutorialItem (duplicate) item \"{0}\"", item.name); }
+    }
+    #endregion
 
     #region UpdateGoal
     /// <summary>
@@ -1375,6 +1416,20 @@ public class TutorialManager : MonoBehaviour
                 else { builder.AppendLine("No records present"); }
             }
             else { Debug.LogError("Invalid dictOfTutorialData (Null)"); }
+
+            //dictOfGoals
+            if (dictOfGoals != null)
+            {
+                builder.AppendFormat("{0}-dictOfGoals{1}", "\n", "\n");
+                if (dictOfGoals.Count > 0)
+                {
+                    foreach (var item in dictOfGoals)
+                    { builder.AppendFormat(" {0} -> isDone {1}, tag \"{2}\"{3}", item.Key, item.Value.isDone, item.Value.tag, "\n"); }
+                }
+                else { builder.AppendLine("No records present"); }
+            }
+            else { Debug.LogError("Invalid dictOfGoals (Null)"); }
+
             return builder.ToString();
         }
         else { return "You must be in Tutorial mode to access this information"; }
