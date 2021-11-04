@@ -2008,6 +2008,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2e29e8f6fe93b97409dac553ec5a6d72, type: 2}
   - {fileID: 11400000, guid: b387e5a7c2f48074a985a015915beada, type: 2}
   - {fileID: 11400000, guid: 5242d883baefa62478c0dc09f123958e, type: 2}
+  - {fileID: 11400000, guid: 0d3596435a0ef0b4db7a335838c4309a, type: 2}
+  - {fileID: 11400000, guid: d529217edd010184f9f43845ef1d9d14, type: 2}
   arrayOfTutorialQueries:
   - {fileID: 11400000, guid: 79c9fe7515698064cb2345d2573a9993, type: 2}
   - {fileID: 11400000, guid: 039191711e5abb94a9a7286637c128e4, type: 2}

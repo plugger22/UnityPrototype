@@ -6061,3 +6061,24 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
 	City seed 28261 -> VirtualCity, Eurasia
+
+Dev seed 47384 -> Wednesday, 3 November 2021 4:27 PM
+WARNING [Val] ValidateSO: MISMATCH on TutorialGoal, array 13, assets 15 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialGoal[]) (at Assets/Scripts/Managers/ValidationManager.cs:2664)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2607)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	City seed 43568 -> VirtualCity, Eurasia
+
+Dev seed 32492 -> Thursday, 4 November 2021 10:41 AM
+WARNING [Val] ValidateSO: MISMATCH on TutorialGoal, array 13, assets 15 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialGoal[]) (at Assets/Scripts/Managers/ValidationManager.cs:2664)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2607)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	City seed 57131 -> VirtualCity, Eurasia
+
+Dev seed 21967 -> Thursday, 4 November 2021 11:01 AM
+City seed 39609 -> VirtualCity, Eurasia
