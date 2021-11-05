@@ -1463,11 +1463,14 @@ public class NemesisManager : MonoBehaviour
                         //both at same node
                         if (nemesisNode.nodeID == GameManager.i.nodeScript.GetPlayerNodeID())
                         {
-                            //Handle edge case -> Tutorial Sandbox where sandbox is already in a win/fail state
                             if (GameManager.i.inputScript.GameState != GameState.Tutorial)
                             { ProcessPlayerInteraction(isPlayerMove); }
-                            else if (GameManager.i.tutorialScript.isSandbox == true)
-                            { ProcessPlayerInteraction(isPlayerMove); }
+                            else
+                            {
+                                //Handle edge case -> Tutorial Sandbox where sandbox is already in a win/fail state
+                                if (GameManager.i.tutorialScript.isSandbox == true)
+                                { ProcessPlayerInteraction(isPlayerMove); }
+                            }
                         }
                     }
                 }

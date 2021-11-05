@@ -1287,32 +1287,6 @@ public class TutorialManager : MonoBehaviour
                 if (set != null)
                 {
                     UpdateNewSet();
-
-                    /*
-                    InitialiseTutorialSet(set);
-                    //reset contact dictionaries
-                    GameManager.i.dataScript.TutorialResetContacts();
-                    //configure player
-                    GameManager.i.playerScript.ResetTutorialPlayer();
-                    if (set.playerConfig != null)
-                    { GameManager.i.playerScript.ConfigureTutorialPlayer(set.playerConfig); }
-                    //configure actors
-                    GameManager.i.actorScript.ConfigureTutorialActors(true);
-                    //configure targets
-                    if (set.targetConfig != null)
-                    { GameManager.i.targetScript.ConfigureTutorialTargets(set.targetConfig); }
-                    //configure teams
-                    if (set.teamConfig != null)
-                    { GameManager.i.teamScript.ConfigureTutorialTeams(set.teamConfig); }
-                    //configure spiders and tracers
-                    if (set.hideConfig != null)
-                    { GameManager.i.nodeScript.ConfigureTutorialHideItems(set.hideConfig); }
-                    //reset nodes and close AlertUI
-                    GameManager.i.alertScript.CloseAlertUI(true);
-                    //activate tutorialUI
-                    EventManager.i.PostNotification(EventType.TutorialOpenUI, this, set, "TutorialManager.cs -> SetNextSet");
-                    */
-
                 }
                 else { Debug.LogErrorFormat("Invalid set (Null) for tutorial \"{0}\" listOfSets[{1}]", tutorial.name, index); }
             }
@@ -1338,7 +1312,7 @@ public class TutorialManager : MonoBehaviour
 
     #region UpdateNewSet
     /// <summary>
-    /// Handles all new set admin -> Called only in event of a fail state
+    /// Handles all new set admin -> Called in event of a fail state or next/previous set
     /// </summary>
     private void UpdateNewSet()
     {
@@ -1355,7 +1329,8 @@ public class TutorialManager : MonoBehaviour
         if (set.targetConfig != null)
         { GameManager.i.targetScript.ConfigureTutorialTargets(set.targetConfig); }
         //configure teams
-        GameManager.i.teamScript.ResetTeams();
+        if (GameManager.i.dataScript.CheckTeamPoolCount(TeamPool.OnMap) > 0)
+        { GameManager.i.teamScript.ResetTeams(); }
         if (set.teamConfig != null)
         { GameManager.i.teamScript.ConfigureTutorialTeams(set.teamConfig); }
         //configure spiders and tracers

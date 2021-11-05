@@ -627,6 +627,8 @@ public class PlayerManager : MonoBehaviour
         //automatically clear out gear and secrets
         listOfSecrets.Clear();
         listOfGear.Clear();
+        //reset player position
+        InitialisePlayerStartNode();
     }
     #endregion
 
