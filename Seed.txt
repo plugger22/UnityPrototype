@@ -6400,3 +6400,124 @@ UnityEngine.Debug:LogError(Object)
 	
 Dev seed 17817 -> Thursday, 4 November 2021 5:11 PM
 City seed 39530 -> VirtualCity, Eurasia
+
+Dev seed 38703 -> Friday, 5 November 2021 10:02 AM
+City seed 3562 -> VirtualCity, Eurasia
+ERROR Invalid actor slotID "-1"
+UnityEngine.Debug:LogError(Object)
+	TeamManager:MoveTeam(TeamPool, Int32, Int32, Node) (at Assets/Scripts/Managers/TeamManager.cs:956)
+	TeamManager:ResetTeams() (at Assets/Scripts/Managers/TeamManager.cs:747)
+	TutorialManager:InitialiseTutorialSet(TutorialSet) (at Assets/Scripts/Managers/TutorialManager.cs:242)
+	TutorialManager:UpdateNewSet() (at Assets/Scripts/Managers/TutorialManager.cs:1361)
+	TutorialManager:SetSandbox(Boolean) (at Assets/Scripts/Managers/TutorialManager.cs:1158)
+	TutorialManager:FailSandboxOutcome(String) (at Assets/Scripts/Managers/TutorialManager.cs:1172)
+	NemesisManager:ProcessPlayerDamage() (at Assets/Scripts/Managers/NemesisManager.cs:1574)
+	NemesisManager:ProcessPlayerInteraction(Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:1134)
+	NemesisManager:CheckNemesisAtPlayerNode(Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:1465)
+	NodeManager:ProcessPlayerMove(ModalMoveDetails) (at Assets/Scripts/Managers/NodeManager.cs:2915)
+	NodeManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/NodeManager.cs:452)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	<CreateMoveMenu>c__AnonStorey7:<>m__0() (at Assets/Scripts/Managers/NodeManager.cs:2735)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 2575 -> Friday, 5 November 2021 10:07 AM
+City seed 28781 -> VirtualCity, Eurasia
+ERROR Invalid actor slotID "-1"
+UnityEngine.Debug:LogError(Object)
+	TeamManager:MoveTeam(TeamPool, Int32, Int32, Node) (at Assets/Scripts/Managers/TeamManager.cs:956)
+	TeamManager:ResetTeams() (at Assets/Scripts/Managers/TeamManager.cs:747)
+	TutorialManager:InitialiseTutorialSet(TutorialSet) (at Assets/Scripts/Managers/TutorialManager.cs:242)
+	TutorialManager:UpdateNewSet() (at Assets/Scripts/Managers/TutorialManager.cs:1361)
+	TutorialManager:SetSandbox(Boolean) (at Assets/Scripts/Managers/TutorialManager.cs:1158)
+	TutorialManager:FailSandboxOutcome(String) (at Assets/Scripts/Managers/TutorialManager.cs:1172)
+	NemesisManager:ProcessPlayerDamage() (at Assets/Scripts/Managers/NemesisManager.cs:1574)
+	NemesisManager:ProcessPlayerInteraction(Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:1134)
+	NemesisManager:CheckNemesisAtPlayerNode(Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:1465)
+	NodeManager:ProcessPlayerMove(ModalMoveDetails) (at Assets/Scripts/Managers/NodeManager.cs:2915)
+	NodeManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/NodeManager.cs:452)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	<CreateMoveMenu>c__AnonStorey7:<>m__0() (at Assets/Scripts/Managers/NodeManager.cs:2735)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ERROR Invalid actor slotID "-1"
+UnityEngine.Debug:LogError(Object)
+	TeamManager:MoveTeam(TeamPool, Int32, Int32, Node) (at Assets/Scripts/Managers/TeamManager.cs:956)
+	TeamManager:ResetTeams() (at Assets/Scripts/Managers/TeamManager.cs:747)
+	TutorialManager:InitialiseTutorialSet(TutorialSet) (at Assets/Scripts/Managers/TutorialManager.cs:242)
+	TutorialManager:UpdateNewSet() (at Assets/Scripts/Managers/TutorialManager.cs:1361)
+	TutorialManager:SetSandbox(Boolean) (at Assets/Scripts/Managers/TutorialManager.cs:1158)
+	TutorialManager:FailSandboxOutcome(String) (at Assets/Scripts/Managers/TutorialManager.cs:1172)
+	NemesisManager:ProcessPlayerDamage() (at Assets/Scripts/Managers/NemesisManager.cs:1574)
+	NemesisManager:ProcessPlayerInteraction(Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:1134)
+	NemesisManager:CheckNemesisAtPlayerNode(Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:1465)
+	NodeManager:ProcessPlayerMove(ModalMoveDetails) (at Assets/Scripts/Managers/NodeManager.cs:2915)
+	NodeManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/NodeManager.cs:452)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	<CreateMoveMenu>c__AnonStorey7:<>m__0() (at Assets/Scripts/Managers/NodeManager.cs:2735)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 57381 -> Friday, 5 November 2021 10:18 AM
+City seed 43079 -> VirtualCity, Eurasia
+
+Dev seed 30125 -> Friday, 5 November 2021 10:37 AM
+City seed 15841 -> VirtualCity, Eurasia
+ERROR Invalid details (Duplicate) for "Nemesis"
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	GUIManager:InfoPipelineAdd(ModalOutcomeDetails) (at Assets/Scripts/Managers/GUIManager.cs:761)
+	NemesisManager:ProcessPlayerDamage() (at Assets/Scripts/Managers/NemesisManager.cs:1570)
+	NemesisManager:ProcessPlayerInteraction(Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:1134)
+	NemesisManager:CheckNemesisAtPlayerNode(Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:1465)
+	NemesisManager:ProcessNemesis(AITracker, Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:270)
+	AIManager:ProcessNemesis() (at Assets/Scripts/Managers/AIManager.cs:696)
+	AIManager:ProcessAISideAuthority() (at Assets/Scripts/Managers/AIManager.cs:682)
+	TurnManager:EndTurnAI() (at Assets/Scripts/Managers/TurnManager.cs:629)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:356)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:195)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	TutorialManager:FailSandboxOutcome(String) (at Assets/Scripts/Managers/TutorialManager.cs:1189)
+	NemesisManager:ProcessPlayerDamage() (at Assets/Scripts/Managers/NemesisManager.cs:1574)
+	NemesisManager:ProcessPlayerInteraction(Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:1134)
+	NemesisManager:CheckNemesisAtPlayerNode(Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:1465)
+	NodeManager:ProcessPlayerMove(ModalMoveDetails) (at Assets/Scripts/Managers/NodeManager.cs:2915)
+	NodeManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/NodeManager.cs:452)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	<CreateMoveMenu>c__AnonStorey7:<>m__0() (at Assets/Scripts/Managers/NodeManager.cs:2735)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Nemesis Damage infoPipeline message FAILED to be added to dictOfPipeline
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	NemesisManager:ProcessPlayerDamage() (at Assets/Scripts/Managers/NemesisManager.cs:1571)
+	NemesisManager:ProcessPlayerInteraction(Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:1134)
+	NemesisManager:CheckNemesisAtPlayerNode(Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:1465)
+	NemesisManager:ProcessNemesis(AITracker, Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:270)
+	AIManager:ProcessNemesis() (at Assets/Scripts/Managers/AIManager.cs:696)
+	AIManager:ProcessAISideAuthority() (at Assets/Scripts/Managers/AIManager.cs:682)
+	TurnManager:EndTurnAI() (at Assets/Scripts/Managers/TurnManager.cs:629)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:356)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:195)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	TutorialManager:FailSandboxOutcome(String) (at Assets/Scripts/Managers/TutorialManager.cs:1189)
+	NemesisManager:ProcessPlayerDamage() (at Assets/Scripts/Managers/NemesisManager.cs:1574)
+	NemesisManager:ProcessPlayerInteraction(Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:1134)
+	NemesisManager:CheckNemesisAtPlayerNode(Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:1465)
+	NodeManager:ProcessPlayerMove(ModalMoveDetails) (at Assets/Scripts/Managers/NodeManager.cs:2915)
+	NodeManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/NodeManager.cs:452)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	<CreateMoveMenu>c__AnonStorey7:<>m__0() (at Assets/Scripts/Managers/NodeManager.cs:2735)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ERROR Duplicate record exists for MainInfoData turn 1
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:759)
+	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:935)
+	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:916)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 6959 -> Friday, 5 November 2021 10:57 AM
+City seed 32880 -> VirtualCity, Eurasia
+ERROR Duplicate record exists for MainInfoData turn 1
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:759)
+	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:935)
+	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:916)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 25282 -> Friday, 5 November 2021 11:10 AM
+City seed 27855 -> VirtualCity, Eurasia

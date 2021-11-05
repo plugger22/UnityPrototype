@@ -728,6 +728,9 @@ public class TeamManager : MonoBehaviour
     /// </summary>
     public void ResetTeams()
     {
+        //tutorial -> need to assign actors prior to reset
+        if (GameManager.i.inputScript.GameState == GameState.Tutorial)
+        { AutoRunAssignActors(); }
         //by value as subsequent admin will delete as you go otherwise
         List<int> teamList = new List<int>(GameManager.i.dataScript.GetTeamPool(TeamPool.OnMap));
         if (teamList != null)

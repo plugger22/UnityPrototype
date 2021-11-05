@@ -1121,7 +1121,7 @@ public class TutorialManager : MonoBehaviour
                 case "Sandbox":
                     //NOTE: set manually, don't use SetSandbox otherwise you'll trigger a reset
                     isSandbox = true;
-                    Debug.LogFormat("[Tst] SetTutorialCondition -> SANDBOX (isSandbox true)");
+                    Debug.LogFormat("[Tut]TutorialManager.cs -> SetTutorialCondition: isSandbox true");
                     break;
                 default: Debug.LogWarningFormat("Unrecognised condition \"{0}\"", condition.name); break;
             }
@@ -1161,15 +1161,16 @@ public class TutorialManager : MonoBehaviour
     }
     #endregion
 
-    #region FailTutorialOutcome
+    #region FailSandboxOutcome
     /// <summary>
     /// Fail state message for tutorialSandbox. Customise with top text. Appears in infoPipeline (if multiple fails in same turn only the first will show) 
     /// </summary>
     /// <param name="topText"></param>
     public void FailSandboxOutcome(string topText)
     {
+        Debug.LogFormat("[Tut] TutorialManager.cs -> FailSandboxOutcome: Sandbox tutorial attempt FAILED{0}", "\n");
         //player failed sandbox tutorial
-        GameManager.i.tutorialScript.SetSandbox(false);
+        SetSandbox(false);
         //dialogue
         ModalOutcomeDetails outcomeTutorial = new ModalOutcomeDetails
         {
@@ -1185,6 +1186,14 @@ public class TutorialManager : MonoBehaviour
         //end of turn outcome window which needs to overlay ontop of InfoAPP and requires a different than normal modal setting
         if (GameManager.i.guiScript.InfoPipelineAdd(outcomeTutorial) == false)
         { Debug.LogWarningFormat("Fail Tutorial infoPipeline message FAILED to be added to dictOfPipeline"); }
+
+        /*
+        //end turn immediately
+        EventManager.i.PostNotification(EventType.NewTurn, this, set, "TutorialManager.cs -> FailSandboxOutcome");
+        */
+
+        //reset turn
+        GameManager.i.turnScript.ResetTurn();
     }
     #endregion
 
@@ -1239,31 +1248,6 @@ public class TutorialManager : MonoBehaviour
                 if (set != null)
                 {
                     UpdateNewSet();
-
-                    /*
-                    InitialiseTutorialSet(set);
-                    //reset contact dictionaries
-                    GameManager.i.dataScript.TutorialResetContacts();
-                    //configure player
-                    GameManager.i.playerScript.ResetTutorialPlayer();
-                    if (set.playerConfig != null)
-                    { GameManager.i.playerScript.ConfigureTutorialPlayer(set.playerConfig); }
-                    //configure actors
-                    GameManager.i.actorScript.ConfigureTutorialActors(true);
-                    //configure targets
-                    if (set.targetConfig != null)
-                    { GameManager.i.targetScript.ConfigureTutorialTargets(set.targetConfig); }
-                    //configure teams
-                    if (set.teamConfig != null)
-                    { GameManager.i.teamScript.ConfigureTutorialTeams(set.teamConfig); }
-                    //configure spiders and tracers
-                    if (set.hideConfig != null)
-                    { GameManager.i.nodeScript.ConfigureTutorialHideItems(set.hideConfig); }
-                    //reset nodes and close AlertUI
-                    GameManager.i.alertScript.CloseAlertUI(true);
-                    //activate tutorialUI
-                    EventManager.i.PostNotification(EventType.TutorialOpenUI, this, set, "TutorialManager.cs -> SetPreviousSet");
-                    */
                 }
                 else { Debug.LogErrorFormat("Invalid set (Null) for tutorial \"{0}\" listOfSets[{1}]", tutorial.name, index); }
             }
@@ -1354,7 +1338,7 @@ public class TutorialManager : MonoBehaviour
 
     #region UpdateNewSet
     /// <summary>
-    /// Handles all new set admin
+    /// Handles all new set admin -> Called only in event of a fail state
     /// </summary>
     private void UpdateNewSet()
     {
@@ -1371,6 +1355,7 @@ public class TutorialManager : MonoBehaviour
         if (set.targetConfig != null)
         { GameManager.i.targetScript.ConfigureTutorialTargets(set.targetConfig); }
         //configure teams
+        GameManager.i.teamScript.ResetTeams();
         if (set.teamConfig != null)
         { GameManager.i.teamScript.ConfigureTutorialTeams(set.teamConfig); }
         //configure spiders and tracers
@@ -1378,8 +1363,15 @@ public class TutorialManager : MonoBehaviour
         { GameManager.i.nodeScript.ConfigureTutorialHideItems(set.hideConfig); }
         //reset nodes and close AlertUI
         GameManager.i.alertScript.CloseAlertUI(true);
+        //reset data
+        GameManager.i.dataScript.ResetTutorialData();
+
+
+
+        /*
         //activate tutorialUI
         EventManager.i.PostNotification(EventType.TutorialOpenUI, this, set, "TutorialManager.cs -> UpdateNewSet");
+        */
     }
     #endregion
 

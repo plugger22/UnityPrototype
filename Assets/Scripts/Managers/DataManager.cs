@@ -630,6 +630,26 @@ public class DataManager : MonoBehaviour
     }
     #endregion
 
+    #region ResetTutorialData
+    /// <summary>
+    /// Clear out any relevant data when the Tutorial Sandbox fails ready for another attempt
+    /// </summary>
+    public void ResetTutorialData()
+    {
+        //history lists
+        listOfHistoryRebelMove.Clear();
+        listOfHistoryNemesisMove.Clear();
+        listOfHistoryNpcMove.Clear();
+        listOfHistoryAutoRun.Clear();
+        ///messages
+        dictOfArchiveMessages.Clear();
+        dictOfPendingMessages.Clear();
+        dictOfCurrentMessages.Clear();
+        dictOfAIMessages.Clear();
+        dictOfInfoHistory.Clear();
+    }
+    #endregion
+
     #region ResetLoadGame
     /// <summary>
     /// Clear any relevant data collections AFTER loading a save game file (excludes collections that have already been dealt with in FileManager.cs -> ReadDataData or later Read.... methods)
