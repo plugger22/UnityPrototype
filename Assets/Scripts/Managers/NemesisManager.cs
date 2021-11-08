@@ -156,34 +156,7 @@ public class NemesisManager : MonoBehaviour
     #region SubInitialiseLevelStart
     private void SubInitialiseLevelStart()
     {
-        //Debug (FOW OFF)
-        isShown = true;
-        isFirstNemesis = true;
-        //assign nemesis to a starting node
-        int nemesisNodeID = -1;
-        //Nemesis always starts at city Centre
-        Node node = GameManager.i.dataScript.GetNode(GameManager.i.cityScript.cityHallDistrictID);
-        if (node != null)
-        {
-            nemesisNodeID = node.nodeID;
-            nemesisNode = node;
-            Debug.LogFormat("[Nem] NemesisManager.cs -> Initialise: Nemesis starts at node {0}, {1}, id {2}{3}", node.nodeName, node.Arc.name, node.nodeID, "\n");
-            //assign node
-            GameManager.i.nodeScript.nodeNemesis = nemesisNodeID;
-        }
-        else { Debug.LogError("Invalid node (Null)"); }
-        //Nemesis AI -> nemesis does nothing for 'x' turns at game start
-        durationDelay = GameManager.i.scenarioScript.scenario.challengeResistance.gracePeriodFirst;
-        if (durationDelay > 0)
-        {
-            //grace period, start inactive
-            SetNemesisMode(NemesisMode.Inactive);
-        }
-        else
-        {
-            //NO grace period, start in normal mode, waiting for signs of player
-            SetNemesisMode(NemesisMode.NORMAL);
-        }
+        InitialiseNemesis();
     }
     #endregion
 
@@ -254,6 +227,46 @@ public class NemesisManager : MonoBehaviour
         /*colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);*/
+    }
+
+    /// <summary>
+    /// Set nemesis up at city hall
+    /// </summary>
+    public void InitialiseNemesis()
+    {
+        //Debug (FOW OFF)
+        isShown = true;
+        isFirstNemesis = true;
+        //assign nemesis to a starting node
+        int nemesisNodeID = -1;
+        //Nemesis always starts at city Centre
+        Node node = GameManager.i.dataScript.GetNode(GameManager.i.cityScript.cityHallDistrictID);
+        if (node != null)
+        {
+            nemesisNodeID = node.nodeID;
+            nemesisNode = node;
+            Debug.LogFormat("[Nem] NemesisManager.cs -> Initialise: Nemesis starts at node {0}, {1}, id {2}{3}", node.nodeName, node.Arc.name, node.nodeID, "\n");
+            //assign node
+            GameManager.i.nodeScript.nodeNemesis = nemesisNodeID;
+        }
+        else { Debug.LogError("Invalid node (Null)"); }
+        //Nemesis AI -> nemesis does nothing for 'x' turns at game start
+        durationDelay = GameManager.i.scenarioScript.scenario.challengeResistance.gracePeriodFirst;
+        if (GameManager.i.inputScript.GameState == GameState.Tutorial)
+        {
+            //tutorial override
+            durationDelay = 0;
+        }
+        if (durationDelay > 0)
+        {
+            //grace period, start inactive
+            SetNemesisMode(NemesisMode.Inactive);
+        }
+        else
+        {
+            //NO grace period, start in normal mode, waiting for signs of player
+            SetNemesisMode(NemesisMode.NORMAL);
+        }
     }
 
 

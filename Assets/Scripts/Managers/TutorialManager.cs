@@ -42,6 +42,8 @@ public class TutorialManager : MonoBehaviour
     #endregion
 
     #region Other...
+    [HideInInspector] public int playerStartNode = -1;          //where player first starts in sandbox mode, resets to this node on retrys
+    [HideInInspector] public int numOfSandboxTries;             //how many sandbox attempts
     [HideInInspector] public bool isSandbox;                    //true if sandbox mode applies -> last set
     [HideInInspector] public bool isSandboxReset;               //true if sandbox has failed and is due to be reset at start of new turn
 
@@ -162,8 +164,7 @@ public class TutorialManager : MonoBehaviour
                 SetNextSet();
                 break;
             case EventType.EndTurnEarly:
-                if (isSandboxReset == true)
-                { UpdateNewSet(); }
+                EndTurnEarly();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -491,6 +492,17 @@ public class TutorialManager : MonoBehaviour
         else { Debug.LogError("Invalid listOfGUIFeaturesToToggleOff (Null)"); }
         #endregion
 
+    }
+    #endregion
+
+    #region EndTurnEarly
+    /// <summary>
+    /// End turn early
+    /// </summary>
+    private void EndTurnEarly()
+    {
+        if (isSandboxReset == true)
+        { UpdateNewSet(); }
     }
     #endregion
 
@@ -1125,9 +1137,7 @@ public class TutorialManager : MonoBehaviour
             switch (condition.name)
             {
                 case "Sandbox":
-                    //NOTE: set manually, don't use SetSandbox otherwise you'll trigger a reset
-                    isSandbox = true;
-                    Debug.LogFormat("[Tut]TutorialManager.cs -> SetTutorialCondition: isSandbox true");
+                    SetSandbox(true);
                     break;
                 default: Debug.LogWarningFormat("Unrecognised condition \"{0}\"", condition.name); break;
             }
@@ -1158,12 +1168,18 @@ public class TutorialManager : MonoBehaviour
     public void SetSandbox(bool sandbox)
     {
         isSandbox = sandbox;
+        if (numOfSandboxTries == 0)
+        {
+            //first attempt -> store player location
+            playerStartNode = GameManager.i.nodeScript.GetPlayerNodeID();
+        }
+        numOfSandboxTries++;
         if (isSandbox == false)
         {
             //reset tutorial
             isSandboxReset = true;
         }
-        Debug.LogFormat("[Tut] TutorialManager.cs -> SetSandbox: isSandbox {0}{1}", isSandbox, "\n");
+        Debug.LogFormat("[Tut] TutorialManager.cs -> SetSandbox: Starting Sandbox, attempt no. {0} - - - (isSandbox {1}){2}", numOfSandboxTries, isSandbox, "\n");
     }
     #endregion
 
@@ -1181,7 +1197,7 @@ public class TutorialManager : MonoBehaviour
         ModalOutcomeDetails outcomeTutorial = new ModalOutcomeDetails
         {
             textTop = GameManager.Formatt(topText, ColourType.moccasinText),
-            textBottom = "That's a fail<br><br>This isn't real so I'll let you try again<br><br>Or you can go live. We're desperately short of people",
+            textBottom = "That's a <b>FAIL</b><br><br>This isn't real so I'll let you try again<br><br>Or you can go live. We're desperately short of people",
             sprite = GameManager.i.tutorialScript.tutorial.sprite,
             isAction = false,
             side = GameManager.i.globalScript.sideResistance,
@@ -1322,14 +1338,12 @@ public class TutorialManager : MonoBehaviour
     /// </summary>
     private void UpdateNewSet()
     {
-        //sandbox flag
-        isSandboxReset = false;
         //Initialise
         InitialiseTutorialSet(set);
         //reset contact dictionaries
         GameManager.i.dataScript.TutorialResetContacts();
         //configure player
-        GameManager.i.playerScript.ResetTutorialPlayer();
+        GameManager.i.playerScript.ResetTutorialPlayer(playerStartNode);
         if (set.playerConfig != null)
         { GameManager.i.playerScript.ConfigureTutorialPlayer(set.playerConfig); }
         //configure actors
@@ -1342,6 +1356,9 @@ public class TutorialManager : MonoBehaviour
         { GameManager.i.teamScript.ResetTeams(); }
         if (set.teamConfig != null)
         { GameManager.i.teamScript.ConfigureTutorialTeams(set.teamConfig); }
+        //reset nemesis -> retry sandbox only
+        if (GameManager.i.optionScript.isNemesis == true && numOfSandboxTries > 1)
+        { GameManager.i.nemesisScript.InitialiseNemesis(); }
         //configure spiders and tracers
         if (set.hideConfig != null)
         { GameManager.i.nodeScript.ConfigureTutorialHideItems(set.hideConfig); }
@@ -1349,13 +1366,14 @@ public class TutorialManager : MonoBehaviour
         GameManager.i.alertScript.CloseAlertUI(true);
         //reset data
         GameManager.i.dataScript.ResetTutorialData();
-
-
-
-        /*
-        //activate tutorialUI
-        EventManager.i.PostNotification(EventType.TutorialOpenUI, this, set, "TutorialManager.cs -> UpdateNewSet");
-        */
+        //sandbox flag
+        if (isSandboxReset == true)
+        {
+            //reset flag
+            isSandboxReset = false;
+            //redraw
+            GameManager.i.nodeScript.RedrawNodes();
+        }
     }
     #endregion
 
@@ -1418,6 +1436,7 @@ public class TutorialManager : MonoBehaviour
             builder.AppendFormat("index: {0}{1}", index, "\n");
             builder.AppendFormat("isSandbox: {0}{1}", isSandbox, "\n");
             builder.AppendFormat("isSandboxReset: {0}{1}", isSandboxReset, "\n");
+            builder.AppendFormat("playerStartNode: {0}{1}", playerStartNode, "\n");
 
             //current tutorialSet -> Features Off
             builder.AppendFormat("{0}-features OFF for \"{1}\"{2}", "\n", set.name, "\n");

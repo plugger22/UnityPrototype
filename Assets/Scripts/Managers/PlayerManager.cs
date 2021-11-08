@@ -539,16 +539,19 @@ public class PlayerManager : MonoBehaviour
 
     #region InitialisePlayerStartNode
     /// <summary>
-    /// starts player at a random SPRAWL node, error if not or if City Hall district (player can't start here as nemesis always starts from there)
+    /// starts player at a random SPRAWL node (if startNodeID = -1, otherwise at specified)s, error if not or if City Hall district (player can't start here as nemesis always starts from there)
     /// </summary>
-    private void InitialisePlayerStartNode()
+    private void InitialisePlayerStartNode(int startNodeID = -1)
     {
         //assign player to a starting node (Sprawl)
         int nodeID = 0;
         int nodeArcID = GameManager.i.dataScript.GetNodeArcID("SPRAWL");
         if (nodeArcID > -1)
         {
-            Node node = GameManager.i.dataScript.GetRandomNode(nodeArcID);
+            Node node;
+            if (startNodeID == -1)
+            { node = GameManager.i.dataScript.GetRandomNode(nodeArcID); }
+            else { node = GameManager.i.dataScript.GetNode(startNodeID); }
             if (node != null)
             { nodeID = node.nodeID; }
             else
@@ -621,14 +624,17 @@ public class PlayerManager : MonoBehaviour
     #region ResetTutorialPlayer
     /// <summary>
     /// Do this at start of every new tutorial set regardless of whether a tutorialPlayerConfig file is present or not
+    /// if playerStartNodeID is -1 (first attempt at sandbox) then it's random, otherwise use that node (for retries)
     /// </summary>
-    public void ResetTutorialPlayer()
+    public void ResetTutorialPlayer(int playerStartNodeID = -1)
     {
         //automatically clear out gear and secrets
         listOfSecrets.Clear();
         listOfGear.Clear();
+        //remove any conditions
+        RemoveAllConditions(globalResistance);
         //reset player position
-        InitialisePlayerStartNode();
+        InitialisePlayerStartNode(playerStartNodeID);
     }
     #endregion
 
