@@ -39,10 +39,11 @@ public class TutorialManager : MonoBehaviour
     [HideInInspector] public Tutorial tutorial;
     [HideInInspector] public TutorialSet set;
     [HideInInspector] public int index;                         //index that tracks player's progress (set #) through current tutorial
-    [HideInInspector] public bool isSandbox;                    //true if sandbox mode applies -> last set
     #endregion
 
     #region Other...
+    [HideInInspector] public bool isSandbox;                    //true if sandbox mode applies -> last set
+    [HideInInspector] public bool isSandboxReset;               //true if sandbox has failed and is due to be reset at start of new turn
 
     //TutorialItem.SO Query option data (takes data from TutorialOption.SO)
     [HideInInspector] public string option0Tag;
@@ -135,6 +136,7 @@ public class TutorialManager : MonoBehaviour
         //register listener
         EventManager.i.AddListener(EventType.TutorialPreviousSet, OnEvent, "TutorialManager.cs");
         EventManager.i.AddListener(EventType.TutorialNextSet, OnEvent, "TutorialManager.cs");
+        EventManager.i.AddListener(EventType.EndTurnEarly, OnEvent, "TutorialManager.cs");
 
     }
     #endregion
@@ -158,6 +160,10 @@ public class TutorialManager : MonoBehaviour
                 break;
             case EventType.TutorialNextSet:
                 SetNextSet();
+                break;
+            case EventType.EndTurnEarly:
+                if (isSandboxReset == true)
+                { UpdateNewSet(); }
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -1155,7 +1161,7 @@ public class TutorialManager : MonoBehaviour
         if (isSandbox == false)
         {
             //reset tutorial
-            UpdateNewSet();
+            isSandboxReset = true;
         }
         Debug.LogFormat("[Tut] TutorialManager.cs -> SetSandbox: isSandbox {0}{1}", isSandbox, "\n");
     }
@@ -1316,6 +1322,9 @@ public class TutorialManager : MonoBehaviour
     /// </summary>
     private void UpdateNewSet()
     {
+        //sandbox flag
+        isSandboxReset = false;
+        //Initialise
         InitialiseTutorialSet(set);
         //reset contact dictionaries
         GameManager.i.dataScript.TutorialResetContacts();
@@ -1408,6 +1417,7 @@ public class TutorialManager : MonoBehaviour
             builder.AppendFormat("tutorialSet: {0}{1}", set.name, "\n");
             builder.AppendFormat("index: {0}{1}", index, "\n");
             builder.AppendFormat("isSandbox: {0}{1}", isSandbox, "\n");
+            builder.AppendFormat("isSandboxReset: {0}{1}", isSandboxReset, "\n");
 
             //current tutorialSet -> Features Off
             builder.AppendFormat("{0}-features OFF for \"{1}\"{2}", "\n", set.name, "\n");
