@@ -1359,8 +1359,8 @@ public class ActionManager : MonoBehaviour
         ModalOutcomeDetails outcomeDetails = SetDefaultOutcome(modalDetails);
         if (modalDetails != null)
         {
-            GameManager.i.playerScript.status = ActorStatus.Inactive;
-            GameManager.i.playerScript.inactiveStatus = ActorInactive.LieLow;
+            GameManager.i.playerScript.Status = ActorStatus.Inactive;
+            GameManager.i.playerScript.InactiveStatus = ActorInactive.LieLow;
             GameManager.i.playerScript.tooltipStatus = ActorTooltip.LieLow;
             GameManager.i.playerScript.isLieLowFirstturn = true;
             GameManager.i.dataScript.StatisticIncrement(StatType.PlayerLieLowTimes);
@@ -1370,7 +1370,7 @@ public class ActionManager : MonoBehaviour
             GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, "Lie Low");
             //message
             Debug.LogFormat("[Ply] ActionManager.cs -> ProcessLieLowPlayerAction: {0}, {1} Player, commences LYING LOW", GameManager.i.playerScript.GetPlayerName(modalDetails.side), modalDetails.side.name);
-            string text = string.Format("{0} is lying Low. Status: {1}", playerName, GameManager.i.playerScript.status);
+            string text = string.Format("{0} is lying Low. Status: {1}", playerName, GameManager.i.playerScript.Status);
             string reason = string.Format("is currently Lying Low and {0}{1}{2}<b>cut off from all communications</b>{3}", "\n", "\n", colourBad, colourEnd);
             GameManager.i.messageScript.ActorStatus(text, "is LYING LOW", reason, GameManager.i.playerScript.actorID, modalDetails.side, null, HelpType.LieLow);
             //history
@@ -1539,14 +1539,14 @@ public class ActionManager : MonoBehaviour
             { title = string.Format(" {0} ", GameManager.i.metaScript.GetAuthorityTitle()); }
 
             //Reactivate Player
-            GameManager.i.playerScript.status = ActorStatus.Active;
-            GameManager.i.playerScript.inactiveStatus = ActorInactive.None;
+            GameManager.i.playerScript.Status = ActorStatus.Active;
+            GameManager.i.playerScript.InactiveStatus = ActorInactive.None;
             GameManager.i.playerScript.tooltipStatus = ActorTooltip.None;
             outcomeDetails.textTop = string.Format(" {0} has emerged from hiding early", playerName);
             outcomeDetails.textBottom = string.Format("{0}{1} is now fully Activated{2}", colourNeutral, playerName, title, colourEnd);
             outcomeDetails.sprite = GameManager.i.playerScript.sprite;
             //message
-            string text = string.Format("{0} has emerged from hiding early. Status: {1}", playerName, GameManager.i.playerScript.status);
+            string text = string.Format("{0} has emerged from hiding early. Status: {1}", playerName, GameManager.i.playerScript.Status);
             GameManager.i.messageScript.ActorStatus(text, "Recalled", "has been Recalled", GameManager.i.playerScript.actorID, details.side);
         }
         else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
@@ -1575,8 +1575,8 @@ public class ActionManager : MonoBehaviour
     {
         if (modalDetails != null)
         {
-            GameManager.i.playerScript.status = ActorStatus.Inactive;
-            GameManager.i.playerScript.inactiveStatus = ActorInactive.StressLeave;
+            GameManager.i.playerScript.Status = ActorStatus.Inactive;
+            GameManager.i.playerScript.InactiveStatus = ActorInactive.StressLeave;
             GameManager.i.playerScript.tooltipStatus = ActorTooltip.Leave;
             GameManager.i.playerScript.isStressLeave = true;
             //deduct power cost
@@ -2618,9 +2618,9 @@ public class ActionManager : MonoBehaviour
                     //Ongoing effects then target moved to completed pool
                     if (target.ongoingEffect != null)
                     {
-                        GameManager.i.dataScript.RemoveTargetFromPool(target, Status.Live);
-                        GameManager.i.dataScript.AddTargetToPool(target, Status.Outstanding);
-                        target.targetStatus = Status.Outstanding;
+                        GameManager.i.dataScript.RemoveTargetFromPool(target, GlobalStatus.Live);
+                        GameManager.i.dataScript.AddTargetToPool(target, GlobalStatus.Outstanding);
+                        target.targetStatus = GlobalStatus.Outstanding;
                     }
                     else
                     {

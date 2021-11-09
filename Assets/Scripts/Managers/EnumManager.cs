@@ -131,7 +131,7 @@
     public enum TopicGlobal { None, Decision, Review, Advert }                      //what type of topic will be generated this turn
     public enum TopicDecisionType { Normal, Letter, Comms, Tutorial, Count }                 //type of decision topic
     public enum TopicBase { Normal, Other, Count }                      //used for base topicUI. Order matters (array index)
-    public enum Status { Dormant, Active, Live, Outstanding, Done }         //target or topic status (Outstanding applies only targets)
+    public enum GlobalStatus { Dormant, Active, Live, Outstanding, Done }         //target or topic status (Outstanding applies only targets)
     public enum Activation { Low, Medium, High }                            //chance of Target becoming 'Live' once 'Active'
     public enum GroupType { VeryBad, Bad, Neutral, Good }                   //Topic group type (NOTE: DO NOT CHANGE -> order specific) 'VeryBad' is another version of 'Bad'. Maps to actor Motivation (0 -> 3)
     public enum CampaignOutcome { Inconclusive, Commendation, Blackmark }   //anytime a campaign outcome occurs, eg. Review topic, fail a level, etc.

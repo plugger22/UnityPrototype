@@ -377,10 +377,10 @@ public class HQManager : MonoBehaviour
         if (GameManager.i.turnScript.CheckIsAutoRun() == true && GameManager.i.autoRunTurns > 0)
         { isProceed = false; }
         //ignore if player is inactive
-        if (GameManager.i.playerScript.status == ActorStatus.Inactive)
+        if (GameManager.i.playerScript.Status == ActorStatus.Inactive)
         {
             isProceed = false;
-            Debug.LogFormat("[HQ] HqManager.cs -> CheckHQPowerSupport: NO support as Player is Inactive ({0}){1}", GameManager.i.playerScript.inactiveStatus, "\n");
+            Debug.LogFormat("[HQ] HqManager.cs -> CheckHQPowerSupport: NO support as Player is Inactive ({0}){1}", GameManager.i.playerScript.InactiveStatus, "\n");
         }
         //HQ relocating
         if (isHqRelocating == true)

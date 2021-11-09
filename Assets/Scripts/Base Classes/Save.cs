@@ -720,7 +720,7 @@ public class SaveGear
 public class SaveTopic
 {
     public string topicName;
-    public Status status;
+    public GlobalStatus status;
     public int timerStart;
     public int timerRepeat;
     public int timerWindow;
@@ -950,7 +950,7 @@ public class SaveOrganisation
 [System.Serializable]
 public class SaveTarget
 {
-    public Status targetStatus;
+    public GlobalStatus targetStatus;
     public int intel;
     public string targetName;
     public int ongoingID;

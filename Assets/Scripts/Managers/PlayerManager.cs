@@ -39,9 +39,7 @@ public class PlayerManager : MonoBehaviour
 
     #region save data compatibile
     [HideInInspector] public int actorID;
-    [HideInInspector] public ActorStatus status;
     [HideInInspector] public ActorTooltip tooltipStatus;                            //Actor sprite shows a relevant tooltip if tooltipStatus > None (Breakdown, etc)
-    [HideInInspector] public ActorInactive inactiveStatus;                          //reason actor is inactive
     [HideInInspector] public ActorSex sex;
     [HideInInspector] public bool isBreakdown;                                      //enforces a minimum one turn gap between successive breakdowns
     [HideInInspector] public bool isEndOfTurnGearCheck;                             //set true by UpdateGear (as a result of Compromised gear check)
@@ -89,8 +87,11 @@ public class PlayerManager : MonoBehaviour
     private string _firstName;
     private int _invisibility;
     private int _innocence;
+    private ActorStatus _status;
+    private ActorInactive _inactiveStatus;
+    #endregion
 
-
+    #region Fast Access fields...
     //for fast access
     private GlobalSide globalAuthority;
     private GlobalSide globalResistance;
@@ -237,6 +238,30 @@ public class PlayerManager : MonoBehaviour
                 //update topBar
                 GameManager.i.topBarScript.UpdateInnocence(_innocence);
             }
+        }
+    }
+    #endregion
+
+    #region Status
+    public ActorStatus Status
+    {
+        get { return _status; }
+        set
+        {
+            Debug.LogFormat("[Sta] -> PlayerManager.cs: Player Status changed from {0} to {1}{2}", _status, value, "\n");
+            _status = value;
+        }
+    }
+    #endregion
+
+    #region InactiveStatus
+    public ActorInactive InactiveStatus
+    {
+        get { return _inactiveStatus; }
+        set
+        {
+            Debug.LogFormat("[Sta] -> PlayerManager.cs: Player InactiveStatus changed from {0} to {1}{2}", _inactiveStatus, value, "\n");
+            _inactiveStatus = value;
         }
     }
     #endregion
@@ -487,8 +512,8 @@ public class PlayerManager : MonoBehaviour
         //set player alpha to active (may have been lying low at end of previous level)
         GameManager.i.actorPanelScript.UpdatePlayerAlpha(GameManager.i.guiScript.alphaActive);
         //set default status
-        status = ActorStatus.Active;
-        inactiveStatus = ActorInactive.None;
+        Status = ActorStatus.Active;
+        InactiveStatus = ActorInactive.None;
         tooltipStatus = ActorTooltip.None;
         //reset mood to default
         SetMood(moodStart);
@@ -595,7 +620,7 @@ public class PlayerManager : MonoBehaviour
         switch (eventType)
         {
             case EventType.StartTurnLate:
-                if (status == ActorStatus.Active)
+                if (Status == ActorStatus.Active)
                 { ProcessInvestigations(); }
                 break;
             case EventType.EndTurnLate:
@@ -2550,8 +2575,8 @@ public class PlayerManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfCures (Null)"); }
         builder.AppendFormat("{0}- States{1}", "\n", "\n");
-        builder.AppendFormat(" Status {0}{1}", status, "\n");
-        builder.AppendFormat(" InactiveStatus {0}{1}", inactiveStatus, "\n");
+        builder.AppendFormat(" Status {0}{1}", Status, "\n");
+        builder.AppendFormat(" InactiveStatus {0}{1}", InactiveStatus, "\n");
         builder.AppendFormat(" showPlayerNode {0}{1}", GameManager.i.nodeScript.GetShowPlayerNode(), "\n");
         builder.AppendFormat(" TooltipStatus {0}{1}", tooltipStatus, "\n");
         builder.AppendFormat(" isBreakdown {0}{1}", isBreakdown, "\n");
@@ -2923,7 +2948,7 @@ public class PlayerManager : MonoBehaviour
     {
         if (unusedActions > 0)
         {
-            if (status == ActorStatus.Active)
+            if (Status == ActorStatus.Active)
             {
                 //stats
                 GameManager.i.dataScript.StatisticIncrement(StatType.PlayerDoNothing, unusedActions);
@@ -3093,7 +3118,7 @@ public class PlayerManager : MonoBehaviour
     public bool CheckPlayerSpecial(PlayerCheck check)
     {
         bool isResult = false;
-        if (status == ActorStatus.Active)
+        if (Status == ActorStatus.Active)
         {
             switch (check)
             {
@@ -3110,7 +3135,7 @@ public class PlayerManager : MonoBehaviour
                             {
                                 List<Topic> listOfTopics = GameManager.i.dataScript.GetListOfTopics(subSubType.subType);
                                 //check that Players most recent node Action has at least one Live topic of correct subSubType on the list
-                                if (listOfTopics.Exists(x => x.subSubType.name.Equals(subSubType.name, StringComparison.Ordinal) && x.status == Status.Live))
+                                if (listOfTopics.Exists(x => x.subSubType.name.Equals(subSubType.name, StringComparison.Ordinal) && x.status == GlobalStatus.Live))
                                 { isResult = true; }
                             }
                             else { Debug.LogErrorFormat("Invalid subSubType (Null) for nodeAction \"{0}\"", data.nodeAction); }

@@ -715,7 +715,7 @@ public class MissionManager : MonoBehaviour
         if (npc.CheckIfInvisibleMode() == false)
         {
             //Player interacts with Npc
-            if (GameManager.i.playerScript.status == ActorStatus.Active)
+            if (GameManager.i.playerScript.Status == ActorStatus.Active)
             {
                 //good effects
                 string effectText = ProcessEffects(npc, true);

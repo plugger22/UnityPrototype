@@ -250,10 +250,10 @@ public class TutorialManager : MonoBehaviour
         //Hide items (spiders/tracers) reset
         GameManager.i.dataScript.ResetHideNodes();
         //Make sure Player is Active
-        if (GameManager.i.playerScript.status != ActorStatus.Active)
+        if (GameManager.i.playerScript.Status != ActorStatus.Active)
         {
-            GameManager.i.playerScript.status = ActorStatus.Active;
-            GameManager.i.playerScript.inactiveStatus = ActorInactive.None;
+            GameManager.i.playerScript.Status = ActorStatus.Active;
+            GameManager.i.playerScript.InactiveStatus = ActorInactive.None;
             GameManager.i.playerScript.tooltipStatus = ActorTooltip.None;
             //alpha
             GameManager.i.actorPanelScript.UpdatePlayerAlpha(GameManager.i.guiScript.alphaActive);
@@ -1215,6 +1215,7 @@ public class TutorialManager : MonoBehaviour
         EventManager.i.PostNotification(EventType.NewTurn, this, set, "TutorialManager.cs -> FailSandboxOutcome");
         */
 
+        
         //reset turn
         GameManager.i.turnScript.ResetTurn();
     }

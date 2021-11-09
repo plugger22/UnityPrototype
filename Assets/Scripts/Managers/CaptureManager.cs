@@ -213,9 +213,9 @@ public class CaptureManager : MonoBehaviour
         if (GameManager.i.sideScript.resistanceOverall == SideState.Human)
         {
             //Human resistance player
-            GameManager.i.playerScript.status = ActorStatus.Captured;
+            GameManager.i.playerScript.Status = ActorStatus.Captured;
             GameManager.i.playerScript.tooltipStatus = ActorTooltip.Captured;
-            GameManager.i.playerScript.inactiveStatus = ActorInactive.None;
+            GameManager.i.playerScript.InactiveStatus = ActorInactive.None;
             //AI side tab
             GameManager.i.aiScript.UpdateSideTabData();
             //add power to authority actor who owns the team (only if they are still OnMap
@@ -354,7 +354,7 @@ public class CaptureManager : MonoBehaviour
                 side = GameManager.i.globalScript.sideResistance
             };
             //edge case of Inactive player and Authority AI capture an actor which may (?) generate a message that'll upset the info pipeline. If player active, display at time of action, otherwise put in pipeline
-            if (GameManager.i.playerScript.status != ActorStatus.Active)
+            if (GameManager.i.playerScript.Status != ActorStatus.Active)
             { outcomeDetails.type = MsgPipelineType.CaptureActor; }
             EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "CaptureManager.cs -> CaptureActor");
         }
@@ -416,7 +416,7 @@ public class CaptureManager : MonoBehaviour
             if (GameManager.i.sideScript.resistanceOverall == SideState.Human)
             {
                 //reset state
-                GameManager.i.playerScript.status = ActorStatus.Active;
+                GameManager.i.playerScript.Status = ActorStatus.Active;
                 GameManager.i.playerScript.tooltipStatus = ActorTooltip.None;
                 builder.AppendFormat("{0}City Loyalty -{1}{2}{3}{4}", colourGood, actorReleased, colourEnd, "\n", "\n");
                 builder.AppendFormat("{0}Player's Invisibility +{1}{2}{3}{4}", colourGood, invisibilityNew, colourEnd, "\n", "\n");
@@ -561,7 +561,7 @@ public class CaptureManager : MonoBehaviour
             //get correct player status depending on who is in charge of Resistance
             ActorStatus status = ActorStatus.Active;
             if (GameManager.i.sideScript.resistanceOverall == SideState.Human)
-            { status = GameManager.i.playerScript.status; }
+            { status = GameManager.i.playerScript.Status; }
             else { status = GameManager.i.aiRebelScript.status; }
             //correct state
             if (status == ActorStatus.Active)
@@ -708,7 +708,7 @@ public class CaptureManager : MonoBehaviour
         //get correct player status depending on who is in charge of Resistance
         ActorStatus status = ActorStatus.Active;
         if (GameManager.i.sideScript.resistanceOverall == SideState.Human)
-        { status = GameManager.i.playerScript.status; }
+        { status = GameManager.i.playerScript.Status; }
         else { status = GameManager.i.aiRebelScript.status; }
         //only check if player active
         if ( status == ActorStatus.Active)
@@ -733,7 +733,7 @@ public class CaptureManager : MonoBehaviour
     public void DebugCapturePlayer()
     {
         //player not already captured
-        if (GameManager.i.playerScript.status != ActorStatus.Captured)
+        if (GameManager.i.playerScript.Status != ActorStatus.Captured)
         {
             //get player node
             Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.GetPlayerNodeID());

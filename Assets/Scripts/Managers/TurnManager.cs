@@ -679,7 +679,7 @@ public class TurnManager : MonoBehaviour
     public void SetActionsForNewTurn()
     {
         //Player active -> normal actions
-        if (GameManager.i.playerScript.status == ActorStatus.Active)
+        if (GameManager.i.playerScript.Status == ActorStatus.Active)
         {
             _actionsCurrent = 0;
             _actionsTotal = _actionsLimit + GameManager.i.dataScript.GetActionAdjustment(GameManager.i.sideScript.PlayerSide);
@@ -776,7 +776,7 @@ public class TurnManager : MonoBehaviour
                 remainder = _actionsTotal - _actionsCurrent;
             }
             //zero out actions if player no longer active
-            if (GameManager.i.playerScript.status != ActorStatus.Active)
+            if (GameManager.i.playerScript.Status != ActorStatus.Active)
             { _actionsCurrent = _actionsTotal; }
             //fail safe check
             if (remainder < 0)
@@ -1386,7 +1386,7 @@ public class TurnManager : MonoBehaviour
     {
         TurnActionData turnData = new TurnActionData();
         turnData.turn = Turn;
-        if (GameManager.i.playerScript.status == ActorStatus.Active)
+        if (GameManager.i.playerScript.Status == ActorStatus.Active)
         {
             //normal
             turnData.actionsCurrent = _actionsCurrent;

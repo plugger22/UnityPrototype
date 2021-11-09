@@ -2273,7 +2273,7 @@ public class ActorManager : MonoBehaviour
                         Target target = GameManager.i.dataScript.GetTarget(node.targetName);
                         if (target != null)
                         {
-                            if (target.targetStatus == Status.Live)
+                            if (target.targetStatus == GlobalStatus.Live)
                             {
                                 bool targetProceed = false;
                                 //can tackle target if Player at node or target specified actor is present in line-up
@@ -3434,7 +3434,7 @@ public class ActorManager : MonoBehaviour
         //
         if (isResistance == true)
         {
-            switch (GameManager.i.playerScript.status)
+            switch (GameManager.i.playerScript.Status)
             {
                 case ActorStatus.Active:
                     //
@@ -6713,7 +6713,7 @@ public class ActorManager : MonoBehaviour
                                                 break;
                                             case "PLANNER":
                                                 //get random target name
-                                                List<Target> listOfTargets = GameManager.i.dataScript.GetTargetPool(Status.Live);
+                                                List<Target> listOfTargets = GameManager.i.dataScript.GetTargetPool(GlobalStatus.Live);
                                                 if (listOfTargets != null && listOfTargets.Count > 0)
                                                 { data.dataName = listOfTargets[Random.Range(0, listOfTargets.Count)].targetName; }
                                                 break;
@@ -6798,7 +6798,7 @@ public class ActorManager : MonoBehaviour
                                     break;
                                 case "PLANNER":
                                     //get random target name
-                                    List<Target> listOfTargets = GameManager.i.dataScript.GetTargetPool(Status.Live);
+                                    List<Target> listOfTargets = GameManager.i.dataScript.GetTargetPool(GlobalStatus.Live);
                                     if (listOfTargets != null)
                                     { data.dataName = listOfTargets[Random.Range(0, listOfTargets.Count)].targetName; }
                                     break;
@@ -7781,7 +7781,7 @@ public class ActorManager : MonoBehaviour
         int numOfOpinionZeroActors = 0;
         string text, topText, detailsTop, detailsBottom;
         //no checks are made if player is not Active
-        if (GameManager.i.playerScript.status == ActorStatus.Active)
+        if (GameManager.i.playerScript.Status == ActorStatus.Active)
         {
             Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(globalResistance);
             if (arrayOfActors != null)
@@ -7946,7 +7946,7 @@ public class ActorManager : MonoBehaviour
         if (isPlayer == true)
         {
             //human resistance player (after autorun)
-            if (GameManager.i.playerScript.status != ActorStatus.Active)
+            if (GameManager.i.playerScript.Status != ActorStatus.Active)
             { isProceed = false; }
         }
         else
@@ -8069,7 +8069,7 @@ public class ActorManager : MonoBehaviour
         int numOfBlackmailers = 0;
         string text, topText, detailsTop, detailsBottom;
         //no checks are made if player is not Active
-        if (GameManager.i.playerScript.status == ActorStatus.Active)
+        if (GameManager.i.playerScript.Status == ActorStatus.Active)
         {
             Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(globalAuthority);
             if (arrayOfActors != null)
@@ -8189,7 +8189,7 @@ public class ActorManager : MonoBehaviour
         if (isPlayer == true)
         {
             //human authority player (after autorun)
-            if (GameManager.i.playerScript.status != ActorStatus.Active)
+            if (GameManager.i.playerScript.Status != ActorStatus.Active)
             { isProceed = false; }
         }
         else
@@ -8465,7 +8465,7 @@ public class ActorManager : MonoBehaviour
         if (GameManager.i.playerScript.isStressed == true)
         { GameManager.i.dataScript.StatisticIncrement(StatType.PlayerStressedDays); }
         //check for Status -> both sides
-        switch (GameManager.i.playerScript.status)
+        switch (GameManager.i.playerScript.Status)
         {
             case ActorStatus.Captured:
                 //decrement timer
@@ -8483,7 +8483,7 @@ public class ActorManager : MonoBehaviour
                 //
                 // - - - Inactive actor (Any) Info App (needs to be at the top for sequencing reasons) - - -
                 //
-                if (GameManager.i.playerScript.inactiveStatus != ActorInactive.None)
+                if (GameManager.i.playerScript.InactiveStatus != ActorInactive.None)
                 {
                     text = "HQ Support Unavailable";
                     topText = "Support Unavailable";
@@ -8491,12 +8491,12 @@ public class ActorManager : MonoBehaviour
                     detailsBottom = string.Format("<b>HQ will consider providing support once you are {0}back in contact</b>{1}", colourNeutral, colourEnd);
                     GameManager.i.messageScript.ActiveEffect(text, topText, detailsTop, detailsBottom, GameManager.i.playerScript.sprite, playerID);
                 }
-                switch (GameManager.i.playerScript.inactiveStatus)
+                switch (GameManager.i.playerScript.InactiveStatus)
                 {
                     case ActorInactive.Breakdown:
                         //restore player (one stress turn only)
-                        GameManager.i.playerScript.status = ActorStatus.Active;
-                        GameManager.i.playerScript.inactiveStatus = ActorInactive.None;
+                        GameManager.i.playerScript.Status = ActorStatus.Active;
+                        GameManager.i.playerScript.InactiveStatus = ActorInactive.None;
                         GameManager.i.playerScript.tooltipStatus = ActorTooltip.None;
                         GameManager.i.actorPanelScript.UpdatePlayerAlpha(GameManager.i.guiScript.alphaActive);
                         string textBreakdown = string.Format("{0} has recovered from their Breakdown", playerName);
@@ -8520,8 +8520,8 @@ public class ActorManager : MonoBehaviour
                         {
                             //player has recovered from lying low, needs to be activated
                             GameManager.i.playerScript.Invisibility = Mathf.Min(maxStatValue, invis);
-                            GameManager.i.playerScript.status = ActorStatus.Active;
-                            GameManager.i.playerScript.inactiveStatus = ActorInactive.None;
+                            GameManager.i.playerScript.Status = ActorStatus.Active;
+                            GameManager.i.playerScript.InactiveStatus = ActorInactive.None;
                             GameManager.i.playerScript.tooltipStatus = ActorTooltip.None;
                             GameManager.i.actorPanelScript.UpdatePlayerAlpha(GameManager.i.guiScript.alphaActive);
                             //assign one action
@@ -8552,8 +8552,8 @@ public class ActorManager : MonoBehaviour
                         if (GameManager.i.playerScript.isStressLeave == false)
                         {
                             //restore actor (one Stress Leave turn only)
-                            GameManager.i.playerScript.status = ActorStatus.Active;
-                            GameManager.i.playerScript.inactiveStatus = ActorInactive.None;
+                            GameManager.i.playerScript.Status = ActorStatus.Active;
+                            GameManager.i.playerScript.InactiveStatus = ActorInactive.None;
                             GameManager.i.playerScript.tooltipStatus = ActorTooltip.None;
                             GameManager.i.actorPanelScript.UpdatePlayerAlpha(GameManager.i.guiScript.alphaActive);
                             text = string.Format("{0}, Player, has returned from their Stress Leave", GameManager.i.playerScript.GetPlayerName(globalAuthority));
@@ -8571,7 +8571,7 @@ public class ActorManager : MonoBehaviour
                 //
                 // - - - Lie Low Info App - - -
                 //
-                if (GameManager.i.playerScript.inactiveStatus == ActorInactive.LieLow)
+                if (GameManager.i.playerScript.InactiveStatus == ActorInactive.LieLow)
                 {
                     text = string.Format("{0}, PLAYER, is LYING LOW", playerName);
                     topText = "Lying Low";
@@ -8595,8 +8595,8 @@ public class ActorManager : MonoBehaviour
                             if (rnd < breakdownChance)
                             {
                                 // - - - BREAKDOWN
-                                GameManager.i.playerScript.status = ActorStatus.Inactive;
-                                GameManager.i.playerScript.inactiveStatus = ActorInactive.Breakdown;
+                                GameManager.i.playerScript.Status = ActorStatus.Inactive;
+                                GameManager.i.playerScript.InactiveStatus = ActorInactive.Breakdown;
                                 GameManager.i.playerScript.tooltipStatus = ActorTooltip.Breakdown;
                                 GameManager.i.playerScript.isBreakdown = true;
                                 GameManager.i.dataScript.StatisticIncrement(StatType.PlayerBreakdown);
@@ -8634,8 +8634,8 @@ public class ActorManager : MonoBehaviour
                                 else
                                 {
                                     // - - - FORCE a Breakdown, player SuperStressed
-                                    GameManager.i.playerScript.status = ActorStatus.Inactive;
-                                    GameManager.i.playerScript.inactiveStatus = ActorInactive.Breakdown;
+                                    GameManager.i.playerScript.Status = ActorStatus.Inactive;
+                                    GameManager.i.playerScript.InactiveStatus = ActorInactive.Breakdown;
                                     GameManager.i.playerScript.tooltipStatus = ActorTooltip.Breakdown;
                                     GameManager.i.playerScript.isBreakdown = true;
                                     GameManager.i.dataScript.StatisticIncrement(StatType.PlayerBreakdown);
@@ -10107,7 +10107,7 @@ public class ActorManager : MonoBehaviour
                 { isProceed = false; }
                 break;
             case SideState.Human:
-                if (GameManager.i.playerScript.status != ActorStatus.Active)
+                if (GameManager.i.playerScript.Status != ActorStatus.Active)
                 { isProceed = false; }
                 break;
             default:

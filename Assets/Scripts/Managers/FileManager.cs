@@ -489,7 +489,7 @@ public class FileManager : MonoBehaviour
     private void WritePlayerData()
     {
         write.playerData.power = GameManager.i.playerScript.Power;
-        write.playerData.status = GameManager.i.playerScript.status;
+        write.playerData.status = GameManager.i.playerScript.Status;
         write.playerData.sex = GameManager.i.playerScript.sex;
         write.playerData.backstory0 = GameManager.i.playerScript.backstory0;
         write.playerData.backstory1 = GameManager.i.playerScript.backstory1;
@@ -502,7 +502,7 @@ public class FileManager : MonoBehaviour
         write.playerData.Innocence = GameManager.i.playerScript.Innocence;
         write.playerData.mood = GameManager.i.playerScript.GetMood();
         write.playerData.tooltipStatus = GameManager.i.playerScript.tooltipStatus;
-        write.playerData.inactiveStatus = GameManager.i.playerScript.inactiveStatus;
+        write.playerData.inactiveStatus = GameManager.i.playerScript.InactiveStatus;
         write.playerData.listOfGear = GameManager.i.playerScript.GetListOfGear();
         write.playerData.isBreakdown = GameManager.i.playerScript.isBreakdown;
         write.playerData.isEndOfTurnGearCheck = GameManager.i.playerScript.isEndOfTurnGearCheck;
@@ -2076,7 +2076,7 @@ public class FileManager : MonoBehaviour
         { write.targetData.listOfNodesWithTargets.AddRange(listOfNodesWithTargets); }
         else { Debug.LogError("Invalid listOfNodesWithTargets (Null)"); }
         //targetPoolActive
-        List<Target> listOfTargetPool = GameManager.i.dataScript.GetTargetPool(Status.Active);
+        List<Target> listOfTargetPool = GameManager.i.dataScript.GetTargetPool(GlobalStatus.Active);
         if (listOfTargetPool != null)
         {
             for (int i = 0; i < listOfTargetPool.Count; i++)
@@ -2089,7 +2089,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfTargetPoolActive (Null)"); }
         //targetPoolLive
-        listOfTargetPool = GameManager.i.dataScript.GetTargetPool(Status.Live);
+        listOfTargetPool = GameManager.i.dataScript.GetTargetPool(GlobalStatus.Live);
         if (listOfTargetPool != null)
         {
             for (int i = 0; i < listOfTargetPool.Count; i++)
@@ -2102,7 +2102,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfTargetPoolLive (Null)"); }
         //targetPoolOutstanding
-        listOfTargetPool = GameManager.i.dataScript.GetTargetPool(Status.Outstanding);
+        listOfTargetPool = GameManager.i.dataScript.GetTargetPool(GlobalStatus.Outstanding);
         if (listOfTargetPool != null)
         {
             for (int i = 0; i < listOfTargetPool.Count; i++)
@@ -2115,7 +2115,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfTargetPoolOutstanding (Null)"); }
         //targetPoolDone
-        listOfTargetPool = GameManager.i.dataScript.GetTargetPool(Status.Done);
+        listOfTargetPool = GameManager.i.dataScript.GetTargetPool(GlobalStatus.Done);
         if (listOfTargetPool != null)
         {
             for (int i = 0; i < listOfTargetPool.Count; i++)
@@ -2349,9 +2349,9 @@ public class FileManager : MonoBehaviour
         GameManager.i.playerScript.petName = read.playerData.petName;
         GameManager.i.playerScript.reasonJoined = read.playerData.reasonJoined;
         GameManager.i.playerScript.initialSecret = read.playerData.playerSecret;
-        GameManager.i.playerScript.status = read.playerData.status;
+        GameManager.i.playerScript.Status = read.playerData.status;
         GameManager.i.playerScript.tooltipStatus = read.playerData.tooltipStatus;
-        GameManager.i.playerScript.inactiveStatus = read.playerData.inactiveStatus;
+        GameManager.i.playerScript.InactiveStatus = read.playerData.inactiveStatus;
         GameManager.i.playerScript.isBreakdown = read.playerData.isBreakdown;
         GameManager.i.playerScript.isEndOfTurnGearCheck = read.playerData.isEndOfTurnGearCheck;
         GameManager.i.playerScript.isLieLowFirstturn = read.playerData.isLieLowFirstturn;
@@ -4323,7 +4323,7 @@ public class FileManager : MonoBehaviour
             { listOfActive.Add(target); }
             else { Debug.LogWarningFormat("Invalid target (Null) for listOfTargetPoolActive[{0}]", i); }
         }
-        GameManager.i.dataScript.SetTargetPool(listOfActive, Status.Active);
+        GameManager.i.dataScript.SetTargetPool(listOfActive, GlobalStatus.Active);
         //target Pool -> Live
         List<Target> listOfLive = new List<Target>();
         for (int i = 0; i < read.targetData.listOfTargetPoolLive.Count; i++)
@@ -4333,7 +4333,7 @@ public class FileManager : MonoBehaviour
             { listOfLive.Add(target); }
             else { Debug.LogWarningFormat("Invalid target (Null) for listOfTargetPoolLive[{0}]", i); }
         }
-        GameManager.i.dataScript.SetTargetPool(listOfLive, Status.Live);
+        GameManager.i.dataScript.SetTargetPool(listOfLive, GlobalStatus.Live);
         //target Pool -> Outstanding
         List<Target> listOfOutstanding = new List<Target>();
         for (int i = 0; i < read.targetData.listOfTargetPoolOutstanding.Count; i++)
@@ -4343,7 +4343,7 @@ public class FileManager : MonoBehaviour
             { listOfOutstanding.Add(target); }
             else { Debug.LogWarningFormat("Invalid target (Null) for listOfTargetPoolOutstanding[{0}]", i); }
         }
-        GameManager.i.dataScript.SetTargetPool(listOfOutstanding, Status.Outstanding);
+        GameManager.i.dataScript.SetTargetPool(listOfOutstanding, GlobalStatus.Outstanding);
         //target Pool -> Done
         List<Target> listOfDone = new List<Target>();
         for (int i = 0; i < read.targetData.listOfTargetPoolDone.Count; i++)
@@ -4353,7 +4353,7 @@ public class FileManager : MonoBehaviour
             { listOfDone.Add(target); }
             else { Debug.LogWarningFormat("Invalid target (Null) for listOfTargetPoolDone[{0}]", i); }
         }
-        GameManager.i.dataScript.SetTargetPool(listOfDone, Status.Done);
+        GameManager.i.dataScript.SetTargetPool(listOfDone, GlobalStatus.Done);
     }
     #endregion
 
@@ -4398,7 +4398,7 @@ public class FileManager : MonoBehaviour
             if (inactiveStatus != ActorInactive.None)
             {
                 Debug.LogWarningFormat("Player status Active -> inactiveStatus \"{0}\" invalid, changed to 'None'{1}", inactiveStatus, "\n");
-                GameManager.i.playerScript.inactiveStatus = ActorInactive.None;
+                GameManager.i.playerScript.InactiveStatus = ActorInactive.None;
             }
         }
         else if (status == ActorStatus.Inactive)
@@ -4408,9 +4408,9 @@ public class FileManager : MonoBehaviour
             {
                 Debug.LogWarningFormat("Player INACTIVE -> tooltipStatus \"{0}\" Or inactiveStatus \"{1}\" invalid,   PlayerStatus changed to 'Active'{2}",
                     tooltipStatus, inactiveStatus, "\n");
-                GameManager.i.playerScript.status = ActorStatus.Active;
+                GameManager.i.playerScript.Status = ActorStatus.Active;
                 GameManager.i.playerScript.tooltipStatus = ActorTooltip.None;
-                GameManager.i.playerScript.inactiveStatus = ActorInactive.None;
+                GameManager.i.playerScript.InactiveStatus = ActorInactive.None;
             }
             else
             {

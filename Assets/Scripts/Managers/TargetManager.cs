@@ -323,7 +323,7 @@ public class TargetManager : MonoBehaviour
             {
                 target.Value.Reset();
                 target.Value.nodeID = -1;
-                target.Value.targetStatus = Status.Dormant;
+                target.Value.targetStatus = GlobalStatus.Dormant;
             }
         }
         else { Debug.LogError("Invalid dictOfTargets (Null)"); }
@@ -365,7 +365,7 @@ public class TargetManager : MonoBehaviour
                                 //target automatically known regardless even if completed & not yet contained
                                 switch (target.targetStatus)
                                 {
-                                    case Status.Outstanding:
+                                    case GlobalStatus.Outstanding:
                                         node.isTargetKnown = true;
                                         break;
                                 }
@@ -376,7 +376,7 @@ public class TargetManager : MonoBehaviour
                         //
                         switch (target.targetStatus)
                         {
-                            case Status.Live:
+                            case GlobalStatus.Live:
                                 if (target.timerWindow == 0)
                                 {
                                     Debug.LogFormat("[Tar] TargetManager.cs -> CheckTargets: Target {0} Expired", target.targetName);
@@ -395,7 +395,7 @@ public class TargetManager : MonoBehaviour
                                     target.timerWindow--;
                                 }
                                 break;
-                            case Status.Active:
+                            case GlobalStatus.Active:
                                 bool isProceed = true;
                                 //exclude Organisation targets if the option is toggled off to ensure target never goes live
                                 if (target.targetType.name.Equals("Organisation", StringComparison.Ordinal) == true && GameManager.i.optionScript.isOrganisations == false)
@@ -441,9 +441,9 @@ public class TargetManager : MonoBehaviour
                                         //Target goes Live
                                         if (isLive == true)
                                         {
-                                            target.targetStatus = Status.Live;
-                                            GameManager.i.dataScript.AddTargetToPool(target, Status.Live);
-                                            GameManager.i.dataScript.RemoveTargetFromPool(target, Status.Active);
+                                            target.targetStatus = GlobalStatus.Live;
+                                            GameManager.i.dataScript.AddTargetToPool(target, GlobalStatus.Live);
+                                            GameManager.i.dataScript.RemoveTargetFromPool(target, GlobalStatus.Active);
                                             string text = string.Format("New target {0} at {1}, {2}, id {3}", target.targetName, node.nodeName, node.Arc.name, node.nodeID);
                                             GameManager.i.messageScript.TargetNew(text, node, target);
                                             Debug.LogFormat("[Tar] TargetManager.cs -> CheckTargets: Target {0} goes LIVE", target.targetName);
@@ -828,7 +828,7 @@ public class TargetManager : MonoBehaviour
             if (config != null)
             {
                 //clear list of Live targets first (tutorial only deals with live targets)
-                List<Target> listOfLiveTargets = GameManager.i.dataScript.GetTargetPool(Status.Live);
+                List<Target> listOfLiveTargets = GameManager.i.dataScript.GetTargetPool(GlobalStatus.Live);
                 if (listOfLiveTargets != null)
                 {
                     //clear collection
@@ -919,12 +919,12 @@ public class TargetManager : MonoBehaviour
                         switch (target.profile.trigger.name)
                         {
                             case "Live":
-                                target.targetStatus = Status.Live;
+                                target.targetStatus = GlobalStatus.Live;
                                 string text = string.Format("New target {0}, at {1}, {2}, id {3}", target.targetName, node.nodeName, node.Arc.name, node.nodeID);
                                 GameManager.i.messageScript.TargetNew(text, node, target);
                                 break;
                             case "Custom":
-                                target.targetStatus = Status.Active;
+                                target.targetStatus = GlobalStatus.Active;
                                 break;
                             default:
                                 Debug.LogErrorFormat("Invalid profile.Trigger \"{0}\" for target {1}", target.profile.trigger.name, target.targetName);
@@ -935,9 +935,9 @@ public class TargetManager : MonoBehaviour
                         if (target.targetType.name.Equals("Organisation", StringComparison.Ordinal) == true && GameManager.i.optionScript.isOrganisations == false)
                         {
                             //can't be live and must have a delay > 0 (due to CheckTargets not taking into account org targets that are live at start in case of org option being false)
-                            if (target.targetStatus == Status.Live)
+                            if (target.targetStatus == GlobalStatus.Live)
                             {
-                                target.targetStatus = Status.Active;
+                                target.targetStatus = GlobalStatus.Active;
                                 if (target.timerDelay == 0)
                                 { target.timerDelay = 5; }
                             }
@@ -992,8 +992,8 @@ public class TargetManager : MonoBehaviour
                             {
                                 switch (target.targetStatus)
                                 {
-                                    case Status.Active:
-                                    case Status.Live:
+                                    case GlobalStatus.Active:
+                                    case GlobalStatus.Live:
                                         tempList.Add(string.Format("<b>{0} Target</b>", target.targetStatus));
                                         tempList.Add(string.Format("{0}<size=110%>{1}</size>{2}", colourTarget, target.targetName, colourEnd));
                                         tempList.Add(string.Format("Level {0}", target.targetLevel));
@@ -1004,7 +1004,7 @@ public class TargetManager : MonoBehaviour
                             {
                                 switch (target.targetStatus)
                                 {
-                                    case Status.Outstanding:
+                                    case GlobalStatus.Outstanding:
                                         tempList.Add(string.Format("<b>{0} Target</b>", target.targetStatus));
                                         tempList.Add(string.Format("{0}<size=110%>{1}</size>{2}", colourTarget, target.targetName, colourEnd));
                                         tempList.Add(string.Format("Level {0}", target.targetLevel));
@@ -1025,8 +1025,8 @@ public class TargetManager : MonoBehaviour
                             //FOW On, only show Live and Completed
                             switch (target.targetStatus)
                             {
-                                case Status.Live:
-                                case Status.Outstanding:
+                                case GlobalStatus.Live:
+                                case GlobalStatus.Outstanding:
                                     tempList.AddRange(GetTargetDetails(target));
                                     break;
                             }
@@ -1036,9 +1036,9 @@ public class TargetManager : MonoBehaviour
                             //FOW Off -> Show all, even Active ones
                             switch (target.targetStatus)
                             {
-                                case Status.Active:
-                                case Status.Live:
-                                case Status.Outstanding:
+                                case GlobalStatus.Active:
+                                case GlobalStatus.Live:
+                                case GlobalStatus.Outstanding:
                                     tempList.AddRange(GetTargetDetails(target));
                                     break;
                             }
@@ -1065,7 +1065,7 @@ public class TargetManager : MonoBehaviour
         List<string> tempList = new List<string>();
         switch (target.targetStatus)
         {
-            case Status.Active:
+            case GlobalStatus.Active:
                 tempList.Add(string.Format("{0}<b>{1} Target</b>{2}", colourNormal, target.targetStatus, colourEnd));
                 tempList.Add(string.Format("{0}<size=110%><b>{1}</b></size>{2}", colourTarget, target.targetName, colourEnd));
                 tempList.Add(string.Format("{0}<b>Level {1}</b>{2}", colourDefault, target.targetLevel, colourEnd));
@@ -1077,7 +1077,7 @@ public class TargetManager : MonoBehaviour
                     tempList.Add(string.Format("timerWindow {0}", target.timerWindow));
                 }
                 break;
-            case Status.Live:
+            case GlobalStatus.Live:
                 tempList.Add(string.Format("{0}<size=110%><b>{1}</b></size>{2}", colourTarget, target.targetName, colourEnd));
 
                 /*//good effects
@@ -1129,7 +1129,7 @@ public class TargetManager : MonoBehaviour
                     tempList.Add(string.Format("timerWindow {0}", target.timerWindow));
                 }
                 break;
-            case Status.Outstanding:
+            case GlobalStatus.Outstanding:
                 //put tooltip together
                 tempList.Add(string.Format("{0}Target \"{1}\" has been Completed{2}", colourTarget, target.targetName, colourEnd));
                 //ongoing effects
@@ -1681,14 +1681,14 @@ public class TargetManager : MonoBehaviour
                 //remove from current target pool
                 switch (target.targetStatus)
                 {
-                    case Status.Live:
-                        GameManager.i.dataScript.RemoveTargetFromPool(target, Status.Live);
+                    case GlobalStatus.Live:
+                        GameManager.i.dataScript.RemoveTargetFromPool(target, GlobalStatus.Live);
                         break;
-                    case Status.Active:
-                        GameManager.i.dataScript.RemoveTargetFromPool(target, Status.Active);
+                    case GlobalStatus.Active:
+                        GameManager.i.dataScript.RemoveTargetFromPool(target, GlobalStatus.Active);
                         break;
-                    case Status.Outstanding:
-                        GameManager.i.dataScript.RemoveTargetFromPool(target, Status.Outstanding);
+                    case GlobalStatus.Outstanding:
+                        GameManager.i.dataScript.RemoveTargetFromPool(target, GlobalStatus.Outstanding);
                         break;
                     default:
                         Debug.LogWarningFormat("Invalid targetStatus \"{0}\". Lists not updated", target.targetStatus);
@@ -1829,10 +1829,10 @@ public class TargetManager : MonoBehaviour
                     //
                     if (isSuccess == true && isDone == true)
                     {
-                        target.targetStatus = Status.Done;
+                        target.targetStatus = GlobalStatus.Done;
                         target.turnDone = GameManager.i.turnScript.Turn;
                         //Add to pool 
-                        GameManager.i.dataScript.AddTargetToPool(target, Status.Done);
+                        GameManager.i.dataScript.AddTargetToPool(target, GlobalStatus.Done);
                     }
                     //
                     // - - - Story targets
@@ -1918,7 +1918,7 @@ public class TargetManager : MonoBehaviour
             genericDetails.textBottom = "Click on a Target to Select. Press CONFIRM. Mouseover target for more information.";
             //generate temp list of gear to choose from
 
-            List<Target> listOfLiveTargets = GameManager.i.dataScript.GetTargetPool(Status.Live);
+            List<Target> listOfLiveTargets = GameManager.i.dataScript.GetTargetPool(GlobalStatus.Live);
             if (listOfLiveTargets != null)
             {
                 //
@@ -2238,7 +2238,7 @@ public class TargetManager : MonoBehaviour
     {
         bool isSuccess = true;
         int intel, before;
-        List<Target> listOfLiveTargets = GameManager.i.dataScript.GetTargetPool(Status.Live);
+        List<Target> listOfLiveTargets = GameManager.i.dataScript.GetTargetPool(GlobalStatus.Live);
         if (listOfLiveTargets != null)
         {
             for (int i = 0; i < listOfLiveTargets.Count; i++)

@@ -441,7 +441,7 @@ public class ItemDataManager : MonoBehaviour
             //get correct player status depending on who is in charge of Resistance
             ActorStatus status = ActorStatus.Active;
             if (GameManager.i.sideScript.resistanceOverall == SideState.Human)
-            { status = GameManager.i.playerScript.status; }
+            { status = GameManager.i.playerScript.Status; }
             else { status = GameManager.i.aiRebelScript.status; }
             //message
             if (string.IsNullOrEmpty(reason) == false)
@@ -1964,7 +1964,7 @@ public class ItemDataManager : MonoBehaviour
             { actorName = actor.actorName; actorArc = actor.arc.name; }
             else { Debug.LogWarningFormat("Invalid Actor (Null) for actorID {0}", actorID); }
         }
-        if (target.targetStatus == Status.Live)
+        if (target.targetStatus == GlobalStatus.Live)
         {
             //failed
             builder.AppendFormat("{0}{1}<b>{2}, {3}{4}{5}</b>{6}attempt {7}<b>FAILED</b>{8}", "\n", "\n", actorName, colourAlert, actorArc, colourEnd, "\n", colourBad, colourEnd);

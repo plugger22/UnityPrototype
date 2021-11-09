@@ -80,7 +80,7 @@ public class Topic : ScriptableObject
     [HideInInspector] public string tooltipDetails;             //sprite tooltip
 
     #region Save Data Compatible
-    [HideInInspector] public Status status = Status.Dormant;
+    [HideInInspector] public GlobalStatus status = GlobalStatus.Dormant;
     [HideInInspector] public bool isCurrent;                                                //true if topic valid for current level (in a Campaign/city topicPool), false otherwise
     //timers
     [HideInInspector] public int timerStart;

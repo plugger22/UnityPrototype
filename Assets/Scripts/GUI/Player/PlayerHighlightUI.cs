@@ -96,7 +96,7 @@ public class PlayerHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
             //set player node back to correct material
             Node node = null;
             //get correct node (captured node if captured)
-            switch (GameManager.i.playerScript.status)
+            switch (GameManager.i.playerScript.Status)
             {
                 case ActorStatus.Active:
                 case ActorStatus.Inactive:

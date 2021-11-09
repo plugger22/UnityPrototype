@@ -552,12 +552,12 @@ public class NodeManager : MonoBehaviour
                 {
                     case SideState.Human:
                         {
-                            switch (GameManager.i.playerScript.status)
+                            switch (GameManager.i.playerScript.Status)
                             {
                                 case ActorStatus.Active:
                                 case ActorStatus.Inactive:
                                     nodeID = nodePlayer; break;
-                                default: Debug.LogWarningFormat("Unrecognised Player Status \"{0}\"", GameManager.i.playerScript.status); nodeID = -1; break;
+                                default: Debug.LogWarningFormat("Unrecognised Player Status \"{0}\"", GameManager.i.playerScript.Status); nodeID = -1; break;
                             }
                         }
                         break;
@@ -568,7 +568,7 @@ public class NodeManager : MonoBehaviour
                                 case ActorStatus.Active:
                                 case ActorStatus.Inactive:
                                     nodeID = nodePlayer; break;
-                                default: Debug.LogWarningFormat("Unrecognised aiRebel Status \"{0}\"", GameManager.i.playerScript.status); nodeID = -1; break;
+                                default: Debug.LogWarningFormat("Unrecognised aiRebel Status \"{0}\"", GameManager.i.playerScript.Status); nodeID = -1; break;
                             }
                         }
                         break;
@@ -580,13 +580,13 @@ public class NodeManager : MonoBehaviour
                 {
                     case SideState.Human:
                         {
-                            switch (GameManager.i.playerScript.status)
+                            switch (GameManager.i.playerScript.Status)
                             {
                                 case ActorStatus.Active:
                                 case ActorStatus.Inactive:
                                     nodeID = nodePlayer; break;
                                 case ActorStatus.Captured: nodeID = nodeCaptured; break;
-                                default: Debug.LogWarningFormat("Unrecognised Player Status \"{0}\"", GameManager.i.playerScript.status); nodeID = -1; break;
+                                default: Debug.LogWarningFormat("Unrecognised Player Status \"{0}\"", GameManager.i.playerScript.Status); nodeID = -1; break;
                             }
                         }
                         break;
@@ -598,7 +598,7 @@ public class NodeManager : MonoBehaviour
                                 case ActorStatus.Inactive:
                                     nodeID = nodePlayer; break;
                                 case ActorStatus.Captured: nodeID = nodeCaptured; break;
-                                default: Debug.LogWarningFormat("Unrecognised aiRebel Status \"{0}\"", GameManager.i.playerScript.status); nodeID = -1; break;
+                                default: Debug.LogWarningFormat("Unrecognised aiRebel Status \"{0}\"", GameManager.i.playerScript.Status); nodeID = -1; break;
                             }
                         }
                         break;
@@ -608,7 +608,7 @@ public class NodeManager : MonoBehaviour
         }
         //debug problem tracking
         if (nodeID < 0)
-        { Debug.LogWarningFormat("Invalid nodeID {0} for Player status \"{1}\", inactive status \"{2}\"", nodeID, GameManager.i.playerScript.status, GameManager.i.playerScript.inactiveStatus); }
+        { Debug.LogWarningFormat("Invalid nodeID {0} for Player status \"{1}\", inactive status \"{2}\"", nodeID, GameManager.i.playerScript.Status, GameManager.i.playerScript.InactiveStatus); }
         return nodeID;
     }
     #endregion
@@ -646,8 +646,8 @@ public class NodeManager : MonoBehaviour
                     {
                         //FOW Off
                         /*tempList.AddRange(GameManager.i.dataScript.GetTargetPool(Status.Active));*/
-                        tempList.AddRange(GameManager.i.dataScript.GetTargetPool(Status.Live));
-                        tempList.AddRange(GameManager.i.dataScript.GetTargetPool(Status.Outstanding));
+                        tempList.AddRange(GameManager.i.dataScript.GetTargetPool(GlobalStatus.Live));
+                        tempList.AddRange(GameManager.i.dataScript.GetTargetPool(GlobalStatus.Outstanding));
                         if (tempList.Count > 0)
                         {
                             foreach (Target target in tempList)
@@ -668,8 +668,8 @@ public class NodeManager : MonoBehaviour
                     else
                     {
                         //FOW ON
-                        tempList.AddRange(GameManager.i.dataScript.GetTargetPool(Status.Live));
-                        tempList.AddRange(GameManager.i.dataScript.GetTargetPool(Status.Outstanding));
+                        tempList.AddRange(GameManager.i.dataScript.GetTargetPool(GlobalStatus.Live));
+                        tempList.AddRange(GameManager.i.dataScript.GetTargetPool(GlobalStatus.Outstanding));
                         if (tempList.Count > 0)
                         {
                             count = 0;

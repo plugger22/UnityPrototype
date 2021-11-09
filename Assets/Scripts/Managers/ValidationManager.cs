@@ -3127,9 +3127,9 @@ public class ValidationManager : MonoBehaviour
             {
                 key = target.Key;
                 CheckDictRange(target.Value.intel, 0, maxTargetIntel, "intel", tag, key);
-                if (target.Value.targetStatus != Status.Dormant && target.Value.targetStatus != Status.Done)
+                if (target.Value.targetStatus != GlobalStatus.Dormant && target.Value.targetStatus != GlobalStatus.Done)
                 { CheckDictRange(target.Value.nodeID, 0, highestNodeID, "nodeID", tag, key); }
-                if (target.Value.targetStatus == Status.Done)
+                if (target.Value.targetStatus == GlobalStatus.Done)
                 { CheckDictRange(target.Value.turnDone, 0, highestTurn, "turnDone", tag, key); }
                 CheckDictRange(target.Value.distance, 0, 20, "distance", tag, key);
                 CheckDictRange(target.Value.numOfAttempts, 0, 20, "numOfAtttempts", tag, key);
@@ -3182,10 +3182,10 @@ public class ValidationManager : MonoBehaviour
         //
         // - - - Target lists
         //
-        CheckList(GameManager.i.dataScript.GetTargetPool(Status.Active), "targetPoolActive", tag);
-        CheckList(GameManager.i.dataScript.GetTargetPool(Status.Live), "targetPoolLive", tag);
-        CheckList(GameManager.i.dataScript.GetTargetPool(Status.Outstanding), "targetPoolOutstanding", tag);
-        CheckList(GameManager.i.dataScript.GetTargetPool(Status.Done), "targetPoolDone", tag);
+        CheckList(GameManager.i.dataScript.GetTargetPool(GlobalStatus.Active), "targetPoolActive", tag);
+        CheckList(GameManager.i.dataScript.GetTargetPool(GlobalStatus.Live), "targetPoolLive", tag);
+        CheckList(GameManager.i.dataScript.GetTargetPool(GlobalStatus.Outstanding), "targetPoolOutstanding", tag);
+        CheckList(GameManager.i.dataScript.GetTargetPool(GlobalStatus.Done), "targetPoolDone", tag);
         CheckListForDuplicates(GameManager.i.dataScript.GetListOfNodesWithTargets(), "nodes", "nodeID", "listOfNodesWithTargets");
     }
     #endregion

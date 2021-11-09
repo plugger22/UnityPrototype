@@ -1172,7 +1172,7 @@ public class AIRebelManager : MonoBehaviour
     /// </summary>
     private void ProcessTargetData()
     {
-        List<Target> listOfTargets = GameManager.i.dataScript.GetTargetPool(Status.Live);
+        List<Target> listOfTargets = GameManager.i.dataScript.GetTargetPool(GlobalStatus.Live);
         if (listOfTargets != null)
         {
             //temp dict with key -> Target, value -> distance (weighted)
@@ -1916,7 +1916,7 @@ public class AIRebelManager : MonoBehaviour
             if (target != null)
             {
                 //Live target
-                if (target.targetStatus == Status.Live)
+                if (target.targetStatus == GlobalStatus.Live)
                 {
                     //Player at target node
                     rnd = Random.Range(0, 100);
@@ -1966,7 +1966,7 @@ public class AIRebelManager : MonoBehaviour
             {
                 int numOfTasks = 0;
                 //is there at least on Live target available
-                List<Target> listOfLiveTargets = GameManager.i.dataScript.GetTargetPool(Status.Live);
+                List<Target> listOfLiveTargets = GameManager.i.dataScript.GetTargetPool(GlobalStatus.Live);
                 if (listOfLiveTargets != null)
                 {
                     int actorID;
@@ -1977,7 +1977,7 @@ public class AIRebelManager : MonoBehaviour
                         if (target != null)
                         {
                             //LIVE target
-                            if (target.targetStatus == Status.Live)
+                            if (target.targetStatus == GlobalStatus.Live)
                             {
                                 if (CheckActorArcPresent(target.actorArc.name) == true)
                                 {
@@ -2212,7 +2212,7 @@ public class AIRebelManager : MonoBehaviour
         if (approvalLevel < factionSupportThreshold)
         {
             //check only if Player Active (node irrelevant in this situation as invisibility not an issue)
-            if (GameManager.i.playerScript.status == ActorStatus.Active)
+            if (GameManager.i.playerScript.Status == ActorStatus.Active)
             {
                 //generate task
                 AITask task = new AITask();
@@ -2893,7 +2893,7 @@ public class AIRebelManager : MonoBehaviour
                     EventManager.i.PostNotification(EventType.Capture, this, captureDetails, "AIRebelManager.cs -> ExecuteMoveTask");
                 }
             }
-            if (GameManager.i.playerScript.status != ActorStatus.Captured)
+            if (GameManager.i.playerScript.Status != ActorStatus.Captured)
             {
                 //Nemesis, if at same node, can interact and damage player
                 GameManager.i.nemesisScript.CheckNemesisAtPlayerNode(true);
@@ -3842,9 +3842,9 @@ public class AIRebelManager : MonoBehaviour
                 //Ongoing effects then target moved to completed pool
                 if (target.ongoingEffect != null)
                 {
-                    GameManager.i.dataScript.RemoveTargetFromPool(target, Status.Live);
-                    GameManager.i.dataScript.AddTargetToPool(target, Status.Outstanding);
-                    target.targetStatus = Status.Outstanding;
+                    GameManager.i.dataScript.RemoveTargetFromPool(target, GlobalStatus.Live);
+                    GameManager.i.dataScript.AddTargetToPool(target, GlobalStatus.Outstanding);
+                    target.targetStatus = GlobalStatus.Outstanding;
                 }
                 //NO ongoing effects -> target  done with. 
                 else

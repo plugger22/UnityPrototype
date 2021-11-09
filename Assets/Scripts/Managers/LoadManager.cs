@@ -1562,7 +1562,7 @@ public class LoadManager : MonoBehaviour
                 Target target = listOfTargets[i];
                 //set data
                 counter++;
-                target.targetStatus = Status.Dormant;
+                target.targetStatus = GlobalStatus.Dormant;
                 //target.timer = -1;
                 target.intel = 1;
                 target.isKnownByAI = false;

@@ -56,7 +56,7 @@ public class ActorClickUI : MonoBehaviour, IPointerClickHandler
                             if (GameManager.i.sideScript.CheckInteraction() == false)
                             { proceedFlag = false; alertType = AlertType.SideStatus; }
                             //Action Menu -> not valid if  Player inactive
-                            else if (GameManager.i.playerScript.status != ActorStatus.Active)
+                            else if (GameManager.i.playerScript.Status != ActorStatus.Active)
                             { proceedFlag = false; alertType = AlertType.PlayerStatus; }
                             else if (GameManager.i.optionScript.isActorRightMenu == false)
                             { proceedFlag = false; alertType = AlertType.TutorialMenuUnavailable; }

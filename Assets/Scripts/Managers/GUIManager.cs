@@ -512,14 +512,14 @@ public class GUIManager : MonoBehaviour
                     details.textBottom = string.Format("We've {0}switched it off{1} for this part of the <b>Tutorial</b><br><br>It's only <b>temporary</b>", colourAlert, colourEnd);
                     break;
                 case AlertType.PlayerStatus:
-                    switch (GameManager.i.playerScript.status)
+                    switch (GameManager.i.playerScript.Status)
                     {
                         case ActorStatus.Captured:
                             details.textTop = string.Format("This action can't be taken because you have been {0}Captured{1}", colourBad, colourEnd);
                             break;
                         case ActorStatus.Inactive:
                             details.sprite = GameManager.i.playerScript.sprite;
-                            switch (GameManager.i.playerScript.inactiveStatus)
+                            switch (GameManager.i.playerScript.InactiveStatus)
                             {
                                 case ActorInactive.Breakdown:
                                     details.textTop = string.Format("This action can't be taken because you{0}are undergoing a{1}{2}{3}STRESS BREAKDOWN{4}", "\n", "\n", "\n",
@@ -934,7 +934,7 @@ public class GUIManager : MonoBehaviour
     {
         MainInfoData data = GameManager.i.dataScript.UpdateCurrentItemData();
         //only display InfoApp if player is Active (out of contact otherwise but data is collected and can be accessed when player returns to active status)
-        ActorStatus playerStatus = GameManager.i.playerScript.status;
+        ActorStatus playerStatus = GameManager.i.playerScript.Status;
         if (playerStatus == ActorStatus.Active)
         { EventManager.i.PostNotification(EventType.MainInfoOpen, this, data, "TurnManager.cs -> ProcessNewTurn"); }
         else
@@ -952,7 +952,7 @@ public class GUIManager : MonoBehaviour
                     }
                     break;
                 case ActorStatus.Inactive:
-                    switch (GameManager.i.playerScript.inactiveStatus)
+                    switch (GameManager.i.playerScript.InactiveStatus)
                     {
                         case ActorInactive.Breakdown:
                             text = string.Format("You are undergoing a {0}STRESS BREAKDOWN{1}", colourBad, colourEnd);

@@ -3707,7 +3707,7 @@ public class MessageManager : MonoBehaviour
     {
         Debug.Assert(node != null, "Invalid node (Null)");
         Debug.Assert(target != null, "Invalid target (Null)");
-        Debug.Assert(target.targetStatus == Status.Live, "Target status NOT Live");
+        Debug.Assert(target.targetStatus == GlobalStatus.Live, "Target status NOT Live");
         if (string.IsNullOrEmpty(text) == false)
         {
             string sideText;
@@ -3768,7 +3768,7 @@ public class MessageManager : MonoBehaviour
     {
         Debug.Assert(node != null, "Invalid node (Null)");
         Debug.Assert(target != null, "Invalid target (Null)");
-        Debug.Assert(target.targetStatus == Status.Live, "Target status NOT Live");
+        Debug.Assert(target.targetStatus == GlobalStatus.Live, "Target status NOT Live");
         if (string.IsNullOrEmpty(text) == false)
         {
             string sideText;
@@ -3825,7 +3825,7 @@ public class MessageManager : MonoBehaviour
     {
         Debug.Assert(node != null, "Invalid node (Null)");
         Debug.Assert(target != null, "Invalid target (Null)");
-        Debug.Assert(target.targetStatus == Status.Live, "Target status NOT Live");
+        Debug.Assert(target.targetStatus == GlobalStatus.Live, "Target status NOT Live");
         if (string.IsNullOrEmpty(text) == false)
         {
             Message message = new Message();
@@ -3886,7 +3886,7 @@ public class MessageManager : MonoBehaviour
             if (GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideResistance.level)
             {
                 ItemData data = new ItemData();
-                if (target.targetStatus == Status.Live)
+                if (target.targetStatus == GlobalStatus.Live)
                 {
                     data.itemText = "TARGET attempt Failed";
                     data.priority = ItemPriority.Low;

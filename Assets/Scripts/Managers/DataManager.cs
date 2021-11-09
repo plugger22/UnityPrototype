@@ -3444,21 +3444,21 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="status"></param>
     /// <returns></returns>
-    public List<Target> GetTargetPool(Status status)
+    public List<Target> GetTargetPool(GlobalStatus status)
     {
         List<Target> tempList = null;
         switch (status)
         {
-            case Status.Active:
+            case GlobalStatus.Active:
                 tempList = targetPoolActive;
                 break;
-            case Status.Live:
+            case GlobalStatus.Live:
                 tempList = targetPoolLive;
                 break;
-            case Status.Outstanding:
+            case GlobalStatus.Outstanding:
                 tempList = targetPoolOutstanding;
                 break;
-            case Status.Done:
+            case GlobalStatus.Done:
                 tempList = targetPoolDone;
                 break;
             default:
@@ -3475,7 +3475,7 @@ public class DataManager : MonoBehaviour
     /// <param name="target"></param>
     /// <param name="status"></param>
     /// <returns></returns>
-    public bool AddTargetToPool(Target target, Status status)
+    public bool AddTargetToPool(Target target, GlobalStatus status)
     {
         bool isSuccess = false;
         if (target != null)
@@ -3485,16 +3485,16 @@ public class DataManager : MonoBehaviour
                 /*case Status.Dormant:
                     possibleTargetsPool.Add(target);
                     break;*/
-                case Status.Active:
+                case GlobalStatus.Active:
                     targetPoolActive.Add(target);
                     break;
-                case Status.Live:
+                case GlobalStatus.Live:
                     targetPoolLive.Add(target);
                     break;
-                case Status.Outstanding:
+                case GlobalStatus.Outstanding:
                     targetPoolOutstanding.Add(target);
                     break;
-                case Status.Done:
+                case GlobalStatus.Done:
                     targetPoolDone.Add(target);
                     break;
                 default:
@@ -3512,7 +3512,7 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="target"></param>
     /// <param name="status"></param>
-    public bool RemoveTargetFromPool(Target target, Status status)
+    public bool RemoveTargetFromPool(Target target, GlobalStatus status)
     {
         bool isSuccess = false;
         if (target != null)
@@ -3523,16 +3523,16 @@ public class DataManager : MonoBehaviour
                 /*case Status.Dormant:
                     listOfTargets = possibleTargetsPool;
                     break;*/
-                case Status.Active:
+                case GlobalStatus.Active:
                     listOfTargets = targetPoolActive;
                     break;
-                case Status.Live:
+                case GlobalStatus.Live:
                     listOfTargets = targetPoolLive;
                     break;
-                case Status.Outstanding:
+                case GlobalStatus.Outstanding:
                     listOfTargets = targetPoolOutstanding;
                     break;
-                case Status.Done:
+                case GlobalStatus.Done:
                     listOfTargets = targetPoolDone;
                     break;
                 default:
@@ -3561,25 +3561,25 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="listOfTargets"></param>
     /// <param name="status"></param>
-    public void SetTargetPool(List<Target> listOfTargets, Status status)
+    public void SetTargetPool(List<Target> listOfTargets, GlobalStatus status)
     {
         if (listOfTargets != null)
         {
             switch (status)
             {
-                case Status.Active:
+                case GlobalStatus.Active:
                     targetPoolActive.Clear();
                     targetPoolActive.AddRange(listOfTargets);
                     break;
-                case Status.Live:
+                case GlobalStatus.Live:
                     targetPoolLive.Clear();
                     targetPoolLive.AddRange(listOfTargets);
                     break;
-                case Status.Outstanding:
+                case GlobalStatus.Outstanding:
                     targetPoolOutstanding.Clear();
                     targetPoolOutstanding.AddRange(listOfTargets);
                     break;
-                case Status.Done:
+                case GlobalStatus.Done:
                     targetPoolDone.Clear();
                     targetPoolDone.AddRange(listOfTargets);
                     break;
@@ -5613,7 +5613,7 @@ public class DataManager : MonoBehaviour
                                             if (listOfTopics != null)
                                             {
                                                 //check that actors most recent node Action has at least one Live topic of correct subSubType on the list
-                                                if (listOfTopics.Exists(x => x.subSubType.name.Equals(subSubType.name, StringComparison.Ordinal) && x.status == Status.Live))
+                                                if (listOfTopics.Exists(x => x.subSubType.name.Equals(subSubType.name, StringComparison.Ordinal) && x.status == GlobalStatus.Live))
                                                 { numOfActors++; }
                                             }
                                             else { Debug.LogWarningFormat("Invalid listOfTopics (Null) for {0}, {1}", subSubType.subType, subSubType); }
@@ -5638,7 +5638,7 @@ public class DataManager : MonoBehaviour
                                             if (listOfTopics != null)
                                             {
                                                 //check that actors most recent team Action has at least one Live topic of correct subSubType on the list
-                                                if (listOfTopics.Exists(x => x.subSubType.name.Equals(subSubType.name, StringComparison.Ordinal) && x.status == Status.Live))
+                                                if (listOfTopics.Exists(x => x.subSubType.name.Equals(subSubType.name, StringComparison.Ordinal) && x.status == GlobalStatus.Live))
                                                 { numOfActors++; }
                                             }
                                             else { Debug.LogWarningFormat("Invalid listOfTopics (Null) for {0}, {1}", subSubType.subType, subSubType); }

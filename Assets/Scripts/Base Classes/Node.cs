@@ -339,7 +339,7 @@ public class Node : MonoBehaviour
                 if (GameManager.i.sideScript.CheckInteraction() == false)
                 { proceedFlag = false; alertType = AlertType.SideStatus; }
                 //Action Menu -> not valid if  Player inactive
-                else if (GameManager.i.playerScript.status != ActorStatus.Active)
+                else if (GameManager.i.playerScript.Status != ActorStatus.Active)
                 { proceedFlag = false; alertType = AlertType.PlayerStatus; }
                 //GUI element toggled off for tutorial
                 else if (GameManager.i.optionScript.isNodeLeftMenu == false)
@@ -415,7 +415,7 @@ public class Node : MonoBehaviour
                         if (GameManager.i.sideScript.CheckInteraction() == false)
                         { proceedFlag = false; alertType = AlertType.SideStatus; }
                         //Action Menu -> not valid if  Player inactive
-                        else if (GameManager.i.playerScript.status != ActorStatus.Active)
+                        else if (GameManager.i.playerScript.Status != ActorStatus.Active)
                         { proceedFlag = false; alertType = AlertType.PlayerStatus; }
                         //Tutorial -> GUI element switched off
                         else if (GameManager.i.optionScript.isNodeRightMenu == false)
@@ -666,7 +666,7 @@ public class Node : MonoBehaviour
         {
             Target target = GameManager.i.dataScript.GetTarget(targetName);
             if (target != null)
-            { data.isTarget = target.targetStatus == Status.Live ? true : false; }
+            { data.isTarget = target.targetStatus == GlobalStatus.Live ? true : false; }
             else { Debug.LogWarningFormat("Invalid target (Null) for targetName {0}, node {1}, {2}, nodeID {3}", targetName, nodeName, Arc.name, nodeID); }
         }
         data.isTeam = isTeamKnown;

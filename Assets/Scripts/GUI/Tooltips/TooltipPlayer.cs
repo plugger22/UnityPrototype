@@ -201,15 +201,15 @@ public class TooltipPlayer : MonoBehaviour
         //
         // - - - Status - - -
         //
-        if (GameManager.i.playerScript.status != ActorStatus.Active)
+        if (GameManager.i.playerScript.Status != ActorStatus.Active)
         {
             //activate UI components
             playerStatus.gameObject.SetActive(true);
             isStatus = true;
-            switch (GameManager.i.playerScript.status)
+            switch (GameManager.i.playerScript.Status)
             {
                 case ActorStatus.Inactive:
-                    switch (GameManager.i.playerScript.inactiveStatus)
+                    switch (GameManager.i.playerScript.InactiveStatus)
                     {
                         case ActorInactive.LieLow:
                             int numOfTurns = GameManager.i.actorScript.maxStatValue - GameManager.i.playerScript.Invisibility;
@@ -226,7 +226,7 @@ public class TooltipPlayer : MonoBehaviour
                     playerStatus.text = string.Format("{0}<b>CAPTURED</b>{1}{2}Whereabouts unknown", colourBad, colourEnd, "\n");
                     break;
                 default:
-                    playerStatus.text = string.Format("{0}<b>{1}</b>{2}", colourNeutral, GameManager.i.playerScript.status.ToString().ToUpper(), colourEnd);
+                    playerStatus.text = string.Format("{0}<b>{1}</b>{2}", colourNeutral, GameManager.i.playerScript.Status.ToString().ToUpper(), colourEnd);
                     break;
             }
         }

@@ -67,7 +67,7 @@ public class Target : ScriptableObject
     [HideInInspector] public TargetProfile profile;                 //Profile that used in code
 
     #region Save Compatible Data
-    [HideInInspector] public Status targetStatus;                   //default status of Dormant
+    [HideInInspector] public GlobalStatus targetStatus;                   //default status of Dormant
     [HideInInspector] public int intel;                             //from 1 to 3, default 0. Gained by Planner action
     [HideInInspector] public int ongoingID;                         //unique ID used to link to ongoing effects, default '0', only valid if > -1
     [HideInInspector] public bool isKnownByAI;                      //is known by the AI?

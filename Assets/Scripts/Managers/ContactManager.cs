@@ -879,7 +879,7 @@ public class ContactManager : MonoBehaviour
         int numOfTargets;
         int numOfRumours = 0;
         bool isProceed;
-        List<Target> listOfActiveTargets = GameManager.i.dataScript.GetTargetPool(Status.Active);
+        List<Target> listOfActiveTargets = GameManager.i.dataScript.GetTargetPool(GlobalStatus.Active);
         List<Target> listOfRumourTargets = new List<Target>();  //temp list to hold targets that have triggered a rumour
         if (listOfActiveTargets != null)
         {

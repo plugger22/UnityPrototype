@@ -1262,8 +1262,8 @@ public class AIManager : MonoBehaviour
                         {
                             switch (target.targetStatus)
                             {
-                                case Status.Active:
-                                case Status.Live:
+                                case GlobalStatus.Active:
+                                case GlobalStatus.Live:
                                     //spider/erasure team node data package (good ambush situation as targets will lure in resistance player)
                                     dataPackage = new AINodeData();
                                     dataPackage.nodeID = node.nodeID;
@@ -1272,7 +1272,7 @@ public class AIManager : MonoBehaviour
                                     dataPackage.isPreferred = node.isPreferredAuthority;
                                     listOfTargetsKnown.Add(dataPackage);
                                     break;
-                                case Status.Outstanding:
+                                case GlobalStatus.Outstanding:
                                     //Damage team node data package (only for completed targets with ongoing effects that require containing)
                                     if (node.CheckForOngoingEffects() == true)
                                     {
@@ -1586,12 +1586,12 @@ public class AIManager : MonoBehaviour
                                             {
                                                 switch (target.targetStatus)
                                                 {
-                                                    case Status.Active:
-                                                    case Status.Live:
+                                                    case GlobalStatus.Active:
+                                                    case GlobalStatus.Live:
                                                         if (target.isKnownByAI)
                                                         { score += nodeTargetFactor; }
                                                         break;
-                                                    case Status.Outstanding:
+                                                    case GlobalStatus.Outstanding:
                                                         score -= nodeTargetFactor;
                                                         break;
                                                 }
@@ -3802,7 +3802,7 @@ public class AIManager : MonoBehaviour
             Tuple<int, string> results = GetHackingCost();
             hackingModifiedCost = results.Item1;
             string gearEffect = results.Item2;
-            switch (GameManager.i.playerScript.status)
+            switch (GameManager.i.playerScript.Status)
             {
                 case ActorStatus.Active:
                     int playerPower = power;

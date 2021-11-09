@@ -1358,7 +1358,7 @@ public class MainInfoUI : MonoBehaviour
         if (currentTurn > 0 && isRunning == false)
         {
             //only if player is active
-            if (GameManager.i.playerScript.status == ActorStatus.Active)
+            if (GameManager.i.playerScript.Status == ActorStatus.Active)
             {
                 MainInfoData data = GameManager.i.dataScript.GetCurrentInfoData();
                 if (data != null)

@@ -51,7 +51,7 @@ public class PlayerClickUI : MonoBehaviour, IPointerClickHandler
                     //Action Menu -> not valid if AI is active for side
                     if (GameManager.i.sideScript.CheckInteraction() == false)
                     { proceedFlag = false; alertType = AlertType.SideStatus; }
-                    if (GameManager.i.playerScript.status != ActorStatus.Active)
+                    if (GameManager.i.playerScript.Status != ActorStatus.Active)
                     { proceedFlag = false; alertType = AlertType.PlayerStatus; }
                     if (GameManager.i.optionScript.isPlayerRightMenu == false)
                     { proceedFlag = false; alertType = AlertType.TutorialMenuUnavailable; }

@@ -1072,8 +1072,8 @@ public class TopicManager : MonoBehaviour
                         if (topic.subType.scope.name.Equals(levelScopeName, StringComparison.Ordinal) == true)
                         {
                             if (topic.timerStart == 0)
-                            { topic.status = Status.Active; }
-                            else { topic.status = Status.Dormant; }
+                            { topic.status = GlobalStatus.Active; }
+                            else { topic.status = GlobalStatus.Dormant; }
                             //isCurrent (all topics set to false prior to changes by SubInitialiseLevelStart
                             topic.isCurrent = true;
                         }
@@ -1088,22 +1088,22 @@ public class TopicManager : MonoBehaviour
                                 {
                                     //initialise
                                     if (topic.timerStart == 0)
-                                    { topic.status = Status.Active; }
-                                    else { topic.status = Status.Dormant; }
+                                    { topic.status = GlobalStatus.Active; }
+                                    else { topic.status = GlobalStatus.Dormant; }
                                     //isCurrent (all topics set to false prior to changes by SubInitialiseLevelStart
                                     topic.isCurrent = true;
                                 }
                                 else
                                 {
                                     //level topic in sequence but not the first
-                                    topic.status = Status.Dormant;
+                                    topic.status = GlobalStatus.Dormant;
                                     topic.isCurrent = false;
                                 }
                             }
                             else
                             {
                                 //different level/scenario, not relevant
-                                topic.status = Status.Done;
+                                topic.status = GlobalStatus.Done;
                                 topic.isCurrent = false;
                             }
                         }
@@ -1185,7 +1185,7 @@ public class TopicManager : MonoBehaviour
                         if (topic.linkedIndex == indexCurrent)
                         {
                             //activate topic
-                            topic.status = Status.Active;
+                            topic.status = GlobalStatus.Active;
                             topic.isCurrent = true;
                         }
                         else
@@ -1193,13 +1193,13 @@ public class TopicManager : MonoBehaviour
                             if (topic.linkedIndex > indexCurrent)
                             {
                                 //yet to do topic
-                                topic.status = Status.Dormant;
+                                topic.status = GlobalStatus.Dormant;
                                 topic.isCurrent = false;
                             }
                             else
                             {
                                 //already done topic (linkedIndex < currentIndex)
-                                topic.status = Status.Done;
+                                topic.status = GlobalStatus.Done;
                                 topic.isCurrent = false;
                             }
                         }
@@ -1207,7 +1207,7 @@ public class TopicManager : MonoBehaviour
                     else
                     {
                         //different level, shut down topic
-                        topic.status = Status.Done;
+                        topic.status = GlobalStatus.Done;
                         topic.isCurrent = false;
                     }
                 }
@@ -1235,12 +1235,12 @@ public class TopicManager : MonoBehaviour
         {
             topicGlobal = TopicGlobal.None;
             //Player must be Active or Captured
-            if (CheckPlayerStatus(playerSide) == true || GameManager.i.playerScript.status == ActorStatus.Captured)
+            if (CheckPlayerStatus(playerSide) == true || GameManager.i.playerScript.Status == ActorStatus.Captured)
             {
                 //
                 // - - - topic Global 
                 //
-                if (GameManager.i.playerScript.status != ActorStatus.Captured)
+                if (GameManager.i.playerScript.Status != ActorStatus.Captured)
                 {
                     if (GameManager.i.optionScript.isReviews == true)
                     {
@@ -1369,25 +1369,25 @@ public class TopicManager : MonoBehaviour
                         //
                         switch (topic.Value.status)
                         {
-                            case Status.Dormant:
+                            case GlobalStatus.Dormant:
                                 //do nothing
                                 break;
-                            case Status.Active:
+                            case GlobalStatus.Active:
                                 //check criteria (even they're aren't any)
                                 if (CheckTopicCriteria(topic.Value) == true)
                                 {
                                     //Criteria O.K, status Live
-                                    topic.Value.status = Status.Live;
+                                    topic.Value.status = GlobalStatus.Live;
                                 }
                                 break;
-                            case Status.Live:
+                            case GlobalStatus.Live:
                                 if (CheckTopicCriteria(topic.Value) == false)
                                 {
                                     //Criteria FAILED, status Active
-                                    topic.Value.status = Status.Active;
+                                    topic.Value.status = GlobalStatus.Active;
                                 }
                                 break;
-                            case Status.Done:
+                            case GlobalStatus.Done:
                                 //do nothing
                                 break;
                             default:
@@ -1399,7 +1399,7 @@ public class TopicManager : MonoBehaviour
                         //
                         switch (topic.Value.status)
                         {
-                            case Status.Dormant:
+                            case GlobalStatus.Dormant:
                                 //Start timer (turns before activating at level start)
                                 if (topic.Value.timerStart > 0)
                                 {
@@ -1407,7 +1407,7 @@ public class TopicManager : MonoBehaviour
                                     topic.Value.timerStart--;
                                     //if Zero, status Active (no need to reset timer as it's a once only use)
                                     if (topic.Value.timerStart == 0)
-                                    { topic.Value.status = Status.Active; }
+                                    { topic.Value.status = GlobalStatus.Active; }
                                 }
                                 else if (topic.Value.turnsLive > 0 && topic.Value.timerRepeat > 0)
                                 {
@@ -1416,7 +1416,7 @@ public class TopicManager : MonoBehaviour
                                     //if Zero, status Active
                                     if (topic.Value.timerRepeat == 0)
                                     {
-                                        topic.Value.status = Status.Active;
+                                        topic.Value.status = GlobalStatus.Active;
                                         //reset repeat timer ready for next time (profile assumed to be not Null due to SO OnEnable checks)
                                         topic.Value.timerRepeat = topic.Value.profile.delayRepeat;
                                     }
@@ -1426,19 +1426,19 @@ public class TopicManager : MonoBehaviour
                                     if (topic.Value.linkedIndex < 0)
                                     {
                                         //normal topic -> no timers -> status Done
-                                        topic.Value.status = Status.Done;
+                                        topic.Value.status = GlobalStatus.Done;
                                     }
                                     else
                                     {
                                         //Linked topic
-                                        topic.Value.status = Status.Active;
+                                        topic.Value.status = GlobalStatus.Active;
                                     }
                                 }
                                 break;
-                            case Status.Active:
+                            case GlobalStatus.Active:
                                 //do nothing
                                 break;
-                            case Status.Live:
+                            case GlobalStatus.Live:
                                 //Window timer
                                 if (topic.Value.timerWindow > 0)
                                 {
@@ -1447,13 +1447,13 @@ public class TopicManager : MonoBehaviour
                                     //if Zero, status Dormant
                                     if (topic.Value.timerWindow == 0)
                                     {
-                                        topic.Value.status = Status.Dormant;
+                                        topic.Value.status = GlobalStatus.Dormant;
                                         //reset timer ready for next time
                                         topic.Value.timerWindow = topic.Value.profile.timerWindow;
                                     }
                                 }
                                 break;
-                            case Status.Done:
+                            case GlobalStatus.Done:
                                 //do nothing
                                 break;
                             default:
@@ -1465,16 +1465,16 @@ public class TopicManager : MonoBehaviour
                         //
                         switch (topic.Value.status)
                         {
-                            case Status.Dormant:
+                            case GlobalStatus.Dormant:
                                 topic.Value.turnsDormant++;
                                 break;
-                            case Status.Active:
+                            case GlobalStatus.Active:
                                 topic.Value.turnsActive++;
                                 break;
-                            case Status.Live:
+                            case GlobalStatus.Live:
                                 topic.Value.turnsLive++;
                                 break;
-                            case Status.Done:
+                            case GlobalStatus.Done:
                                 topic.Value.turnsDone++;
                                 break;
                             default:
@@ -1501,7 +1501,7 @@ public class TopicManager : MonoBehaviour
         //clear list at start of selection (not done in ResetTopicAdmin as it should only be done once at start, not every iteration inside the selection loop
         listOfTopicTypesTurn.Clear();
         //special case of resistance player being captured
-        if (GameManager.i.playerScript.status == ActorStatus.Captured)
+        if (GameManager.i.playerScript.Status == ActorStatus.Captured)
         {
             //Add org type, if valid. NOTE: All org subTypes have criteria re: capture so that only one activates, eg. orgEmergency
             TopicType topicType = captureType;
@@ -1727,7 +1727,7 @@ public class TopicManager : MonoBehaviour
                                                 Topic topic = listOfTopics[k];
                                                 if (topic != null)
                                                 {
-                                                    if (topic.status == Status.Live)
+                                                    if (topic.status == GlobalStatus.Live)
                                                     {
                                                         isProceed = true;
                                                         break;
@@ -1925,7 +1925,7 @@ public class TopicManager : MonoBehaviour
                                 if (topic.isDisabled == false)
                                 {
                                     //check topic Live (timer and status checks O.K)
-                                    if (topic.status == Status.Live)
+                                    if (topic.status == GlobalStatus.Live)
                                     {
                                         //populate pool based on priorities
                                         numOfEntries = GetNumOfEntries(topic.priority);
@@ -3218,7 +3218,7 @@ public class TopicManager : MonoBehaviour
                     else
                     {
                         //Resistance player Captured
-                        if (GameManager.i.playerScript.status == ActorStatus.Captured)
+                        if (GameManager.i.playerScript.Status == ActorStatus.Captured)
                         {
                             //valid topic selected, ignore otherwise
                             if (turnTopic != null)
@@ -3261,7 +3261,7 @@ public class TopicManager : MonoBehaviour
                 bool isProceed = false;
                 //check at least one topic in pool is live
                 foreach (Topic topic in debugTopicPool.listOfTopics)
-                { if (topic.status == Status.Live) { isProceed = true; break; } }
+                { if (topic.status == GlobalStatus.Live) { isProceed = true; break; } }
                 if (isProceed == true)
                 {
                     //check subType criteria
@@ -4252,7 +4252,7 @@ public class TopicManager : MonoBehaviour
                     //set all linked topics to Dormant status (they can go active next turn depending on their profile)
                     foreach (Topic topic in turnTopic.listOfLinkedTopics)
                     {
-                        topic.status = Status.Dormant;
+                        topic.status = GlobalStatus.Dormant;
                         topic.isCurrent = true;
                         if (isTestLog)
                         { Debug.LogFormat("[Tst] TopicManager.cs -> UpdateTopicTypeData: LINKED topic \"{0}\" set to Status.Dormant{1}", topic.name, "\n"); }
@@ -4267,14 +4267,14 @@ public class TopicManager : MonoBehaviour
                     //set all Buddy topics to status Done to prevent them being selected
                     foreach (Topic topic in turnTopic.listOfBuddyTopics)
                     {
-                        topic.status = Status.Done;
+                        topic.status = GlobalStatus.Done;
                         topic.isCurrent = false;
                         if (isTestLog)
                         { Debug.LogFormat("[Tst] TopicManager.cs -> UpdateTopicTypeData: BUDDY topic \"{0}\" set to Status.Done{1}", topic.name, "\n"); }
                     }
                 }
                 //current topic (Fail Safe measure -> should already be included in listOfBuddyTopics)
-                turnTopic.status = Status.Done;
+                turnTopic.status = GlobalStatus.Done;
             }
             //non-linked topic
             else
@@ -4282,12 +4282,12 @@ public class TopicManager : MonoBehaviour
                 //Current topic -> Back to Dormant if repeat, Done otherwise
                 if (turnTopic.timerRepeat > 0)
                 {
-                    turnTopic.status = Status.Dormant;
+                    turnTopic.status = GlobalStatus.Dormant;
                     turnTopic.isCurrent = true;
                 }
                 else
                 {
-                    turnTopic.status = Status.Done;
+                    turnTopic.status = GlobalStatus.Done;
                     turnTopic.isCurrent = false;
                 }
             }
@@ -4500,7 +4500,7 @@ public class TopicManager : MonoBehaviour
                                             if (topic.isDisabled == false)
                                             {
                                                 //check status
-                                                if (topic.status == Status.Live)
+                                                if (topic.status == GlobalStatus.Live)
                                                 {
                                                     //at least one valid topic present, exit
                                                     isValid = true;
@@ -4673,8 +4673,8 @@ public class TopicManager : MonoBehaviour
             if (turnTopic != null)
             {
                 //status active
-                if (turnTopic.status != Status.Live)
-                { Debug.LogWarningFormat("Invalid topic \"{0}\" status \"{1}\" (should be {2})", turnTopic.name, turnTopic.status, Status.Live); }
+                if (turnTopic.status != GlobalStatus.Live)
+                { Debug.LogWarningFormat("Invalid topic \"{0}\" status \"{1}\" (should be {2})", turnTopic.name, turnTopic.status, GlobalStatus.Live); }
                 //check correct topicSubType,
                 if (turnTopic.subType.name.Equals(turnTopicSubType.name, StringComparison.Ordinal) == false)
                 { Debug.LogWarningFormat("Invalid topic \"{0}\" has MISMATCH with topicSubType parent (is {1}, should be {2})", turnTopic.name, turnTopic.subType.name, turnTopicSubType.name); }
@@ -4907,20 +4907,20 @@ public class TopicManager : MonoBehaviour
                 {
                     case GroupType.Good:
                         //high opinion, good group
-                        listOfTopics.AddRange(inputList.Where(t => t.status == Status.Live &&
+                        listOfTopics.AddRange(inputList.Where(t => t.status == GlobalStatus.Live &&
                         t.group.name.Equals("Good", StringComparison.Ordinal)).ToList());
                         break;
                     case GroupType.Neutral:
                         //neutral opinion, use all Active topics
                         if (Random.Range(0, 100) < chanceNeutralGood)
-                        { listOfTopics.AddRange(inputList.Where(t => t.status == Status.Live && t.group.name.Equals("Good", StringComparison.Ordinal)).ToList()); }
+                        { listOfTopics.AddRange(inputList.Where(t => t.status == GlobalStatus.Live && t.group.name.Equals("Good", StringComparison.Ordinal)).ToList()); }
                         else
-                        { listOfTopics.AddRange(inputList.Where(t => t.status == Status.Live && t.group.name.Equals("Bad", StringComparison.Ordinal)).ToList()); }
+                        { listOfTopics.AddRange(inputList.Where(t => t.status == GlobalStatus.Live && t.group.name.Equals("Bad", StringComparison.Ordinal)).ToList()); }
                         break;
                     case GroupType.Bad:
                     case GroupType.VeryBad:
                         //low opinion, bad group
-                        listOfTopics.AddRange(inputList.Where(t => t.status == Status.Live &&
+                        listOfTopics.AddRange(inputList.Where(t => t.status == GlobalStatus.Live &&
                         t.group.name.Equals("Bad", StringComparison.Ordinal)).ToList());
                         break;
                     default:
@@ -4934,7 +4934,7 @@ public class TopicManager : MonoBehaviour
                     { Debug.LogFormat("[Tst] TopicManager.cs -> GetTopicGroup: No topics found for \"{0}\", group \"{1}\", All topics used{2}", subTypeName, group, "\n"); }
                     //exclude story types from this, if none found then return empty list
                     if (turnTopicType.name.Equals("Story", StringComparison.Ordinal) == false)
-                    { listOfTopics.AddRange(inputList.Where(t => t.status == Status.Live).ToList()); }
+                    { listOfTopics.AddRange(inputList.Where(t => t.status == GlobalStatus.Live).ToList()); }
                     else { Debug.LogWarningFormat("No valid story topic found for topicType.{0}, topicSubType.{1}", turnTopicType.name, turnTopicSubType.name); }
                 }
                 else
@@ -4950,19 +4950,19 @@ public class TopicManager : MonoBehaviour
                 {
                     case GroupType.Good:
                         //high opinion, good group
-                        listOfTopics.AddRange(inputList.Where(t => t.status == Status.Live &&
+                        listOfTopics.AddRange(inputList.Where(t => t.status == GlobalStatus.Live &&
                         t.subSubType.name.Equals(subSubTypeName, StringComparison.Ordinal) &&
                         t.group.name.Equals("Good", StringComparison.Ordinal)).ToList());
                         break;
                     case GroupType.Neutral:
                         //neutral opinion, use all Active topics
-                        listOfTopics.AddRange(inputList.Where(t => t.status == Status.Live &&
+                        listOfTopics.AddRange(inputList.Where(t => t.status == GlobalStatus.Live &&
                         t.subSubType.name.Equals(subSubTypeName, StringComparison.Ordinal)).ToList());
                         break;
                     case GroupType.Bad:
                     case GroupType.VeryBad:
                         //low opinion, bad group
-                        listOfTopics.AddRange(inputList.Where(t => t.status == Status.Live &&
+                        listOfTopics.AddRange(inputList.Where(t => t.status == GlobalStatus.Live &&
                         t.subSubType.name.Equals(subSubTypeName, StringComparison.Ordinal) &&
                         t.group.name.Equals("Bad", StringComparison.Ordinal)).ToList());
                         break;
@@ -4975,7 +4975,7 @@ public class TopicManager : MonoBehaviour
                 {
                     if (isTestLog)
                     { Debug.LogFormat("[Tst] TopicManager.cs -> GetActorContactTopics: No topics found for \"{0}\", {1}, group {2}, All relevant topics used{2}", subTypeName, subSubTypeName, group, "\n"); }
-                    listOfTopics.AddRange(inputList.Where(t => t.status == Status.Live &&
+                    listOfTopics.AddRange(inputList.Where(t => t.status == GlobalStatus.Live &&
                     t.subSubType.name.Equals(subSubTypeName, StringComparison.Ordinal)).ToList());
                 }
                 else
@@ -5074,7 +5074,7 @@ public class TopicManager : MonoBehaviour
         {
             if (string.IsNullOrEmpty(subSubTypeName) == false)
             {
-                if (listOfTopics.Exists(x => x.subSubType.name.Equals(subSubTypeName, StringComparison.Ordinal) && x.status == Status.Live))
+                if (listOfTopics.Exists(x => x.subSubType.name.Equals(subSubTypeName, StringComparison.Ordinal) && x.status == GlobalStatus.Live))
                 { return true; }
             }
             else { Debug.LogError("Invalid subSubTypeName (Null)"); }
@@ -5133,7 +5133,7 @@ public class TopicManager : MonoBehaviour
                 switch (GameManager.i.sideScript.authorityOverall)
                 {
                     case SideState.Human:
-                        if (GameManager.i.playerScript.status == ActorStatus.Active)
+                        if (GameManager.i.playerScript.Status == ActorStatus.Active)
                         { isValid = true; }
                         break;
                     case SideState.AI:
@@ -5150,7 +5150,7 @@ public class TopicManager : MonoBehaviour
                 switch (GameManager.i.sideScript.resistanceOverall)
                 {
                     case SideState.Human:
-                        if (GameManager.i.playerScript.status == ActorStatus.Active)
+                        if (GameManager.i.playerScript.Status == ActorStatus.Active)
                         { isValid = true; }
                         break;
                     case SideState.AI:

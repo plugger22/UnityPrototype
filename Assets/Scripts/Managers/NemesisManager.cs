@@ -67,10 +67,10 @@ public class NemesisManager : MonoBehaviour
 
     [HideInInspector] public Nemesis nemesis;
     [HideInInspector] public bool isShown;          //Fog of War setting for Nemesis
-    [HideInInspector] public bool isMoved;          //always shown at start while at city hall until it first moves
+    [HideInInspector] public bool isMoved;          //always shown at start while at city hall until it first moves (this is a global setting for a level as a whole)
 
     //flags
-    private bool hasMoved;                  //flag set true if Nemesis has moved during AI phase, reset at start of next AI phase
+    private bool hasMoved;                  //flag set true if Nemesis has moved during AI phase, reset at start of next AI phase (this is a tactical setting for an individual turn_
     private bool hasActed;                  //flag set true if Nemesis has spotted player and caused Damage during the AI phase
     private bool hasWarning;                //flag set true if Nemesis at same node, hasn't spotted player, and a warning issued ("You sense a dark shadow..."). Stops a double warning
     private bool isFirstNemesis;            //flag set true if first Nemesis, false for arrival of second Nemesis
@@ -1188,7 +1188,7 @@ public class NemesisManager : MonoBehaviour
                     { isValidPlayer = false; }
                     break;
                 case SideState.Human:
-                    if (GameManager.i.playerScript.status == ActorStatus.Inactive && GameManager.i.playerScript.inactiveStatus != ActorInactive.Breakdown)
+                    if (GameManager.i.playerScript.Status == ActorStatus.Inactive && GameManager.i.playerScript.InactiveStatus != ActorInactive.Breakdown)
                     { isValidPlayer = false; }
                     break;
                 default:
@@ -1522,7 +1522,7 @@ public class NemesisManager : MonoBehaviour
                         { isValidPlayer = false; }
                         break;
                     case SideState.Human:
-                        if (GameManager.i.playerScript.status == ActorStatus.Inactive && GameManager.i.playerScript.inactiveStatus != ActorInactive.Breakdown)
+                        if (GameManager.i.playerScript.Status == ActorStatus.Inactive && GameManager.i.playerScript.InactiveStatus != ActorInactive.Breakdown)
                         { isValidPlayer = false; }
                         break;
                     default:
@@ -2103,6 +2103,8 @@ public class NemesisManager : MonoBehaviour
     {
         NemesisSaveClass writeData = new NemesisSaveClass();
         //copy data over
+        writeData.isMoved = isMoved;
+        writeData.isShown = isShown;
         writeData.hasMoved = hasMoved;
         writeData.hasActed = hasActed;
         writeData.hasWarning = hasWarning;
@@ -2137,6 +2139,8 @@ public class NemesisManager : MonoBehaviour
         if (readData != null)
         {
             //copy data into NemesisManager.cs
+            isShown = readData.isShown;
+            isMoved = readData.isMoved;
             hasMoved = readData.hasMoved;
             hasActed = readData.hasActed;
             hasWarning = readData.hasWarning;

@@ -366,8 +366,8 @@ public class SideManager : MonoBehaviour
                 //update states
                 status = GameManager.i.aiScript.status;
                 inactiveStatus = GameManager.i.aiScript.inactiveStatus;
-                GameManager.i.playerScript.status = status;
-                GameManager.i.playerScript.inactiveStatus = inactiveStatus;
+                GameManager.i.playerScript.Status = status;
+                GameManager.i.playerScript.InactiveStatus = inactiveStatus;
                 GameManager.i.playerScript.isBreakdown = GameManager.i.aiScript.isBreakdown;
                 //player
                 switch (status)
@@ -441,8 +441,8 @@ public class SideManager : MonoBehaviour
                 //update states
                 status = GameManager.i.aiRebelScript.status;
                 inactiveStatus = GameManager.i.aiRebelScript.inactiveStatus;
-                GameManager.i.playerScript.status = status;
-                GameManager.i.playerScript.inactiveStatus = inactiveStatus;
+                GameManager.i.playerScript.Status = status;
+                GameManager.i.playerScript.InactiveStatus = inactiveStatus;
                 GameManager.i.playerScript.isBreakdown = GameManager.i.aiScript.isBreakdown;
                 //testManager.cs Invisibility
                 if (GameManager.i.testScript.playerInvisibility > -1)

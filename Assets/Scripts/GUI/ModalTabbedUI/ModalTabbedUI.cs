@@ -3661,7 +3661,7 @@ public class ModalTabbedUI : MonoBehaviour
         if (isPlayer == true)
         {
             //Player
-            tab0Header0.listOfItems[0].descriptor.text = GetStatus(GameManager.i.playerScript.status, GameManager.i.playerScript.inactiveStatus);
+            tab0Header0.listOfItems[0].descriptor.text = GetStatus(GameManager.i.playerScript.Status, GameManager.i.playerScript.InactiveStatus);
         }
         else
         {

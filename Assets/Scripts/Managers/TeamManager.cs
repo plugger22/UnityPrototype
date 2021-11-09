@@ -1796,7 +1796,7 @@ public class TeamManager : MonoBehaviour
                     Target target = GameManager.i.dataScript.GetTarget(node.targetName);
                     if (target != null)
                     {
-                        if (target.targetStatus == Status.Outstanding && target.ongoingID > -1)
+                        if (target.targetStatus == GlobalStatus.Outstanding && target.ongoingID > -1)
                         {
                             //contain target and shut down all ongoing node effects
                             GameManager.i.targetScript.ContainTarget(target);

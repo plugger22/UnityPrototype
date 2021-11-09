@@ -783,6 +783,9 @@ namespace packageAPI
     [System.Serializable]
     public class NemesisSaveClass
     {
+        public bool isShown;
+        public bool isMoved;
+
         public bool hasMoved;
         public bool hasActed;
         public bool hasWarning;

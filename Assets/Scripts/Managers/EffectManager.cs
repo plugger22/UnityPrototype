@@ -597,7 +597,7 @@ public class EffectManager : MonoBehaviour
                                             {
                                                 case "TargetPresent":
                                                     //There must be at least one Live target
-                                                    List<Target> listOfLiveTargets = GameManager.i.dataScript.GetTargetPool(Status.Live);
+                                                    List<Target> listOfLiveTargets = GameManager.i.dataScript.GetTargetPool(GlobalStatus.Live);
                                                     if (listOfLiveTargets != null)
                                                     {
                                                         if (listOfLiveTargets.Count == 0)
@@ -1179,12 +1179,12 @@ public class EffectManager : MonoBehaviour
                                                 break;
                                             case "PlayerCapturedNo":
                                                 //Player (Human) not captured
-                                                if (GameManager.i.playerScript.status == ActorStatus.Captured)
+                                                if (GameManager.i.playerScript.Status == ActorStatus.Captured)
                                                 { BuildString(result, string.Format("Player Captured{0}", "\n")); }
                                                 break;
                                             case "PlayerCapturedYes":
                                                 //Player (Human) not captured
-                                                if (GameManager.i.playerScript.status != ActorStatus.Captured)
+                                                if (GameManager.i.playerScript.Status != ActorStatus.Captured)
                                                 { BuildString(result, string.Format("Player not Captured{0}", "\n")); }
                                                 break;
                                             case "InnocenceHigh":
