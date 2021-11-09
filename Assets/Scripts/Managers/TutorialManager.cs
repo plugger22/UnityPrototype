@@ -1186,11 +1186,12 @@ public class TutorialManager : MonoBehaviour
     #region FailSandboxOutcome
     /// <summary>
     /// Fail state message for tutorialSandbox. Customise with top text. Appears in infoPipeline (if multiple fails in same turn only the first will show) 
+    /// 'reason' is a couple of words at most. Why they failed, eg. 'Nemesis'
     /// </summary>
     /// <param name="topText"></param>
-    public void FailSandboxOutcome(string topText)
+    public void FailSandboxOutcome(string topText, string reason)
     {
-        Debug.LogFormat("[Tut] TutorialManager.cs -> FailSandboxOutcome: Sandbox tutorial attempt FAILED{0}", "\n");
+        Debug.LogFormat("[Tut] TutorialManager.cs -> FailSandboxOutcome: Sandbox tutorial attempt FAILED ({0}){1}", reason, "\n");
         //player failed sandbox tutorial
         SetSandbox(false);
         //dialogue

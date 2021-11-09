@@ -1376,6 +1376,8 @@ public class NodeManager : MonoBehaviour
                     }
                 }
                 //Nemesis current node (Resistance side only if FOW ON & Nemesis present)
+
+                /*
                 proceedFlag = true;
                 if (GameManager.i.sideScript.PlayerSide.level == globalResistance.level)
                 {
@@ -1385,7 +1387,9 @@ public class NodeManager : MonoBehaviour
                     else if (GameManager.i.nemesisScript.nemesis == null)
                     { proceedFlag = false; }
                 }
-                if (proceedFlag == true)
+                */
+
+                if (GameManager.i.nemesisScript.ShowNemesis() == true)
                 {
                     //Nemesis node
                     if (nodeNemesis > -1)

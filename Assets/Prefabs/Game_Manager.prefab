@@ -6359,7 +6359,10 @@ MonoBehaviour:
   tutorial: {fileID: 0}
   set: {fileID: 0}
   index: 0
+  playerStartNode: -1
+  numOfSandboxTries: 0
   isSandbox: 0
+  isSandboxReset: 0
   option0Tag: 
   option1Tag: 
   option2Tag: 
@@ -6447,6 +6450,7 @@ MonoBehaviour:
   numOfGearItems: -1
   numOfWorkers: 8
   bonusPower: 0
+  showNemesis: 0
   conditionTurnAuthority: -1
   conditionWhoAuthority: 999
   condtionAuthority: {fileID: 0}
@@ -6549,6 +6553,7 @@ MonoBehaviour:
   controlPowerCost: 1
   nemesis: {fileID: 0}
   isShown: 0
+  isMoved: 0
 --- !u!114 &114621988062562700
 MonoBehaviour:
   m_ObjectHideFlags: 1

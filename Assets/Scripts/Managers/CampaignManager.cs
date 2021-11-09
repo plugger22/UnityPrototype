@@ -152,10 +152,7 @@ public class CampaignManager : MonoBehaviour
             else { Debug.LogError("Invalid mission (Null) for scenario"); }
             // Nemesis -> may or may not be present
             if (scenario.challengeResistance.nemesisFirst != null)
-            {
-                GameManager.i.nemesisScript.nemesis = scenario.challengeResistance.nemesisFirst;
-                GameManager.i.nemesisScript.Initialise();
-            }
+            { GameManager.i.nemesisScript.Initialise(); }
             else { Debug.LogFormat("[Nem] CampaignManager.cs -> InitialiseLate: No Nemesis present in Scenario{0}", "\n"); }
         }
         else { Debug.LogError("Invalid scenario Challenge (Null)"); }

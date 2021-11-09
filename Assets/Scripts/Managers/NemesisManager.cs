@@ -66,7 +66,8 @@ public class NemesisManager : MonoBehaviour
 
 
     [HideInInspector] public Nemesis nemesis;
-    [HideInInspector] public bool isShown;        //Fog of War setting for Nemesis
+    [HideInInspector] public bool isShown;          //Fog of War setting for Nemesis
+    [HideInInspector] public bool isMoved;          //always shown at start while at city hall until it first moves
 
     //flags
     private bool hasMoved;                  //flag set true if Nemesis has moved during AI phase, reset at start of next AI phase
@@ -112,7 +113,7 @@ public class NemesisManager : MonoBehaviour
     private string colourGrey;*/
 
 
-
+    #region Initialise
     /// <summary>
     /// Initialise data ready for Nemesis -> Called from CampaignManager.cs -> InitialiseLate
     /// </summary>
@@ -149,7 +150,7 @@ public class NemesisManager : MonoBehaviour
                 break;
         }
     }
-
+    #endregion
 
     #region Initialise SubMethods
 
@@ -195,6 +196,7 @@ public class NemesisManager : MonoBehaviour
 
     #endregion
 
+    #region OnEvent
     /// <summary>
     /// handles events
     /// </summary>
@@ -214,7 +216,9 @@ public class NemesisManager : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
+    #region SetColours
     /// <summary>
     /// set colour palette for Generic Tool tip
     /// </summary>
@@ -228,51 +232,84 @@ public class NemesisManager : MonoBehaviour
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);*/
     }
+    #endregion
 
+    #region InitialiseNemesis
     /// <summary>
     /// Set nemesis up at city hall
     /// </summary>
     public void InitialiseNemesis()
     {
-        //Debug (FOW OFF)
-        isShown = true;
-        isFirstNemesis = true;
-        //assign nemesis to a starting node
-        int nemesisNodeID = -1;
-        //Nemesis always starts at city Centre
-        Node node = GameManager.i.dataScript.GetNode(GameManager.i.cityScript.cityHallDistrictID);
-        if (node != null)
+        nemesis = GameManager.i.campaignScript.scenario.challengeResistance.nemesisFirst;
+        if (nemesis != null)
         {
-            nemesisNodeID = node.nodeID;
-            nemesisNode = node;
-            Debug.LogFormat("[Nem] NemesisManager.cs -> Initialise: Nemesis starts at node {0}, {1}, id {2}{3}", node.nodeName, node.Arc.name, node.nodeID, "\n");
-            //assign node
-            GameManager.i.nodeScript.nodeNemesis = nemesisNodeID;
+            //default don't show nemesis (except at start until it moves). Can be overriden by setting in testManager.cs
+            isShown = GameManager.i.testScript.showNemesis;
+            isMoved = false;
+            isFirstNemesis = true;
+            //assign nemesis to a starting node
+            int nemesisNodeID = -1;
+            //Nemesis always starts at city Centre
+            Node node = GameManager.i.dataScript.GetNode(GameManager.i.cityScript.cityHallDistrictID);
+            if (node != null)
+            {
+                nemesisNodeID = node.nodeID;
+                nemesisNode = node;
+                Debug.LogFormat("[Nem] NemesisManager.cs -> Initialise: Nemesis starts at node {0}, {1}, id {2}{3}", node.nodeName, node.Arc.name, node.nodeID, "\n");
+                //assign node
+                GameManager.i.nodeScript.nodeNemesis = nemesisNodeID;
+            }
+            else { Debug.LogError("Invalid node (Null)"); }
+            //Nemesis AI -> nemesis does nothing for 'x' turns at game start
+            durationDelay = GameManager.i.scenarioScript.scenario.challengeResistance.gracePeriodFirst;
+            if (GameManager.i.inputScript.GameState == GameState.Tutorial)
+            {
+                //tutorial override
+                durationDelay = 0;
+            }
+            if (durationDelay > 0)
+            {
+                //grace period, start inactive
+                SetNemesisMode(NemesisMode.Inactive);
+            }
+            else
+            {
+                //NO grace period, start in normal mode, waiting for signs of player
+                SetNemesisMode(NemesisMode.NORMAL);
+            }
         }
-        else { Debug.LogError("Invalid node (Null)"); }
-        //Nemesis AI -> nemesis does nothing for 'x' turns at game start
-        durationDelay = GameManager.i.scenarioScript.scenario.challengeResistance.gracePeriodFirst;
-        if (GameManager.i.inputScript.GameState == GameState.Tutorial)
-        {
-            //tutorial override
-            durationDelay = 0;
-        }
-        if (durationDelay > 0)
-        {
-            //grace period, start inactive
-            SetNemesisMode(NemesisMode.Inactive);
-        }
-        else
-        {
-            //NO grace period, start in normal mode, waiting for signs of player
-            SetNemesisMode(NemesisMode.NORMAL);
-        }
+        else { Debug.LogError("Invalid Nemesis (Null)"); }
     }
+    #endregion
 
-
+    #region SetResistancePlayer
     public void SetResistancePlayer(SideState state)
     { resistancePlayer = state; }
+    #endregion
 
+    #region ShowNemesis
+    /// <summary>
+    /// Used by NodeManager.cs -> Redraw nodes to decide whether to show the nemesis on the map, or not. Returns true if so
+    /// </summary>
+    /// <returns></returns>
+    public bool ShowNemesis()
+    {
+        if (nemesis != null)
+        {
+            if (isShown == true)
+            { return true; }
+            else
+            {
+                //isShown false but show at start while Nemesis at city hall UNTIL it first moves
+                if (isMoved == false)
+                { return true; }
+            }
+        }
+        return false;
+    }
+    #endregion
+
+    #region ProcessNemesis
     /// <summary>
     /// called by AIManager.cs -> AISideAuthority, handles all nemesis turn processing methods. 
     /// NOTE: Nemesis checked for null by calling method
@@ -310,7 +347,9 @@ public class NemesisManager : MonoBehaviour
             ProcessNemesisAdminEnd();
         }
     }
+    #endregion
 
+    #region ProcessNemesisAdminStart
     /// <summary>
     /// Nemesis related matters that need to be reset, or taken care off, prior to nemesis turn processing
     /// </summary>
@@ -319,7 +358,9 @@ public class NemesisManager : MonoBehaviour
         hasMoved = false;
         hasActed = false;
     }
+    #endregion
 
+    #region ProcessNemesisAdminEnd
     /// <summary>
     /// Nemesis related matters that need to be reset, or taken care off, at end of nemesis turn processing
     /// </summary>
@@ -361,7 +402,9 @@ public class NemesisManager : MonoBehaviour
             }
         }
     }
+    #endregion
 
+    #region ProcessNemesisActivity
     /// <summary>
     /// master AI for nemesis. AIManager.cs -> ProcessErasureTarget provides an update on recent player activity and gives AITracker data (null if nothing to reports)
     /// </summary>
@@ -563,7 +606,9 @@ public class NemesisManager : MonoBehaviour
         }
         else { Debug.LogErrorFormat("Invalid nemesisNode (Null) for nodeID {0}", nodeID); }
     }
+    #endregion
 
+    #region ProcessNemesisPlayerControlled
     /// <summary>
     /// Alternative to ProcessNemesisActivity when nemesis is under direct control of Authority player. Parameters are there solely to pass on if AI takes back control. No effect if Player controlled.
     /// </summary>
@@ -627,7 +672,9 @@ public class NemesisManager : MonoBehaviour
         }
 
     }
+    #endregion
 
+    #region SetPlayerControlStart
     /// <summary>
     /// Player has opted to directly control nemesis
     /// </summary>
@@ -667,7 +714,9 @@ public class NemesisManager : MonoBehaviour
         }
         else { Debug.LogWarningFormat("Can't take control of Nemesis because cooldown Timer still active ({0} turns)", controlCooldownTimer); }
     }
+    #endregion
 
+    #region SetPlayerControlEnd
     /// <summary>
     /// Player control of Nemesis has ended. Nemesis reverts back to Normal / Loiter, cooldown period activated (interval before player can resume control again)
     /// </summary>
@@ -683,7 +732,9 @@ public class NemesisManager : MonoBehaviour
         //log
         Debug.LogFormat("[Nem] NemesisManager.cs -> SetPlayerControlStart: Authority Player NO LONGER has control of Nemesis, cooldown period {0}{1}", durationControlCoolDown, "\n");
     }
+    #endregion
 
+    #region SetNemesisMode
     /// <summary>
     /// sets mode and all associated variables in a consistent manner
     /// </summary>
@@ -727,10 +778,11 @@ public class NemesisManager : MonoBehaviour
             default:
                 Debug.LogWarningFormat("Invalid mode \"{0}\"", requiredMode);
                 break;
-
         }
     }
+    #endregion
 
+    #region SetNemesisGoal
     /// <summary>
     /// sets goal and all associated variables in a consistent manner.
     /// </summary>
@@ -777,7 +829,9 @@ public class NemesisManager : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
+    #region ProcessNemesisHunt
     /// <summary>
     /// Player activity detected this turn (HUNT mode / MOVETO goal)
     /// </summary>
@@ -865,7 +919,9 @@ public class NemesisManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid targetNodeID (-1)"); }
     }
+    #endregion
 
+    #region ProcessNemesisGoal
     /// <summary>
     /// Nemesis proceeds with curent goal
     /// </summary>
@@ -956,7 +1012,9 @@ public class NemesisManager : MonoBehaviour
             }
         }
     }
+    #endregion
 
+    #region ProcessNemesisMoveTo
     /// <summary>
     /// specific MoveTo goal where Nemesis heads to a target nodeID at their maximum move allowance
     /// </summary>
@@ -1026,7 +1084,9 @@ public class NemesisManager : MonoBehaviour
             SetNemesisGoal(NemesisGoal.SEARCH);
         }
     }
+    #endregion
 
+    #region ProcessNemesisMove
     /// <summary>
     /// method to move nemesis one link. Handles admin and player and contact interaction checks. moveNumber is number of move in sequential order for this turn. '0' is for first move.
     /// NOTE: Assumed to be a single link move.
@@ -1036,6 +1096,8 @@ public class NemesisManager : MonoBehaviour
     private bool ProcessNemesisMove(int nodeID, int moveNumber = 0)
     {
         bool isSpotted = false;
+        //has moved at least once (no longer show nemesis unless specifically requested to do so)
+        isMoved = true;
         //check if node is a neighbour of current nemesis node (assumed to be a single link move)
         if (nemesisNode.CheckNeighbourNodeID(nodeID) == true)
         {
@@ -1096,12 +1158,13 @@ public class NemesisManager : MonoBehaviour
         else
         {
             Debug.LogWarningFormat("Invalid move nodeId (Doesn't match any of neighbours) for nodeID {0} and nemesisNode {1}, {2}, id {3}{4}", nodeID, nemesisNode.nodeName, nemesisNode.Arc.name,
-         nemesisNode.nodeID, "\n");
+                nemesisNode.nodeID, "\n");
         }
         return isSpotted;
     }
+    #endregion
 
-
+    #region ProcessPlayerInteraction
     /// <summary>
     /// nemesis and player at same node. For end of turn checks set 'isPlayerMove' to false as this tweaks modal setting of outcome window to handle MainInfoApp, leave as default true otherwise
     /// returns true if player spotted by nemesis. 
@@ -1268,7 +1331,9 @@ public class NemesisManager : MonoBehaviour
         }
         return isSpotted;
     }
+    #endregion
 
+    #region GetSearchRatingAdjusted
     /// <summary>
     /// returns Nemesis Search rating after adjusting for mode and activiy
     /// </summary>
@@ -1282,7 +1347,9 @@ public class NemesisManager : MonoBehaviour
         searchRating = Mathf.Clamp(searchRating, 1, 3);
         return searchRating;
     }
+    #endregion
 
+    #region GetStealthRatingAdjusted
     /// <summary>
     /// returns Nemesis Stealth rating after adjusting for mode and activiy
     /// </summary>
@@ -1298,7 +1365,9 @@ public class NemesisManager : MonoBehaviour
         { stealthRating += 999; }
         return stealthRating;
     }
+    #endregion
 
+    #region ProcessContactInteraction
     /// <summary>
     /// nemesis at same node as one or more resistance contacts. moveNumber is the sequential move in the sequence of moves for this turn, '0' being the first
     /// </summary>
@@ -1371,7 +1440,9 @@ public class NemesisManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid listOfActorsWithContactsAtNode (Null)"); }
     }
+    #endregion
 
+    #region CheckNemesisContactSighting
     /// <summary>
     /// Check if nemesis spotted by Contacts at start of a turn where the nemesis hasn't moved
     /// </summary>
@@ -1412,7 +1483,9 @@ public class NemesisManager : MonoBehaviour
             }
         }
     }
+    #endregion
 
+    #region CheckNemesisTracerSighting
     /// <summary>
     /// check if nemesis automatically spotted by a Tracer that is inserted in the node they are currently in. Will run regardless of 'hasWarning' (additional info from a secondary source)
     /// </summary>
@@ -1425,7 +1498,9 @@ public class NemesisManager : MonoBehaviour
             GameManager.i.messageScript.TracerNemesisSpotted(text, nemesisNode, nemesis, moveNumber);
         }
     }
+    #endregion
 
+    #region CheckNemesisAtPlayerNode
     /// <summary>
     /// check if nemesis is at the same node as the player. Used when nemesis hasn't moved (start of turn, 'isPlayerMove' false) and when player moving to a new node ('isPlayerMove' true)
     /// if nemesis stationary at start of turn there is a further check to prevent nemesis damaging the player twice in a row if they have already done so during the AI turn
@@ -1490,7 +1565,9 @@ public class NemesisManager : MonoBehaviour
             }
         }
     }
+    #endregion
 
+    #region ProcessPlayerDamage
     /// <summary>
     /// called whenever Nemesis spots and catches player. Both assumed to be at the same node.
     /// </summary>
@@ -1593,16 +1670,19 @@ public class NemesisManager : MonoBehaviour
                 { Debug.LogWarningFormat("Nemesis Damage infoPipeline message FAILED to be added to dictOfPipeline"); }
                 //Sandbox tutorial
                 if (GameManager.i.inputScript.GameState == GameState.Tutorial && GameManager.i.tutorialScript.CheckIfSandbox() == true)
-                { GameManager.i.tutorialScript.FailSandboxOutcome("So that Cyber Hound bit you on the rear end, did it?"); }
+                { GameManager.i.tutorialScript.FailSandboxOutcome("So that Cyber Hound bit you on the rear end, did it?", "Nemesis"); }
             }
         }
         else { Debug.LogWarning("Invalid damage (Null)"); }
     }
+    #endregion
 
+    #region Loiter...
     //
     // - - - Loiter - - -
     //
 
+    #region SetLoiterNodes
     /// <summary>
     /// Sets up a list (max 3) of nodes which are well-connected and, hopefully, centred, where the nemesis can sit and wait for developments
     /// </summary>
@@ -1734,7 +1814,9 @@ public class NemesisManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfMostConnectedNodes (Null)"); }
     }
+    #endregion
 
+    #region SetLoiterData
     /// <summary>
     /// Takes loiter nodes and configueres a LoiterData package for each individual node for quick reference by nemesis
     /// </summary>
@@ -1843,11 +1925,16 @@ public class NemesisManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfLoiterNodes (Null)"); }
     }
+    #endregion
 
+    #endregion
+
+    #region Debug...
     //
     // - - - Debug - - -
     //
 
+    #region DebugShowNemsisStatus
     /// <summary>
     /// Debug method to display nemesis status
     /// </summary>
@@ -1919,7 +2006,16 @@ public class NemesisManager : MonoBehaviour
         builder.AppendFormat(" controlGoal: {0}{1}", controlGoal, "\n");
         return builder.ToString();
     }
+    #endregion
 
+    #endregion
+
+    #region StubMethods...
+    //
+    // - - - Stub Methods
+    //
+
+    #region CheckNemesisActive
     /// <summary>
     /// returns true if Nemesis is active (Normal or Hunt modes), false if Inactive. NOTE: Assumes Nemesis is present (use CheckNemesisPresent to determine this)
     /// </summary>
@@ -1929,14 +2025,18 @@ public class NemesisManager : MonoBehaviour
         if (mode != NemesisMode.Inactive) { return true; }
         return false;
     }
+    #endregion
 
+    #region CheckNemesis Present
     /// <summary>
     /// returns true if a Nemesis is present, false if not
     /// </summary>
     /// <returns></returns>
     public bool CheckNemesisPresent()
     { return nemesis != null ? true : false; }
+    #endregion
 
+    #region CheckNemesisAmbush
     /// <summary>
     /// returns true if Nemesis currently has an Ambush goal, false otherwise
     /// </summary>
@@ -1946,7 +2046,9 @@ public class NemesisManager : MonoBehaviour
         if (goal == NemesisGoal.AMBUSH) { return true; }
         return false;
     }
+    #endregion
 
+    #region CheckNemesisSearch
     /// <summary>
     /// returns true if Nemesis currently has a Search goal, false otherwise
     /// </summary>
@@ -1956,10 +2058,14 @@ public class NemesisManager : MonoBehaviour
         if (goal == NemesisGoal.SEARCH) { return true; }
         return false;
     }
+    #endregion
 
+    #region GetMode
     public NemesisMode GetMode()
     { return mode; }
+    #endregion
 
+    #region GetGoal
     /// <summary>
     /// returns normal nemesis goal or Player controlled goal
     /// </summary>
@@ -1970,18 +2076,25 @@ public class NemesisManager : MonoBehaviour
         if (isControl == false) { return goal; }
         return controlGoal;
     }
+    #endregion
 
+    #region GetDurationMode
     /// <summary>
     /// returns duration, in turns, of nemesis being inactive or in hunt mode
     /// </summary>
     /// <returns></returns>
     public int GetDurationMode()
     { return durationDelay; }
+    #endregion
 
+    #endregion
+
+    #region Save/Load...
     //
     // - - - Save / Load
     //
 
+    #region WriteSaveData
     /// <summary>
     /// populates Save data class and returns the same
     /// </summary>
@@ -2012,7 +2125,9 @@ public class NemesisManager : MonoBehaviour
         writeData.resistancePlayer = resistancePlayer;
         return writeData;
     }
+    #endregion
 
+    #region ReadSaveData
     /// <summary>
     /// update nemesisManager.cs with loaded save file data
     /// </summary>
@@ -2046,6 +2161,9 @@ public class NemesisManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid NemesisSaveClass (Null)"); }
     }
+    #endregion
+
+    #endregion
 
 
 

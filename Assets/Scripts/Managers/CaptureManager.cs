@@ -266,7 +266,7 @@ public class CaptureManager : MonoBehaviour
             { Debug.LogWarningFormat("Player Captured infoPipeline message FAILED to be added to dictOfPipeline"); }
             //Sandbox tutorial
             if (GameManager.i.inputScript.GameState == GameState.Tutorial && GameManager.i.tutorialScript.CheckIfSandbox() == true)
-            { GameManager.i.tutorialScript.FailSandboxOutcome("They got you. That's a worry"); }
+            { GameManager.i.tutorialScript.FailSandboxOutcome("They got you. That's a worry", "Erasure Team"); }
         }
         else
         {

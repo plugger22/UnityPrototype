@@ -1289,7 +1289,7 @@ public class TurnManager : MonoBehaviour
         {
             //tutorial sandbox
             if (GameManager.i.inputScript.GameState == GameState.Tutorial && GameManager.i.tutorialScript.CheckIfSandbox() == true)
-            { GameManager.i.tutorialScript.FailSandboxOutcome("You've run out of time"); }
+            { GameManager.i.tutorialScript.FailSandboxOutcome("You've run out of time", "Time"); }
             else
             {
                 topText = string.Format("Your Mission timer ({0}{1} turns{2}) has EXPIRED", colourNeutral, scenarioTimer, colourEnd);

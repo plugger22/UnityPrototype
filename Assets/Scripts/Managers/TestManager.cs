@@ -32,6 +32,10 @@ public class TestManager : MonoBehaviour
     [Tooltip("Bonus Power given to player at start of every MetaGame, default 0")]
     [Range(0, 10)] public int bonusPower = 0;
 
+    [Header("Nemesis")]
+    [Tooltip("Nemesis will be shown on map at all times if true, otherwise according to standard rules (shown only at start until it moves")]
+    public bool showNemesis;
+
     [Header("Authority Player AutoRun tests")]
     [Tooltip("Specify a turn (LESS THAN autorun period, ignored otherwise) where the indicated Condition will be given to the Authority player")]
     public int conditionTurnAuthority = -1;
