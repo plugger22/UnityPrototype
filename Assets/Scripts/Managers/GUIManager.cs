@@ -966,6 +966,10 @@ public class GUIManager : MonoBehaviour
                             text = string.Format("You are on {0}STRESS LEAVE{1}", colourNeutral, colourEnd);
                             sprite = GameManager.i.spriteScript.infoSprite;
                             break;
+                        case ActorInactive.TutorialSandboxFail:
+                            text = string.Format("{0}Take a breather. We'll reset the simulation{1}", colourAlert, colourEnd);
+                            sprite = GameManager.i.tutorialScript.tutorial.sprite;
+                            break;
                     }
                     break;
             }

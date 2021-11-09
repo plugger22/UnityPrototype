@@ -6599,3 +6599,44 @@ City seed 40311 -> VirtualCity, Eurasia
 
 Dev seed 43272 -> Tuesday, 9 November 2021 4:07 PM
 City seed 45614 -> VirtualCity, Eurasia
+
+Dev seed 21598 -> Tuesday, 9 November 2021 4:25 PM
+City seed 14556 -> VirtualCity, Eurasia
+
+Dev seed 20794 -> Tuesday, 9 November 2021 4:38 PM
+City seed 61693 -> VirtualCity, Eurasia
+WARNING Invalid nodeID -1 for Player status "Inactive", inactive status "TutorialSandboxFail"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	NodeManager:GetPlayerNodeID() (at Assets/Scripts/Managers/NodeManager.cs:611)
+	NemesisManager:ProcessNemesisMove(Int32, Int32) (at Assets/Scripts/Managers/NemesisManager.cs:1113)
+	NemesisManager:ProcessNemesisMoveTo() (at Assets/Scripts/Managers/NemesisManager.cs:1056)
+	NemesisManager:ProcessNemesisGoal() (at Assets/Scripts/Managers/NemesisManager.cs:962)
+	NemesisManager:ProcessNemesisHunt() (at Assets/Scripts/Managers/NemesisManager.cs:917)
+	NemesisManager:ProcessNemesisActivity(AITracker, Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:579)
+	NemesisManager:ProcessNemesis(AITracker, Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:344)
+	AIManager:ProcessNemesis() (at Assets/Scripts/Managers/AIManager.cs:696)
+	AIManager:ProcessAISideAuthority() (at Assets/Scripts/Managers/AIManager.cs:682)
+	TurnManager:EndTurnAI() (at Assets/Scripts/Managers/TurnManager.cs:629)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:356)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:195)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	NewTurnUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/NewTurnUI.cs:179)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 21772 -> Tuesday, 9 November 2021 5:05 PM
+City seed 14766 -> VirtualCity, Eurasia
+ERROR _actionsTotal exceeded by _actionsCurrent
+UnityEngine.Debug:LogError(Object)
+	TurnManager:UseAction(String) (at Assets/Scripts/Managers/TurnManager.cs:783)
+	ModalOutcome:CloseModalOutcome() (at Assets/Scripts/GUI/ModalOutcome.cs:648)
+	<RunCloseSequence>c__Iterator4:MoveNext() (at Assets/Scripts/GUI/ModalOutcome.cs:588)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 60807 -> Tuesday, 9 November 2021 5:12 PM
+City seed 41272 -> Londus, Eurasia
+
+Dev seed 35250 -> Tuesday, 9 November 2021 5:12 PM
+City seed 56256 -> VirtualCity, Eurasia
+
+Dev seed 40138 -> Tuesday, 9 November 2021 5:18 PM
+City seed 42346 -> VirtualCity, Eurasia

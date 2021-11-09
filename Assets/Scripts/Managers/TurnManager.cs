@@ -651,7 +651,7 @@ public class TurnManager : MonoBehaviour
         if (unusedActions > 0 && GameManager.i.sideScript.CheckInteraction() == true)
         { GameManager.i.playerScript.ProcessDoNothing(unusedActions); }
         //broadcast event
-        EventManager.i.PostNotification(EventType.EndTurnEarly, this, null, "TurnManager.cs -> StartTurnLate");
+        EventManager.i.PostNotification(EventType.EndTurnEarly, this, null, "TurnManager.cs -> EndTurnEarly");
     }
     #endregion
 
@@ -777,10 +777,15 @@ public class TurnManager : MonoBehaviour
             }
             //zero out actions if player no longer active
             if (GameManager.i.playerScript.Status != ActorStatus.Active)
-            { _actionsCurrent = _actionsTotal; }
+            {
+                _actionsCurrent = _actionsTotal;
+                remainder = 0;
+            }
             //fail safe check
             if (remainder < 0)
-            { Debug.LogError("_actionsTotal exceeded by _actionsCurrent"); }
+            {
+                Debug.LogWarningFormat("_actionsTotal exceeded by _actionsCurrent");
+            }
             else
             { EventManager.i.PostNotification(EventType.ChangeActionPoints, this, remainder, "TurnManager.cs -> UseAction"); }
             //new turn UI if no more actions

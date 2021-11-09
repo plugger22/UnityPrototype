@@ -156,7 +156,7 @@
                                                                                                 //change MetaManager.cs -> InitialiseHQ
 
     public enum ActorStatus { Active, Inactive, Reserve, RecruitPool, Captured, Dismissed, Promoted, Killed, Resigned, HQ }
-    public enum ActorInactive { None, LieLow, Breakdown, StressLeave, Dormant}                               //reason actor is inactive
+    public enum ActorInactive { None, LieLow, Breakdown, StressLeave, Dormant, TutorialSandboxFail}                               //reason actor is inactive
     public enum ActorList { None, Reserve, Promoted, Dismissed, Disposed, Resigned, HQ}             //used as a parameter only to access lists (DataManager.cs -> GetActorList)
     public enum ActorTooltip { None, Breakdown, LieLow, Captured, Leave, Dormant}                            //actor sprite shows a relevant tooltip if other than 'None'
     public enum ActorDatapoint { Datapoint0, Influence0, Contacts0, Datapoint1, Opinion1, Ability2, Invisibility2, Datapoint2}    //interchangeable. Use whichever one is appropriate

@@ -1210,14 +1210,16 @@ public class TutorialManager : MonoBehaviour
         if (GameManager.i.guiScript.InfoPipelineAdd(outcomeTutorial) == false)
         { Debug.LogWarningFormat("Fail Tutorial infoPipeline message FAILED to be added to dictOfPipeline"); }
 
-        /*
-        //end turn immediately
-        EventManager.i.PostNotification(EventType.NewTurn, this, set, "TutorialManager.cs -> FailSandboxOutcome");
-        */
-
-        
+       
         //reset turn
         GameManager.i.turnScript.ResetTurn();
+        //change player status (prevents MainInfoApp showing at end of turn)
+        GameManager.i.playerScript.Status = ActorStatus.Inactive;
+        GameManager.i.playerScript.InactiveStatus = ActorInactive.TutorialSandboxFail;
+        //set node as needed during reset purpose and could be an error if player has been captured and then status changed to TutorialSandboxFail
+        GameManager.i.nodeScript.nodePlayer = playerStartNode;
+        //zero out actions (no more for turn)
+        GameManager.i.turnScript.SetActionsToZero();
     }
     #endregion
 
