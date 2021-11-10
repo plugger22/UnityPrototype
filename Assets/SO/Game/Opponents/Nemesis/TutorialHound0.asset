@@ -15,6 +15,6 @@ MonoBehaviour:
     prey. A bite from the Cyber Hound will embed a tracking device in the target.
   tag: Cyber Hound Pup
   movement: 1
-  searchRating: 2
+  searchRating: 3
   stealthRating: 1
   damage: {fileID: 11400000, guid: abe106254ab83204f9e732d8b964e2b1, type: 2}

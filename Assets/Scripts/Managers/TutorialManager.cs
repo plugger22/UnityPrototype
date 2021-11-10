@@ -1210,11 +1210,76 @@ public class TutorialManager : MonoBehaviour
         Debug.LogFormat("[Tut] TutorialManager.cs -> FailSandboxOutcome: Sandbox tutorial attempt FAILED ({0}){1}", reason, "\n");
         //player failed sandbox tutorial
         SetSandboxFlag(false);
+        //block mainInfoApp from showing at end of this turn
+        GameManager.i.guiScript.BlockInfoApp();
+        //messages
+        ProcessSandboxFailMessage(topText);
+        ProcessSandboxResetMessage();
+        //reset turn
+        GameManager.i.turnScript.ResetTurn();
+        //set node as needed during reset purpose and could be an error if player has been captured and then status changed to TutorialSandboxFail
+        GameManager.i.nodeScript.nodePlayer = playerStartNode;
+        //zero out actions (no more for turn) and instigate new turn
+        GameManager.i.turnScript.SetActionsToZero();
+    }
+    #endregion
+
+    #region ProcessSandboxHelpMessage
+    /// <summary>
+    /// provides a context sensitive help message from Fred, your trainer, during the sandbox provided no other tutorial message is present (which would be a win or fail state message)
+    /// </summary>
+    public void ProcessSandboxHelpMessage()
+    {
+        //randomise message (not all the time)
+        if (Random.Range(0, 100) < 50)
+        {
+            //ignore message if already a tutorial related win/fail one in the queue
+            if (GameManager.i.guiScript.CheckInfoPipeline(MsgPipelineType.TutorialSucceed) == false && GameManager.i.guiScript.CheckInfoPipeline(MsgPipelineType.TutorialFail) == false)
+            {
+                //dialogue
+                ModalOutcomeDetails outcomeTutorial = new ModalOutcomeDetails
+                {
+                    textTop = GameManager.Formatt("Hi, I'm here to give you tips", ColourType.moccasinText),
+                    textBottom = "What can I say? Do you best and wear clean underpants",
+                    sprite = GameManager.i.tutorialScript.tutorial.sprite,
+                    isAction = false,
+                    side = GameManager.i.globalScript.sideResistance,
+                    isSpecial = true,
+                    isSpecialGood = true,
+                    type = MsgPipelineType.Tutorial
+                };
+                //end of turn outcome window which needs to overlay ontop of InfoAPP and requires a different than normal modal setting
+                if (GameManager.i.guiScript.InfoPipelineAdd(outcomeTutorial) == false)
+                { Debug.LogWarningFormat("Tutorial infoPipeline message FAILED to be added to dictOfPipeline"); }
+            }
+        }
+    }
+    #endregion
+
+    #region ProcessSandboxFailMessage
+    /// <summary>
+    /// provides a context sensitive message for a sandbox tutorial fail
+    /// </summary>
+    private void ProcessSandboxFailMessage(string textTopMsg = "Unknown")
+    {
+        string textBottomMsg = "Unknown";
+        switch (numOfSandboxTries)
+        {
+            case 1:
+                textBottomMsg = "That's a <b>FAIL</b><br><br>This isn't real so I'll let you try again<br><br>Or you can go live. We're short of people";
+                break;
+            case 2:
+                textBottomMsg = "Failed again, huh?<br><br>Are you sure the Resistance is where you want to be?<br><br>Only kidding! Try again";
+                break;
+            default:
+                textBottomMsg = "I'm taking note of your performance<br><br>I have to say that it ain't stellar, no sir";
+                break;
+        }
         //dialogue
         ModalOutcomeDetails outcomeTutorial = new ModalOutcomeDetails
         {
-            textTop = GameManager.Formatt(topText, ColourType.moccasinText),
-            textBottom = "That's a <b>FAIL</b><br><br>This isn't real so I'll let you try again<br><br>Or you can go live. We're desperately short of people",
+            textTop = GameManager.Formatt(textTopMsg, ColourType.moccasinText),
+            textBottom = textBottomMsg,
             sprite = GameManager.i.tutorialScript.tutorial.sprite,
             isAction = false,
             side = GameManager.i.globalScript.sideResistance,
@@ -1225,13 +1290,36 @@ public class TutorialManager : MonoBehaviour
         //end of turn outcome window which needs to overlay ontop of InfoAPP and requires a different than normal modal setting
         if (GameManager.i.guiScript.InfoPipelineAdd(outcomeTutorial) == false)
         { Debug.LogWarningFormat("Fail Tutorial infoPipeline message FAILED to be added to dictOfPipeline"); }
-        //block mainInfoApp from showing at end of this turn
-        GameManager.i.guiScript.BlockInfoApp();
-        //reset message
+    }
+    #endregion
+
+    #region ProcessSandboxResetMessage
+    /// <summary>
+    /// provides a context sensitive message for a tutorial reset
+    /// </summary>
+    private void ProcessSandboxResetMessage()
+    {
+        string textTopMsg = "Unknown";
+        string textBottomMsg = "Unknown";
+        switch (numOfSandboxTries)
+        {
+            case 1:
+                textTopMsg = "Ready to try again?";
+                textBottomMsg = "I've reset the Simulation<br><br>Good to go<br><br>The Stick is still out there and you still need to rescue them";
+                break;
+            case 2:
+                textTopMsg = "Don't worry, nobody gets it right first up";
+                textBottomMsg = "I've reset the Simulation<br><br>Rescue the Stick again but this time I've toned down the CyberHound";
+                break;
+            default:
+                textTopMsg = "It's time to score a win";
+                textBottomMsg = "I've reset, again...<br><br>I've given our pet CyberHound pup the day off";
+                break;
+        }
         ModalOutcomeDetails outcomeReset = new ModalOutcomeDetails
         {
-            textTop = GameManager.Formatt("Ready to try again?", ColourType.moccasinText),
-            textBottom = "I've reset the Simulation<br><br>Good to go<br><br>The Stick is still out there and you still need to rescue them<br><br>Press '<b>T</b>' to find the Stick",
+            textTop = GameManager.Formatt(textTopMsg, ColourType.moccasinText),
+            textBottom = textBottomMsg,
             sprite = GameManager.i.tutorialScript.tutorial.sprite,
             isAction = false,
             side = GameManager.i.globalScript.sideResistance,
@@ -1242,40 +1330,6 @@ public class TutorialManager : MonoBehaviour
         //end of turn outcome window which needs to overlay ontop of InfoAPP and requires a different than normal modal setting
         if (GameManager.i.guiScript.InfoPipelineAdd(outcomeReset) == false)
         { Debug.LogWarningFormat("Reset Tutorial infoPipeline message FAILED to be added to dictOfPipeline"); }
-        //reset turn
-        GameManager.i.turnScript.ResetTurn();
-        //set node as needed during reset purpose and could be an error if player has been captured and then status changed to TutorialSandboxFail
-        GameManager.i.nodeScript.nodePlayer = playerStartNode;
-        //zero out actions (no more for turn) and instigate new turn
-        GameManager.i.turnScript.SetActionsToZero();
-    }
-    #endregion
-
-    #region ProcessSandboxMessage
-    /// <summary>
-    /// provides a context sensitive tutorial message from Fred, your trainer, during the sandbox provided no other tutorial message is present (which would be a win or fail state message)
-    /// </summary>
-    public void ProcessSandboxMessage()
-    {
-        //ignore message if already a tutorial related win/fail one in the queue
-        if (GameManager.i.guiScript.CheckInfoPipeline(MsgPipelineType.TutorialSucceed) == false && GameManager.i.guiScript.CheckInfoPipeline(MsgPipelineType.TutorialFail) == false)
-        {
-            //dialogue
-            ModalOutcomeDetails outcomeTutorial = new ModalOutcomeDetails
-            {
-                textTop = GameManager.Formatt("Hi, I'm here to give you tips", ColourType.moccasinText),
-                textBottom = "What can I say? Do you best and wear clean underpants",
-                sprite = GameManager.i.tutorialScript.tutorial.sprite,
-                isAction = false,
-                side = GameManager.i.globalScript.sideResistance,
-                isSpecial = true,
-                isSpecialGood = true,
-                type = MsgPipelineType.Tutorial
-            };
-            //end of turn outcome window which needs to overlay ontop of InfoAPP and requires a different than normal modal setting
-            if (GameManager.i.guiScript.InfoPipelineAdd(outcomeTutorial) == false)
-            { Debug.LogWarningFormat("Tutorial infoPipeline message FAILED to be added to dictOfPipeline"); }
-        }
     }
     #endregion
 
