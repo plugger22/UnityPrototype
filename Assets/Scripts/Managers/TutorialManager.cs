@@ -1209,17 +1209,32 @@ public class TutorialManager : MonoBehaviour
         //end of turn outcome window which needs to overlay ontop of InfoAPP and requires a different than normal modal setting
         if (GameManager.i.guiScript.InfoPipelineAdd(outcomeTutorial) == false)
         { Debug.LogWarningFormat("Fail Tutorial infoPipeline message FAILED to be added to dictOfPipeline"); }
-
-       
+        //block mainInfoApp from showing at end of this turn
+        GameManager.i.guiScript.BlockInfoApp();
+        //reset message
+        ModalOutcomeDetails outcomeReset = new ModalOutcomeDetails
+        {
+            textTop = GameManager.Formatt("Ready to try again?", ColourType.moccasinText),
+            textBottom = "I've reset the Simulation<br><br>Good to go<br><br>The Stick is still out there and you still need to rescue them (press 'T')",
+            sprite = GameManager.i.tutorialScript.tutorial.sprite,
+            isAction = false,
+            side = GameManager.i.globalScript.sideResistance,
+            isSpecial = true,
+            isSpecialGood = false,
+            type = MsgPipelineType.TutorialReset
+        };
+        //end of turn outcome window which needs to overlay ontop of InfoAPP and requires a different than normal modal setting
+        if (GameManager.i.guiScript.InfoPipelineAdd(outcomeReset) == false)
+        { Debug.LogWarningFormat("Reset Tutorial infoPipeline message FAILED to be added to dictOfPipeline"); }
         //reset turn
         GameManager.i.turnScript.ResetTurn();
-        //change player status (prevents MainInfoApp showing at end of turn)
-        GameManager.i.playerScript.Status = ActorStatus.Inactive;
-        GameManager.i.playerScript.InactiveStatus = ActorInactive.TutorialSandboxFail;
         //set node as needed during reset purpose and could be an error if player has been captured and then status changed to TutorialSandboxFail
         GameManager.i.nodeScript.nodePlayer = playerStartNode;
-        //zero out actions (no more for turn)
-        GameManager.i.turnScript.SetActionsToZero();
+        if (GameManager.i.turnScript.CheckRemainingActions() == true)
+        {
+            //zero out actions (no more for turn) and instigate new turn
+            GameManager.i.turnScript.SetActionsToZero();
+        }
     }
     #endregion
 

@@ -783,11 +783,9 @@ public class TurnManager : MonoBehaviour
             }
             //fail safe check
             if (remainder < 0)
-            {
-                Debug.LogWarningFormat("_actionsTotal exceeded by _actionsCurrent");
-            }
-            else
-            { EventManager.i.PostNotification(EventType.ChangeActionPoints, this, remainder, "TurnManager.cs -> UseAction"); }
+            { Debug.LogWarningFormat("TurnManager.cs -> UseAction: _actionsTotal {0} exceeded by _actionsCurrent {1}, remainder {2}", _actionsTotal, _actionsCurrent, remainder); }
+            //reset action points
+            EventManager.i.PostNotification(EventType.ChangeActionPoints, this, remainder, "TurnManager.cs -> UseAction");
             //new turn UI if no more actions
             if (remainder <= 0)
             { EventManager.i.PostNotification(EventType.NewTurnShow, this, null, "TurnManager.cs -> UseAction"); }
@@ -854,7 +852,9 @@ public class TurnManager : MonoBehaviour
     /// </summary>
     public void SetActionsToZero()
     {
+        int actionsBefore = _actionsCurrent;
         _actionsCurrent = _actionsTotal;
+        Debug.LogFormat("[Act] TurnManager.cs -> SetActionsToZero: _actionsCurrent now {0} (were {1}){2}", _actionsCurrent, actionsBefore, "\n");
         //update widget
         EventManager.i.PostNotification(EventType.ChangeActionPoints, this, _actionsTotal, "TurnManager.cs -> SetActionsRecovery");
         //new turn

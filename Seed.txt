@@ -6640,3 +6640,85 @@ City seed 56256 -> VirtualCity, Eurasia
 
 Dev seed 40138 -> Tuesday, 9 November 2021 5:18 PM
 City seed 42346 -> VirtualCity, Eurasia
+
+Dev seed 3548 -> Wednesday, 10 November 2021 12:06 PM
+City seed 48846 -> VirtualCity, Eurasia
+WARNING Invalid Ripper Doc cure (Duplicate) in listOfCures for node Finger Bridge, INDUSTRIAL, ID 1
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddCureNode(Node) (at Assets/Scripts/Managers/DataManager.cs:2785)
+	NodeManager:AddCureNode(Cure, Boolean) (at Assets/Scripts/Managers/NodeManager.cs:3552)
+	PlayerManager:AddCondition(Condition, GlobalSide, String) (at Assets/Scripts/Managers/PlayerManager.cs:1243)
+	NemesisManager:ProcessPlayerDamage() (at Assets/Scripts/Managers/NemesisManager.cs:1607)
+	NemesisManager:ProcessPlayerInteraction(Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:1210)
+	NemesisManager:ProcessNemesisMove(Int32, Int32) (at Assets/Scripts/Managers/NemesisManager.cs:1126)
+	NemesisManager:ProcessNemesisGoal() (at Assets/Scripts/Managers/NemesisManager.cs:982)
+	NemesisManager:ProcessNemesisActivity(AITracker, Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:604)
+	NemesisManager:ProcessNemesis(AITracker, Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:344)
+	AIManager:ProcessNemesis() (at Assets/Scripts/Managers/AIManager.cs:696)
+	AIManager:ProcessAISideAuthority() (at Assets/Scripts/Managers/AIManager.cs:682)
+	TurnManager:EndTurnAI() (at Assets/Scripts/Managers/TurnManager.cs:629)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:356)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:195)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:393)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:483)
+	
+Dev seed 48569 -> Wednesday, 10 November 2021 12:27 PM
+City seed 17546 -> VirtualCity, Eurasia
+WARNING _actionsTotal exceeded by _actionsCurrent
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TurnManager:UseAction(String) (at Assets/Scripts/Managers/TurnManager.cs:787)
+	ModalOutcome:CloseModalOutcome() (at Assets/Scripts/GUI/ModalOutcome.cs:648)
+	<RunCloseSequence>c__Iterator4:MoveNext() (at Assets/Scripts/GUI/ModalOutcome.cs:588)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 3178 -> Wednesday, 10 November 2021 12:37 PM
+City seed 37420 -> VirtualCity, Eurasia
+ASSERT FormatException: Input string was not in a correct format.
+System.Text.StringBuilder.FormatError () (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Text.StringBuilder.AppendFormatHelper (System.IFormatProvider provider, System.String format, System.ParamsArray args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.String.FormatHelper (System.IFormatProvider provider, System.String format, System.ParamsArray args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.String.Format (System.String format, System.Object[] args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	UnityEngine.DebugLogHandler.LogFormat (UnityEngine.LogType logType, UnityEngine.Object context, System.String format, System.Object[] args) (at C:/buildslave/unity/build/Runtime/Export/Logger/DebugLogHandler.cs:9)
+	UnityEngine.Logger.LogFormat (UnityEngine.LogType logType, System.String format, System.Object[] args) (at C:/buildslave/unity/build/Runtime/Export/Logger/Logger.cs:113)
+	UnityEngine.Debug.LogFormat (System.String format, System.Object[] args) (at C:/buildslave/unity/build/Runtime/Export/Debug.bindings.cs:108)
+	GUIManager.InitialiseInfoApp (GlobalSide playerSide) (at Assets/Scripts/Managers/GUIManager.cs:943)
+	GUIManager+<MainInfoApp>c__Iterator3.MoveNext () (at Assets/Scripts/Managers/GUIManager.cs:917)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	
+Dev seed 30196 -> Wednesday, 10 November 2021 12:38 PM
+City seed 45530 -> VirtualCity, Eurasia
+
+Dev seed 8128 -> Wednesday, 10 November 2021 12:44 PM
+City seed 4579 -> VirtualCity, Eurasia
+WARNING TurnManager.cs -> UseAction: _actionsTotal 2 exceeded by _actionsCurrent 3, remainder -1
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TurnManager:UseAction(String) (at Assets/Scripts/Managers/TurnManager.cs:787)
+	ModalOutcome:CloseModalOutcome() (at Assets/Scripts/GUI/ModalOutcome.cs:648)
+	<RunCloseSequence>c__Iterator4:MoveNext() (at Assets/Scripts/GUI/ModalOutcome.cs:588)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 14278 -> Wednesday, 10 November 2021 1:12 PM
+City seed 3391 -> VirtualCity, Eurasia
+
+Dev seed 50709 -> Wednesday, 10 November 2021 1:14 PM
+City seed 42028 -> VirtualCity, Eurasia
+
+Dev seed 54712 -> Wednesday, 10 November 2021 1:30 PM
+City seed 5235 -> VirtualCity, Eurasia
+WARNING TurnManager.cs -> UseAction: _actionsTotal 2 exceeded by _actionsCurrent 3, remainder -1
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TurnManager:UseAction(String) (at Assets/Scripts/Managers/TurnManager.cs:786)
+	ModalOutcome:CloseModalOutcome() (at Assets/Scripts/GUI/ModalOutcome.cs:648)
+	<RunCloseSequence>c__Iterator4:MoveNext() (at Assets/Scripts/GUI/ModalOutcome.cs:588)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 39802 -> Wednesday, 10 November 2021 1:42 PM
+City seed 9662 -> VirtualCity, Eurasia
+WARNING TurnManager.cs -> UseAction: _actionsTotal 2 exceeded by _actionsCurrent 3, remainder -1
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TurnManager:UseAction(String) (at Assets/Scripts/Managers/TurnManager.cs:786)
+	ModalOutcome:CloseModalOutcome() (at Assets/Scripts/GUI/ModalOutcome.cs:648)
+	<RunCloseSequence>c__Iterator4:MoveNext() (at Assets/Scripts/GUI/ModalOutcome.cs:588)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	

@@ -219,11 +219,12 @@ public class GUIManager : MonoBehaviour
 
 
 
-    private bool[] arrayIsBlocked;                                    //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
-                                                                      //to block use -> 'if (isBlocked == false)' in OnMouseDown/Over/Exit etc.
-                                                                      //array corresponds to modalLevel, one block setting for each level, level 1 is isBlocked[1]
-    private ShowMeData showMeData;                                    //data package that controls highlighting of node/connection and callback event to originating UI element
+    private bool[] arrayIsBlocked;                                      //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
+                                                                        //to block use -> 'if (isBlocked == false)' in OnMouseDown/Over/Exit etc.
+                                                                        //array corresponds to modalLevel, one block setting for each level, level 1 is isBlocked[1]
+    private ShowMeData showMeData;                                      //data package that controls highlighting of node/connection and callback event to originating UI element
     [HideInInspector] public bool waitUntilDone;                        //flag to ensure nothing happens until current UI element completed, eg. allows sequential execution of message pipeline
+    [HideInInspector] public bool isInfoAppBlocked;                     //flag, that if true, will block the mainInfoApp from displaying for a turn
     private Dictionary<MsgPipelineType, ModalOutcomeDetails> dictOfPipeline = new Dictionary<MsgPipelineType, ModalOutcomeDetails>();           //handles message queue for start of turn information pipeline
     //colour palette 
     private string colourAlert;
@@ -935,10 +936,11 @@ public class GUIManager : MonoBehaviour
         MainInfoData data = GameManager.i.dataScript.UpdateCurrentItemData();
         //only display InfoApp if player is Active (out of contact otherwise but data is collected and can be accessed when player returns to active status)
         ActorStatus playerStatus = GameManager.i.playerScript.Status;
-        if (playerStatus == ActorStatus.Active)
+        if (playerStatus == ActorStatus.Active && isInfoAppBlocked == false)
         { EventManager.i.PostNotification(EventType.MainInfoOpen, this, data, "TurnManager.cs -> ProcessNewTurn"); }
         else
         {
+            Debug.LogFormat("[Pip] GUIManager.cs -> InitialiseInfoApp: NOT showing this turn, Player.Status {0}, isInfoAppBlocked {1}{2}", playerStatus, isInfoAppBlocked, "\n");
             Sprite sprite = GameManager.i.spriteScript.errorSprite;
             string text = ""; //empty
             switch (playerStatus)
@@ -966,9 +968,8 @@ public class GUIManager : MonoBehaviour
                             text = string.Format("You are on {0}STRESS LEAVE{1}", colourNeutral, colourEnd);
                             sprite = GameManager.i.spriteScript.infoSprite;
                             break;
-                        case ActorInactive.TutorialSandboxFail:
-                            text = string.Format("{0}Take a breather. We'll reset the simulation{1}", colourAlert, colourEnd);
-                            sprite = GameManager.i.tutorialScript.tutorial.sprite;
+                        default:
+                            //No message, eg. tutorial Sandbox fail
                             break;
                     }
                     break;
@@ -982,6 +983,8 @@ public class GUIManager : MonoBehaviour
                 details.sprite = sprite;
                 EventManager.i.PostNotification(EventType.OutcomeOpen, this, details);
             }
+            //reset flag
+            isInfoAppBlocked = false;
             //turn on new turn button
             EventManager.i.PostNotification(EventType.NewTurnShow, this, null);
         }
@@ -1026,6 +1029,17 @@ public class GUIManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfPipeLineDetails (Null)"); }
     }
+
+    /// <summary>
+    /// calling this blocks the MainInfoApp for showing for a turn. It doesn't stop the data so the missed info can be accessed the following turn via the app
+    /// </summary>
+    public void BlockInfoApp()
+    {
+        isInfoAppBlocked = true;
+        Debug.LogFormat("[Pip] GUIManager.cs -> BlockMainInfoApp: isMainInfoAppBlocked now {0}{1}", isInfoAppBlocked, "\n");
+    }
+
+
     #endregion
 
     #region Tooltips...
