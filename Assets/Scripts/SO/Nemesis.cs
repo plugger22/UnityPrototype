@@ -10,6 +10,9 @@ public class Nemesis : ScriptableObject
 {
     [Tooltip("In game tooltip descriptor")]
     [TextArea] public string descriptor;
+    [Tooltip("Tag used  in Game (not the Name)")]
+    public string tag;
+
 
     [Header("Base Stats")]
     [Tooltip("The number of districts the droid can move per turn")]
@@ -24,6 +27,7 @@ public class Nemesis : ScriptableObject
 
     public void OnEnable()
     {
+        Debug.Assert(string.IsNullOrEmpty(tag) == false, "Invalid tag (Null or Empty)");
         Debug.Assert(damage != null, string.Format("Invalid damage (Null) for nenesis {0}", this.name));
     }
 

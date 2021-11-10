@@ -13,6 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: A stealthy humaniod droid that is designed to find and frame it's target
     in order to discredit them.
+  tag: Scumbot
   movement: 1
   searchRating: 2
   stealthRating: 2

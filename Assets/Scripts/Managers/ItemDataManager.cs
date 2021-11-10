@@ -812,7 +812,7 @@ public class ItemDataManager : MonoBehaviour
         string textAware = shortContactAware.GetRandomRecord(false);
         string textAction = shortContactAction.GetRandomRecord(false);
         builder.AppendFormat("<b>{0} {1}, {2}{3}{4},</b> {5} that they {6} a{7}{8}", contact.nameFirst, contact.nameLast, colourAlert, contact.job, colourEnd, textAware, textAction, "\n", "\n");
-        builder.AppendFormat("{0}<b>{1}</b>{2}{3}{4}", colourNeutral, nemesis.name, colourEnd, "\n", "\n");
+        builder.AppendFormat("{0}<b>{1}</b>{2}{3}{4}", colourNeutral, nemesis.tag, colourEnd, "\n", "\n");
         builder.AppendFormat("At <b>{0}, {1}{2}{3}</b> district", node.nodeName, colourAlert, node.Arc.name, colourEnd);
         //only add a time stamp if nemesis is capable of multiple moves within a single turn
         if (nemesis.movement > 1)
@@ -996,7 +996,7 @@ public class ItemDataManager : MonoBehaviour
             case 1: colourSearch = colourGood; break;
             default: Debug.LogWarningFormat("Invalid nemesis Search rating \"{0}\"", search); break;
         }
-        builder.AppendFormat("<b>{0}</b> Nemesis is{1}", nemesis.name, "\n");
+        builder.AppendFormat("<b>{0}</b> Nemesis is{1}", nemesis.tag, "\n");
         NemesisMode mode = GameManager.i.nemesisScript.GetMode();
         switch (mode)
         {
@@ -1039,7 +1039,7 @@ public class ItemDataManager : MonoBehaviour
         //find on invis 1 or 2, colourNeutral, if 3 or less, colourBad
         string colourSearch = colourNeutral;
         if (search == 3) { colourSearch = colourBad; }
-        builder.AppendFormat("<b>{0}</b> Nemesis changes{1}", nemesis.name, "\n");
+        builder.AppendFormat("<b>{0}</b> Nemesis changes{1}", nemesis.tag, "\n");
         NemesisMode mode = GameManager.i.nemesisScript.GetMode();
         switch (mode)
         {
@@ -1074,7 +1074,7 @@ public class ItemDataManager : MonoBehaviour
     public string GetNemesisPlayerOngoingDetails(Nemesis nemesis, bool isPlayerControl, int coolDownTimer, int controlTimer, Node controlNode, Node currentNode)
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("{0}<b>{1}{2} nemesis</b>{3}{4}", colourNeutral, nemesis.name, colourEnd, "\n", "\n");
+        builder.AppendFormat("{0}<b>{1}{2} nemesis</b>{3}{4}", colourNeutral, nemesis.tag, colourEnd, "\n", "\n");
         if (GameManager.i.nemesisScript.GetMode() != NemesisMode.Inactive)
         {
             if (isPlayerControl == true)
@@ -2273,7 +2273,7 @@ public class ItemDataManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("<b>{0}{1}{2}</b> info feed{3}has your{4}{5}", colourAlert, org.tag, colourEnd, "\n", "\n", "\n");
-        builder.AppendFormat("<b>{0}{1}{2} Nemesis</b>{3}{4}", colourNeutral, nemesis.name, colourEnd, "\n", "\n");
+        builder.AppendFormat("<b>{0}{1}{2} Nemesis</b>{3}{4}", colourNeutral, nemesis.tag, colourEnd, "\n", "\n");
         builder.AppendFormat("At <b>{0}, {1}{2}{3}</b> district", node.nodeName, colourAlert, node.Arc.name, colourEnd);
         //only add a time stamp if nemesis is capable of multiple moves within a single turn
         if (nemesis.movement > 1)

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Enhanced human equipped with advanced imaging and DNA sequencing capability.
     Aims to hunt down target and gain a positive ID for others to use.
+  tag: Paparrazi Bot
   movement: 1
   searchRating: 1
   stealthRating: 1

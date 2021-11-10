@@ -13,6 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: A freelance humanoid who hunts prey for monetary reward. They aim to
     capture their target and ransom them off.
+  tag: Bounty Hunter
   movement: 1
   searchRating: 2
   stealthRating: 2

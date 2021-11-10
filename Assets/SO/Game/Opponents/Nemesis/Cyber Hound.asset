@@ -13,6 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: A robot hound that, given a DNA scent, will sniff out and run down it's
     prey. A bite from the Cyber Hound will embed a tracking device in the target.
+  tag: Cyber Hound
   movement: 1
   searchRating: 3
   stealthRating: 1

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: A highly advanced humanoid Terminator. A killing machine. It is relentless,
     it doesn't stop. Ever.
+  tag: Assassin Droid
   movement: 2
   searchRating: 3
   stealthRating: 3

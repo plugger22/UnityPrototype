@@ -2400,7 +2400,7 @@ public class MessageManager : MonoBehaviour
             message.data2 = GameManager.i.nemesisScript.GetStealthRatingAdjusted();
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = string.Format("{0} Nemesis current Status", nemesis.name);
+            data.itemText = string.Format("{0} Nemesis current Status", nemesis.tag);
             data.topText = "Nemesis Status";
             data.bottomText = GameManager.i.itemDataScript.GetNemesisOngoingEffectDetails(nemesis, message.data1);
             data.priority = ItemPriority.High;
@@ -2442,7 +2442,7 @@ public class MessageManager : MonoBehaviour
             message.data2 = GameManager.i.nemesisScript.GetStealthRatingAdjusted();
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = string.Format("{0} Nemesis changes mode", nemesis.name);
+            data.itemText = string.Format("{0} Nemesis changes mode", nemesis.tag);
             data.topText = "New Nemesis Mode";
             data.bottomText = GameManager.i.itemDataScript.GetNemesisNewModeDetails(nemesis, message.data1);
             data.priority = ItemPriority.Medium;

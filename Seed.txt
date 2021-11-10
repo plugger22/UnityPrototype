@@ -6759,3 +6759,5 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	NewTurnUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/NewTurnUI.cs:179)
 	UnityEngine.EventSystems.EventSystem:Update()
 	
+Dev seed 19231 -> Wednesday, 10 November 2021 4:45 PM
+City seed 27455 -> VirtualCity, Eurasia
