@@ -6722,3 +6722,40 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	<RunCloseSequence>c__Iterator4:MoveNext() (at Assets/Scripts/GUI/ModalOutcome.cs:588)
 	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
 	
+Dev seed 27601 -> Wednesday, 10 November 2021 3:33 PM
+City seed 49834 -> VirtualCity, Eurasia
+
+Dev seed 1523 -> Wednesday, 10 November 2021 3:59 PM
+City seed 52187 -> VirtualCity, Eurasia
+
+Dev seed 2389 -> Wednesday, 10 November 2021 4:04 PM
+City seed 18413 -> VirtualCity, Eurasia
+
+Dev seed 17508 -> Wednesday, 10 November 2021 4:17 PM
+WARNING [Val] ValidateSO: MISMATCH on Challenge, array 6, assets 7 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(Challenge[]) (at Assets/Scripts/Managers/ValidationManager.cs:2664)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2487)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	City seed 5192 -> VirtualCity, Eurasia
+WARNING Invalid Ripper Doc cure (Duplicate) in listOfCures for node Barr Town, RESEARCH, ID 13
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddCureNode(Node) (at Assets/Scripts/Managers/DataManager.cs:2785)
+	NodeManager:AddCureNode(Cure, Boolean) (at Assets/Scripts/Managers/NodeManager.cs:3552)
+	PlayerManager:AddCondition(Condition, GlobalSide, String) (at Assets/Scripts/Managers/PlayerManager.cs:1243)
+	NemesisManager:ProcessPlayerDamage() (at Assets/Scripts/Managers/NemesisManager.cs:1610)
+	NemesisManager:ProcessPlayerInteraction(Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:1210)
+	NemesisManager:ProcessNemesisMove(Int32, Int32) (at Assets/Scripts/Managers/NemesisManager.cs:1126)
+	NemesisManager:ProcessNemesisGoal() (at Assets/Scripts/Managers/NemesisManager.cs:982)
+	NemesisManager:ProcessNemesisActivity(AITracker, Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:604)
+	NemesisManager:ProcessNemesis(AITracker, Boolean) (at Assets/Scripts/Managers/NemesisManager.cs:344)
+	AIManager:ProcessNemesis() (at Assets/Scripts/Managers/AIManager.cs:696)
+	AIManager:ProcessAISideAuthority() (at Assets/Scripts/Managers/AIManager.cs:682)
+	TurnManager:EndTurnAI() (at Assets/Scripts/Managers/TurnManager.cs:629)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:356)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:195)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	NewTurnUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/NewTurnUI.cs:179)
+	UnityEngine.EventSystems.EventSystem:Update()
+	

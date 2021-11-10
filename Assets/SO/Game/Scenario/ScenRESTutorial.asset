@@ -29,7 +29,7 @@ MonoBehaviour:
   cityStartLoyalty: 5
   missionResistance: {fileID: 11400000, guid: d511bb988761208449e62f90a1bab955, type: 2}
   missionAuthority: {fileID: 0}
-  challengeResistance: {fileID: 11400000, guid: f49eada5905cc6e4dbd50b2b5650dea1,
+  challengeResistance: {fileID: 11400000, guid: 47300178e4971584fb7f59834643137e,
     type: 2}
   timer: 20
   newsPool:

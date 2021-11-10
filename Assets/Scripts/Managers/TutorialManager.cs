@@ -44,7 +44,8 @@ public class TutorialManager : MonoBehaviour
     #region Other...
     [HideInInspector] public int playerStartNode = -1;          //where player first starts in sandbox mode, resets to this node on retrys
     [HideInInspector] public int numOfSandboxTries;             //how many sandbox attempts
-    [HideInInspector] public bool isSandbox;                    //true if sandbox mode applies -> last set
+    [HideInInspector] public bool isSandboxTutorial;            //true if sandbox tutorial (last set)
+    [HideInInspector] public bool isSandboxFlag;                //tactical setting. Can be true/false depending on state of sandbox
     [HideInInspector] public bool isSandboxReset;               //true if sandbox has failed and is due to be reset at start of new turn
 
     //TutorialItem.SO Query option data (takes data from TutorialOption.SO)
@@ -1137,7 +1138,8 @@ public class TutorialManager : MonoBehaviour
             switch (condition.name)
             {
                 case "Sandbox":
-                    SetSandbox(true);
+                    SetSandboxTutorial(true);
+                    SetSandboxFlag(true);
                     break;
                 default: Debug.LogWarningFormat("Unrecognised condition \"{0}\"", condition.name); break;
             }
@@ -1151,35 +1153,49 @@ public class TutorialManager : MonoBehaviour
     // - - - Tutorial Sandbox
     //
 
-    #region CheckIfSandbox
+    #region CheckIfSandboxTutorial
     /// <summary>
     /// returns true if tutorial sandbox mode applies, eg. last set
     /// </summary>
     /// <returns></returns>
-    public bool CheckIfSandbox()
-    { return isSandbox; }
+    public bool CheckIfSandboxTutorial()
+    { return isSandboxTutorial; }
     #endregion
 
-    #region SetSandbox
+    #region SetSandboxTutorial
     /// <summary>
-    /// Set isSandbox to a new value
+    /// Sets global flag indicating that sandbox tutorial is in play
     /// </summary>
     /// <param name="sandbox"></param>
-    public void SetSandbox(bool sandbox)
+    public void SetSandboxTutorial(bool sandbox = false)
     {
-        isSandbox = sandbox;
+        isSandboxTutorial = true;
+        Debug.LogFormat("[Tut] TutorialManager.cs -> SetSandboxTutorial: isSandboxTutorial now {0}{1}", isSandboxTutorial, "\n");
+    }
+    #endregion
+
+    #region SetSandboxFlag
+    /// <summary>
+    /// Set isSandboxFlag (tactical) to a new value. Enables resetting of sandbox tutorial
+    /// </summary>
+    /// <param name="sandbox"></param>
+    public void SetSandboxFlag(bool sandbox)
+    {
+        isSandboxFlag = sandbox;
         if (numOfSandboxTries == 0)
         {
             //first attempt -> store player location
             playerStartNode = GameManager.i.nodeScript.GetPlayerNodeID();
         }
         numOfSandboxTries++;
-        if (isSandbox == false)
+        if (isSandboxFlag == false)
         {
+            //reset flag
+            isSandboxFlag = true;
             //reset tutorial
             isSandboxReset = true;
         }
-        Debug.LogFormat("[Tut] TutorialManager.cs -> SetSandbox: Starting Sandbox, attempt no. {0} - - - (isSandbox {1}){2}", numOfSandboxTries, isSandbox, "\n");
+        Debug.LogFormat("[Tut] TutorialManager.cs -> SetSandboxFlag: Starting Sandbox, attempt no. {0} - - - (isSandboxFlag {1}){2}", numOfSandboxTries, isSandboxFlag, "\n");
     }
     #endregion
 
@@ -1193,7 +1209,7 @@ public class TutorialManager : MonoBehaviour
     {
         Debug.LogFormat("[Tut] TutorialManager.cs -> FailSandboxOutcome: Sandbox tutorial attempt FAILED ({0}){1}", reason, "\n");
         //player failed sandbox tutorial
-        SetSandbox(false);
+        SetSandboxFlag(false);
         //dialogue
         ModalOutcomeDetails outcomeTutorial = new ModalOutcomeDetails
         {
@@ -1215,7 +1231,7 @@ public class TutorialManager : MonoBehaviour
         ModalOutcomeDetails outcomeReset = new ModalOutcomeDetails
         {
             textTop = GameManager.Formatt("Ready to try again?", ColourType.moccasinText),
-            textBottom = "I've reset the Simulation<br><br>Good to go<br><br>The Stick is still out there and you still need to rescue them (press 'T')",
+            textBottom = "I've reset the Simulation<br><br>Good to go<br><br>The Stick is still out there and you still need to rescue them<br><br>Press '<b>T</b>' to find the Stick",
             sprite = GameManager.i.tutorialScript.tutorial.sprite,
             isAction = false,
             side = GameManager.i.globalScript.sideResistance,
@@ -1230,11 +1246,8 @@ public class TutorialManager : MonoBehaviour
         GameManager.i.turnScript.ResetTurn();
         //set node as needed during reset purpose and could be an error if player has been captured and then status changed to TutorialSandboxFail
         GameManager.i.nodeScript.nodePlayer = playerStartNode;
-        if (GameManager.i.turnScript.CheckRemainingActions() == true)
-        {
-            //zero out actions (no more for turn) and instigate new turn
-            GameManager.i.turnScript.SetActionsToZero();
-        }
+        //zero out actions (no more for turn) and instigate new turn
+        GameManager.i.turnScript.SetActionsToZero();
     }
     #endregion
 
@@ -1375,9 +1388,13 @@ public class TutorialManager : MonoBehaviour
         { GameManager.i.teamScript.ResetTeams(); }
         if (set.teamConfig != null)
         { GameManager.i.teamScript.ConfigureTutorialTeams(set.teamConfig); }
+        
+        /*
         //reset nemesis -> retry sandbox only
         if (GameManager.i.optionScript.isNemesis == true && numOfSandboxTries > 1)
         { GameManager.i.nemesisScript.InitialiseNemesis(); }
+        */
+
         //configure spiders and tracers
         if (set.hideConfig != null)
         { GameManager.i.nodeScript.ConfigureTutorialHideItems(set.hideConfig); }
@@ -1453,7 +1470,8 @@ public class TutorialManager : MonoBehaviour
             builder.AppendFormat("tutorial: {0}{1}", tutorial.name, "\n");
             builder.AppendFormat("tutorialSet: {0}{1}", set.name, "\n");
             builder.AppendFormat("index: {0}{1}", index, "\n");
-            builder.AppendFormat("isSandbox: {0}{1}", isSandbox, "\n");
+            builder.AppendFormat("isSandboxTutorial: {0}{1}", isSandboxTutorial, "\n");
+            builder.AppendFormat("isSandboxFlag: {0}{1}", isSandboxFlag, "\n");
             builder.AppendFormat("isSandboxReset: {0}{1}", isSandboxReset, "\n");
             builder.AppendFormat("playerStartNode: {0}{1}", playerStartNode, "\n");
 

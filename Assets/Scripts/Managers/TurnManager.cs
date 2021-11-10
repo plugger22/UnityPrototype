@@ -372,7 +372,7 @@ public class TurnManager : MonoBehaviour
                             }
                         }
                         //tutorial sandbox
-                        if (GameManager.i.inputScript.GameState == GameState.Tutorial && GameManager.i.tutorialScript.isSandbox == true)
+                        if (GameManager.i.inputScript.GameState == GameState.Tutorial && GameManager.i.tutorialScript.isSandboxFlag == true)
                         { GameManager.i.tutorialScript.ProcessSandboxMessage(); }
                         //turn on info App (only if not autorunning)
                         if (isAutoRun == false)
@@ -753,7 +753,7 @@ public class TurnManager : MonoBehaviour
 
     #region UseAction
     /// <summary>
-    /// call this method everytime an action is expended by the Player. Triggers new turn if action limit reached, error if exceeded
+    /// call this method everytime an action is expended by the Player. Triggers new turn if action limit reached (edit -> don't think so), error if exceeded
     /// </summary>
     public void UseAction(string text = "Unknown")
     {
@@ -781,9 +781,12 @@ public class TurnManager : MonoBehaviour
                 _actionsCurrent = _actionsTotal;
                 remainder = 0;
             }
-            //fail safe check
+            //fail safe check -> can occur in tutorial sandbox when moved and caught on last action
             if (remainder < 0)
-            { Debug.LogWarningFormat("TurnManager.cs -> UseAction: _actionsTotal {0} exceeded by _actionsCurrent {1}, remainder {2}", _actionsTotal, _actionsCurrent, remainder); }
+            {
+                Debug.LogWarningFormat("TurnManager.cs -> UseAction: _actionsTotal {0} exceeded by _actionsCurrent {1}, remainder {2}", _actionsTotal, _actionsCurrent, remainder);
+                remainder = 0;
+            }
             //reset action points
             EventManager.i.PostNotification(EventType.ChangeActionPoints, this, remainder, "TurnManager.cs -> UseAction");
             //new turn UI if no more actions
@@ -1293,7 +1296,7 @@ public class TurnManager : MonoBehaviour
         if (_turn == scenarioTimer)
         {
             //tutorial sandbox
-            if (GameManager.i.inputScript.GameState == GameState.Tutorial && GameManager.i.tutorialScript.CheckIfSandbox() == true)
+            if (GameManager.i.inputScript.GameState == GameState.Tutorial && GameManager.i.tutorialScript.CheckIfSandboxTutorial() == true)
             { GameManager.i.tutorialScript.FailSandboxOutcome("You've run out of time", "Time"); }
             else
             {

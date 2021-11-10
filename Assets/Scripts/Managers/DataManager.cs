@@ -647,6 +647,8 @@ public class DataManager : MonoBehaviour
         dictOfCurrentMessages.Clear();
         dictOfAIMessages.Clear();
         dictOfInfoHistory.Clear();
+        //cure nodes
+        listOfCureNodes.Clear();
     }
     #endregion
 

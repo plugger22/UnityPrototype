@@ -1223,6 +1223,9 @@ public class NemesisManager : MonoBehaviour
                         //place Nemesis OFFLINE for a period (standard damage wait plus any new nemesis grace period)
                         SetNemesisMode(NemesisMode.Inactive);
                         durationDelay = durationDamageOffLine + GameManager.i.scenarioScript.scenario.challengeResistance.gracePeriodSecond;
+                        //speed things up if tutorial
+                        if (GameManager.i.inputScript.GameState == GameState.Tutorial)
+                        { durationDelay = GameManager.i.scenarioScript.scenario.challengeResistance.gracePeriodSecond; }
                         string.Format("[Nem] NemesisManager.cs -> ProcessPlayerInteraction: NEW Nemesis arrives, {0}, offline for {1} turns{2}", nemesis.name, durationDelay, "\n");
                         if (durationDelay > 0)
                         {
@@ -1556,7 +1559,7 @@ public class NemesisManager : MonoBehaviour
                             else
                             {
                                 //Handle edge case -> Tutorial Sandbox where sandbox is already in a win/fail state
-                                if (GameManager.i.tutorialScript.isSandbox == true)
+                                if (GameManager.i.tutorialScript.isSandboxFlag == true)
                                 { ProcessPlayerInteraction(isPlayerMove); }
                             }
                         }
@@ -1653,6 +1656,7 @@ public class NemesisManager : MonoBehaviour
             //AutoRun Event
             if (GameManager.i.turnScript.CheckIsAutoRun() == true)
             { GameManager.i.dataScript.AddHistoryAutoRun(textAutoRun); }
+            //NOT autorun
             else
             {
                 //player damaged outcome window
@@ -1669,7 +1673,7 @@ public class NemesisManager : MonoBehaviour
                 if (GameManager.i.guiScript.InfoPipelineAdd(outcomeDetails) == false)
                 { Debug.LogWarningFormat("Nemesis Damage infoPipeline message FAILED to be added to dictOfPipeline"); }
                 //Sandbox tutorial
-                if (GameManager.i.inputScript.GameState == GameState.Tutorial && GameManager.i.tutorialScript.CheckIfSandbox() == true)
+                if (GameManager.i.inputScript.GameState == GameState.Tutorial && GameManager.i.tutorialScript.CheckIfSandboxTutorial() == true)
                 { GameManager.i.tutorialScript.FailSandboxOutcome("So that Cyber Hound bit you on the rear end, did it?", "Nemesis"); }
             }
         }
