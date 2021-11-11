@@ -1441,7 +1441,7 @@ public class TutorialManager : MonoBehaviour
         GameManager.i.actorScript.ConfigureTutorialActors(true);
         //configure targets
         if (set.targetConfig != null)
-        { GameManager.i.targetScript.ConfigureTutorialTargets(set.targetConfig); }
+        { GameManager.i.targetScript.AssignTutorialTargets(set.targetConfig); }
         //configure teams
         if (GameManager.i.dataScript.CheckTeamPoolCount(TeamPool.OnMap) > 0)
         { GameManager.i.teamScript.ResetTeams(); }

@@ -193,7 +193,7 @@ public class TargetManager : MonoBehaviour
         {
             TutorialTargetConfig config = GameManager.i.tutorialScript.set.targetConfig;
             if (config != null)
-            { ConfigureTutorialTargets(config); }
+            { AssignTutorialTargets(config); }
         }
     }
     #endregion
@@ -815,13 +815,11 @@ public class TargetManager : MonoBehaviour
     }*/
     #endregion
 
-    #endregion
-
-    #region ConfigureTutorialTargets
+    #region AssignTutorialTargets
     /// <summary>
     /// Assign tutorial targets to random nodes a set distance minimum from player start node.
     /// </summary>
-    public void ConfigureTutorialTargets(TutorialTargetConfig config)
+    public void AssignTutorialTargets(TutorialTargetConfig config)
     {
        if (GameManager.i.optionScript.isTargets == true)
         {
@@ -875,6 +873,8 @@ public class TargetManager : MonoBehaviour
         }
        else { Debug.LogWarning("Can't assign targets as optionManager.isTargets FALSE"); }
     }
+    #endregion
+    
     #endregion
 
     #region SetTargetDetails
@@ -1749,8 +1749,49 @@ public class TargetManager : MonoBehaviour
                                           node.nodeID, target.followOnTarget.targetName);
                                     }
                                     break;
+                                case "Tutorial":
+                                    //Random nodes a set distance away from player's current location (which will be at the target that is being followed on from)
+                                    //assign target to a random node at, or beyond, a minimum distance from player node
+                                    Node nodeTarget = null;
+                                    int minDist = 3; //default, fail safe value
+                                    if (GameManager.i.tutorialScript.set.targetConfig != null)
+                                    { minDist = GameManager.i.tutorialScript.set.targetConfig.minDistance; }
+                                    else { Debug.LogWarningFormat("Invalid targetConfig (Null) for tutorial Set \"{0}\"", GameManager.i.tutorialScript.set.name); }
+                                    //exclusion list which will hold all nodes with targets -> only one in this instance so a blank list is fine
+                                    List<int> exclusionList = new List<int>();
+                                    Node playerNode = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.GetPlayerNodeID());
+                                    if (playerNode != null)
+                                    {
+                                        nodeTarget = GameManager.i.dijkstraScript.GetRandomNodeAtMaxDistance(playerNode, minDist, exclusionList);
+                                        if (nodeTarget != null)
+                                        {
+                                            //set target
+                                            if (SetTargetDetails(target, nodeTarget) == true)
+                                            {
+                                                Debug.LogFormat("[Tar] TargetManager.cs -> SetTargetDone: Node (random) \"{0}\", {1}, id {2}, assigned follow On target \"{3}\"", nodeTarget.nodeName,
+                                                    nodeTarget.Arc.name, nodeTarget.nodeID, target.followOnTarget.targetName);
+                                            }
+                                        }
+                                        else { Debug.LogErrorFormat("Invalid nodeTarget (Null) for target \"{0}\"", target.name); }
+                                    }
+                                    else { Debug.LogError("Invalid playerNode (Null)"); }
+                                    //fail safe check -> random node
+                                    if (nodeTarget == null)
+                                    {
+                                        Node nodeRandomTarget = GameManager.i.dataScript.GetRandomTargetNode();
+                                        if (nodeRandomTarget != null)
+                                        {
+                                            if (SetTargetDetails(target.followOnTarget, nodeRandomTarget) == true)
+                                            {
+                                                Debug.LogFormat("[Tar] TargetManager.cs -> SetTargetDone: Node (random) \"{0}\", {1}, id {2}, assigned follow On target \"{3}\"", nodeRandomTarget.nodeName,
+                                                    nodeRandomTarget.Arc.name, nodeRandomTarget.nodeID, target.followOnTarget.targetName);
+                                            }
+                                        }
+                                        else { Debug.LogError("Invalid nodeRandom (Null), Target not assigned"); }
+                                    }
+                                    break;
                                 default:
-                                    //Story / VIP / Goal Follow On targets -> random node
+                                    //Story / VIP / Goal  Follow On targets -> random node
                                     Node nodeRandom = GameManager.i.dataScript.GetRandomTargetNode();
                                     if (nodeRandom != null)
                                     {
