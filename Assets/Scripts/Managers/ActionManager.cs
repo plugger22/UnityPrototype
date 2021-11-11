@@ -1392,7 +1392,7 @@ public class ActionManager : MonoBehaviour
             bool isStressed = GameManager.i.playerScript.CheckConditionPresent(conditionStressed, GameManager.i.globalScript.sideResistance);
             outcomeDetails.isAction = true;
             outcomeDetails.reason = "Player Lie Low";
-            outcomeDetails.textBottom = GetLieLowMessage(numOfTurns, playerName, "PLAYER", isStressed);
+            outcomeDetails.textBottom = GetLieLowMessage(numOfTurns, playerName, "you", isStressed);
         }
         //generate a create modal window event
         EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessLieLowPlayerAction");

@@ -408,12 +408,12 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             if (isStart == true)
             {
-                data.itemText = "Player starting location";
+                data.itemText = "Your starting location";
                 data.topText = "Start Location";
             }
             else
             {
-                data.itemText = "Player moves";
+                data.itemText = "You move";
                 data.topText = "Move";
             }
             data.bottomText = GameManager.i.itemDataScript.GetPlayerMoveDetails(node, changeInvisibility, aiDelay);
@@ -458,9 +458,9 @@ public class MessageManager : MonoBehaviour
             data.topText = secret.tag;
             data.bottomText = GameManager.i.itemDataScript.GetPlayerSecretDetails(secret, isGained);
             if (isGained == true)
-            { data.itemText = "Player gains a Secret"; }
+            { data.itemText = "You gain a Secret"; }
             else
-            { data.itemText = "Player loses a Secret"; }
+            { data.itemText = "You lose a Secret"; }
             data.priority = ItemPriority.Low;
             data.sprite = playerSprite;
             data.spriteName = data.sprite.name;
@@ -501,7 +501,7 @@ public class MessageManager : MonoBehaviour
             message.isPublic = true;
             //ItemData
             ItemData data = new ItemData();
-            data.topText = "Player Escapes";
+            data.topText = "You Escape";
             data.bottomText = GameManager.i.itemDataScript.GetPlayerEscapesDetails(node);
             data.itemText = string.Format("{0}, has ESCAPED", GameManager.i.playerScript.PlayerName);
             data.priority = ItemPriority.High;
@@ -695,8 +695,8 @@ public class MessageManager : MonoBehaviour
         Debug.Assert(change != 0, "Invalid change (Zero)");
         string text = "Unknown";
         string topText = "Unknown";
-        if (change > 0) { text = "Player's MOOD has IMPROVED"; topText = "Mood Improves"; }
-        else { text = "Player's MOOD has WORSENED"; topText = "Mood Worsens"; }
+        if (change > 0) { text = "Your MOOD has IMPROVED"; topText = "Mood Improves"; }
+        else { text = "Your MOOD has WORSENED"; topText = "Mood Worsens"; }
         Message message = new Message();
         message.text = text;
         message.type = MessageType.PLAYER;
@@ -989,7 +989,7 @@ public class MessageManager : MonoBehaviour
             if (actorID == playerActorID)
             {
                 message.type = MessageType.PLAYER;
-                data.itemText = string.Format("{0}, Player, {1}", GameManager.i.playerScript.PlayerName, itemTextTag);
+                data.itemText = string.Format("{0}, you, {1}", GameManager.i.playerScript.PlayerName, itemTextTag);
                 data.sprite = playerSprite;
                 data.spriteName = data.sprite.name;
                 data.bottomText = GameManager.i.itemDataScript.GetActorStatusDetails(reason, details, null);
@@ -1084,7 +1084,7 @@ public class MessageManager : MonoBehaviour
                 message.type = MessageType.PLAYER;
                 if (side.level == globalAuthority.level)
                 { data.itemText = string.Format("{0}, Mayor, takes Stress Leave", GameManager.i.playerScript.GetPlayerNameAuthority()); }
-                else { data.itemText = string.Format("{0}, Player, takes Stress Leave", GameManager.i.playerScript.GetPlayerNameResistance()); }
+                else { data.itemText = string.Format("{0}, you, take Stress Leave", GameManager.i.playerScript.GetPlayerNameResistance()); }
                 data.sprite = playerSprite;
                 data.spriteName = data.sprite.name;
                 data.bottomText = GameManager.i.itemDataScript.GetActorStressLeaveDetails(side);
@@ -1636,8 +1636,8 @@ public class MessageManager : MonoBehaviour
             if (actorID == 999)
             {
                 //player captured
-                data.itemText = string.Format("{0}, Player, has been CAPTURED", playerName);
-                data.topText = "Player Captured";
+                data.itemText = string.Format("{0}, you, have been CAPTURED", playerName);
+                data.topText = "You're Captured";
                 data.bottomText = GameManager.i.itemDataScript.GetActorCaptureDetails(playerName, "Player", node, team);
             }
             else
@@ -1756,8 +1756,8 @@ public class MessageManager : MonoBehaviour
             if (actorID == 999)
             {
                 //player captured
-                data.itemText = string.Format("{0}, Player, has been RELEASED", playerName);
-                data.topText = "Player Released";
+                data.itemText = string.Format("{0}, you, have been RELEASED", playerName);
+                data.topText = "You've been Released";
                 data.bottomText = GameManager.i.itemDataScript.GetActorReleaseDetails(playerName, "Player", node);
             }
             else
@@ -2490,19 +2490,19 @@ public class MessageManager : MonoBehaviour
             {
                 if (isPlayerControl == true)
                 {
-                    data.itemText = "Nemesis under PLAYER CONTROL";
-                    data.topText = "Under Player Command";
+                    data.itemText = "Nemesis under your CONTROL";
+                    data.topText = "Under your Command";
                 }
                 else
                 {
                     if (coolDownTimer == 0)
                     {
-                        data.itemText = "Nemesis AVAILABLE for Player Control";
+                        data.itemText = "Nemesis AVAILABLE for your Control";
                         data.topText = "Nemesis Available";
                     }
                     else
                     {
-                        data.itemText = "Nemesis NOT YET available for Player Control";
+                        data.itemText = "Nemesis NOT YET available for your Control";
                         data.topText = "Nemesis Cooldown Period";
                     }
                 }

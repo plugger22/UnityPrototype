@@ -93,9 +93,6 @@ public class ItemDataManager : MonoBehaviour
         colourAlert = GameManager.i.colourScript.GetColour(ColourType.salmonText);
         colourNormal = GameManager.i.colourScript.GetColour(ColourType.normalText);
         colourEnd = GameManager.i.colourScript.GetEndTag();
-        /*if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
-        { colourSide = colourAuthority; }
-        else { colourSide = colourRebel; }*/
     }
 
 
@@ -230,7 +227,7 @@ public class ItemDataManager : MonoBehaviour
         { builder.AppendFormat(", ID {0}", node.nodeID); }
         if (changeInvisibility != 0)
         {
-            builder.AppendFormat("{0}{1}{2}<b>Player SPOTTED{3}Invisibility {4}</b>{5}", "\n", "\n", colourBad, "\n", changeInvisibility, colourEnd);
+            builder.AppendFormat("{0}{1}{2}<b>You've been SPOTTED{3}Invisibility {4}</b>{5}", "\n", "\n", colourBad, "\n", changeInvisibility, colourEnd);
             if (aiDelay > 0)
             { builder.AppendFormat("{0}{1}{2}<b>Authority will know in {3}{4}{5}{6} turn{7}</b>{8}", "\n", "\n", colourAlert, colourNeutral, aiDelay, colourEnd, colourAlert, aiDelay != 1 ? "s" : "", colourEnd); }
         }
@@ -267,8 +264,8 @@ public class ItemDataManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         string playerName = GameManager.i.playerScript.PlayerName;
-        builder.AppendFormat("<b>{0}, {1}Player</b>{2}{3}", playerName, colourAlert, colourEnd, "\n");
-        builder.AppendFormat("{0}<b>has ESCAPED</b>{1}{2}{3}", colourGood, colourEnd, "\n", "\n");
+        builder.AppendFormat("<b>{0}, {1}you</b>{2}{3}", playerName, colourAlert, colourEnd, "\n");
+        builder.AppendFormat("{0}<b>have ESCAPED</b>{1}{2}{3}", colourGood, colourEnd, "\n", "\n");
         builder.AppendFormat("from <b>{0}, {1}{2}</b>{3}{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
         builder.AppendFormat("{0}<b>{1} is under a cloud of suspicion as a result of their time with the Authority</b>{2}", colourBad, playerName, colourEnd);
         return builder.ToString();
@@ -286,7 +283,7 @@ public class ItemDataManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         //player
-        builder.AppendFormat("<b>{0}, {1}PLAYER</b>{2}{3}{4}", GameManager.i.playerScript.GetPlayerNameResistance(), colourAlert, colourEnd, "\n", "\n");
+        builder.AppendFormat("<b>{0}, {1}you</b>{2}{3}{4}", GameManager.i.playerScript.GetPlayerNameResistance(), colourAlert, colourEnd, "\n", "\n");
         builder.AppendFormat("<b>{0}, {1}{2}</b>{3}, district{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
         //details
         if (string.IsNullOrEmpty(detailsTop) == false)
@@ -445,8 +442,8 @@ public class ItemDataManager : MonoBehaviour
             else { status = GameManager.i.aiRebelScript.status; }
             //message
             if (string.IsNullOrEmpty(reason) == false)
-            { builder.AppendFormat("<b>{0}{1}, PLAYER</b>{2}{3}<b>{4}</b>{5}{6}", GameManager.i.playerScript.PlayerName, colourAlert, colourEnd, "\n", reason, "\n", "\n"); }
-            builder.AppendFormat("{0}<b>PLAYER</b>{1} status now {2}<b>{3}</b>{4}", colourAlert, colourEnd, colourNeutral, status, colourEnd);
+            { builder.AppendFormat("<b>{0}{1}, you</b>{2}{3}<b>{4}</b>{5}{6}", GameManager.i.playerScript.PlayerName, colourAlert, colourEnd, "\n", reason, "\n", "\n"); }
+            builder.AppendFormat("{0}<b>Your</b>{1} status now {2}<b>{3}</b>{4}", colourAlert, colourEnd, colourNeutral, status, colourEnd);
         }
         else
         {
@@ -473,8 +470,8 @@ public class ItemDataManager : MonoBehaviour
             //Player
             if (side.level == globalAuthority.level)
             { builder.AppendFormat("The {0}<b>Mayor{1}, {2},</b> has left the office for a short while", colourAlert, colourEnd, GameManager.i.playerScript.GetPlayerNameAuthority()); }
-            else { builder.AppendFormat("The {0}<b>Player{1}, {2},</b> has left for a short while", colourAlert, colourEnd, GameManager.i.playerScript.GetPlayerNameResistance()); }
-            builder.AppendFormat("{0}{1}When they return they will be {2}<b>Stress Free</b>{3}", "\n", "\n", colourGood, colourEnd);
+            else { builder.AppendFormat("{0}<b>You{1}, {2},</b> have left for a short while", colourAlert, colourEnd, GameManager.i.playerScript.GetPlayerNameResistance()); }
+            builder.AppendFormat("{0}{1}When you return you will be {2}<b>Stress Free</b>{3}", "\n", "\n", colourGood, colourEnd);
         }
         else
         {
@@ -1290,7 +1287,7 @@ public class ItemDataManager : MonoBehaviour
         else
         {
             //player got gear
-            builder.AppendFormat("Sourced by <b>{0}, {1}PLAYER</b>{2}{3}{4}", GameManager.i.playerScript.PlayerName, colourAlert, colourEnd, "\n", "\n");
+            builder.AppendFormat("Sourced by <b>{0}, {1}you</b>{2}{3}{4}", GameManager.i.playerScript.PlayerName, colourAlert, colourEnd, "\n", "\n");
             builder.AppendFormat("at <b>{0}, {1}{2}</b>{3} district", node.nodeName, colourAlert, node.Arc.name, colourEnd);
         }
         return builder.ToString();
@@ -2022,7 +2019,7 @@ public class ItemDataManager : MonoBehaviour
             if (actorID == 999)
             {
                 //player
-                builder.AppendFormat("<b>{0}, {1}PLAYER</b>{2}{3}{4}", GameManager.i.playerScript.PlayerName, colourAlert, colourEnd, "\n", "\n");
+                builder.AppendFormat("<b>{0}, {1}you</b>{2}{3}{4}", GameManager.i.playerScript.PlayerName, colourAlert, colourEnd, "\n", "\n");
             }
             else
             {
@@ -2068,7 +2065,7 @@ public class ItemDataManager : MonoBehaviour
                 builder.Append("Unknown Node");
             }
         }
-        else { builder.AppendFormat("{0}, {1}PLAYER{2}, {3}", GameManager.i.playerScript.PlayerName, colourAlert, colourEnd, "\n"); }
+        else { builder.AppendFormat("{0}, {1}you{2}, {3}", GameManager.i.playerScript.PlayerName, colourAlert, colourEnd, "\n"); }
         if (string.IsNullOrEmpty(ongoing.reason) == false)
         { builder.AppendFormat("{0}due to {1}", "\n", ongoing.reason); }
         if (string.IsNullOrEmpty(ongoing.description) == false)

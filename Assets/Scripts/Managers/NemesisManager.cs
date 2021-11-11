@@ -385,11 +385,11 @@ public class NemesisManager : MonoBehaviour
                 if (mode != NemesisMode.Inactive)
                 {
                     if (isPlayerControl)
-                    { text = string.Format("{0} nemesis under PLAYER CONTROL", nemesis.tag); }
+                    { text = string.Format("{0} nemesis under YOUR control", nemesis.tag); }
                     else
                     {
-                        if (controlCooldownTimer == 0) { text = string.Format("{0} nemesis AVAILABLE for Player Control", nemesis.tag); }
-                        else { string.Format("{0} nemesis available for Player Control in {1} turn{2}", nemesis.tag, controlCooldownTimer, controlCooldownTimer != 1 ? "s" : ""); }
+                        if (controlCooldownTimer == 0) { text = string.Format("{0} nemesis AVAILABLE for Your control", nemesis.tag); }
+                        else { string.Format("{0} nemesis available for Your control in {1} turn{2}", nemesis.tag, controlCooldownTimer, controlCooldownTimer != 1 ? "s" : ""); }
                     }
                 }
                 else

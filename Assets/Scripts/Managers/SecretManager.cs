@@ -474,7 +474,7 @@ public class SecretManager : MonoBehaviour
         builder.AppendFormat("{0}{1}- listOfDeletedSecrets", "\n", "\n");
         builder.Append(DisplaySecretList(GameManager.i.dataScript.GetListOfDeletedSecrets()));
         //player data
-        builder.AppendFormat("{0}{1}- PLAYER", "\n", "\n");
+        builder.AppendFormat("{0}{1}- You", "\n", "\n");
         builder.Append(GameManager.i.playerScript.DebugDisplaySecrets());
         //actor data
         for (int i = 0; i < GameManager.i.actorScript.maxNumOfOnMapActors; i++)

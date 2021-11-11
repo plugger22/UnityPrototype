@@ -113,7 +113,7 @@ public class ActorManager : MonoBehaviour
     [Header("Lie Low")]
     [Tooltip("Lying Low has a global cooldown period. Once it has been used by either an actor or the player, it isn't available until the cooldown timer has expired")]
     [Range(1, 10)] public int lieLowCooldownPeriod = 5;
-    [Tooltip("When PLAYER recovers from lying low this is how many action points he gets for that turn only")]
+    [Tooltip("When you recover from lying low this is how many action points you get for that turn only")]
     [Range(0, 2)] public int lieLowActionPoints = 1;
 
     [Header("MetaGame")]
@@ -8573,7 +8573,7 @@ public class ActorManager : MonoBehaviour
                 //
                 if (GameManager.i.playerScript.InactiveStatus == ActorInactive.LieLow)
                 {
-                    text = string.Format("{0}, PLAYER, is LYING LOW", playerName);
+                    text = string.Format("{0}, you, are LYING LOW", playerName);
                     topText = "Lying Low";
                     detailsTop = "You are deliberately keeping a <b>Low Profile</b>";
                     detailsBottom = string.Format("{0}<b>You can't take ANY actions while Lying Low</b>{1}", colourAlert, colourEnd);
@@ -8811,7 +8811,7 @@ public class ActorManager : MonoBehaviour
             {
                 if (condition != null)
                 {
-                    text = string.Format("{0}, PLAYER, has the {1} condition", playerName, condition.tag);
+                    text = string.Format("{0}, you, have the {1} condition", playerName, condition.tag);
                     topText = "Condition present";
                     switch (condition.type.level)
                     {
@@ -8989,7 +8989,7 @@ public class ActorManager : MonoBehaviour
                 {
                     if (isPlayer == true)
                     {
-                        text = string.Format("{0}, PLAYER, is LYING LOW", playerName);
+                        text = string.Format("{0}, you, are LYING LOW", playerName);
                         topText = "Lying Low";
                         detailsTop = "You are deliberately keeping a <b>Low Profile</b>";
                         detailsBottom = string.Format("{0}<b>You can't take ANY actions while Lying Low</b>{1}", colourAlert, colourEnd);
@@ -9843,26 +9843,26 @@ public class ActorManager : MonoBehaviour
         switch (GameManager.i.playerScript.tooltipStatus)
         {
             case ActorTooltip.Breakdown:
-                data.header = string.Format("{0}PLAYER{1}{2}{3}", colourSide, colourEnd, "\n", playerName);
+                data.header = string.Format("{0}You{1}{2}{3}", colourSide, colourEnd, "\n", playerName);
                 data.main = string.Format("{0}<size=120%>Currently having a {1}{2}BREAKDOWN (Stress){3}{4} and unavailable</size>{5}", colourNormal, colourEnd,
                     colourNeutral, colourEnd, colourNormal, colourEnd);
                 data.details = string.Format("{0} is expected to recover next turn", playerName);
                 break;
             case ActorTooltip.LieLow:
-                data.header = string.Format("{0}PLAYER{1}{2}{3}", colourSide, colourEnd, "\n", playerName);
+                data.header = string.Format("{0}You{1}{2}{3}", colourSide, colourEnd, "\n", playerName);
                 data.main = string.Format("{0}<size=120%>Currently {1}{2}LYING LOW{3}{4} and unavailable</size>{5}", colourNormal, colourEnd,
                     colourNeutral, colourEnd, colourNormal, colourEnd);
                 data.details = string.Format("{0}{1}{2} will automatically reactivate once their invisibility recovers to {3}3 Stars{4}",
                     colourNeutral, playerName, colourEnd, colourNeutral, colourEnd);
                 break;
             case ActorTooltip.Captured:
-                data.header = string.Format("{0}Player{1}{2}{3}", colourSide, colourEnd, "\n", GameManager.i.playerScript.PlayerName);
+                data.header = string.Format("{0}You{1}{2}{3}", colourSide, colourEnd, "\n", GameManager.i.playerScript.PlayerName);
                 data.main = string.Format("{0}<size=120%>Currently{1} {2}CAPTURED{3}{4} and unavailable</size>{5}", colourNormal, colourEnd,
                     colourBad, colourEnd, colourNormal, colourEnd);
                 data.details = string.Format("{0}{1}'s future is in the hands of the Authority{2}", colourBad, GameManager.i.playerScript.PlayerName, colourEnd);
                 break;
             case ActorTooltip.Leave:
-                data.header = string.Format("{0}Player{1}{2}{3}", colourSide, colourEnd, "\n", playerName);
+                data.header = string.Format("{0}You{1}{2}{3}", colourSide, colourEnd, "\n", playerName);
                 data.main = string.Format("{0}<size=120%>On{1} {2}STRESS LEAVE{3}{4} and unavailable</size>{5}", colourNormal, colourEnd,
                     colourNeutral, colourEnd, colourNormal, colourEnd);
                 data.details = string.Format("{0}{1} is expected to return, free of Stress, shortly{2}", colourAlert, playerName, colourEnd);

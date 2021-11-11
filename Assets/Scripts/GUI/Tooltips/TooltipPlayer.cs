@@ -197,7 +197,7 @@ public class TooltipPlayer : MonoBehaviour
         //
         // - - - Name - - -
         //
-        playerName.text = string.Format("{0}<b>PLAYER</b>{1}{2}{3}<size=110%><b>{4}</b></size>{5}", colourCancel, colourEnd, "\n", colourName, GameManager.i.playerScript.PlayerName, colourEnd);
+        playerName.text = string.Format("{0}<b>you</b>{1}{2}{3}<size=110%><b>{4}</b></size>{5}", colourCancel, colourEnd, "\n", colourName, GameManager.i.playerScript.PlayerName, colourEnd);
         //
         // - - - Status - - -
         //
