@@ -251,7 +251,7 @@
     {
         None,
         Move, MoveSecurity,
-        SandboxRescue, SandboxEvacuate,
+        SandboxRescue, SandboxEvacuate, SandboxComplete,
         PlayerInvisibility, PlayerNodeActions, PlayerRecruit, PlayerGiveGear, PlayerTarget,
         SubordinateRecruit, SubordinateNodeActions, SubordinateDismiss, SubordinateActivate, SubordinateGear, SubordinatePlanner
     }                 
@@ -263,7 +263,7 @@
     {
         StressLeaveResistance, StressLeaveAuthority,  
         PlayerBreakdown, PlayerLieLowTimes, PlayerLieLowDays, PlayerCaptured, PlayerCapturedDays, PlayerBetrayed, PlayerTimesStressed, PlayerStressedDays, PlayerSuperStressed, PlayerDoNothing,
-        PlayerNodeActions, PlayerMoveActions, PlayerTargetAttempts, PlayerGiveGear, PlayerAddictedDays, PlayerTimesCured, PlayerDaysOnJob, PlayerInvisibilityLost,
+        PlayerActions, PlayerNodeActions, PlayerMoveActions, PlayerTargetAttempts, PlayerGiveGear, PlayerAddictedDays, PlayerTimesCured, PlayerDaysOnJob, PlayerInvisibilityLost,
         PlayerMoveSecureConnections,
         PlayerManageActions, PlayerManageReserve, PlayerManageMoveOn, PlayerManageDispose,
         SubordinateNodeActions, SubordinateActivate,

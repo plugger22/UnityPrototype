@@ -775,6 +775,7 @@ public class TutorialManager : MonoBehaviour
                 case "GiveGear": goalType = GoalType.PlayerGiveGear; break;
                 case "SandboxRescue": goalType = GoalType.SandboxRescue; break;
                 case "SandboxEvacuate": goalType = GoalType.SandboxEvacuate; break;
+                case "SandboxComplete": goalType = GoalType.SandboxComplete; break;
                 default: Debug.LogWarningFormat("Unrecognised goal \"{0}\"", goal); break;
             }
         }
@@ -853,6 +854,10 @@ public class TutorialManager : MonoBehaviour
             case GoalType.SandboxEvacuate:
                 //player attempts second sandbox goal target (only 1 target on map)
                 goalValue = GameManager.i.dataScript.StatisticGetLevel(StatType.TargetSuccesses);
+                break;
+            case GoalType.SandboxComplete:
+                //player does something, anything that requires an action
+                goalValue = GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerActions);
                 break;
             case GoalType.None: break;
             default: Debug.LogWarningFormat("Unrecognised goalType \"{0}\"", goalType); break;

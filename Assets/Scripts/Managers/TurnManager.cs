@@ -760,6 +760,8 @@ public class TurnManager : MonoBehaviour
         if (GameManager.i.optionScript.isActions == true)
         {
             int remainder;
+            //stats
+            GameManager.i.dataScript.StatisticIncrement(StatType.PlayerActions);
             //Wounded
             if (GameManager.i.playerScript.CheckConditionPresent(conditionWounded, GameManager.i.sideScript.PlayerSide) == true)
             {
