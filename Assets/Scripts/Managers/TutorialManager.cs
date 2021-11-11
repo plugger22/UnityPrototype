@@ -1126,12 +1126,12 @@ public class TutorialManager : MonoBehaviour
 
     #endregion
 
-    #region SetTutorialCondition
+    #region ProcessTutorialCondition
     /// <summary>
     /// Sets up a condition (could be anything you can do via code) activated when item is triggered
     /// </summary>
     /// <param name="condition"></param>
-    public void SetTutorialCondition(TutorialCondition condition)
+    public void ProcessTutorialCondition(TutorialCondition condition)
     {
         if (condition != null)
         {
@@ -1303,17 +1303,17 @@ public class TutorialManager : MonoBehaviour
         string textBottomMsg = "Unknown";
         switch (numOfSandboxTries)
         {
-            case 1:
-                textTopMsg = "Ready to try again?";
-                textBottomMsg = "I've reset the Simulation<br><br>Good to go<br><br>The Stick is still out there and you still need to rescue them";
-                break;
             case 2:
                 textTopMsg = "Don't worry, nobody gets it right first up";
-                textBottomMsg = "I've reset the Simulation<br><br>Rescue the Stick again but this time I've toned down the CyberHound";
+                textBottomMsg = "I've reset the Simulation<br><br>Rescue the Stick again but this time I've toned down the Cyber Hound pup";
                 break;
-            default:
-                textTopMsg = "It's time to score a win";
-                textBottomMsg = "I've reset, again...<br><br>I've given our pet CyberHound pup the day off";
+            case 3:
+                textTopMsg = "You need to keep a low profile";
+                textBottomMsg = "I've reset, again...<br><br>I've given our pet Cyber Hound pup the day off";
+                break;
+            case 4:
+                textTopMsg = "It's time to kick a goal";
+                textBottomMsg = "I've reset, you're good to go<br><br>The Cyber Hound pup is back in the kennel";
                 break;
         }
         ModalOutcomeDetails outcomeReset = new ModalOutcomeDetails

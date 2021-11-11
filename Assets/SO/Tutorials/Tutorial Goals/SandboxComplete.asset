@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14ce46f3171943c4288c53f60de62339, type: 3}
+  m_Name: SandboxComplete
+  m_EditorClassIdentifier: 
+  notes: 'Sandbox tutorial is complete
+
+    Goal is player action. Generates reminder that sandbox over.'
+  startTopText: Training Complete
+  startBottomText: Well that's you done<br><br>It'd be nice to spend more time but
+    when does the Resistance ever have enough time?<br><br>Press <b>ESC</b> once this
+    closes for the main menu
+  finishTopText: You can, if you wish, putter around our training simulation for as
+    long as you want
+  finishBottomText: It's not that exciting though<br><br>We need you to go Live<br><br>We're
+    desperately short of people
+  tooltipText: Press ESC for the Main Menu and start a new game
+  prereq: {fileID: 11400000, guid: 0d3596435a0ef0b4db7a335838c4309a, type: 2}
+  goal0: {fileID: 11400000, guid: ef03019ff96896a4e8872892fc1bd68d, type: 2}
+  tracker0Notes: Sandbox Complete
+  target0: 1
+  goal1: {fileID: 0}
+  tracker1Notes: 
+  target1: -1

@@ -236,7 +236,7 @@ public class NemesisManager : MonoBehaviour
 
     #region InitialiseNemesis
     /// <summary>
-    /// Set nemesis up at city hall
+    /// Set first nemesis up at city hall
     /// </summary>
     public void InitialiseNemesis()
     {
@@ -1674,7 +1674,16 @@ public class NemesisManager : MonoBehaviour
                 { Debug.LogWarningFormat("Nemesis Damage infoPipeline message FAILED to be added to dictOfPipeline"); }
                 //Sandbox tutorial
                 if (GameManager.i.inputScript.GameState == GameState.Tutorial && GameManager.i.tutorialScript.CheckIfSandboxTutorial() == true)
-                { GameManager.i.tutorialScript.FailSandboxOutcome("So that Cyber Hound bit you on the rear end, did it?", "Nemesis"); }
+                {
+                    string message = "Unknown";
+                    switch (GameManager.i.tutorialScript.numOfSandboxTries)
+                    {
+                        case 1: message = "That Cyber Hound pup nipped you on the ankle, did it?"; break;
+                        case 2: message = "He's a frisky one, that Cyber Hound pup"; break;
+                        default: message = "It's just a small Cyber Hound pup. Harmless"; break;
+                    }
+                    GameManager.i.tutorialScript.FailSandboxOutcome(message, "Nemesis");
+                }
             }
         }
         else { Debug.LogWarning("Invalid damage (Null)"); }

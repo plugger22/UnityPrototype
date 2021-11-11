@@ -1992,6 +1992,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e148415021bf6744c96f03127571b34e, type: 2}
   - {fileID: 11400000, guid: 6cbdd59db5c0e794a99547c1808a04e5, type: 2}
   - {fileID: 11400000, guid: 74b0a41f472bdb84ea6bd012b4e4d589, type: 2}
+  - {fileID: 11400000, guid: b147e1d6e9c471743a7afc56b47d5e59, type: 2}
   arrayOfTutorialTypes:
   - {fileID: 11400000, guid: 6af73092ead59e34f89fadf31d6d355c, type: 2}
   - {fileID: 11400000, guid: 3ea5e079678bd114896744e070740f21, type: 2}
@@ -2013,6 +2014,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5242d883baefa62478c0dc09f123958e, type: 2}
   - {fileID: 11400000, guid: 0d3596435a0ef0b4db7a335838c4309a, type: 2}
   - {fileID: 11400000, guid: d529217edd010184f9f43845ef1d9d14, type: 2}
+  - {fileID: 11400000, guid: 1837050b43173134fa21e10ef9e45dc6, type: 2}
   arrayOfTutorialQueries:
   - {fileID: 11400000, guid: 79c9fe7515698064cb2345d2573a9993, type: 2}
   - {fileID: 11400000, guid: 039191711e5abb94a9a7286637c128e4, type: 2}
@@ -2176,6 +2178,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 44c5c13d4db5c5844be28a91d4795207, type: 2}
   - {fileID: 11400000, guid: 28e7cb27a2bed474f911749d63ce0357, type: 2}
   - {fileID: 11400000, guid: 1808839bec0eb7d40a377dd178a20501, type: 2}
+  - {fileID: 11400000, guid: ef03019ff96896a4e8872892fc1bd68d, type: 2}
   arrayOfTutorialQueryTypes:
   - {fileID: 11400000, guid: 932d6256daa87c544beac8ae5099c73e, type: 2}
   - {fileID: 11400000, guid: 7b12844901fc9f9478441b5e50b7ecc1, type: 2}
@@ -7197,7 +7200,6 @@ MonoBehaviour:
   arrowIconRight: 
   arrowIconLeft: 
   waitUntilDone: 0
-  isInfoAppBlocked: 0
 --- !u!114 &114736970613289560
 MonoBehaviour:
   m_ObjectHideFlags: 1

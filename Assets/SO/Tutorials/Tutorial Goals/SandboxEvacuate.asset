@@ -11,12 +11,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14ce46f3171943c4288c53f60de62339, type: 3}
   m_Name: SandboxEvacuate
   m_EditorClassIdentifier: 
-  notes: Rescue the stick while in sandbox mode
+  notes: Evacuate the stick
   startTopText: Evacuate the Stick
-  startBottomText: d
-  finishTopText: d
-  finishBottomText: d
-  tooltipText: d
+  startBottomText: It's imperative that you get the Stick out of town<br><br>We've
+    organised a safe means of leaving the city<br><br>Press 'T' to find it
+  finishTopText: You got the Stick to safety<br><br>The Stick says thanks
+  finishBottomText: We don't really care about the Stick<br><br>What we wanted was
+    for you to get a feel for moving around a city<br><br>Both how easy and dangerous
+    it can be
+  tooltipText: Press 'T' to find the egress point for the Stick. Successfully attempt
+    the target
   prereq: {fileID: 11400000, guid: d529217edd010184f9f43845ef1d9d14, type: 2}
   goal0: {fileID: 11400000, guid: 28e7cb27a2bed474f911749d63ce0357, type: 2}
   tracker0Notes: Evacuate the Stick

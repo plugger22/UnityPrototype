@@ -858,8 +858,12 @@ public class TurnManager : MonoBehaviour
         int actionsBefore = _actionsCurrent;
         _actionsCurrent = _actionsTotal;
         Debug.LogFormat("[Act] TurnManager.cs -> SetActionsToZero: _actionsCurrent now {0} (were {1}){2}", _actionsCurrent, actionsBefore, "\n");
-        //update widget
+
+        /*
+        //update widget -> NOTE: not needed as it just forces the player to hit end turn before they get their pipeline messages. Does it automatically now.
         EventManager.i.PostNotification(EventType.ChangeActionPoints, this, _actionsTotal, "TurnManager.cs -> SetActionsRecovery");
+        */
+
         //new turn
         ProcessNewTurn();
     }
