@@ -1229,38 +1229,6 @@ public class TutorialManager : MonoBehaviour
     }
     #endregion
 
-    #region ProcessSandboxHelpMessage
-    /// <summary>
-    /// provides a context sensitive help message from Fred, your trainer, during the sandbox provided no other tutorial message is present (which would be a win or fail state message)
-    /// </summary>
-    public void ProcessSandboxHelpMessage()
-    {
-        //randomise message (not all the time)
-        if (Random.Range(0, 100) < 50)
-        {
-            //ignore message if already a tutorial related win/fail one in the queue
-            if (GameManager.i.guiScript.CheckInfoPipeline(MsgPipelineType.TutorialSucceed) == false && GameManager.i.guiScript.CheckInfoPipeline(MsgPipelineType.TutorialFail) == false)
-            {
-                //dialogue
-                ModalOutcomeDetails outcomeTutorial = new ModalOutcomeDetails
-                {
-                    textTop = GameManager.Formatt("Hi, I'm here to give you tips", ColourType.moccasinText),
-                    textBottom = "What can I say? Do you best and wear clean underpants",
-                    sprite = GameManager.i.tutorialScript.tutorial.sprite,
-                    isAction = false,
-                    side = GameManager.i.globalScript.sideResistance,
-                    isSpecial = true,
-                    isSpecialGood = true,
-                    type = MsgPipelineType.Tutorial
-                };
-                //end of turn outcome window which needs to overlay ontop of InfoAPP and requires a different than normal modal setting
-                if (GameManager.i.guiScript.InfoPipelineAdd(outcomeTutorial) == false)
-                { Debug.LogWarningFormat("Tutorial infoPipeline message FAILED to be added to dictOfPipeline"); }
-            }
-        }
-    }
-    #endregion
-
     #region ProcessSandboxFailMessage
     /// <summary>
     /// provides a context sensitive message for a sandbox tutorial fail
@@ -1337,7 +1305,42 @@ public class TutorialManager : MonoBehaviour
         { Debug.LogWarningFormat("Reset Tutorial infoPipeline message FAILED to be added to dictOfPipeline"); }
     }
     #endregion
-
+   
+    #region ProcessSandboxHelpMessage
+    /// <summary>
+    /// provides a context sensitive help message from Fred, your trainer, during the sandbox provided no other tutorial message is present (which would be a win or fail state message)
+    /// </summary>
+    public void ProcessSandboxHelpMessage()
+    {
+        //randomise message (not all the time)
+        if (Random.Range(0, 100) < 50)
+        {
+            //ignore if player status inactive
+            if (GameManager.i.playerScript.Status == ActorStatus.Active)
+            {
+                //ignore message if already a tutorial related win/fail one in the queue
+                if (GameManager.i.guiScript.CheckInfoPipeline(MsgPipelineType.TutorialSucceed) == false && GameManager.i.guiScript.CheckInfoPipeline(MsgPipelineType.TutorialFail) == false)
+                {
+                    //dialogue
+                    ModalOutcomeDetails outcomeTutorial = new ModalOutcomeDetails
+                    {
+                        textTop = GameManager.Formatt("Hi, I'm here to give you tips", ColourType.moccasinText),
+                        textBottom = "What can I say? Do you best and wear clean underpants",
+                        sprite = GameManager.i.tutorialScript.tutorial.sprite,
+                        isAction = false,
+                        side = GameManager.i.globalScript.sideResistance,
+                        isSpecial = true,
+                        isSpecialGood = true,
+                        type = MsgPipelineType.Tutorial
+                    };
+                    //end of turn outcome window which needs to overlay ontop of InfoAPP and requires a different than normal modal setting
+                    if (GameManager.i.guiScript.InfoPipelineAdd(outcomeTutorial) == false)
+                    { Debug.LogWarningFormat("Tutorial infoPipeline message FAILED to be added to dictOfPipeline"); }
+                }
+            }
+        }
+    }
+    #endregion
     #endregion
 
     #region Widget Interaction...

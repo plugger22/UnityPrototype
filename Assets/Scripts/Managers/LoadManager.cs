@@ -46,11 +46,14 @@ public class LoadManager : MonoBehaviour
     public HqPosition[] arrayOfHqPositions;
     public CaptureTool[] arrayOfCaptureTools;
     public Layout[] arrayOfLayouts;
-    public GameHelp[] arrayOfGameHelp;
-    public GameHelpSet[] arrayOfGameHelpSets;
     public CampaignPool[] arrayOfCampaignPools;
     public CampaignDetails[] arrayOfCampaignDetails;
 
+    [Header("Help")]
+    public GameHelp[] arrayOfGameHelp;
+    public GameHelpSet[] arrayOfGameHelpSets;
+    public HelpCondition[] arrayOfHelpConditions;
+    public HelpMessage[] arrayOfHelpMessages;
 
     [Header("ActorDrafts -> ToolManager Duplicates")]
     public ActorDraftSex[] arrayOfActorDraftSex;
@@ -1309,6 +1312,20 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfGameHelpSets has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No GameHelpSets present"); }
+        //
+        // - - - HelpConditions (not stored in a collection)
+        //
+        numArray = arrayOfHelpConditions.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfHelpConditions has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No HelpConditions present"); }
+        //
+        // - - - HelpMessages (not stored in a collection)
+        //
+        numArray = arrayOfHelpMessages.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfHelpMessages has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No HelpMessages present"); }
 
     }
     #endregion

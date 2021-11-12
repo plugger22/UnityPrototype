@@ -2631,6 +2631,10 @@ public class ValidationManager : MonoBehaviour
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfGameHelp);
         //GameHelpSets
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfGameHelpSets);
+        //HelpConditions
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfHelpConditions);
+        //HelpMessages
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfHelpMessages);
         //CampaignPools
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfCampaignPools);
         //CampaignDetails
