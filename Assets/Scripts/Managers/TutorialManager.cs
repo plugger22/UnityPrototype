@@ -1447,13 +1447,6 @@ public class TutorialManager : MonoBehaviour
         { GameManager.i.teamScript.ResetTeams(); }
         if (set.teamConfig != null)
         { GameManager.i.teamScript.ConfigureTutorialTeams(set.teamConfig); }
-        
-        /*
-        //reset nemesis -> retry sandbox only
-        if (GameManager.i.optionScript.isNemesis == true && numOfSandboxTries > 1)
-        { GameManager.i.nemesisScript.InitialiseNemesis(); }
-        */
-
         //configure spiders and tracers
         if (set.hideConfig != null)
         { GameManager.i.nodeScript.ConfigureTutorialHideItems(set.hideConfig); }
@@ -1461,6 +1454,8 @@ public class TutorialManager : MonoBehaviour
         GameManager.i.alertScript.CloseAlertUI(true);
         //reset data
         GameManager.i.dataScript.ResetTutorialData();
+        //TutorialUI
+        GameManager.i.tutorialUIScript.ResetAllItems();
         //sandbox flag
         if (isSandboxReset == true)
         {

@@ -6797,3 +6797,18 @@ City seed 53431 -> VirtualCity, Eurasia
 
 Dev seed 25997 -> Thursday, 11 November 2021 3:39 PM
 City seed 33779 -> VirtualCity, Eurasia
+
+Dev seed 64149 -> Thursday, 11 November 2021 4:31 PM
+City seed 35014 -> VirtualCity, Eurasia
+WARNING Invalid car (Null) for listOfCarsTraffic[1]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	AnimationManager:ResetTraffic() (at Assets/Scripts/Managers/AnimationManager.cs:504)
+	AnimationManager:StopAnimations() (at Assets/Scripts/Managers/AnimationManager.cs:239)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:334)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:195)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:403)
+	NewTurnUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/NewTurnUI.cs:179)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 8966 -> Friday, 12 November 2021 12:38 PM
+City seed 58233 -> VirtualCity, Eurasia

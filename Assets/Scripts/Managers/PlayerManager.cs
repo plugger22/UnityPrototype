@@ -653,6 +653,10 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     public void ResetTutorialPlayer(int playerStartNodeID = -1)
     {
+        //status to active (may have been captured)
+        Status = ActorStatus.Active;
+        InactiveStatus = ActorInactive.None;
+        tooltipStatus = ActorTooltip.None;
         //automatically clear out gear and secrets
         listOfSecrets.Clear();
         listOfGear.Clear();

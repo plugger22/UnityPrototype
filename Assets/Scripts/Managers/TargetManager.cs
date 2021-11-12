@@ -1766,7 +1766,7 @@ public class TargetManager : MonoBehaviour
                                         if (nodeTarget != null)
                                         {
                                             //set target
-                                            if (SetTargetDetails(target, nodeTarget) == true)
+                                            if (SetTargetDetails(target.followOnTarget, nodeTarget) == true)
                                             {
                                                 Debug.LogFormat("[Tar] TargetManager.cs -> SetTargetDone: Node (random) \"{0}\", {1}, id {2}, assigned follow On target \"{3}\"", nodeTarget.nodeName,
                                                     nodeTarget.Arc.name, nodeTarget.nodeID, target.followOnTarget.targetName);
