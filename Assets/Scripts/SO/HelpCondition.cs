@@ -12,10 +12,10 @@ public class HelpCondition : ScriptableObject
     [TextArea] public string descriptor;
 
     [Header("Limit")]
-    [Tooltip("Use ONE of these only (if multiple only first from top to bottom will be used. Defines limit of condition. Eg. if == 2 then triggered when condition.value (code) is 2")]
-    public int equals;
-    [Tooltip("Use ONE of these only (if multiple only first from top to bottom will be used. Defines limit of condition. Eg. if == 2 then triggered when condition.value (code) is 2")]
-    public int greaterThan;
-    [Tooltip("Use ONE of these only (if multiple only first from top to bottom will be used. Defines limit of condition. Eg. if == 2 then triggered when condition.value (code) is 2")]
-    public int lessThan;
+    [Tooltip("Use ONE of these only (if multiple only first from top to bottom will be used. Defines limit of condition. Eg. if == 2 then triggered when condition.value (code) is 2. Default -1")]
+    public int equals = -1;
+    [Tooltip("Use ONE of these only (if multiple only first from top to bottom will be used. Defines limit of condition. Eg. if > 2 then triggered when condition.value (code) > value + 2. Default -1")]
+    public int greaterThan = -1;
+    [Tooltip("Use ONE of these only (if multiple only first from top to bottom will be used. Defines limit of condition. Eg. if < 2 then triggered when condition.value (code) is < value - 2. Default -1")]
+    public int lessThan = -1;
 }

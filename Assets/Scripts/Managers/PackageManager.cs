@@ -1533,5 +1533,40 @@ namespace packageAPI
         public bool isCure;
     }
 
+    /// <summary>
+    /// HelpCondition.SO converts to this data package for use in code
+    /// </summary>
+    public class HelpConditionData
+    {
+        public string name;                         //helpCondition.SO name
+        public int equals;                          //helpCondition.SO default -1
+        public int greaterThan;                     //helpCondition.SO default -1
+        public int lessThan;                        //helpCondition.SO default -1
+        public bool isDone;                         //default false
+    }
+
+    /// <summary>
+    /// HelpMessage.SO converts to this data package (DataManager.cs -> dictOfHelpMessages)
+    /// </summary>
+    public class HelpMessageData
+    {
+        public string name;
+        public string textTop;
+        public string textBottom;
+        public List<HelpConditionData> listOfConditions;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public HelpMessageData()
+        {
+            textTop = "Unknown";
+            textBottom = "Unknown";
+            listOfConditions = new List<HelpConditionData>();
+        }
+        
+    }
+
+
     //new classes above here
 }

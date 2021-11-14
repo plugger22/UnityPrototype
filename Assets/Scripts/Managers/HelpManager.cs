@@ -169,7 +169,7 @@ public class HelpManager : MonoBehaviour
 
     #endregion
 
-
+    #region CreateItemDataHelp...
     /// <summary>
     /// creates item Help data. Returns an empty list if none
     /// NOTE: Use stringbuilder for help topics with multiple lines only, too much overhead for single lines
@@ -2925,10 +2925,10 @@ public class HelpManager : MonoBehaviour
         //
         //return help
         return listOfHelp;
-
-
     }
+    #endregion
 
+    #region DebugShowHelp
     /// <summary>
     /// allows a help window to pop-up showing the topics specified below. Used for debugging help topics
     /// </summary>
@@ -2942,7 +2942,9 @@ public class HelpManager : MonoBehaviour
         Vector3 screenPos = new Vector3(Screen.width / 2, Screen.height / 2);
         GameManager.i.tooltipHelpScript.SetTooltip(listOfHelp, screenPos);
     }
+    #endregion
 
+    #region DisplayHelp
     /// <summary>
     /// debug method to display all keyboard commands
     /// </summary>
@@ -2987,5 +2989,16 @@ public class HelpManager : MonoBehaviour
             .AppendFormat(" Test Condition -> Z{0}", "\n")
             .ToString();
     }
+    #endregion
+
+    #region HelpMessages...
+    //
+    // - - - Help Messages
+    //
+
+
+
+    #endregion
+
 
 }
