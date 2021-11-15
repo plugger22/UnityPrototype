@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0ca6a67c218f4847ae08d3aa62ec78e, type: 3}
+  m_Name: PlayerLieLow
+  m_EditorClassIdentifier: 
+  textTop: You have lost your Invisibility<br><br>That makes you highly vulnerable
+  textBottom: LIE LOW (Right click your portrait)<br><br>Don't risk wandering around
+    the city with a 'Come And Get Me' sign on your back
+  listOfConditions:
+  - {fileID: 11400000, guid: a867e699baf551c4aa92c78ef54c678e, type: 2}
