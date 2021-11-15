@@ -1637,6 +1637,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f843e35d83fae614b9583b62b5aba7d2, type: 2}
   arrayOfLayouts:
   - {fileID: 11400000, guid: f86e231ef3f7d1b40a9c086b0d0da6bd, type: 2}
+  arrayOfCampaignPools:
+  - {fileID: 0}
+  arrayOfCampaignDetails:
+  - {fileID: 11400000, guid: 40e9aad61e73f1c47867ea7c46f5cc8e, type: 2}
+  - {fileID: 11400000, guid: 0ec05877a9da9d74d933fde67554884f, type: 2}
   arrayOfGameHelp:
   - {fileID: 11400000, guid: 695b16a6bbe55124680ffaddad0a0b60, type: 2}
   - {fileID: 11400000, guid: 564543bbaaeeb7541b861970caea63e7, type: 2}
@@ -1687,11 +1692,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ef57bce5325d08545891fc018f784f47, type: 2}
   - {fileID: 11400000, guid: 31a7a3736dfa8a945abe048d4e40b802, type: 2}
   - {fileID: 11400000, guid: 49ae8c226c3dac143aafe3e910e1d302, type: 2}
-  arrayOfCampaignPools:
-  - {fileID: 0}
-  arrayOfCampaignDetails:
-  - {fileID: 11400000, guid: 40e9aad61e73f1c47867ea7c46f5cc8e, type: 2}
-  - {fileID: 11400000, guid: 0ec05877a9da9d74d933fde67554884f, type: 2}
+  arrayOfHelpConditions:
+  - {fileID: 11400000, guid: 9356432893e9c224eb0f4473e0c71573, type: 2}
+  - {fileID: 11400000, guid: 1dba771ab8b69184d8d9a2069a069a5c, type: 2}
+  - {fileID: 11400000, guid: 9f9eeee7b3f15394a8ec41dd628ed1f7, type: 2}
+  - {fileID: 11400000, guid: a867e699baf551c4aa92c78ef54c678e, type: 2}
+  - {fileID: 11400000, guid: 4cb5c0d730eba5e468ad76dcf63d371a, type: 2}
+  arrayOfHelpMessages: []
   arrayOfActorDraftSex:
   - {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
   - {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}

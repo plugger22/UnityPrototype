@@ -14,6 +14,6 @@ MonoBehaviour:
   descriptor: 'Acquire some gear
 
     Statistic getGear'
-  equals: 0
-  greaterThan: -1
-  lessThan: -1
+  isEquals: -1
+  isGreaterThan: 0
+  isLessThan: -1

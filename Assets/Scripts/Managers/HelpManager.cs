@@ -1,5 +1,6 @@
 ﻿using gameAPI;
 using packageAPI;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -3061,6 +3062,51 @@ public class HelpManager : MonoBehaviour
             else { Debug.LogError("Invalid listOfMessages (Empty)"); }
         }
         else { Debug.LogError("Invalid listOfMessages (Null)"); }
+    }
+    #endregion
+
+    #region DebugDisplayHelpMessages
+    /// <summary>
+    /// Displays contents of DM -> dictOfHelpMessages
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayHelpMessages()
+    {
+        StringBuilder builder = new StringBuilder();
+        Dictionary<string, HelpMessageData> dictOfHelpMessages = GameManager.i.dataScript.GetDictOfHelpMessages();
+        if (dictOfHelpMessages != null)
+        {
+            int count = dictOfHelpMessages.Count;
+            int numOfConditions;
+            HelpConditionData condition;
+            builder.AppendFormat("-dictOfHelpMessages  {0} record{1}{2}{3}", count, count != 1 ? "s" : "", "\n", "\n");
+            if (count == 0)
+            { builder.Append("No records"); }
+            else
+            {
+                foreach (var data in dictOfHelpMessages)
+                {
+                    numOfConditions = data.Value.listOfConditions.Count;
+                    builder.AppendFormat(" {0} -> texts {1}/{2}, {3} Condition{4}, isDone {5}{6}", data.Key, data.Value.textTop.Length > 0 ? "yes" : "NO", data.Value.textBottom.Length > 0 ? "yes" : "NO",
+                      numOfConditions > 0 ? Convert.ToString(numOfConditions) : "No", numOfConditions != 1 ? "s" : "", data.Value.isDone, "\n");
+                    if (numOfConditions > 0)
+                    {
+                        for (int i = 0; i < numOfConditions; i++)
+                        {
+                            condition = data.Value.listOfConditions[i];
+                            if (condition != null)
+                            {
+                                builder.AppendFormat("  {0} -> value {1}, equal {2}, greaterThan {3}, lessThan {4}{5}", 
+                                    condition.name, condition.value, condition.isEquals, condition.isGreaterThan, condition.isLessThan, "\n");
+                            }
+                            else { Debug.LogErrorFormat("Invalid HelpConditionData (Null) in {0}.listOfConditions[{1}]", data.Key, i); }
+                        }
+                    }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfHelpMessages (Null)"); }
+        return builder.ToString();
     }
     #endregion
 

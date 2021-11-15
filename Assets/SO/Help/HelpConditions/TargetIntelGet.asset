@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Name: TargetIntelGet
   m_EditorClassIdentifier: 
   descriptor: "Acquire some target intel. \nStatistic - target intel"
-  equals: 0
-  greaterThan: -1
-  lessThan: -1
+  isEquals: -1
+  isGreaterThan: 0
+  isLessThan: -1

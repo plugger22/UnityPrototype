@@ -6816,3 +6816,41 @@ City seed 58233 -> VirtualCity, Eurasia
 Dev seed 23139 -> Friday, 12 November 2021 3:09 PM
 City seed 57336 -> VirtualCity, Eurasia
 City seed 40494 -> Londus, Eurasia
+
+Dev seed 52867 -> Monday, 15 November 2021 12:19 PM
+WARNING  LoadManager.cs -> InitialiseStart: No HelpConditions present
+UnityEngine.Debug:LogWarning(Object)
+	LoadManager:InitialiseStart(GameState) (at Assets/Scripts/Managers/LoadManager.cs:1321)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING  LoadManager.cs -> InitialiseStart: No HelpMessages present
+UnityEngine.Debug:LogWarning(Object)
+	LoadManager:InitialiseStart(GameState) (at Assets/Scripts/Managers/LoadManager.cs:1328)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on HelpCondition, array 0, assets 5 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(HelpCondition[]) (at Assets/Scripts/Managers/ValidationManager.cs:2668)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2635)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	City seed 64006 -> VirtualCity, Eurasia
+
+Dev seed 35813 -> Monday, 15 November 2021 12:42 PM
+WARNING  LoadManager.cs -> InitialiseStart: No HelpConditions present
+UnityEngine.Debug:LogWarning(Object)
+	LoadManager:InitialiseStart(GameState) (at Assets/Scripts/Managers/LoadManager.cs:1321)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING  LoadManager.cs -> InitialiseStart: No HelpMessages present
+UnityEngine.Debug:LogWarning(Object)
+	LoadManager:InitialiseStart(GameState) (at Assets/Scripts/Managers/LoadManager.cs:1328)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	WARNING [Val] ValidateSO: MISMATCH on HelpCondition, array 0, assets 5 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(HelpCondition[]) (at Assets/Scripts/Managers/ValidationManager.cs:2668)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2635)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
+	City seed 42753 -> VirtualCity, Eurasia

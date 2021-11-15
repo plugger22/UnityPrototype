@@ -44,6 +44,7 @@ public class DebugGUI : MonoBehaviour
     private int box_file;
     private int button_width;
     private int offset;
+    private int helpToggle = 0;
     private int targetToggle = 0;
     private int campaignToggle = 0;
     private int personalityToggle = 0;
@@ -183,12 +184,15 @@ public class DebugGUI : MonoBehaviour
             //
 
             //first button
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 0 + button_height * 0, button_width, button_height), "Help"))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 0 + button_height * 0, button_width, button_height), "Help Data"))
             {
-                Debug.Log("[Dbg] Button -> Toggle Help");
-                if (debugDisplay != 13)
-                { debugDisplay = 13; }
-                else { debugDisplay = 0; }
+                Debug.Log("[Dbg] Button -> Toggle Help Data");
+                switch (helpToggle)
+                {
+                    case 0: debugDisplay = 13; helpToggle = 1; break;
+                    case 1: debugDisplay = 120; helpToggle = 2; break;
+                    case 2: debugDisplay = 0; helpToggle = 0; break;
+                }
             }
 
             //second button
@@ -2515,6 +2519,12 @@ public class DebugGUI : MonoBehaviour
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.i.dataScript.DebugDisplayListOfNodesWithTargets();
                         GUI.Box(new Rect(Screen.width - 555, 10, 550, 600), analysis, customBackground);
+                        break;
+                    //Help Messages
+                    case 120:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.i.helpScript.DebugDisplayHelpMessages();
+                        GUI.Box(new Rect(Screen.width - 555, 10, 550, 900), analysis, customBackground);
                         break;
                 }
             }

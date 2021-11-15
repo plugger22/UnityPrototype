@@ -9,11 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 639f6716e186ecc45894726d2b7e4061, type: 3}
-  m_Name: GearGet
+  m_Name: Hacking
   m_EditorClassIdentifier: 
-  descriptor: 'Acquire some gear
+  descriptor: 'Hack district security
 
-    Statistic getGear'
-  equals: 0
-  greaterThan: -1
-  lessThan: -1
+    Stat timesHacked'
+  isEquals: -1
+  isGreaterThan: 0
+  isLessThan: -1

@@ -1543,7 +1543,7 @@ namespace packageAPI
         public int isEquals;                            //helpCondition.SO default -1
         public int isGreaterThan;                       //helpCondition.SO default -1
         public int isLessThan;                          //helpCondition.SO default -1
-        public bool isDone;                             //default false
+
 
         /// <summary>
         /// Constructor
@@ -1563,15 +1563,17 @@ namespace packageAPI
         public string textTop;
         public string textBottom;
         public List<HelpConditionData> listOfConditions;
+        public bool isDone;                                         //default false
 
         /// <summary>
         /// Constructor
         /// </summary>
         public HelpMessageData()
         {
-            textTop = "Unknown";
-            textBottom = "Unknown";
+            textTop = "";
+            textBottom = "";
             listOfConditions = new List<HelpConditionData>();
+            isDone = false;
         }
         
     }
