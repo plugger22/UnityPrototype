@@ -2996,7 +2996,73 @@ public class HelpManager : MonoBehaviour
     // - - - Help Messages
     //
 
-
+    #region InitialiseHelpMessages
+    /// <summary>
+    /// Converts HelpMessage.SO's to data packages and populates DM -> dictOfHelpMessages
+    /// </summary>
+    /// <param name="listOfMessages"></param>
+    public void InitialiseHelpMessages(List<HelpMessage> listOfMessages)
+    {
+        if (listOfMessages != null)
+        {
+            int countConditions;
+            int countMessages = listOfMessages.Count;
+            if (countMessages > 0)
+            {
+                Dictionary<string, HelpMessageData> dictOfHelpMessages = GameManager.i.dataScript.GetDictOfHelpMessages();
+                if (dictOfHelpMessages != null)
+                {
+                    //check empty - info message if not
+                    if (dictOfHelpMessages.Count > 0)
+                    { Debug.LogWarningFormat("Invalid dictOfHelpMessages (has {0} records, should be Empty)", dictOfHelpMessages.Count); }
+                    //clear any residual data from dictionary
+                    dictOfHelpMessages.Clear();
+                    //Populate dictionary
+                    for (int i = 0; i < countMessages; i++)
+                    {
+                        HelpMessage message = listOfMessages[i];
+                        if (message != null)
+                        {
+                            //convert to data packages
+                            HelpMessageData dataMsg = new HelpMessageData();
+                            dataMsg.name = message.name;
+                            dataMsg.textTop = message.textTop;
+                            dataMsg.textBottom = message.textBottom;
+                            //convert any conditions to data packages
+                            countConditions = message.listOfConditions.Count;
+                            if (countConditions > 0)
+                            {
+                                for (int k = 0; k < countConditions; k++)
+                                {
+                                    HelpCondition condition = message.listOfConditions[k];
+                                    if (condition != null)
+                                    {
+                                        HelpConditionData dataCon = new HelpConditionData();
+                                        dataCon.name = condition.name;
+                                        dataCon.isEquals = condition.isEquals;
+                                        dataCon.isGreaterThan = condition.isGreaterThan;
+                                        dataCon.isLessThan = condition.isLessThan;
+                                        //add to list
+                                        dataMsg.listOfConditions.Add(dataCon);
+                                    }
+                                    else { Debug.LogErrorFormat("Invalid HelpCondition (Null) in {0}.listOfConditions[{1}]", message.name, k); }
+                                }
+                            }
+                            //add to dict
+                            dictOfHelpMessages.Add(dataMsg.name, dataMsg);
+                        }
+                        else { Debug.LogErrorFormat("Invalid HelpMessage (Null) in listOfMessages[{0}]", i); }
+                    }
+                    //log
+                    Debug.LogFormat("[Loa] HelpManager.cs -> InitialiseHelpManager.cs: dictOfHelpMessages loaded up with {0} records{1}", dictOfHelpMessages.Count, "\n");
+                }
+                else { Debug.LogError("Invalid dictOfHelpMessages (Null)"); }
+            }
+            else { Debug.LogError("Invalid listOfMessages (Empty)"); }
+        }
+        else { Debug.LogError("Invalid listOfMessages (Null)"); }
+    }
+    #endregion
 
     #endregion
 

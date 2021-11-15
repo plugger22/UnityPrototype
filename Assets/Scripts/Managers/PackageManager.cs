@@ -1538,11 +1538,20 @@ namespace packageAPI
     /// </summary>
     public class HelpConditionData
     {
-        public string name;                         //helpCondition.SO name
-        public int equals;                          //helpCondition.SO default -1
-        public int greaterThan;                     //helpCondition.SO default -1
-        public int lessThan;                        //helpCondition.SO default -1
-        public bool isDone;                         //default false
+        public string name;                             //helpCondition.SO name
+        public int value;                               //base value that condition is tested against, default -1
+        public int isEquals;                            //helpCondition.SO default -1
+        public int isGreaterThan;                       //helpCondition.SO default -1
+        public int isLessThan;                          //helpCondition.SO default -1
+        public bool isDone;                             //default false
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public HelpConditionData()
+        {
+            value = -1;
+        }
     }
 
     /// <summary>

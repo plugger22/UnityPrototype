@@ -257,6 +257,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, List<int>> dictOfNodeContactsAuthority = new Dictionary<int, List<int>>();          //Key -> NodeID, Value -> list of actorID's who have a contact at node
     private Dictionary<int, List<Contact>> dictOfContactsByNodeResistance = new Dictionary<int, List<Contact>>(); //Key -> NodeID, Value -> list of Contacts at the node (resistance only)
     private Dictionary<string, HelpData> dictOfHelpData = new Dictionary<string, HelpData>();                   //Key -> tag, Value -> HelpData
+    private Dictionary<string, HelpMessageData> dictOfHelpMessages = new Dictionary<string, HelpMessageData>(); //Key -> HelpMessage.SO name, Value -> HelpMessageData.cs
     private Dictionary<StatType, int> dictOfStatisticsLevel = new Dictionary<StatType, int>();                  //Key -> (int)StatType, Value -> statistic
     private Dictionary<StatType, int> dictOfStatisticsCampaign = new Dictionary<StatType, int>();               //Key -> (int)StatType, Value -> statistic
     private Dictionary<string, Campaign> dictOfCampaigns = new Dictionary<string, Campaign>();                  //Key -> campaign.name, Value -> Campaign
@@ -609,6 +610,8 @@ public class DataManager : MonoBehaviour
         dictOfDijkstraWeighted.Clear();
         //teams
         dictOfTeams.Clear();
+        //help messages
+        dictOfHelpMessages.Clear();
         //contacts
         dictOfContacts.Clear();
         dictOfActorContacts.Clear();
@@ -8398,6 +8401,9 @@ public class DataManager : MonoBehaviour
     public Dictionary<string, HelpData> GetDictOfHelpData()
     { return dictOfHelpData; }
 
+    public Dictionary<string, HelpMessageData> GetDictOfHelpMessages()
+    { return dictOfHelpMessages; }
+
     /// <summary>
     /// Get help data for a specific tag, returns Null if not found
     /// </summary>
@@ -8410,6 +8416,7 @@ public class DataManager : MonoBehaviour
         else { Debug.LogWarningFormat("Not found, tag \"{0}\", in dictOfHelpData {1}", tag, "\n"); }
         return null;
     }
+
     #endregion
 
     #region History...
