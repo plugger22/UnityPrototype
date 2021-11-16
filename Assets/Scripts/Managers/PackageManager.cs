@@ -1539,7 +1539,8 @@ namespace packageAPI
     public class HelpConditionData
     {
         public string name;                             //helpCondition.SO name
-        public int value;                               //base value that condition is tested against, default -1
+        public HelpConditionType conType;               //name converted to enum
+        public int conValue;                            //base value that condition is tested against, default -1
         public bool isEquals;                           //helpCondition.SO default -1
         public bool isGreaterThan;                      //helpCondition.SO default -1
         public bool isLessThan;                         //helpCondition.SO default -1
@@ -1558,7 +1559,7 @@ namespace packageAPI
         /// </summary>
         public HelpConditionData()
         {
-            value = -1;
+            conValue = -1;
         }
     }
 

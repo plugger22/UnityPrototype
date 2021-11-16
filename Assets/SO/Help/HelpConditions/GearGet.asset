@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: 'Acquire some gear
 
-    Statistic getGear'
+    Amount of gear acquired (stat)'
   isEquals: 255
   isGreaterThan: 0
   isLessThan: 0

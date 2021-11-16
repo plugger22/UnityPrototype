@@ -289,6 +289,16 @@
         PlayerBreakdown, StressLeave, LieLow, BadCondition
     }
 
+    public enum HelpConditionType
+    {
+        None,
+        GearGet, TargetIntelGet,
+        DistrictHack, 
+        FixerOnMap, HackerOnMap, PlannerOnMap,
+        ActionDiversion,
+        PlayerLieLow
+    }
+
     //
     // - - - Messages - - -
     //

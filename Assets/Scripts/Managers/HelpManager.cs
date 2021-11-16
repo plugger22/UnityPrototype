@@ -11,9 +11,16 @@ using UnityEngine;
 public class HelpManager : MonoBehaviour
 {
     //bullet character for help topics
-    char bullet;
-    string arrowLeft;
-    string arrowRight;
+    private char bullet;
+    private string arrowLeft;
+    private string arrowRight;
+
+    //fast access
+    private ActorArc arcFixer;
+    private ActorArc arcPlanner;
+    private ActorArc arcHacker;
+
+    private GlobalSide sideResistance;
 
     //
     // - - - Colour Scheme - - -
@@ -31,12 +38,22 @@ public class HelpManager : MonoBehaviour
     public void Initialise(GameState state)
     {
         SetColours();
-        //fast access
+        //fast access -> characters
         bullet = GameManager.i.guiScript.bulletChar;
         arrowLeft = GameManager.i.guiScript.arrowIconLeft;
         arrowRight = GameManager.i.guiScript.arrowIconRight;
         Debug.Assert(string.IsNullOrEmpty(arrowLeft) == false, "Invalid arrowLeft (Null or Empty)");
         Debug.Assert(string.IsNullOrEmpty(arrowRight) == false, "Invalid arrowRight (Null or Empty)");
+        //fast access -> actorArcs
+        arcFixer = GameManager.i.dataScript.GetActorArc("FIXER");
+        arcPlanner = GameManager.i.dataScript.GetActorArc("PLANNER");
+        arcHacker = GameManager.i.dataScript.GetActorArc("HACKER");
+        Debug.Assert(arcFixer != null, "Invalid arcFixer (Null)");
+        Debug.Assert(arcPlanner != null, "Invalid arcPlanner (Null)");
+        Debug.Assert(arcHacker != null, "Invalid arcHacker (Null)");
+        //fast access -> other
+        sideResistance = GameManager.i.globalScript.sideResistance;
+        Debug.Assert(sideResistance != null, "Invalid sideResistance (Null)");
         //register listener
         EventManager.i.AddListener(EventType.ChangeColour, OnEvent, "ItemDataManager");
     }
@@ -3043,6 +3060,13 @@ public class HelpManager : MonoBehaviour
                                         dataCon.isEquals = condition.isEquals;
                                         dataCon.isGreaterThan = condition.isGreaterThan;
                                         dataCon.isLessThan = condition.isLessThan;
+                                        dataCon.isPresent = condition.isPresent;
+                                        dataCon.isNotPresent = condition.isNotPresent;
+                                        dataCon.lowerLimit = condition.lowerLimit;
+                                        dataCon.upperLimit = condition.upperLimit;
+                                        dataCon.setNumber = condition.setNumber;
+                                        dataCon.conType = GetConditionType(condition.name);
+                                        dataCon.conValue = GetConditionValue(dataCon.conType);
                                         //add to list
                                         dataMsg.listOfConditions.Add(dataCon);
                                     }
@@ -3065,6 +3089,77 @@ public class HelpManager : MonoBehaviour
     }
     #endregion
 
+
+    #region GetHelpMessageType
+    /// <summary>
+    /// Converts HelpMessage.SO name into an enum for faster access. Returns HelpConditionType.None if a problem
+    /// </summary>
+    /// <param name="messageName"></param>
+    /// <returns></returns>
+    private HelpConditionType GetConditionType(string conditionName)
+    {
+        HelpConditionType conditionType = HelpConditionType.None;
+        if (string.IsNullOrEmpty(conditionName) == false)
+        {
+            switch(conditionName)
+            {
+                case "GearGet": conditionType = HelpConditionType.GearGet; break;
+                case "FixerPresent": conditionType = HelpConditionType.FixerOnMap; break;
+                case "Hacking": conditionType = HelpConditionType.DistrictHack; break;
+                case "HackerPresent": conditionType = HelpConditionType.HackerOnMap; break;
+                case "PlayerLieLow": conditionType = HelpConditionType.PlayerLieLow; break;
+                case "Diversion": conditionType = HelpConditionType.ActionDiversion; break;
+                case "TargetIntelGet": conditionType = HelpConditionType.TargetIntelGet; break;
+                case "PlannerPresent": conditionType = HelpConditionType.PlannerOnMap; break;
+                default: Debug.LogWarningFormat("Unrecognised conditionName \"{0}\"", conditionName); break;
+            }
+        }
+        else { Debug.LogError("Invalid conditionName (Null or Empty)"); }
+        return conditionType;
+    }
+    #endregion
+
+    #region GetConditionValue
+    /// <summary>
+    /// Gets current value of a condition type. If a bool value is expected will return 1 for true, 0 for false. Returns -1 if a problem
+    /// </summary>
+    /// <param name="conType"></param>
+    /// <returns></returns>
+    private int GetConditionValue(HelpConditionType conType)
+    {
+        int value = -1;
+        switch (conType)
+        {
+            case HelpConditionType.GearGet:
+                value = GameManager.i.dataScript.StatisticGetLevel(StatType.GearTotal);
+                break;
+            case HelpConditionType.FixerOnMap:
+                value = GameManager.i.dataScript.CheckActorArcPresent(arcFixer, sideResistance, true) == true ? 1 : 0;
+                break;
+            case HelpConditionType.PlannerOnMap:
+                value = GameManager.i.dataScript.CheckActorArcPresent(arcPlanner, sideResistance, true) == true ? 1 : 0;
+                break;
+            case HelpConditionType.HackerOnMap:
+                value = GameManager.i.dataScript.CheckActorArcPresent(arcHacker, sideResistance, true) == true ? 1 : 0;
+                break;
+            case HelpConditionType.PlayerLieLow:
+                value = GameManager.i.playerScript.Invisibility;
+                break;
+            case HelpConditionType.ActionDiversion:
+                value = GameManager.i.dataScript.StatisticGetLevel(StatType.SubordinateNodeActions);
+                break;
+            case HelpConditionType.TargetIntelGet:
+                value = GameManager.i.dataScript.StatisticGetLevel(StatType.TargetInfo);
+                break;
+            case HelpConditionType.DistrictHack:
+                
+                break;
+            default: Debug.LogWarningFormat("Unrecognised conType \"{0}\"", conType); break;
+        }
+        return value;
+    }
+    #endregion
+
     #region DebugDisplayHelpMessages
     /// <summary>
     /// Displays contents of DM -> dictOfHelpMessages
@@ -3079,7 +3174,7 @@ public class HelpManager : MonoBehaviour
             int count = dictOfHelpMessages.Count;
             int numOfConditions;
             HelpConditionData condition;
-            builder.AppendFormat("- - - dictOfHelpMessages  {0} record{1}{2}{3}", count, count != 1 ? "s" : "", "\n", "\n");
+            builder.AppendFormat("-dictOfHelpMessages  {0} record{1}{2}{3}", count, count != 1 ? "s" : "", "\n", "\n");
             if (count == 0)
             { builder.Append("No records"); }
             else
@@ -3087,8 +3182,13 @@ public class HelpManager : MonoBehaviour
                 foreach (var data in dictOfHelpMessages)
                 {
                     numOfConditions = data.Value.listOfConditions.Count;
-                    builder.AppendFormat("-{0} -> texts {1}/{2}, {3} Condition{4}, isDone {5}{6}", data.Key, data.Value.textTop.Length > 0 ? "yes" : "NO", data.Value.textBottom.Length > 0 ? "yes" : "NO",
-                      numOfConditions > 0 ? Convert.ToString(numOfConditions) : "No", numOfConditions != 1 ? "s" : "", data.Value.isDone, "\n");
+                    builder.AppendFormat(" {0} -> texts {1}, {2} condition{3}, isDone {4}{5}", 
+                        data.Key, 
+                        data.Value.textTop.Length > 0 || data.Value.textBottom.Length > 0 ? "ok" : "M.I.A",
+                        numOfConditions > 0 ? Convert.ToString(numOfConditions) : "No", 
+                        numOfConditions != 1 ? "s" : "", 
+                        data.Value.isDone, 
+                        "\n");
                     if (numOfConditions > 0)
                     {
                         for (int i = 0; i < numOfConditions; i++)
@@ -3096,16 +3196,17 @@ public class HelpManager : MonoBehaviour
                             condition = data.Value.listOfConditions[i];
                             if (condition != null)
                             {
-                                builder.AppendFormat("   {0} -> value {1}, {2}{3}{4}, {5}{6}, {7} {8}{9}", 
+                                builder.AppendFormat("    {0} -> {1}, val {2}{3}{4}{5}{6}{7}{8}{9}{10}", 
                                     condition.name, 
-                                    condition.value, 
-                                    condition.isEquals == true ? "isEqual " + condition.isEquals : "",
-                                    condition.isGreaterThan == true ? "isGreaterThan " + condition.isGreaterThan : "",
-                                    condition.isLessThan == true ? "isLessThan " + condition.isLessThan : "",
-                                    condition.isPresent == true ? "Present" : "",
-                                    condition.isNotPresent == true ? "Not Present" : "",
-                                    condition.lowerLimit > -1 || condition.upperLimit > -1 ? " Limits" + condition.lowerLimit + "/" + condition.upperLimit : "",
-                                    condition.setNumber > -1 ? " Set # " + condition.setNumber : "", 
+                                    condition.conType,
+                                    condition.conValue, 
+                                    condition.isEquals == true ? ", isEqual " : "",
+                                    condition.isGreaterThan == true ? ", isGreaterThan " : "",
+                                    condition.isLessThan == true ? ", isLessThan " : "",
+                                    condition.isPresent == true ? ", Present" : "",
+                                    condition.isNotPresent == true ? ", Not Present" : "",
+                                    condition.lowerLimit > -1 || condition.upperLimit > -1 ? " limits " + condition.lowerLimit + "/" + condition.upperLimit : "",
+                                    condition.setNumber > -1 ? " set # " + condition.setNumber : "", 
                                     "\n");
                             }
                             else { Debug.LogErrorFormat("Invalid HelpConditionData (Null) in {0}.listOfConditions[{1}]", data.Key, i); }
