@@ -42,6 +42,10 @@ public class TutorialSet : ScriptableObject
     [Tooltip("List of Tutorial items for this set. ORDER MATTERS. Maximum of 10 items")]
     public List<TutorialItem> listOfTutorialItems;
 
+    [Header("Help Messages")]
+    [Tooltip("Help Messages are only shown if there are some present in the list. Ignored otherwise")]
+    public List<HelpMessage> listOfHelpMessages;
+
 
     public void OnEnable()
     {

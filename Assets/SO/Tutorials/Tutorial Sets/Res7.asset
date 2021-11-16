@@ -30,3 +30,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e148415021bf6744c96f03127571b34e, type: 2}
   - {fileID: 11400000, guid: 6cbdd59db5c0e794a99547c1808a04e5, type: 2}
   - {fileID: 11400000, guid: b147e1d6e9c471743a7afc56b47d5e59, type: 2}
+  listOfHelpMessages:
+  - {fileID: 11400000, guid: 3e234a61b45fc964da28bc48b279ef51, type: 2}
+  - {fileID: 11400000, guid: fb5fe38d8bafb3048a079d328cf40249, type: 2}
+  - {fileID: 11400000, guid: 0a80e6c9cd8903e43a76dcf900b4107a, type: 2}
+  - {fileID: 11400000, guid: c5889514f32bef04c9d7ae9e0104c04d, type: 2}
+  - {fileID: 11400000, guid: 37cdbfa59361b8a4cb5240e7cfbfcd19, type: 2}

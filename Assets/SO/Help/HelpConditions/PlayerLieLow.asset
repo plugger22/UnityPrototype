@@ -12,6 +12,11 @@ MonoBehaviour:
   m_Name: PlayerLieLow
   m_EditorClassIdentifier: 
   descriptor: Player at invis 0 needs to lie low
-  isEquals: 0
-  isGreaterThan: -1
-  isLessThan: -1
+  isEquals: 1
+  isGreaterThan: 0
+  isLessThan: 0
+  isPresent: 0
+  isNotPresent: 0
+  lowerLimit: -1
+  upperLimit: -1
+  setNumber: 0

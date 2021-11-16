@@ -3079,7 +3079,7 @@ public class HelpManager : MonoBehaviour
             int count = dictOfHelpMessages.Count;
             int numOfConditions;
             HelpConditionData condition;
-            builder.AppendFormat("-dictOfHelpMessages  {0} record{1}{2}{3}", count, count != 1 ? "s" : "", "\n", "\n");
+            builder.AppendFormat("- - - dictOfHelpMessages  {0} record{1}{2}{3}", count, count != 1 ? "s" : "", "\n", "\n");
             if (count == 0)
             { builder.Append("No records"); }
             else
@@ -3087,7 +3087,7 @@ public class HelpManager : MonoBehaviour
                 foreach (var data in dictOfHelpMessages)
                 {
                     numOfConditions = data.Value.listOfConditions.Count;
-                    builder.AppendFormat(" {0} -> texts {1}/{2}, {3} Condition{4}, isDone {5}{6}", data.Key, data.Value.textTop.Length > 0 ? "yes" : "NO", data.Value.textBottom.Length > 0 ? "yes" : "NO",
+                    builder.AppendFormat("-{0} -> texts {1}/{2}, {3} Condition{4}, isDone {5}{6}", data.Key, data.Value.textTop.Length > 0 ? "yes" : "NO", data.Value.textBottom.Length > 0 ? "yes" : "NO",
                       numOfConditions > 0 ? Convert.ToString(numOfConditions) : "No", numOfConditions != 1 ? "s" : "", data.Value.isDone, "\n");
                     if (numOfConditions > 0)
                     {
@@ -3096,8 +3096,17 @@ public class HelpManager : MonoBehaviour
                             condition = data.Value.listOfConditions[i];
                             if (condition != null)
                             {
-                                builder.AppendFormat("  {0} -> value {1}, equal {2}, greaterThan {3}, lessThan {4}{5}", 
-                                    condition.name, condition.value, condition.isEquals, condition.isGreaterThan, condition.isLessThan, "\n");
+                                builder.AppendFormat("   {0} -> value {1}, {2}{3}{4}, {5}{6}, {7} {8}{9}", 
+                                    condition.name, 
+                                    condition.value, 
+                                    condition.isEquals == true ? "isEqual " + condition.isEquals : "",
+                                    condition.isGreaterThan == true ? "isGreaterThan " + condition.isGreaterThan : "",
+                                    condition.isLessThan == true ? "isLessThan " + condition.isLessThan : "",
+                                    condition.isPresent == true ? "Present" : "",
+                                    condition.isNotPresent == true ? "Not Present" : "",
+                                    condition.lowerLimit > -1 || condition.upperLimit > -1 ? " Limits" + condition.lowerLimit + "/" + condition.upperLimit : "",
+                                    condition.setNumber > -1 ? " Set # " + condition.setNumber : "", 
+                                    "\n");
                             }
                             else { Debug.LogErrorFormat("Invalid HelpConditionData (Null) in {0}.listOfConditions[{1}]", data.Key, i); }
                         }

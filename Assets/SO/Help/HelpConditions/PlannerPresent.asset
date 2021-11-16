@@ -11,7 +11,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639f6716e186ecc45894726d2b7e4061, type: 3}
   m_Name: PlannerPresent
   m_EditorClassIdentifier: 
-  descriptor: Planner is present in line-up
-  isEquals: 1
-  isGreaterThan: -1
-  isLessThan: -1
+  descriptor: Planner is present in OnMap line-up
+  isEquals: 0
+  isGreaterThan: 0
+  isLessThan: 0
+  isPresent: 1
+  isNotPresent: 0
+  lowerLimit: -1
+  upperLimit: -1
+  setNumber: -1

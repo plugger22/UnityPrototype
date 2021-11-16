@@ -1694,11 +1694,19 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 49ae8c226c3dac143aafe3e910e1d302, type: 2}
   arrayOfHelpConditions:
   - {fileID: 11400000, guid: 9356432893e9c224eb0f4473e0c71573, type: 2}
+  - {fileID: 11400000, guid: b758b45f7646a954ca1966103deee608, type: 2}
   - {fileID: 11400000, guid: 1dba771ab8b69184d8d9a2069a069a5c, type: 2}
+  - {fileID: 11400000, guid: 112eca3fb74918e4bb077591001ab462, type: 2}
   - {fileID: 11400000, guid: 9f9eeee7b3f15394a8ec41dd628ed1f7, type: 2}
+  - {fileID: 11400000, guid: 9541c5f6d4ad5484da9f7cd90531f04f, type: 2}
   - {fileID: 11400000, guid: a867e699baf551c4aa92c78ef54c678e, type: 2}
   - {fileID: 11400000, guid: 4cb5c0d730eba5e468ad76dcf63d371a, type: 2}
-  arrayOfHelpMessages: []
+  arrayOfHelpMessages:
+  - {fileID: 11400000, guid: 3e234a61b45fc964da28bc48b279ef51, type: 2}
+  - {fileID: 11400000, guid: fb5fe38d8bafb3048a079d328cf40249, type: 2}
+  - {fileID: 11400000, guid: 0a80e6c9cd8903e43a76dcf900b4107a, type: 2}
+  - {fileID: 11400000, guid: c5889514f32bef04c9d7ae9e0104c04d, type: 2}
+  - {fileID: 11400000, guid: 37cdbfa59361b8a4cb5240e7cfbfcd19, type: 2}
   arrayOfActorDraftSex:
   - {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
   - {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}

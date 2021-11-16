@@ -14,6 +14,11 @@ MonoBehaviour:
   descriptor: 'Subordinates do actions to create diversion
 
     Subordinate action'
-  isEquals: -1
+  isEquals: 255
   isGreaterThan: 0
-  isLessThan: -1
+  isLessThan: 0
+  isPresent: 0
+  isNotPresent: 0
+  lowerLimit: 0
+  upperLimit: 2
+  setNumber: -1

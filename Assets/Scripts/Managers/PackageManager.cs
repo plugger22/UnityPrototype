@@ -1540,9 +1540,17 @@ namespace packageAPI
     {
         public string name;                             //helpCondition.SO name
         public int value;                               //base value that condition is tested against, default -1
-        public int isEquals;                            //helpCondition.SO default -1
-        public int isGreaterThan;                       //helpCondition.SO default -1
-        public int isLessThan;                          //helpCondition.SO default -1
+        public bool isEquals;                           //helpCondition.SO default -1
+        public bool isGreaterThan;                      //helpCondition.SO default -1
+        public bool isLessThan;                         //helpCondition.SO default -1
+        public bool isPresent;                          //true if condition means something is present
+        public bool isNotPresent;                       //true if condition means something is not present
+        public int lowerLimit;                          //default -1, optional. HelpCondition.SO number
+        public int upperLimit;                          //default -1, optional. HelpCondition.SO number
+        public int lowerLimitActual;                    //calculated, value based, lower limit
+        public int upperLimitActual;                    //calculated, value based, upper limit
+        public int setNumber;                           //default -1, a set number that applies (in place of limits)
+        public int setNumberActual;                     //calculated, value based, setNumber
 
 
         /// <summary>

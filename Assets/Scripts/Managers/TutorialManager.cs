@@ -250,6 +250,9 @@ public class TutorialManager : MonoBehaviour
         GameManager.i.teamScript.ResetTeams();
         //Hide items (spiders/tracers) reset
         GameManager.i.dataScript.ResetHideNodes();
+        //Help Messages
+        if (set.listOfHelpMessages.Count > 0)
+        { GameManager.i.helpScript.InitialiseHelpMessages(set.listOfHelpMessages); }
         //Make sure Player is Active
         if (GameManager.i.playerScript.Status != ActorStatus.Active)
         {

@@ -6854,3 +6854,26 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:963)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:440)
 	City seed 42753 -> VirtualCity, Eurasia
+
+Dev seed 55448 -> Tuesday, 16 November 2021 10:41 AM
+City seed 5227 -> VirtualCity, Eurasia
+
+Dev seed 8221 -> Tuesday, 16 November 2021 10:49 AM
+City seed 41832 -> VirtualCity, Eurasia
+
+Dev seed 37070 -> Tuesday, 16 November 2021 10:52 AM
+City seed 18777 -> VirtualCity, Eurasia
+
+Dev seed 11241 -> Tuesday, 16 November 2021 11:07 AM
+City seed 60110 -> VirtualCity, Eurasia
+ASSERT FormatException: Index (zero based) must be greater than or equal to zero and less than the size of the argument list.
+System.Text.StringBuilder.AppendFormatHelper (System.IFormatProvider provider, System.String format, System.ParamsArray args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Text.StringBuilder.AppendFormat (System.String format, System.Object[] args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	HelpManager.DebugDisplayHelpMessages () (at Assets/Scripts/Managers/HelpManager.cs:3099)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:2526)
+	
+Dev seed 63146 -> Tuesday, 16 November 2021 11:13 AM
+City seed 3598 -> VirtualCity, Eurasia
+
+Dev seed 53679 -> Tuesday, 16 November 2021 11:14 AM
+City seed 62519 -> VirtualCity, Eurasia
