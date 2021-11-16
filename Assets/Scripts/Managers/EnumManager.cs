@@ -267,6 +267,7 @@
         PlayerMoveSecureConnections,
         PlayerManageActions, PlayerManageReserve, PlayerManageMoveOn, PlayerManageDispose,
         SubordinateNodeActions, SubordinateActivate,
+        NodeHacker, NodeAnarchist, NodeHeavy, NodePlanner, NodeObserver, NodeOperator, NodeFixer, NodeRecruiter, NodeBlogger,
         LieLowDaysTotal, GearTotal,
         TargetAttempts, TargetSuccesses, TargetInfo,
         ActorsResignedAuthority, ActorsResignedResistance, ActorResistanceTraitors, ActorsRecruited, ActorConflicts, ActorLearntSecret, ActorCompatibilityGood, ActorCompatibilityBad,

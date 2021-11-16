@@ -35,6 +35,9 @@ public class OptionManager : MonoBehaviour
     [HideInInspector] public bool isMoveSecurity = true;                            //if false, connection security is ignored when moving
     [HideInInspector] public bool isActions = true;                                 //if false there are no actions. New turn only on request
 
+    //Help Messages
+    [HideInInspector] public bool isHelpMessages = false;                           //if true helpMessages are generated
+
     //UI options
     [HideInInspector] public bool showContacts = false;                             //if true node tooltips will show contact as well as Actor Arcs for nodes where actors have contacts
     [HideInInspector] public bool showPower = true;                                 //if true power UI elements shown for actors and player, if false show compatibility instead
@@ -92,15 +95,6 @@ public class OptionManager : MonoBehaviour
     }
 
 
-    /*/// <summary>
-    /// Housekeep events
-    /// </summary>
-    public void OnDisable()
-    {
-        EventManager.instance.RemoveEvent(EventType.ChangeSide);
-        EventManager.instance.RemoveEvent(EventType.ChangeColour);
-    }*/
-
     /// <summary>
     /// Debug method
     /// </summary>
@@ -133,6 +127,8 @@ public class OptionManager : MonoBehaviour
             .AppendFormat(" IsMoveSecurity -> {0}{1}", isMoveSecurity, "\n")
             .AppendFormat(" isActions -> {0}{1}", isActions, "\n")
             .AppendFormat(" NO Nodes -> {0}{1}", noNodes, "\n")
+            .AppendFormat("{0}- Help Messages{1}", "\n", "\n")
+            .AppendFormat(" isHelpMessages -> {0}{1}", isHelpMessages, "\n")
             .AppendFormat("{0}- UI Options{1}", "\n", "\n")
             .AppendFormat(" Connector Tooltips -> {0}{1}", connectorTooltips, "\n")
             .AppendFormat(" Full Mood Information -> {0}{1}", fullMoodInfo, "\n")

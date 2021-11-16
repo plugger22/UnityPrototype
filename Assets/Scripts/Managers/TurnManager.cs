@@ -385,6 +385,9 @@ public class TurnManager : MonoBehaviour
                                 //generate topic
                                 GameManager.i.topicScript.ProcessTopic(playerSide);
                             }
+                            //Help Messages
+                            if (GameManager.i.optionScript.isHelpMessages == true)
+                            { GameManager.i.helpScript.CheckHelpMessages(); }
 
                             /*//debug
                             DebugCreatePipelineMessages();*/

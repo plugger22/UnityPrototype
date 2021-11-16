@@ -253,6 +253,7 @@ public class TutorialManager : MonoBehaviour
         //Help Messages
         if (set.listOfHelpMessages.Count > 0)
         { GameManager.i.helpScript.InitialiseHelpMessages(set.listOfHelpMessages); }
+        else { GameManager.i.optionScript.isHelpMessages = false; }
         //Make sure Player is Active
         if (GameManager.i.playerScript.Status != ActorStatus.Active)
         {

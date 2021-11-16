@@ -3030,6 +3030,8 @@ public class HelpManager : MonoBehaviour
                 Dictionary<string, HelpMessageData> dictOfHelpMessages = GameManager.i.dataScript.GetDictOfHelpMessages();
                 if (dictOfHelpMessages != null)
                 {
+                    //set option
+                    GameManager.i.optionScript.isHelpMessages = true;
                     //check empty - info message if not
                     if (dictOfHelpMessages.Count > 0)
                     { Debug.LogWarningFormat("Invalid dictOfHelpMessages (has {0} records, should be Empty)", dictOfHelpMessages.Count); }
@@ -3067,6 +3069,16 @@ public class HelpManager : MonoBehaviour
                                         dataCon.setNumber = condition.setNumber;
                                         dataCon.conType = GetConditionType(condition.name);
                                         dataCon.conValue = GetConditionValue(dataCon.conType);
+                                        //fast access
+                                        if (condition.isEquals == true || condition.isGreaterThan == true || condition.isLessThan == true)
+                                        { dataCon.isComparison = true; }
+                                        else { dataCon.isComparison = false; }
+                                        if (condition.isPresent == true || condition.isNotPresent == true)
+                                        { dataCon.isAvailability = true; }
+                                        else { dataCon.isAvailability = false; }
+                                        if (condition.lowerLimit > -1 || condition.upperLimit > -1)
+                                        { dataCon.isLimits = true; }
+                                        else { dataCon.isLimits = false; }
                                         //add to list
                                         dataMsg.listOfConditions.Add(dataCon);
                                     }
@@ -3089,6 +3101,113 @@ public class HelpManager : MonoBehaviour
     }
     #endregion
 
+    #region CheckHelpMessages
+    /// <summary>
+    /// Turn based check of Help Messages. Scans dictionary, puts all valid messages in a pool and chooses one, if appropriate (not every turn). Placed in Info Pipeline
+    /// </summary>
+    public void CheckHelpMessages()
+    {
+        Dictionary<string, HelpMessageData> dictOfHelpMessages = GameManager.i.dataScript.GetDictOfHelpMessages();
+        if (dictOfHelpMessages != null)
+        {
+            //two pools, one for messages with conditions, one for those without
+            List<HelpMessageData> listOfConditionMessages = new List<HelpMessageData>();
+            List<HelpMessageData> listOfRandomMessages = new List<HelpMessageData>();
+            int count;
+            bool isTrue;
+            HelpConditionData condition;
+            //iterate through dict
+            foreach(var data in dictOfHelpMessages)
+            {
+                if (data.Value != null)
+                {
+                    //not done
+                    if (data.Value.isDone == false)
+                    {
+                        //
+                        // - - - Message verification
+                        //
+                        count = data.Value.listOfConditions.Count;
+                        //has conditions
+                        if (count > 0)
+                        {
+                            isTrue = true;
+                            //check conditions
+                            for (int i = 0; i < count; i++)
+                            {
+                                condition = data.Value.listOfConditions[i];
+                                if (condition != null)
+                                {
+                                    if (CheckCondition(condition) == false)
+                                    {
+                                        isTrue = false;
+                                        break;
+                                    }
+                                }
+                                else { Debug.LogWarningFormat("Invalid condition in \"{0}\".listOfConditions[{1}]", data.Key, i); }
+                            }
+                            if (isTrue == true)
+                            {
+                                //all conditions are true
+                                listOfConditionMessages.Add(data.Value);
+                            }
+                        }
+                        else
+                        {
+                            //no conditions
+                            listOfRandomMessages.Add(data.Value);
+                        }
+                        //
+                        // - - - Message Selection
+                        //
+                        Debug.LogFormat("[Tst] HelpManager.cs -> CheckHelpMessages: listOfConditionMessages {0}, listOfRandomMessages {1}{2}", listOfConditionMessages.Count, listOfRandomMessages.Count, "\n");
+                    }
+                }
+                else { Debug.LogWarningFormat("Invalid HelpMessageData (Null) for \"{0}\" in dictOfHelpMessages", data.Key); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfHelpMessages (Null)"); }
+    }
+    #endregion
+
+    #region CheckCondition
+    /// <summary>
+    /// Updates value and checks condition. Returns true if condition valid, false otherwise
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    private bool CheckCondition(HelpConditionData data)
+    {
+        bool isTrue = true;
+        //update value
+        data.conValue = GetConditionValue(data.conType);
+        if (data.isComparison == true)
+        {
+            //Comparison
+            if (data.isLimits == true)
+            {
+                if (data.lowerLimit > data.conValue) { isTrue = false; }
+                if (data.upperLimit < data.conValue) { isTrue = false; }
+            }
+            else if (data.setNumber > -1)
+            { if (data.conValue != data.setNumber) { isTrue = false; } }
+            else { Debug.LogWarningFormat("Invalid conditions for \"{0}\" (isLimits {1} - {2}/{3}, set# {4}, conValue {5})", 
+                data.conType, data.isLimits, data.lowerLimit, data.upperLimit, data.setNumber, data.conValue); }
+        }
+        else if (data.isAvailability == true)
+        {
+            //Availability
+            if (data.isPresent == true)
+            { if (data.conValue == 0) { isTrue = false; } }
+            else if (data.isNotPresent == true)
+            { if (data.conValue == 1) { isTrue = false; } }
+            else
+            {  Debug.LogWarningFormat("Invalid conditions for \"{0}\" (isAvailability {1}, isPresent {2}, isNotPresent {3}, conValue {4})",
+              data.conType, data.isAvailability, data.isPresent, data.isNotPresent, data.conValue); }
+        }
+        return isTrue;
+    }
+    #endregion
 
     #region GetHelpMessageType
     /// <summary>
@@ -3152,7 +3271,7 @@ public class HelpManager : MonoBehaviour
                 value = GameManager.i.dataScript.StatisticGetLevel(StatType.TargetInfo);
                 break;
             case HelpConditionType.DistrictHack:
-                
+                value = GameManager.i.dataScript.StatisticGetLevel(StatType.NodeHacker);
                 break;
             default: Debug.LogWarningFormat("Unrecognised conType \"{0}\"", conType); break;
         }

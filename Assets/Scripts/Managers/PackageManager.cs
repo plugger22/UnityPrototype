@@ -1552,6 +1552,10 @@ namespace packageAPI
         public int upperLimitActual;                    //calculated, value based, upper limit
         public int setNumber;                           //default -1, a set number that applies (in place of limits)
         public int setNumberActual;                     //calculated, value based, setNumber
+        //fast access
+        public bool isComparison;                       //calculated on initialisation. True if any of isEquals/GreaterThan/LesserThan, false otherwise
+        public bool isAvailability;                     //calculated on initialisation. True if any of present/NotPresent, false otherwise
+        public bool isLimits;                           //calculated on initialisation. True if any of lowerLimit/upperLimit, false otherwise
 
 
         /// <summary>

@@ -454,9 +454,9 @@ public class ActionManager : MonoBehaviour
                                     case NodeAction.PlayerCreateRiots:
                                         textHistory = "You create a Riot (HEAVY)";
                                         break;
-                                    case NodeAction.PlayerDeployTeam:
+                                    /*case NodeAction.PlayerDeployTeam:
                                         textHistory = "You deploy a Team";
-                                        break;
+                                        break;*/
                                     case NodeAction.PlayerGainTargetInfo:
                                         textHistory = "You gain Target Intelligence (PLANNER)";
                                         break;
@@ -472,9 +472,9 @@ public class ActionManager : MonoBehaviour
                                     case NodeAction.PlayerObtainGear:
                                         textHistory = "You obtain Gear (FIXER)";
                                         break;
-                                    case NodeAction.PlayerRecallTeam:
+                                    /*case NodeAction.PlayerRecallTeam:
                                         textHistory = "You Recall a Team";
-                                        break;
+                                        break;*/
                                     case NodeAction.PlayerRecruitActor:
                                         textHistory = "You recruit a Subordinate (RECRUITER)";
                                         break;
@@ -489,6 +489,42 @@ public class ActionManager : MonoBehaviour
                             }
                             //statistics
                             GameManager.i.dataScript.StatisticIncrement(StatType.NodeActionsResistance);
+                            //global node action (doesn't matter who did it)
+                            NodeAction nodeAction = NodeAction.None;
+                            if (nodeActionPlayer != NodeAction.None)
+                            { nodeAction = nodeActionPlayer; }
+                            else { nodeAction = nodeActionActor; }
+                            switch (nodeAction)
+                            {
+                                case NodeAction.PlayerBlowStuffUp:
+                                    GameManager.i.dataScript.StatisticIncrement(StatType.NodeAnarchist);
+                                    break;
+                                case NodeAction.PlayerCreateRiots:
+                                    GameManager.i.dataScript.StatisticIncrement(StatType.NodeHeavy);
+                                    break;
+                                case NodeAction.PlayerGainTargetInfo:
+                                    GameManager.i.dataScript.StatisticIncrement(StatType.NodePlanner);
+                                    break;
+                                case NodeAction.PlayerHackSecurity:
+                                    GameManager.i.dataScript.StatisticIncrement(StatType.NodeHacker);
+                                    break;
+                                case NodeAction.PlayerInsertTracer:
+                                    GameManager.i.dataScript.StatisticIncrement(StatType.NodeObserver);
+                                    break;
+                                case NodeAction.PlayerNeutraliseTeam:
+                                    GameManager.i.dataScript.StatisticIncrement(StatType.NodeOperator);
+                                    break;
+                                case NodeAction.PlayerObtainGear:
+                                    GameManager.i.dataScript.StatisticIncrement(StatType.NodeFixer);
+                                    break;
+                                case NodeAction.PlayerRecruitActor:
+                                    GameManager.i.dataScript.StatisticIncrement(StatType.NodeRecruiter);
+                                    break;
+                                case NodeAction.PlayerSpreadFakeNews:
+                                    GameManager.i.dataScript.StatisticIncrement(StatType.NodeBlogger);
+                                    break;
+                                default: Debug.LogWarningFormat("Unrecognised NodeAction \"{0}\"", nodeActionPlayer); break;
+                            }
                         }
                         //texts
                         outcomeDetails.textTop = builderTop.ToString();
