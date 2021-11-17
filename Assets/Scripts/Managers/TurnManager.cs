@@ -385,7 +385,7 @@ public class TurnManager : MonoBehaviour
                                 //generate topic
                                 GameManager.i.topicScript.ProcessTopic(playerSide);
                             }
-                            //Help Messages
+                            //Help Messages -> needs to be last thing before infoPipeline as it counts number of messages in pipeline
                             if (GameManager.i.optionScript.isHelpMessages == true)
                             { GameManager.i.helpScript.CheckHelpMessages(); }
 

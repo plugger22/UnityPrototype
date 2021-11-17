@@ -1039,6 +1039,13 @@ public class GUIManager : MonoBehaviour
         Debug.LogFormat("[Pip] GUIManager.cs -> BlockMainInfoApp: isMainInfoAppBlocked now {0}{1}", isInfoAppBlocked, "\n");
     }
 
+    /// <summary>
+    /// Returns number of messages currently in InfoPipeline. Zero if none.
+    /// </summary>
+    /// <returns></returns>
+    public int GetInfoPipelineCount()
+    { return dictOfPipeline.Count; }
+
 
     #endregion
 

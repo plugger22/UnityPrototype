@@ -1335,7 +1335,7 @@ public class TutorialManager : MonoBehaviour
                         side = GameManager.i.globalScript.sideResistance,
                         isSpecial = true,
                         isSpecialGood = true,
-                        type = MsgPipelineType.Tutorial
+                        type = MsgPipelineType.HelpMessage
                     };
                     //end of turn outcome window which needs to overlay ontop of InfoAPP and requires a different than normal modal setting
                     if (GameManager.i.guiScript.InfoPipelineAdd(outcomeTutorial) == false)
@@ -1345,6 +1345,7 @@ public class TutorialManager : MonoBehaviour
         }
     }
     #endregion
+
     #endregion
 
     #region Widget Interaction...

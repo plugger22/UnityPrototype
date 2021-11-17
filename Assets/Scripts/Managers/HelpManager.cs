@@ -3107,66 +3107,103 @@ public class HelpManager : MonoBehaviour
     /// </summary>
     public void CheckHelpMessages()
     {
-        Dictionary<string, HelpMessageData> dictOfHelpMessages = GameManager.i.dataScript.GetDictOfHelpMessages();
-        if (dictOfHelpMessages != null)
+        int count;
+        bool isTrue = true;
+        //global conditions that may prevent a helpMessage -> too many messages already in pipeline 
+        count = GameManager.i.guiScript.GetInfoPipelineCount();
+        if (count > 1)
+        { isTrue = false; }
+        else { Debug.LogFormat("[Tst] HelpManager.cs -> CheckHelpMessages: NO help message this turn -> {0} messages in pipeline already{1}", count, "\n"); }
+        //global -> tutorial win/loss state achieved
+        if (GameManager.i.inputScript.GameState == GameState.Tutorial)
         {
-            //two pools, one for messages with conditions, one for those without
-            List<HelpMessageData> listOfConditionMessages = new List<HelpMessageData>();
-            List<HelpMessageData> listOfRandomMessages = new List<HelpMessageData>();
-            int count;
-            bool isTrue;
-            HelpConditionData condition;
-            //iterate through dict
-            foreach(var data in dictOfHelpMessages)
-            {
-                if (data.Value != null)
-                {
-                    //not done
-                    if (data.Value.isDone == false)
-                    {
-                        //
-                        // - - - Message verification
-                        //
-                        count = data.Value.listOfConditions.Count;
-                        //has conditions
-                        if (count > 0)
-                        {
-                            isTrue = true;
-                            //check conditions
-                            for (int i = 0; i < count; i++)
-                            {
-                                condition = data.Value.listOfConditions[i];
-                                if (condition != null)
-                                {
-                                    if (CheckCondition(condition) == false)
-                                    {
-                                        isTrue = false;
-                                        break;
-                                    }
-                                }
-                                else { Debug.LogWarningFormat("Invalid condition in \"{0}\".listOfConditions[{1}]", data.Key, i); }
-                            }
-                            if (isTrue == true)
-                            {
-                                //all conditions are true
-                                listOfConditionMessages.Add(data.Value);
-                            }
-                        }
-                        else
-                        {
-                            //no conditions
-                            listOfRandomMessages.Add(data.Value);
-                        }
-                        //
-                        // - - - Message Selection
-                        //
-                        Debug.LogFormat("[Tst] HelpManager.cs -> CheckHelpMessages: listOfConditionMessages {0}, listOfRandomMessages {1}{2}", listOfConditionMessages.Count, listOfRandomMessages.Count, "\n");
-                    }
-                }
-                else { Debug.LogWarningFormat("Invalid HelpMessageData (Null) for \"{0}\" in dictOfHelpMessages", data.Key); }
-            }
+            if (GameManager.i.guiScript.CheckInfoPipeline(MsgPipelineType.TutorialSucceed) == true 
+                || GameManager.i.guiScript.CheckInfoPipeline(MsgPipelineType.TutorialFail) == true
+                || GameManager.i.guiScript.CheckInfoPipeline(MsgPipelineType.TutorialReset) == true)
+            { isTrue = false; }
+            else { Debug.LogFormat("[Tst] HelpManager.cs -> CheckHelpMessages: NO help message this turn -> TutorialSucceed/Fail/Reset{0}", "\n"); }
         }
-        else { Debug.LogError("Invalid dictOfHelpMessages (Null)"); }
+        else
+        {
+            //global -> level win/loss state achieved
+            if (GameManager.i.guiScript.CheckInfoPipeline(MsgPipelineType.WinLoseLevel) == true || GameManager.i.guiScript.CheckInfoPipeline(MsgPipelineType.WinLoseCampaign) == true)
+            { isTrue = false; }
+            else { Debug.LogFormat("[Tst] HelpManager.cs -> CheckHelpMessages: NO help message this turn -> WinLoseLevel/WinLoseCampaign{0}", "\n"); }
+        }
+        //proceed
+        if (isTrue == true)
+        {
+            Dictionary<string, HelpMessageData> dictOfHelpMessages = GameManager.i.dataScript.GetDictOfHelpMessages();
+            if (dictOfHelpMessages != null)
+            {
+                //two pools, one for messages with conditions, one for those without
+                List<HelpMessageData> listOfConditionMessages = new List<HelpMessageData>();
+                List<HelpMessageData> listOfRandomMessages = new List<HelpMessageData>();
+
+                HelpConditionData condition;
+
+                #region Message Verification
+                //
+                // - - - Message Verification
+                //
+                foreach (var data in dictOfHelpMessages)
+                {
+                    if (data.Value != null)
+                    {
+                        //not done
+                        if (data.Value.isDone == false)
+                        {
+                            count = data.Value.listOfConditions.Count;
+                            //has conditions
+                            if (count > 0)
+                            {
+                                isTrue = true;
+                                //check conditions
+                                for (int i = 0; i < count; i++)
+                                {
+                                    condition = data.Value.listOfConditions[i];
+                                    if (condition != null)
+                                    {
+                                        if (CheckCondition(condition) == false)
+                                        {
+                                            isTrue = false;
+                                            break;
+                                        }
+                                    }
+                                    else { Debug.LogWarningFormat("Invalid condition in \"{0}\".listOfConditions[{1}]", data.Key, i); }
+                                }
+                                if (isTrue == true)
+                                {
+                                    //all conditions are true
+                                    listOfConditionMessages.Add(data.Value);
+                                    Debug.LogFormat("[Tst] HelpManager.cs -> CheckHelpMessages: \"{0}\" added to listOfConditionMessages{1}", data.Value.name, "\n");
+                                }
+                                else { Debug.LogFormat("[Tst] HelpManager.cs -> CheckHelpMessages: \"{0}\" NOT added to listOfConditionMessages{1}", data.Value.name, "\n"); }
+                            }
+                            else
+                            {
+                                //no conditions
+                                listOfRandomMessages.Add(data.Value);
+                                Debug.LogFormat("[Tst] HelpManager.cs -> CheckHelpMessages: \"{0}\" added to listOfRandomMessages{1}", data.Value.name, "\n");
+                            }
+
+                        }
+                        else { Debug.LogFormat("[Tst] HelpManager.cs -> CheckHelpMessages: \"{0}\" isDone True -> ignored{1}", data.Value.name, "\n"); }
+                    }
+                    else { Debug.LogWarningFormat("Invalid HelpMessageData (Null) for \"{0}\" in dictOfHelpMessages", data.Key); }
+                }
+                #endregion
+
+                #region Message Selection
+                //
+                // - - - Message Selection
+                //
+                Debug.LogFormat("[Tst] HelpManager.cs -> CheckHelpMessages: listOfConditionMessages {0}, listOfRandomMessages {1}{2}", listOfConditionMessages.Count, listOfRandomMessages.Count, "\n");
+
+                #endregion
+            }
+            else { Debug.LogError("Invalid dictOfHelpMessages (Null)"); }
+        }
     }
     #endregion
 

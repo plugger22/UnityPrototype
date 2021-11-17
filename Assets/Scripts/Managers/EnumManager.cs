@@ -310,7 +310,7 @@
         Npc, ReleasePlayer, Nemesis,
         CapturePlayer, CaptureActor, SecretRevealed,
         InvestigationLaunched, InvestigationCompleted,
-        Tutorial, TutorialFail, TutorialSucceed, TutorialReset,
+        HelpMessage, TutorialFail, TutorialSucceed, TutorialReset,
         WinLoseLevel, WinLoseCampaign, DebugTopic} //see notes above
     public enum MessageCategory { None, Current, Pending, Archive, AI, Nemesis }
     public enum MessageType { None, PLAYER, TEAM, AI, GEAR, ACTOR, TARGET, ACTIVE, ONGOING, DECISION, HQ, CITY, NODE, GENERAL, CONTACT, OBJECTIVE, TOPIC, ORGANISATION, NPC, INVESTIGATION }
