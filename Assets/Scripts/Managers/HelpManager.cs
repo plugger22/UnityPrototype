@@ -1,15 +1,25 @@
 ﻿using gameAPI;
+using modalAPI;
 using packageAPI;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// handles all Help related matters
 /// </summary>
 public class HelpManager : MonoBehaviour
 {
+    [Header("Help Messages")]
+    [Tooltip("Only show a help message if infoPipeline has MORE than this amount of messages queued up (avoids spamming player)")]
+    [Range(0, 3)] public int helpMaxMessageCount = 1;
+    [Tooltip("Chance of a conditional message (if any present) being shown. Checked first")]
+    [Range(0, 100)] public int helpChanceConditional = 50;
+    [Tooltip("Chance of a random message (if any present) being shown. Checked only AFTER conditional message check failed")]
+    [Range(0, 100)] public int helpChanceRandom = 25;
+
     //bullet character for help topics
     private char bullet;
     private string arrowLeft;
@@ -3109,27 +3119,53 @@ public class HelpManager : MonoBehaviour
     {
         int count;
         bool isTrue = true;
-        //global conditions that may prevent a helpMessage -> too many messages already in pipeline 
-        count = GameManager.i.guiScript.GetInfoPipelineCount();
-        if (count > 1)
-        { isTrue = false; }
-        else { Debug.LogFormat("[Tst] HelpManager.cs -> CheckHelpMessages: NO help message this turn -> {0} messages in pipeline already{1}", count, "\n"); }
-        //global -> tutorial win/loss state achieved
-        if (GameManager.i.inputScript.GameState == GameState.Tutorial)
+
+        #region Global Checks
+        //
+        // - - - Global Checks that may prevent a helpMessage
+        //
+        //global player active
+        if (GameManager.i.playerScript.Status != ActorStatus.Active)
         {
-            if (GameManager.i.guiScript.CheckInfoPipeline(MsgPipelineType.TutorialSucceed) == true 
-                || GameManager.i.guiScript.CheckInfoPipeline(MsgPipelineType.TutorialFail) == true
-                || GameManager.i.guiScript.CheckInfoPipeline(MsgPipelineType.TutorialReset) == true)
-            { isTrue = false; }
-            else { Debug.LogFormat("[Tst] HelpManager.cs -> CheckHelpMessages: NO help message this turn -> TutorialSucceed/Fail/Reset{0}", "\n"); }
+            isTrue = false;
+            Debug.LogFormat("[Tst] HelpManager.cs -> CheckHelpMessages: NO help message this turn -> Player status {0}{1}", GameManager.i.playerScript.Status, "\n");
         }
         else
         {
-            //global -> level win/loss state achieved
-            if (GameManager.i.guiScript.CheckInfoPipeline(MsgPipelineType.WinLoseLevel) == true || GameManager.i.guiScript.CheckInfoPipeline(MsgPipelineType.WinLoseCampaign) == true)
-            { isTrue = false; }
-            else { Debug.LogFormat("[Tst] HelpManager.cs -> CheckHelpMessages: NO help message this turn -> WinLoseLevel/WinLoseCampaign{0}", "\n"); }
+            //global -> too many messages already in pipeline 
+            count = GameManager.i.guiScript.GetInfoPipelineCount();
+            if (count > helpMaxMessageCount)
+            {
+                isTrue = false;
+                Debug.LogFormat("[Tst] HelpManager.cs -> CheckHelpMessages: NO help message this turn -> {0} messages in pipeline already{1}", count, "\n");
+            }
+            else  
+            {
+
+                //global -> tutorial win/loss state achieved
+                if (GameManager.i.inputScript.GameState == GameState.Tutorial)
+                {
+                    if (GameManager.i.guiScript.CheckInfoPipeline(MsgPipelineType.TutorialSucceed) == true
+                        || GameManager.i.guiScript.CheckInfoPipeline(MsgPipelineType.TutorialFail) == true
+                        || GameManager.i.guiScript.CheckInfoPipeline(MsgPipelineType.TutorialReset) == true)
+                    {
+                        isTrue = false;
+                        Debug.LogFormat("[Tst] HelpManager.cs -> CheckHelpMessages: NO help message this turn -> TutorialSucceed/Fail/Reset{0}", "\n");
+                    }
+                }
+                else
+                {
+                    //global -> level win/loss state achieved
+                    if (GameManager.i.guiScript.CheckInfoPipeline(MsgPipelineType.WinLoseLevel) == true || GameManager.i.guiScript.CheckInfoPipeline(MsgPipelineType.WinLoseCampaign) == true)
+                    {
+                        isTrue = false;
+                        Debug.LogFormat("[Tst] HelpManager.cs -> CheckHelpMessages: NO help message this turn -> WinLoseLevel/WinLoseCampaign{0}", "\n");
+                    }
+                }
+            }
         }
+        #endregion
+
         //proceed
         if (isTrue == true)
         {
@@ -3199,9 +3235,65 @@ public class HelpManager : MonoBehaviour
                 // - - - Message Selection
                 //
                 Debug.LogFormat("[Tst] HelpManager.cs -> CheckHelpMessages: listOfConditionMessages {0}, listOfRandomMessages {1}{2}", listOfConditionMessages.Count, listOfRandomMessages.Count, "\n");
-
+                HelpMessageData msgData = null;
+                //conditional messages checked first
+                count = listOfConditionMessages.Count;
+                if (count > 0)
+                {
+                    int rndNum = Random.Range(0, 100);
+                    if (rndNum < helpChanceConditional)
+                    {
+                        //select randomly from list of valid messages
+                        msgData = listOfConditionMessages[Random.Range(0, count)];
+                        Debug.LogFormat("[Tst] HelpManager.cs -> CheckHelpMessages: Condition Message PASSED check ({0} in list, rolled {1} needed {2}){3}", count, rndNum, helpChanceConditional, "\n");
+                    }
+                    else
+                    {
+                        Debug.LogFormat("[Tst] HelpManager.cs -> CheckHelpMessages: Condition Message failed check ({0} in list, rolled {1} needed {2}){3}", count, rndNum, helpChanceConditional, "\n");
+                        count = listOfRandomMessages.Count;
+                        if (count > 0)
+                        {
+                            //Random messages checked next
+                            rndNum = Random.Range(0, 100);
+                            if (rndNum < helpChanceRandom)
+                            {
+                                //select randomly from list
+                                msgData = listOfRandomMessages[Random.Range(0, count)];
+                                Debug.LogFormat("[Tst] HelpManager.cs -> CheckHelpMessages: Random Message PASSED check ({0} in list, rolled {1} needed {2}){3}", count, rndNum, helpChanceRandom, "\n");
+                            }
+                            else
+                            { Debug.LogFormat("[Tst] HelpManager.cs -> CheckHelpMessages: Random Message failed check ({0} in list, rolled {1} needed {2}){3}", count, rndNum, helpChanceRandom, "\n"); }
+                        }
+                    }
+                }
                 #endregion
-            }
+
+                #region Message into Pipeline
+                //
+                // - - - Message into Pipeline
+                //
+                if (msgData != null)
+                {
+                    ModalOutcomeDetails helpMessage = new ModalOutcomeDetails
+                    {
+                        textTop = GameManager.Formatt(msgData.textTop, ColourType.moccasinText),
+                        textBottom = msgData.textBottom,
+                        sprite = GameManager.i.tutorialScript.tutorial.sprite,
+                        isAction = false,
+                        side = sideResistance,
+                        isSpecial = true,
+                        isSpecialGood = true,
+                        type = MsgPipelineType.HelpMessage
+                    };
+                    //end of turn outcome window which needs to overlay ontop of InfoAPP and requires a different than normal modal setting
+                    if (GameManager.i.guiScript.InfoPipelineAdd(helpMessage) == false)
+                    { Debug.LogWarningFormat("HelpMessage infoPipeline message FAILED to be added to dictOfPipeline"); }
+                }
+                else
+                { Debug.LogFormat("[Tst] HelpManager.cs -> CheckHelpMessages: No helpMessage this turn (msgData Null){0}", "\n"); }
+                #endregion
+
+                }
             else { Debug.LogError("Invalid dictOfHelpMessages (Null)"); }
         }
     }

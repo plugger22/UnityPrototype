@@ -371,9 +371,6 @@ public class TurnManager : MonoBehaviour
                                 GameManager.i.topicScript.SelectTopic(playerSide);
                             }
                         }
-                        //tutorial sandbox
-                        if (GameManager.i.inputScript.GameState == GameState.Tutorial && GameManager.i.tutorialScript.isSandboxFlag == true)
-                        { GameManager.i.tutorialScript.ProcessSandboxHelpMessage(); }
                         //turn on info App (only if not autorunning)
                         if (isAutoRun == false)
                         {

@@ -1310,7 +1310,8 @@ public class TutorialManager : MonoBehaviour
     }
     #endregion
    
-    #region ProcessSandboxHelpMessage
+    #region Archive -> ProcessSandboxHelpMessage
+    /*
     /// <summary>
     /// provides a context sensitive help message from Fred, your trainer, during the sandbox provided no other tutorial message is present (which would be a win or fail state message)
     /// </summary>
@@ -1343,7 +1344,7 @@ public class TutorialManager : MonoBehaviour
                 }
             }
         }
-    }
+    }*/
     #endregion
 
     #endregion

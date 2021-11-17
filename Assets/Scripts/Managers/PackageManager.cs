@@ -1548,10 +1548,7 @@ namespace packageAPI
         public bool isNotPresent;                       //true if condition means something is not present
         public int lowerLimit;                          //default -1, optional. HelpCondition.SO number
         public int upperLimit;                          //default -1, optional. HelpCondition.SO number
-        public int lowerLimitActual;                    //calculated, value based, lower limit
-        public int upperLimitActual;                    //calculated, value based, upper limit
         public int setNumber;                           //default -1, a set number that applies (in place of limits)
-        public int setNumberActual;                     //calculated, value based, setNumber
         //fast access
         public bool isComparison;                       //calculated on initialisation. True if any of isEquals/GreaterThan/LesserThan, false otherwise
         public bool isAvailability;                     //calculated on initialisation. True if any of present/NotPresent, false otherwise
