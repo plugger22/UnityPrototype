@@ -1533,6 +1533,28 @@ namespace packageAPI
         public bool isCure;
     }
 
+
+    /// <summary>
+    /// HelpMessage.SO converts to this data package (DataManager.cs -> dictOfHelpMessages)
+    /// </summary>
+    public class HelpMessageData
+    {
+        public string name;
+        public string textTop;
+        public string textBottom;
+        public List<HelpConditionData> listOfConditions;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public HelpMessageData()
+        {
+            textTop = "";
+            textBottom = "";
+            listOfConditions = new List<HelpConditionData>();
+        }
+    }
+
     /// <summary>
     /// HelpCondition.SO converts to this data package for use in code
     /// </summary>
@@ -1554,7 +1576,6 @@ namespace packageAPI
         public bool isAvailability;                     //calculated on initialisation. True if any of present/NotPresent, false otherwise
         public bool isLimits;                           //calculated on initialisation. True if any of lowerLimit/upperLimit, false otherwise
 
-
         /// <summary>
         /// Constructor
         /// </summary>
@@ -1562,30 +1583,6 @@ namespace packageAPI
         {
             conValue = -1;
         }
-    }
-
-    /// <summary>
-    /// HelpMessage.SO converts to this data package (DataManager.cs -> dictOfHelpMessages)
-    /// </summary>
-    public class HelpMessageData
-    {
-        public string name;
-        public string textTop;
-        public string textBottom;
-        public List<HelpConditionData> listOfConditions;
-        public bool isDone;                                         //default false
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public HelpMessageData()
-        {
-            textTop = "";
-            textBottom = "";
-            listOfConditions = new List<HelpConditionData>();
-            isDone = false;
-        }
-        
     }
 
 

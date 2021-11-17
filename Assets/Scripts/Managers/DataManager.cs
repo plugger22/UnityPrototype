@@ -8417,6 +8417,22 @@ public class DataManager : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// Remove entry in dictOfHelpMessages. Returns true if successful
+    /// </summary>
+    /// <param name="dictKey"></param>
+    public bool RemoveHelpMessage(string dictKey)
+    {
+        if (string.IsNullOrEmpty(dictKey) == false)
+        {
+            if (dictOfHelpMessages.Remove(dictKey) == true)
+            { return true; }
+            else { Debug.LogWarningFormat("DataManager.cs -> RemoveHelpMessage: \"{0}\" NOT removed from dictOfHelpMessages", dictKey); }
+        }
+        else { Debug.LogError("Invalid dictKey (Null or Empty)"); }
+        return false;
+    }
+
     #endregion
 
     #region History...

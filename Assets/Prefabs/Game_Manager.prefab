@@ -1707,6 +1707,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0a80e6c9cd8903e43a76dcf900b4107a, type: 2}
   - {fileID: 11400000, guid: c5889514f32bef04c9d7ae9e0104c04d, type: 2}
   - {fileID: 11400000, guid: 37cdbfa59361b8a4cb5240e7cfbfcd19, type: 2}
+  - {fileID: 11400000, guid: 7952c0b85b94fc24fbd25f518aae207f, type: 2}
+  - {fileID: 11400000, guid: 1f4572f70d59988428b7283d3548cbbd, type: 2}
   arrayOfActorDraftSex:
   - {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
   - {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}
@@ -6422,6 +6424,7 @@ MonoBehaviour:
   isRecruit: 1
   isMoveSecurity: 1
   isActions: 1
+  isHelpMessages: 0
   showContacts: 0
   showPower: 1
   connectorTooltips: 0
@@ -6826,6 +6829,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 544963c1e9444e144a825cd140dd4f5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  helpMaxMessageCount: 1
+  helpChanceConditional: 50
+  helpChanceRandom: 25
 --- !u!114 &114678931324486554
 MonoBehaviour:
   m_ObjectHideFlags: 1

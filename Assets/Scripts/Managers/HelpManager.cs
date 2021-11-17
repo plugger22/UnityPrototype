@@ -16,9 +16,11 @@ public class HelpManager : MonoBehaviour
     [Tooltip("Only show a help message if infoPipeline has MORE than this amount of messages queued up (avoids spamming player)")]
     [Range(0, 3)] public int helpMaxMessageCount = 1;
     [Tooltip("Chance of a conditional message (if any present) being shown. Checked first")]
-    [Range(0, 100)] public int helpChanceConditional = 50;
-    [Tooltip("Chance of a random message (if any present) being shown. Checked only AFTER conditional message check failed")]
-    [Range(0, 100)] public int helpChanceRandom = 25;
+    [Range(0, 100)] public int helpChanceConditional = 40;
+    [Tooltip("Chance of a general, non-conditional, message (if any present) being shown. Checked only AFTER conditional message check failed")]
+    [Range(0, 100)] public int helpChanceGeneral = 20;
+    [Tooltip("Chance modifier (adds/increases) for both of the above for Tutorial messages")]
+    [Range(0, 50)] public int helpTutorialModifier = 10;
 
     //bullet character for help topics
     private char bullet;
@@ -765,7 +767,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "tutorial_1";
         data.header = "Controls";
-        data.text = string.Format("Click on the {0}RIGHT{1} arrow to move to the {2}Next{3} stage of the tutorial, the {4}LEFT{5} for the {6}Previous{7}. Click on the {8}QUESTION{9} for {10}Help{11}", 
+        data.text = string.Format("Click on the {0}RIGHT{1} arrow to move to the {2}Next{3} stage of the tutorial, the {4}LEFT{5} for the {6}Previous{7}. Click on the {8}QUESTION{9} for {10}Help{11}",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Master Help
@@ -2458,7 +2460,7 @@ public class HelpManager : MonoBehaviour
         data.tag = "nemesis_1";
         data.header = "Spotting";
         builder = new StringBuilder();
-        builder.AppendFormat("Tracers will {0}automatically{1} spot your Nemesis. Contacts will spot them only if their effetiveness is {2}equal to, or higher{3}, than the stealth rating of the Nemesis", 
+        builder.AppendFormat("Tracers will {0}automatically{1} spot your Nemesis. Contacts will spot them only if their effetiveness is {2}equal to, or higher{3}, than the stealth rating of the Nemesis",
             colourAlert, colourEnd, colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
@@ -2467,7 +2469,7 @@ public class HelpManager : MonoBehaviour
         data.tag = "nemesis_2";
         data.header = "Hiding";
         builder = new StringBuilder();
-        builder.AppendFormat("If your Nemesis is in the {0}same district{1} as yourself it will find you if your Invisibility is {2}less then, or equal to{3}, it's search rating", 
+        builder.AppendFormat("If your Nemesis is in the {0}same district{1} as yourself it will find you if your Invisibility is {2}less then, or equal to{3}, it's search rating",
             colourAlert, colourEnd, colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
@@ -3111,14 +3113,18 @@ public class HelpManager : MonoBehaviour
     }
     #endregion
 
-    #region CheckHelpMessages
+    #region ProcessHelpMessages
     /// <summary>
     /// Turn based check of Help Messages. Scans dictionary, puts all valid messages in a pool and chooses one, if appropriate (not every turn). Placed in Info Pipeline
     /// </summary>
-    public void CheckHelpMessages()
+    public void ProcessHelpMessages()
     {
-        int count;
+        int count, chance;
         bool isTrue = true;
+        bool isTutorial = false;
+
+        if (GameManager.i.inputScript.GameState == GameState.Tutorial)
+        { isTutorial = true; }
 
         #region Global Checks
         //
@@ -3128,7 +3134,7 @@ public class HelpManager : MonoBehaviour
         if (GameManager.i.playerScript.Status != ActorStatus.Active)
         {
             isTrue = false;
-            Debug.LogFormat("[Tst] HelpManager.cs -> CheckHelpMessages: NO help message this turn -> Player status {0}{1}", GameManager.i.playerScript.Status, "\n");
+            Debug.LogFormat("[Tst] HelpManager.cs -> ProcessHelpMessages: NO help message this turn -> Player status {0}{1}", GameManager.i.playerScript.Status, "\n");
         }
         else
         {
@@ -3137,20 +3143,20 @@ public class HelpManager : MonoBehaviour
             if (count > helpMaxMessageCount)
             {
                 isTrue = false;
-                Debug.LogFormat("[Tst] HelpManager.cs -> CheckHelpMessages: NO help message this turn -> {0} messages in pipeline already{1}", count, "\n");
+                Debug.LogFormat("[Tst] HelpManager.cs -> ProcessHelpMessages: NO help message this turn -> {0} messages in pipeline already{1}", count, "\n");
             }
-            else  
+            else
             {
 
                 //global -> tutorial win/loss state achieved
-                if (GameManager.i.inputScript.GameState == GameState.Tutorial)
+                if (isTutorial == true)
                 {
                     if (GameManager.i.guiScript.CheckInfoPipeline(MsgPipelineType.TutorialSucceed) == true
                         || GameManager.i.guiScript.CheckInfoPipeline(MsgPipelineType.TutorialFail) == true
                         || GameManager.i.guiScript.CheckInfoPipeline(MsgPipelineType.TutorialReset) == true)
                     {
                         isTrue = false;
-                        Debug.LogFormat("[Tst] HelpManager.cs -> CheckHelpMessages: NO help message this turn -> TutorialSucceed/Fail/Reset{0}", "\n");
+                        Debug.LogFormat("[Tst] HelpManager.cs -> ProcessHelpMessages: NO help message this turn -> TutorialSucceed/Fail/Reset{0}", "\n");
                     }
                 }
                 else
@@ -3159,7 +3165,7 @@ public class HelpManager : MonoBehaviour
                     if (GameManager.i.guiScript.CheckInfoPipeline(MsgPipelineType.WinLoseLevel) == true || GameManager.i.guiScript.CheckInfoPipeline(MsgPipelineType.WinLoseCampaign) == true)
                     {
                         isTrue = false;
-                        Debug.LogFormat("[Tst] HelpManager.cs -> CheckHelpMessages: NO help message this turn -> WinLoseLevel/WinLoseCampaign{0}", "\n");
+                        Debug.LogFormat("[Tst] HelpManager.cs -> ProcessHelpMessages: NO help message this turn -> WinLoseLevel/WinLoseCampaign{0}", "\n");
                     }
                 }
             }
@@ -3174,7 +3180,7 @@ public class HelpManager : MonoBehaviour
             {
                 //two pools, one for messages with conditions, one for those without
                 List<HelpMessageData> listOfConditionMessages = new List<HelpMessageData>();
-                List<HelpMessageData> listOfRandomMessages = new List<HelpMessageData>();
+                List<HelpMessageData> listOfGeneralMessages = new List<HelpMessageData>();
 
                 HelpConditionData condition;
 
@@ -3186,45 +3192,39 @@ public class HelpManager : MonoBehaviour
                 {
                     if (data.Value != null)
                     {
-                        //not done
-                        if (data.Value.isDone == false)
+                        count = data.Value.listOfConditions.Count;
+                        //has conditions
+                        if (count > 0)
                         {
-                            count = data.Value.listOfConditions.Count;
-                            //has conditions
-                            if (count > 0)
+                            isTrue = true;
+                            //check conditions
+                            for (int i = 0; i < count; i++)
                             {
-                                isTrue = true;
-                                //check conditions
-                                for (int i = 0; i < count; i++)
+                                condition = data.Value.listOfConditions[i];
+                                if (condition != null)
                                 {
-                                    condition = data.Value.listOfConditions[i];
-                                    if (condition != null)
+                                    if (CheckCondition(condition) == false)
                                     {
-                                        if (CheckCondition(condition) == false)
-                                        {
-                                            isTrue = false;
-                                            break;
-                                        }
+                                        isTrue = false;
+                                        break;
                                     }
-                                    else { Debug.LogWarningFormat("Invalid condition in \"{0}\".listOfConditions[{1}]", data.Key, i); }
                                 }
-                                if (isTrue == true)
-                                {
-                                    //all conditions are true
-                                    listOfConditionMessages.Add(data.Value);
-                                    Debug.LogFormat("[Tst] HelpManager.cs -> CheckHelpMessages: \"{0}\" added to listOfConditionMessages{1}", data.Value.name, "\n");
-                                }
-                                else { Debug.LogFormat("[Tst] HelpManager.cs -> CheckHelpMessages: \"{0}\" NOT added to listOfConditionMessages{1}", data.Value.name, "\n"); }
+                                else { Debug.LogWarningFormat("Invalid condition in \"{0}\".listOfConditions[{1}]", data.Key, i); }
                             }
-                            else
+                            if (isTrue == true)
                             {
-                                //no conditions
-                                listOfRandomMessages.Add(data.Value);
-                                Debug.LogFormat("[Tst] HelpManager.cs -> CheckHelpMessages: \"{0}\" added to listOfRandomMessages{1}", data.Value.name, "\n");
+                                //all conditions are true
+                                listOfConditionMessages.Add(data.Value);
+                                Debug.LogFormat("[Tst] HelpManager.cs -> ProcessHelpMessages: \"{0}\" added to listOfConditionMessages{1}", data.Value.name, "\n");
                             }
-
+                            else { Debug.LogFormat("[Tst] HelpManager.cs -> ProcessHelpMessages: \"{0}\" NOT added to listOfConditionMessages{1}", data.Value.name, "\n"); }
                         }
-                        else { Debug.LogFormat("[Tst] HelpManager.cs -> CheckHelpMessages: \"{0}\" isDone True -> ignored{1}", data.Value.name, "\n"); }
+                        else
+                        {
+                            //no conditions
+                            listOfGeneralMessages.Add(data.Value);
+                            Debug.LogFormat("[Tst] HelpManager.cs -> ProcessHelpMessages: \"{0}\" added to listOfRandomMessages{1}", data.Value.name, "\n");
+                        }
                     }
                     else { Debug.LogWarningFormat("Invalid HelpMessageData (Null) for \"{0}\" in dictOfHelpMessages", data.Key); }
                 }
@@ -3234,35 +3234,39 @@ public class HelpManager : MonoBehaviour
                 //
                 // - - - Message Selection
                 //
-                Debug.LogFormat("[Tst] HelpManager.cs -> CheckHelpMessages: listOfConditionMessages {0}, listOfRandomMessages {1}{2}", listOfConditionMessages.Count, listOfRandomMessages.Count, "\n");
+                Debug.LogFormat("[Tst] HelpManager.cs -> ProcessHelpMessages: listOfConditionMessages {0}, listOfGeneralMessages {1}{2}", listOfConditionMessages.Count, listOfGeneralMessages.Count, "\n");
                 HelpMessageData msgData = null;
                 //conditional messages checked first
                 count = listOfConditionMessages.Count;
                 if (count > 0)
                 {
                     int rndNum = Random.Range(0, 100);
-                    if (rndNum < helpChanceConditional)
+                    chance = helpChanceConditional;
+                    if (isTutorial == true) { chance += helpTutorialModifier; }
+                    if (rndNum < chance)
                     {
                         //select randomly from list of valid messages
                         msgData = listOfConditionMessages[Random.Range(0, count)];
-                        Debug.LogFormat("[Tst] HelpManager.cs -> CheckHelpMessages: Condition Message PASSED check ({0} in list, rolled {1} needed {2}){3}", count, rndNum, helpChanceConditional, "\n");
+                        Debug.LogFormat("[Tst] HelpManager.cs -> ProcessHelpMessages: Condition Message PASSED check ({0} in list, rolled {1} needed {2}){3}", count, rndNum, chance, "\n");
                     }
                     else
                     {
-                        Debug.LogFormat("[Tst] HelpManager.cs -> CheckHelpMessages: Condition Message failed check ({0} in list, rolled {1} needed {2}){3}", count, rndNum, helpChanceConditional, "\n");
-                        count = listOfRandomMessages.Count;
+                        Debug.LogFormat("[Tst] HelpManager.cs -> ProcessHelpMessages: Condition Message failed check ({0} in list, rolled {1} needed {2}){3}", count, rndNum, chance, "\n");
+                        count = listOfGeneralMessages.Count;
                         if (count > 0)
                         {
-                            //Random messages checked next
+                            //General messages checked next
                             rndNum = Random.Range(0, 100);
-                            if (rndNum < helpChanceRandom)
+                            chance = helpChanceGeneral;
+                            if (isTutorial == true) { chance += helpTutorialModifier; }
+                            if (rndNum < chance)
                             {
                                 //select randomly from list
-                                msgData = listOfRandomMessages[Random.Range(0, count)];
-                                Debug.LogFormat("[Tst] HelpManager.cs -> CheckHelpMessages: Random Message PASSED check ({0} in list, rolled {1} needed {2}){3}", count, rndNum, helpChanceRandom, "\n");
+                                msgData = listOfGeneralMessages[Random.Range(0, count)];
+                                Debug.LogFormat("[Tst] HelpManager.cs -> ProcessHelpMessages: General Message PASSED check ({0} in list, rolled {1} needed {2}){3}", count, rndNum, chance, "\n");
                             }
                             else
-                            { Debug.LogFormat("[Tst] HelpManager.cs -> CheckHelpMessages: Random Message failed check ({0} in list, rolled {1} needed {2}){3}", count, rndNum, helpChanceRandom, "\n"); }
+                            { Debug.LogFormat("[Tst] HelpManager.cs -> ProcessHelpMessages: General Message failed check ({0} in list, rolled {1} needed {2}){3}", count, rndNum, chance, "\n"); }
                         }
                     }
                 }
@@ -3288,12 +3292,18 @@ public class HelpManager : MonoBehaviour
                     //end of turn outcome window which needs to overlay ontop of InfoAPP and requires a different than normal modal setting
                     if (GameManager.i.guiScript.InfoPipelineAdd(helpMessage) == false)
                     { Debug.LogWarningFormat("HelpMessage infoPipeline message FAILED to be added to dictOfPipeline"); }
+                    else
+                    {
+                        //delete message from dictionary
+                        if (GameManager.i.dataScript.RemoveHelpMessage(msgData.name) == true)
+                        { Debug.LogFormat("[Tst] HelpManager.cs -> ProcessHelpMessages: \"{0}\" removed from dictOfHelpMessages{1}", msgData.name, "\n"); }
+                    }
                 }
                 else
-                { Debug.LogFormat("[Tst] HelpManager.cs -> CheckHelpMessages: No helpMessage this turn (msgData Null){0}", "\n"); }
+                { Debug.LogFormat("[Tst] HelpManager.cs -> ProcessHelpMessages: No helpMessage this turn (msgData Null){0}", "\n"); }
                 #endregion
 
-                }
+            }
             else { Debug.LogError("Invalid dictOfHelpMessages (Null)"); }
         }
     }
@@ -3320,8 +3330,11 @@ public class HelpManager : MonoBehaviour
             }
             else if (data.setNumber > -1)
             { if (data.conValue != data.setNumber) { isTrue = false; } }
-            else { Debug.LogWarningFormat("Invalid conditions for \"{0}\" (isLimits {1} - {2}/{3}, set# {4}, conValue {5})", 
-                data.conType, data.isLimits, data.lowerLimit, data.upperLimit, data.setNumber, data.conValue); }
+            else
+            {
+                Debug.LogWarningFormat("Invalid conditions for \"{0}\" (isLimits {1} - {2}/{3}, set# {4}, conValue {5})",
+             data.conType, data.isLimits, data.lowerLimit, data.upperLimit, data.setNumber, data.conValue);
+            }
         }
         else if (data.isAvailability == true)
         {
@@ -3331,8 +3344,10 @@ public class HelpManager : MonoBehaviour
             else if (data.isNotPresent == true)
             { if (data.conValue == 1) { isTrue = false; } }
             else
-            {  Debug.LogWarningFormat("Invalid conditions for \"{0}\" (isAvailability {1}, isPresent {2}, isNotPresent {3}, conValue {4})",
-              data.conType, data.isAvailability, data.isPresent, data.isNotPresent, data.conValue); }
+            {
+                Debug.LogWarningFormat("Invalid conditions for \"{0}\" (isAvailability {1}, isPresent {2}, isNotPresent {3}, conValue {4})",
+               data.conType, data.isAvailability, data.isPresent, data.isNotPresent, data.conValue);
+            }
         }
         return isTrue;
     }
@@ -3349,7 +3364,7 @@ public class HelpManager : MonoBehaviour
         HelpConditionType conditionType = HelpConditionType.None;
         if (string.IsNullOrEmpty(conditionName) == false)
         {
-            switch(conditionName)
+            switch (conditionName)
             {
                 case "GearGet": conditionType = HelpConditionType.GearGet; break;
                 case "FixerPresent": conditionType = HelpConditionType.FixerOnMap; break;
@@ -3430,12 +3445,11 @@ public class HelpManager : MonoBehaviour
                 foreach (var data in dictOfHelpMessages)
                 {
                     numOfConditions = data.Value.listOfConditions.Count;
-                    builder.AppendFormat(" {0} -> texts {1}, {2} condition{3}, isDone {4}{5}", 
-                        data.Key, 
+                    builder.AppendFormat(" {0} -> texts {1}, {2} condition{3}{4}",
+                        data.Key,
                         data.Value.textTop.Length > 0 || data.Value.textBottom.Length > 0 ? "ok" : "M.I.A",
-                        numOfConditions > 0 ? Convert.ToString(numOfConditions) : "No", 
-                        numOfConditions != 1 ? "s" : "", 
-                        data.Value.isDone, 
+                        numOfConditions > 0 ? Convert.ToString(numOfConditions) : "No",
+                        numOfConditions != 1 ? "s" : "",
                         "\n");
                     if (numOfConditions > 0)
                     {
@@ -3444,17 +3458,17 @@ public class HelpManager : MonoBehaviour
                             condition = data.Value.listOfConditions[i];
                             if (condition != null)
                             {
-                                builder.AppendFormat("    {0} -> {1}, val {2}{3}{4}{5}{6}{7}{8}{9}{10}", 
-                                    condition.name, 
+                                builder.AppendFormat("    {0} -> {1}, val {2}{3}{4}{5}{6}{7}{8}{9}{10}",
+                                    condition.name,
                                     condition.conType,
-                                    condition.conValue, 
+                                    condition.conValue,
                                     condition.isEquals == true ? ", isEqual " : "",
                                     condition.isGreaterThan == true ? ", isGreaterThan " : "",
                                     condition.isLessThan == true ? ", isLessThan " : "",
                                     condition.isPresent == true ? ", Present" : "",
                                     condition.isNotPresent == true ? ", Not Present" : "",
                                     condition.lowerLimit > -1 || condition.upperLimit > -1 ? " limits " + condition.lowerLimit + "/" + condition.upperLimit : "",
-                                    condition.setNumber > -1 ? " set # " + condition.setNumber : "", 
+                                    condition.setNumber > -1 ? " set # " + condition.setNumber : "",
                                     "\n");
                             }
                             else { Debug.LogErrorFormat("Invalid HelpConditionData (Null) in {0}.listOfConditions[{1}]", data.Key, i); }
