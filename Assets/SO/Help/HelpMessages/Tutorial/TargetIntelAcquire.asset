@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: TargetIntelAcquire
   m_EditorClassIdentifier: 
   textTop: Be smart about how you tackle targets
-  textBottom: Use your PLANNER and gain some useful Intel<br><br>I'tll raise your
+  textBottom: Use your PLANNER and gain some useful Intel<br><br>It'll raise your
     chances of success when attempting the target
   listOfConditions:
   - {fileID: 11400000, guid: 4cb5c0d730eba5e468ad76dcf63d371a, type: 2}

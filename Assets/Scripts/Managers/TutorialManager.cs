@@ -624,7 +624,7 @@ public class TutorialManager : MonoBehaviour
                                 };
 
                                 listOfGoals.Add(tracker);
-                                Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateGoals: goal \"{0}\" added to list (goal0 {1}, data0 {2}, target0 {3} goal1 {4} -> data1 {5}, target1 {6}){7}", tracker.goalName,
+                                Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateGoals: goal \"{0}\" added to list (goal0 {1}, data0 {2}, target0 {3} g1 {4} -> d1 {5}, t1 {6}){7}", tracker.goalName,
                                     tracker.goal0, tracker.data0, tracker.target0, tracker.goal1, tracker.data1, tracker.target1, "\n");
                                 //open special outcome window
                                 ModalOutcomeDetails details = new ModalOutcomeDetails()
@@ -713,7 +713,7 @@ public class TutorialManager : MonoBehaviour
                         {
                             //set goal done in dictOfGoals
                             SetGoalComplete(tracker.goalName);
-                            Debug.LogFormat("[Tut] TutorialManager.cs -> CheckGoals: Goal \"{0}\" COMPLETED (goal0 {1}, data0 {2}, target0 {3}, goal1 {4}, data1 {5}, target1 {6}){7}",
+                            Debug.LogFormat("[Tut] TutorialManager.cs -> CheckGoals: Goal \"{0}\" COMPLETED (goal0 {1}, data0 {2}, target0 {3}, g1 {4}, d1 {5}, t1 {6}){7}",
                                 tracker.goalName, tracker.goal0, tracker.data0, tracker.target0, tracker.goal1, tracker.data1, tracker.target1, "\n");
                             //activate event (eg. close an underlying UI before showing outcome)
                             if (tracker.eventType != EventType.None)
@@ -1310,43 +1310,6 @@ public class TutorialManager : MonoBehaviour
     }
     #endregion
    
-    #region Archive -> ProcessSandboxHelpMessage
-    /*
-    /// <summary>
-    /// provides a context sensitive help message from Fred, your trainer, during the sandbox provided no other tutorial message is present (which would be a win or fail state message)
-    /// </summary>
-    public void ProcessSandboxHelpMessage()
-    {
-        //randomise message (not all the time)
-        if (Random.Range(0, 100) < 50)
-        {
-            //ignore if player status inactive
-            if (GameManager.i.playerScript.Status == ActorStatus.Active)
-            {
-                //ignore message if already a tutorial related win/fail one in the queue
-                if (GameManager.i.guiScript.CheckInfoPipeline(MsgPipelineType.TutorialSucceed) == false && GameManager.i.guiScript.CheckInfoPipeline(MsgPipelineType.TutorialFail) == false)
-                {
-                    //dialogue
-                    ModalOutcomeDetails outcomeTutorial = new ModalOutcomeDetails
-                    {
-                        textTop = GameManager.Formatt("Hi, I'm here to give you tips", ColourType.moccasinText),
-                        textBottom = "What can I say? Do you best and wear clean underpants",
-                        sprite = GameManager.i.tutorialScript.tutorial.sprite,
-                        isAction = false,
-                        side = GameManager.i.globalScript.sideResistance,
-                        isSpecial = true,
-                        isSpecialGood = true,
-                        type = MsgPipelineType.HelpMessage
-                    };
-                    //end of turn outcome window which needs to overlay ontop of InfoAPP and requires a different than normal modal setting
-                    if (GameManager.i.guiScript.InfoPipelineAdd(outcomeTutorial) == false)
-                    { Debug.LogWarningFormat("Tutorial infoPipeline message FAILED to be added to dictOfPipeline"); }
-                }
-            }
-        }
-    }*/
-    #endregion
-
     #endregion
 
     #region Widget Interaction...

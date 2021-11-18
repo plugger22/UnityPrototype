@@ -47,6 +47,8 @@ public class HelpManager : MonoBehaviour
     private string colourAlert;
     private string colourEnd;
 
+    #region Initialise
+
     public void Initialise(GameState state)
     {
         SetColours();
@@ -69,8 +71,9 @@ public class HelpManager : MonoBehaviour
         //register listener
         EventManager.i.AddListener(EventType.ChangeColour, OnEvent, "ItemDataManager");
     }
+    #endregion
 
-
+    #region OnEvent
     /// <summary>
     /// Event Handler
     /// </summary>
@@ -90,6 +93,7 @@ public class HelpManager : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
     #region SetColours
     /// <summary>
@@ -3134,7 +3138,7 @@ public class HelpManager : MonoBehaviour
         if (GameManager.i.playerScript.Status != ActorStatus.Active)
         {
             isTrue = false;
-            Debug.LogFormat("[Tst] HelpManager.cs -> ProcessHelpMessages: NO help message this turn -> Player status {0}{1}", GameManager.i.playerScript.Status, "\n");
+            Debug.LogFormat("[Hlp] HelpManager.cs -> ProcessHelpMessages: NO help message this turn -> Player status {0}{1}", GameManager.i.playerScript.Status, "\n");
         }
         else
         {
@@ -3143,7 +3147,7 @@ public class HelpManager : MonoBehaviour
             if (count > helpMaxMessageCount)
             {
                 isTrue = false;
-                Debug.LogFormat("[Tst] HelpManager.cs -> ProcessHelpMessages: NO help message this turn -> {0} messages in pipeline already{1}", count, "\n");
+                Debug.LogFormat("[Hlp] HelpManager.cs -> ProcessHelpMessages: NO help message this turn -> {0} messages in pipeline already{1}", count, "\n");
             }
             else
             {
@@ -3156,7 +3160,7 @@ public class HelpManager : MonoBehaviour
                         || GameManager.i.guiScript.CheckInfoPipeline(MsgPipelineType.TutorialReset) == true)
                     {
                         isTrue = false;
-                        Debug.LogFormat("[Tst] HelpManager.cs -> ProcessHelpMessages: NO help message this turn -> TutorialSucceed/Fail/Reset{0}", "\n");
+                        Debug.LogFormat("[Hlp] HelpManager.cs -> ProcessHelpMessages: NO help message this turn -> TutorialSucceed/Fail/Reset{0}", "\n");
                     }
                 }
                 else
@@ -3165,7 +3169,7 @@ public class HelpManager : MonoBehaviour
                     if (GameManager.i.guiScript.CheckInfoPipeline(MsgPipelineType.WinLoseLevel) == true || GameManager.i.guiScript.CheckInfoPipeline(MsgPipelineType.WinLoseCampaign) == true)
                     {
                         isTrue = false;
-                        Debug.LogFormat("[Tst] HelpManager.cs -> ProcessHelpMessages: NO help message this turn -> WinLoseLevel/WinLoseCampaign{0}", "\n");
+                        Debug.LogFormat("[Hlp] HelpManager.cs -> ProcessHelpMessages: NO help message this turn -> WinLoseLevel/WinLoseCampaign{0}", "\n");
                     }
                 }
             }
@@ -3215,15 +3219,15 @@ public class HelpManager : MonoBehaviour
                             {
                                 //all conditions are true
                                 listOfConditionMessages.Add(data.Value);
-                                Debug.LogFormat("[Tst] HelpManager.cs -> ProcessHelpMessages: \"{0}\" added to listOfConditionMessages{1}", data.Value.name, "\n");
+                                Debug.LogFormat("[Hlp] HelpManager.cs -> ProcessHelpMessages: \"{0}\" added to listOfConditionMessages{1}", data.Value.name, "\n");
                             }
-                            else { Debug.LogFormat("[Tst] HelpManager.cs -> ProcessHelpMessages: \"{0}\" NOT added to listOfConditionMessages{1}", data.Value.name, "\n"); }
+                            else { Debug.LogFormat("[Hlp] HelpManager.cs -> ProcessHelpMessages: \"{0}\" NOT added to listOfConditionMessages{1}", data.Value.name, "\n"); }
                         }
                         else
                         {
                             //no conditions
                             listOfGeneralMessages.Add(data.Value);
-                            Debug.LogFormat("[Tst] HelpManager.cs -> ProcessHelpMessages: \"{0}\" added to listOfRandomMessages{1}", data.Value.name, "\n");
+                            Debug.LogFormat("[Hlp] HelpManager.cs -> ProcessHelpMessages: \"{0}\" added to listOfRandomMessages{1}", data.Value.name, "\n");
                         }
                     }
                     else { Debug.LogWarningFormat("Invalid HelpMessageData (Null) for \"{0}\" in dictOfHelpMessages", data.Key); }
@@ -3234,7 +3238,7 @@ public class HelpManager : MonoBehaviour
                 //
                 // - - - Message Selection
                 //
-                Debug.LogFormat("[Tst] HelpManager.cs -> ProcessHelpMessages: listOfConditionMessages {0}, listOfGeneralMessages {1}{2}", listOfConditionMessages.Count, listOfGeneralMessages.Count, "\n");
+                Debug.LogFormat("[Hlp] HelpManager.cs -> ProcessHelpMessages: listOfConditionMessages {0}, listOfGeneralMessages {1}{2}", listOfConditionMessages.Count, listOfGeneralMessages.Count, "\n");
                 HelpMessageData msgData = null;
                 //conditional messages checked first
                 count = listOfConditionMessages.Count;
@@ -3247,11 +3251,11 @@ public class HelpManager : MonoBehaviour
                     {
                         //select randomly from list of valid messages
                         msgData = listOfConditionMessages[Random.Range(0, count)];
-                        Debug.LogFormat("[Tst] HelpManager.cs -> ProcessHelpMessages: Condition Message PASSED check ({0} in list, rolled {1} needed {2}){3}", count, rndNum, chance, "\n");
+                        Debug.LogFormat("[Hlp] HelpManager.cs -> ProcessHelpMessages: Condition Message PASSED check ({0} in list, rolled {1} needed {2}){3}", count, rndNum, chance, "\n");
                     }
                     else
                     {
-                        Debug.LogFormat("[Tst] HelpManager.cs -> ProcessHelpMessages: Condition Message failed check ({0} in list, rolled {1} needed {2}){3}", count, rndNum, chance, "\n");
+                        Debug.LogFormat("[Hlp] HelpManager.cs -> ProcessHelpMessages: Condition Message failed check ({0} in list, rolled {1} needed {2}){3}", count, rndNum, chance, "\n");
                         count = listOfGeneralMessages.Count;
                         if (count > 0)
                         {
@@ -3263,10 +3267,10 @@ public class HelpManager : MonoBehaviour
                             {
                                 //select randomly from list
                                 msgData = listOfGeneralMessages[Random.Range(0, count)];
-                                Debug.LogFormat("[Tst] HelpManager.cs -> ProcessHelpMessages: General Message PASSED check ({0} in list, rolled {1} needed {2}){3}", count, rndNum, chance, "\n");
+                                Debug.LogFormat("[Hlp] HelpManager.cs -> ProcessHelpMessages: General Message PASSED check ({0} in list, rolled {1} needed {2}){3}", count, rndNum, chance, "\n");
                             }
                             else
-                            { Debug.LogFormat("[Tst] HelpManager.cs -> ProcessHelpMessages: General Message failed check ({0} in list, rolled {1} needed {2}){3}", count, rndNum, chance, "\n"); }
+                            { Debug.LogFormat("[Hlp] HelpManager.cs -> ProcessHelpMessages: General Message failed check ({0} in list, rolled {1} needed {2}){3}", count, rndNum, chance, "\n"); }
                         }
                     }
                 }
@@ -3296,11 +3300,11 @@ public class HelpManager : MonoBehaviour
                     {
                         //delete message from dictionary
                         if (GameManager.i.dataScript.RemoveHelpMessage(msgData.name) == true)
-                        { Debug.LogFormat("[Tst] HelpManager.cs -> ProcessHelpMessages: \"{0}\" removed from dictOfHelpMessages{1}", msgData.name, "\n"); }
+                        { Debug.LogFormat("[Hlp] HelpManager.cs -> ProcessHelpMessages: \"{0}\" removed from dictOfHelpMessages{1}", msgData.name, "\n"); }
                     }
                 }
                 else
-                { Debug.LogFormat("[Tst] HelpManager.cs -> ProcessHelpMessages: No helpMessage this turn (msgData Null){0}", "\n"); }
+                { Debug.LogFormat("[Hlp] HelpManager.cs -> ProcessHelpMessages: No helpMessage this turn (msgData Null){0}", "\n"); }
                 #endregion
 
             }
